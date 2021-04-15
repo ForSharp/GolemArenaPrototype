@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SecondaryStats : MonoBehaviour
+﻿namespace __Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum SecondaryStats 
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Health,
+        Stamina,
+        DamagePerHeat,
+        MoveSpeed,
+        AttackSpeed,
+        Defence,
+        MagicDamage,
+        ManaPool, 
+        AvoidChance,
+        DodgeChance,
+        MagicResistance
     }
 }
