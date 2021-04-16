@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace __Scripts
+﻿namespace __Scripts.ExtraStats
 {
     public struct GolemExtraStats 
     {

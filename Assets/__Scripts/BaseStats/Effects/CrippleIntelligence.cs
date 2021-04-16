@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace __Scripts
+﻿namespace __Scripts.BaseStats.Effects
 {
     public class CrippleIntelligence : StatsDecorator
     {
