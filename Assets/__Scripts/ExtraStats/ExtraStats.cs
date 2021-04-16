@@ -1,6 +1,6 @@
-﻿namespace __Scripts
+﻿namespace __Scripts.ExtraStats
 {
-    public enum SecondaryStats 
+    public enum ExtraStats 
     {
         Health, 
         Stamina,  
