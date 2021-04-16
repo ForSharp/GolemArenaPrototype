@@ -2,9 +2,9 @@
 {
     public enum SecondaryStats 
     {
-        Health,
-        Stamina,
-        DamagePerHeat,
+        Health, 
+        Stamina,  
+        DamagePerHeat, 
         MoveSpeed,
         AttackSpeed,
         Defence,
@@ -12,6 +12,9 @@
         ManaPool, 
         AvoidChance,
         DodgeChance,
-        MagicResistance
+        MagicResistance,
+        HitAccuracy,
+        MagicAccuracy,
+        RegenerationRate
     }
 }

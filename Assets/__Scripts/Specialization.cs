@@ -1,6 +1,6 @@
 ﻿namespace __Scripts
 {
-    public enum Spetialization 
+    public enum Specialization 
     {
         Warrior,
         Rogue,
