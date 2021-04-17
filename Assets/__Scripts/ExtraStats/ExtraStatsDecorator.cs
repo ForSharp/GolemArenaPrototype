@@ -11,9 +11,9 @@
         
         public GolemExtraStats GetExtraStats(GolemBaseStats baseStats)
         {
-            return GetExtraStatsInternal();
+            return GetExtraStatsInternal(baseStats);
         }
         
-        protected abstract GolemExtraStats GetExtraStatsInternal();
+        protected abstract GolemExtraStats GetExtraStatsInternal(GolemBaseStats baseStats);
     }
 }
