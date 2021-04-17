@@ -1,26 +1,48 @@
-﻿using UnityEngine;
+﻿using __Scripts.BaseStats;
+using UnityEngine;
 
 namespace __Scripts
 {
-    public class Golem : MonoBehaviour
+    public class Golem 
     {
-        private GolemType _golemType = GolemType.MithrilGolem;
-        private Specialization _specialization = Specialization.Wizard;
+        private readonly GolemType _golemType;
+        private readonly Specialization _specialization;
 
         private IStatsProvider _provider;
         private static float _minBaseStats = 1000;
         
-        public IStatsProvider Rate { get; private set; }
+        public IStatsProvider Rate { get; }
 
-        public Golem()
+        public Golem(GolemType golemType, Specialization specialization)
         {
-            Rate = SetRate();
+            _golemType = golemType;
+            _specialization = specialization;
             
+            Rate = GetRate();
             _provider = new DefaultStats(_minBaseStats, Rate);
-            //_provider = new WeaknessTremor(_provider);
         }
 
-        private IStatsProvider SetRate()
+        public void GetExtras()
+        {
+            
+        }
+
+        public void ChangeBaseStatsProportionally(float value)
+        {
+            _provider = new BaseStatsEditor(value, GetCurrentStats(Rate), _provider);
+        }
+
+        public GolemBaseStats GetCurrentStats(IStatsProvider provider)
+        {
+            return new GolemBaseStats()
+            {
+                Strength = provider.GetBaseStats().Strength,
+                Agility = provider.GetBaseStats().Agility,
+                Intelligence = provider.GetBaseStats().Intelligence
+            };
+        }
+        
+        private IStatsProvider GetRate()
         {
             _provider = new GolemTypeStats(_golemType); 
             _provider = new SpecializationStats(_provider, _specialization);
@@ -35,18 +57,34 @@ namespace __Scripts
         }
     }
 
+    public class BaseStatsEditor : StatsDecorator
+    {
+        private readonly float _value;
+        private readonly GolemBaseStats _multiplier;
+        public BaseStatsEditor(float value, GolemBaseStats multiplier, IStatsProvider wrappedEntity) : base(wrappedEntity)
+        {
+            _value = value;
+            _multiplier = multiplier;
+        }
+
+        protected override GolemBaseStats GetStatsInternal()
+        {
+            return _wrappedEntity.GetBaseStats() + (_multiplier * _value);
+        }
+    }
+
     public class DefaultStats : StatsDecorator
     {
         private readonly float _minBaseStats;
-        
-        protected override GolemBaseStats GetStatsInternal()
-        {
-            return _wrappedEntity.GetBaseStats() * _minBaseStats;
-        }
 
         public DefaultStats(float minBaseStats, IStatsProvider wrappedEntity) : base(wrappedEntity)
         {
             _minBaseStats = minBaseStats;
+        }
+
+        protected override GolemBaseStats GetStatsInternal()
+        {
+            return _wrappedEntity.GetBaseStats() * _minBaseStats;
         }
     }
 }
