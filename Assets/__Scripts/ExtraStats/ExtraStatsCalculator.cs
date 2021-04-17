@@ -2,23 +2,24 @@
 
 namespace __Scripts.ExtraStats
 {
+    /// <summary>
+    /// All methods returns the maximum allowed half,
+    /// then the GolemType values and GolemSpecialization values are concatenated.
+    /// </summary>
     public static class ExtraStatsCalculator 
     {
         
-
-        public static float GetHealth(float strength, float agility, float intelligence)
+        public static float GetHealth(float strength)
         {
-            return (strength + agility + intelligence) * 10;
-            //should move to struct initializer
+            return strength * 10;
         }
-
-        public static float GetStamina()
+        public static float GetStamina(float strength, float agility)
         {
-            return 0;
+            return (agility * 0.8f + strength * 0.2f) * 10;
         }
-        public static float GetDamagePerHeat()
+        public static float GetDamagePerHeat(float strength, float agility, float intelligence)
         {
-            return 0;
+            return (strength + agility + intelligence);
         }
         public static float GetMoveSpeed()
         {

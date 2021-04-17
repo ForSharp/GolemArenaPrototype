@@ -2,10 +2,11 @@
 
 namespace __Scripts
 {
+    
     public class SpecializationStats : StatsDecorator
     {
-        private GolemType _golemType = GolemType.IronGolem;
-        private Specialization _specialization = Specialization.Tank;
+        
+        private Specialization _specialization;
         
         public SpecializationStats(IStatsProvider wrappedEntity, Specialization specialization) : base(wrappedEntity)
         {
