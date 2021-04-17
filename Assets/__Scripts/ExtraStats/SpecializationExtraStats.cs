@@ -28,7 +28,20 @@ namespace __Scripts.ExtraStats
                 case Specialization.Warrior:
                     return new GolemExtraStats()
                     {
-
+                        AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(),
+                        AvoidChance = ExtraStatsCalculator.GetAvoidChance(),
+                        DamagePerHeat = ExtraStatsCalculator.GetDamagePerHeat(strength, agility, intelligence),
+                        Defence = ExtraStatsCalculator.GetDefence(),
+                        DodgeChance = ExtraStatsCalculator.GetDodgeChance(),
+                        Health = ExtraStatsCalculator.GetHealth(strength),
+                        HitAccuracy = ExtraStatsCalculator.GetHitAccuracy(),
+                        MagicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(),
+                        MagicDamage = ExtraStatsCalculator.GetMagicDamage(),
+                        MagicResistance = ExtraStatsCalculator.GetMagicResistance(),
+                        ManaPool = ExtraStatsCalculator.GetManaPool(),
+                        MoveSpeed = ExtraStatsCalculator.GetMoveSpeed(),
+                        RegenerationRate = ExtraStatsCalculator.GetRegenerationRate(),
+                        Stamina = ExtraStatsCalculator.GetStamina(strength, agility)
                     };
                 case Specialization.Rogue:
                     return new GolemExtraStats()

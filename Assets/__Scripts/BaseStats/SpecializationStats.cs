@@ -2,6 +2,7 @@
 
 namespace __Scripts
 {
+    
     public class SpecializationStats : StatsDecorator
     {
         

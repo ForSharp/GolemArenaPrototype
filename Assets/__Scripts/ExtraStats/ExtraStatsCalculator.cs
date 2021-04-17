@@ -2,65 +2,66 @@
 
 namespace __Scripts.ExtraStats
 {
+    /// <summary>
+    /// All methods returns the maximum allowed half,
+    /// then the GolemType values and GolemSpecialization values are concatenated.
+    /// </summary>
     public static class ExtraStatsCalculator 
     {
         
-
-        public static float GetHealth(float strength, float agility, float intelligence)
+        public static float GetHealth(float strength)
         {
-            return (strength + agility + intelligence) * 10;
-            //should move to struct initializer
+            return strength * 10;
         }
-
-        public static float GetStamina(float strength, float agility, float intelligence)
+        public static float GetStamina(float strength, float agility)
         {
-            return 0;
+            return (agility * 0.8f + strength * 0.2f) * 10;
         }
         public static float GetDamagePerHeat(float strength, float agility, float intelligence)
         {
-            return 0;
+            return (strength + agility + intelligence);
         }
-        public static float GetMoveSpeed(float strength, float agility, float intelligence)
+        public static float GetMoveSpeed()
         {
             return 0;
         }
-        public static float GetAttackSpeed(float strength, float agility, float intelligence)
+        public static float GetAttackSpeed()
         {
             return 0;
         }
-        public static float GetDefence(float strength, float agility, float intelligence)
+        public static float GetDefence()
         {
             return 0;
         }
-        public static float GetMagicDamage(float strength, float agility, float intelligence)
+        public static float GetMagicDamage()
         {
             return 0;
         }
-        public static float GetManaPool(float strength, float agility, float intelligence)
+        public static float GetManaPool()
         {
             return 0;
         }
-        public static float GetAvoidChance(float strength, float agility, float intelligence)
+        public static float GetAvoidChance()
         {
             return 0;
         }
-        public static float GetDodgeChance(float strength, float agility, float intelligence)
+        public static float GetDodgeChance()
         {
             return 0;
         }
-        public static float GetMagicResistance(float strength, float agility, float intelligence)
+        public static float GetMagicResistance()
         {
             return 0;
         }
-        public static float GetHitAccuracy(float strength, float agility, float intelligence)
+        public static float GetHitAccuracy()
         {
             return 0;
         }
-        public static float GetMagicAccuracy(float strength, float agility, float intelligence)
+        public static float GetMagicAccuracy()
         {
             return 0;
         }
-        public static float GetRegenerationRate(float strength, float agility, float intelligence)
+        public static float GetRegenerationRate()
         {
             return 0;
         }
