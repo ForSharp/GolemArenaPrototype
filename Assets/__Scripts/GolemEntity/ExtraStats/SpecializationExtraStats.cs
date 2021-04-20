@@ -129,7 +129,6 @@ namespace __Scripts.GolemEntity.ExtraStats
 
         private GolemExtraStats InitializeExtraStats(SpecExtraArgs specExtraArgs)
         {
-           
             return new GolemExtraStats()
             {
                 AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(specExtraArgs.AttackSpeedArgAg),
@@ -148,8 +147,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                 Stamina = ExtraStatsCalculator.GetStamina(specExtraArgs.StaminaArgSt, specExtraArgs.StaminaArgAg)
             };
         }
-
-
+        
         private class SpecExtraArgs
         {
             private static float Strength { get; set; }

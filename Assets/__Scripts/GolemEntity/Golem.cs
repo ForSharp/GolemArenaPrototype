@@ -1,4 +1,7 @@
-﻿namespace __Scripts.GolemEntity
+﻿using __Scripts.ExtraStats;
+using __Scripts.GolemEntity.ExtraStats;
+
+namespace __Scripts.GolemEntity
 {
     public class Golem 
     {
@@ -19,9 +22,12 @@
             _provider = new DefaultStats(_minBaseStats, Rate);
         }
 
-        public void GetExtras()
+        public string GetExtras()
         {
-            
+            IExtraStatsProvider extra;
+            extra = new TypeExtraStats(_golemType);
+            extra = new SpecializationExtraStats(extra, _specialization);
+            return extra.GetExtraStats(GetCurrentStats(_provider)).ToString();
         }
 
         public void ChangeBaseStatsProportionally(float value)
