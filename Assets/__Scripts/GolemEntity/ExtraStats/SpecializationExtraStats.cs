@@ -33,7 +33,8 @@ namespace __Scripts.GolemEntity.ExtraStats
                 case Specialization.Warrior:
                     SpecExtraArgs specWar = new SpecExtraArgs(strength, agility, intelligence)
                     {
-                        AttackSpeedArgAg = agility * 8f
+                        AttackSpeedArgAg = agility * 2f,
+                        HealthArgSt = strength * 1.5f
                     };
                     return InitializeExtraStats(specWar);
                 case Specialization.Rogue:
@@ -128,7 +129,6 @@ namespace __Scripts.GolemEntity.ExtraStats
 
         private GolemExtraStats InitializeExtraStats(SpecExtraArgs specExtraArgs)
         {
-           
             return new GolemExtraStats()
             {
                 AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(specExtraArgs.AttackSpeedArgAg),
@@ -138,7 +138,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                 DodgeChance = ExtraStatsCalculator.GetDodgeChance(specExtraArgs.DodgeChanceArgAg, specExtraArgs.DodgeChanceArgIn),
                 Health = ExtraStatsCalculator.GetHealth(specExtraArgs.HealthArgSt),
                 HitAccuracy = ExtraStatsCalculator.GetHitAccuracy(specExtraArgs.HitAccuracyArgSt, specExtraArgs.HitAccuracyArgAg),
-                MagicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(specExtraArgs.MagicAccuracyArgAg, specExtraArgs.MagicAccuracyArgIn),
+                MagicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(specExtraArgs.MagicAccuracyArgSt, specExtraArgs.MagicAccuracyArgIn),
                 MagicDamage = ExtraStatsCalculator.GetMagicDamage(specExtraArgs.MagicDamageArgIn),
                 MagicResistance = ExtraStatsCalculator.GetMagicResistance(specExtraArgs.MagicResistanceArgSt, specExtraArgs.MagicResistanceArgIn),
                 ManaPool = ExtraStatsCalculator.GetManaPool(specExtraArgs.ManaPoolArgIn),
@@ -147,8 +147,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                 Stamina = ExtraStatsCalculator.GetStamina(specExtraArgs.StaminaArgSt, specExtraArgs.StaminaArgAg)
             };
         }
-
-
+        
         private class SpecExtraArgs
         {
             private static float Strength { get; set; }
@@ -175,7 +174,7 @@ namespace __Scripts.GolemEntity.ExtraStats
             public float HitAccuracyArgSt = Strength;
             public float HitAccuracyArgAg = Agility;
             
-            public float MagicAccuracyArgAg = Agility;
+            public float MagicAccuracyArgSt = Strength;
             public float MagicAccuracyArgIn = Intelligence;
             
             public float MagicDamageArgIn = Intelligence;
