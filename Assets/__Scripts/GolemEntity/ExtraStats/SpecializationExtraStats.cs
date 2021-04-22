@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using __Scripts.ExtraStats;
+using UnityEngine;
 
 namespace __Scripts.GolemEntity.ExtraStats
 {
@@ -19,6 +20,9 @@ namespace __Scripts.GolemEntity.ExtraStats
 
         protected override GolemExtraStats GetExtraStatsInternal(GolemBaseStats baseStats)
         {
+            Debug.Log("FFFF" + _wrappedEntity.GetExtraStats(baseStats).ToString());
+            Debug.Log("FDDD" + GetSpecExtraStats(baseStats, _specialization).ToString());
+            Debug.Log("SUM"+_wrappedEntity.GetExtraStats(baseStats) + GetSpecExtraStats(baseStats, _specialization));
             return _wrappedEntity.GetExtraStats(baseStats) + GetSpecExtraStats(baseStats, _specialization);
         }
 
@@ -28,9 +32,12 @@ namespace __Scripts.GolemEntity.ExtraStats
             var agility = baseStats.Agility;
             var intelligence = baseStats.Intelligence;
 
+            //Debug.Log($"ERROR {strength}, {agility}, {intelligence}");
+            
             switch (specialization)
             {
                 case Specialization.Warrior:
+                    //Debug.Log($"ERROR {strength}, {agility}, {intelligence}");
                     SpecExtraArgs specWar = new SpecExtraArgs(strength, agility, intelligence)
                     {
                         AttackSpeedArgAg = agility * 2f,
