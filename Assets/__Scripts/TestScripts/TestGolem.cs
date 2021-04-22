@@ -17,6 +17,10 @@ namespace __Scripts
         private void Start()
         {
             CreateGolem();
+            
+            GolemBaseStats golem = _golem.GetCurrentStats(_golem._provider);
+            
+            Debug.Log("fdfd" +golem);
         }
 
         private void Update()

@@ -1,5 +1,6 @@
 ﻿using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
+using UnityEngine;
 
 namespace __Scripts.GolemEntity
 {
@@ -8,7 +9,7 @@ namespace __Scripts.GolemEntity
         private readonly GolemType _golemType;
         private readonly Specialization _specialization;
 
-        private IStatsProvider _provider;
+        public IStatsProvider _provider;
         private static float _minBaseStats = 1000;
         
         public IStatsProvider Rate { get; }
