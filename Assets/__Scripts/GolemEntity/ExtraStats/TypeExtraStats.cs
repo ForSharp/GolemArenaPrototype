@@ -6,17 +6,19 @@ namespace __Scripts.GolemEntity.ExtraStats
     public class TypeExtraStats : IExtraStatsProvider
     {
         private GolemType _type;
+        private GolemBaseStats _baseStats;
 
-        public TypeExtraStats(GolemType type)
+        public TypeExtraStats(GolemType type, GolemBaseStats baseStats)
         {
             _type = type;
+            _baseStats = baseStats;
         }
 
-        public GolemExtraStats GetExtraStats(GolemBaseStats baseStats)
+        public GolemExtraStats GetExtraStats()
         {
-            var strength = baseStats.Strength;
-            var agility = baseStats.Agility;
-            var intelligence = baseStats.Intelligence;
+            var strength = _baseStats.Strength;
+            var agility = _baseStats.Agility;
+            var intelligence = _baseStats.Intelligence;
 
             switch (_type)
             {

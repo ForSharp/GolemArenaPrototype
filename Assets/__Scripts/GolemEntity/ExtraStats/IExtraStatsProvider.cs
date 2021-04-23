@@ -2,6 +2,6 @@
 {
     public interface IExtraStatsProvider 
     {
-        GolemExtraStats GetExtraStats(GolemBaseStats baseStats);
+        GolemExtraStats GetExtraStats();
     }
 }
