@@ -10,8 +10,11 @@ namespace __Scripts.TestScripts
         {
             _golem = new Golem(GolemType.IronGolem, Specialization.Warrior);
             
-            Debug.Log(_golem.ShowGolemBaseStats());
-            Debug.Log(_golem.ShowGolemExtraStats());
+            Debug.Log(_golem.GetGolemBaseStats());
+            Debug.Log(_golem.GetGolemExtraStats());
+            
+            _golem.ShowGolemBaseStats();
+            _golem.ShowGolemExtraStats();
         }
         private void Start()
         {
@@ -24,14 +27,18 @@ namespace __Scripts.TestScripts
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 _golem.ChangeBaseStatsProportionally(10);
-                Debug.Log(_golem.ShowGolemBaseStats());
-                Debug.Log(_golem.ShowGolemExtraStats());
+                Debug.Log(_golem.GetGolemBaseStats());
+                Debug.Log(_golem.GetGolemExtraStats());
+                _golem.ShowGolemBaseStats();
+                _golem.ShowGolemExtraStats();
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 _golem.ChangeBaseStatsProportionally(-10);
-                Debug.Log(_golem.ShowGolemBaseStats());
-                Debug.Log(_golem.ShowGolemExtraStats());
+                Debug.Log(_golem.GetGolemBaseStats());
+                Debug.Log(_golem.GetGolemExtraStats());
+                _golem.ShowGolemBaseStats();
+                _golem.ShowGolemExtraStats();
             }
         }
     }
