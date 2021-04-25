@@ -1,8 +1,7 @@
-﻿using System;
-using __Scripts.GolemEntity;
+﻿using __Scripts.GolemEntity;
 using UnityEngine;
 
-namespace __Scripts
+namespace __Scripts.TestScripts
 {
     public class TestGolem : MonoBehaviour
     {
@@ -11,31 +10,35 @@ namespace __Scripts
         {
             _golem = new Golem(GolemType.IronGolem, Specialization.Warrior);
             
-            Debug.Log(_golem.GetGolemStats());
-            Debug.Log(_golem.GetExtras());
+            Debug.Log(_golem.GetGolemBaseStats());
+            Debug.Log(_golem.GetGolemExtraStats());
+            
+            _golem.ShowGolemBaseStats();
+            _golem.ShowGolemExtraStats();
         }
         private void Start()
         {
             CreateGolem();
             
-            GolemBaseStats golem = _golem.GetCurrentStats(_golem._provider);
-            
-            Debug.Log("fdfd" +golem);
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _golem.ChangeBaseStatsProportionally(100);
-                Debug.Log(_golem.GetGolemStats());
-                Debug.Log(_golem.GetExtras());
+                _golem.ChangeBaseStatsProportionally(10);
+                Debug.Log(_golem.GetGolemBaseStats());
+                Debug.Log(_golem.GetGolemExtraStats());
+                _golem.ShowGolemBaseStats();
+                _golem.ShowGolemExtraStats();
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _golem.ChangeBaseStatsProportionally(-100);
-                Debug.Log(_golem.GetGolemStats());
-                Debug.Log(_golem.GetExtras());
+                _golem.ChangeBaseStatsProportionally(-10);
+                Debug.Log(_golem.GetGolemBaseStats());
+                Debug.Log(_golem.GetGolemExtraStats());
+                _golem.ShowGolemBaseStats();
+                _golem.ShowGolemExtraStats();
             }
         }
     }

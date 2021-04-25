@@ -1,4 +1,5 @@
-﻿using __Scripts.ExtraStats;
+﻿using System.Threading.Tasks;
+using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
 using UnityEngine;
 
@@ -9,34 +10,76 @@ namespace __Scripts.GolemEntity
         private readonly GolemType _golemType;
         private readonly Specialization _specialization;
 
-        public IStatsProvider _provider;
-        private static float _minBaseStats = 1000;
-        
-        public IStatsProvider Rate { get; }
+        private IStatsProvider _provider;
+        private IExtraStatsProvider _extra;
+        private const float MINBaseStats = 100;
 
+        private IStatsProvider Rate { get; set; }
+   
         public Golem(GolemType golemType, Specialization specialization)
         {
             _golemType = golemType;
             _specialization = specialization;
             
-            Rate = GetRate();
-            _provider = new DefaultStats(_minBaseStats, Rate);
+            InitProvider();
+            SetRate();
+            SetDefaultStatsByRate();
+            InitExtraProvider();
         }
-
-        public string GetExtras()
+        
+        public async void ChangeBaseStatsProportionally(float value)
         {
-            IExtraStatsProvider extra;
-            extra = new TypeExtraStats(_golemType);
-            extra = new SpecializationExtraStats(extra, _specialization);
-            return extra.GetExtraStats(GetCurrentStats(_provider)).ToString();
+            _provider = new BaseStatsEditor(value, ParseIStatsToGolemBaseStats(Rate), _provider);
+            
+            await RecalculateExtraStats();
         }
 
-        public void ChangeBaseStatsProportionally(float value)
+        private GolemBaseStats GetBaseStats()
         {
-            _provider = new BaseStatsEditor(value, GetCurrentStats(Rate), _provider);
+            return ParseIStatsToGolemBaseStats(_provider);
         }
 
-        public GolemBaseStats GetCurrentStats(IStatsProvider provider)
+        private GolemExtraStats GetExtraStats()
+        {
+            return ParseIExtraStatsToGolemExtraStats(_extra);
+        }
+
+        private async Task RecalculateExtraStats()
+        {
+            await Task.Run(() =>
+            {
+                //mustn't nullify because there may be other modifiers
+                //redo
+                _extra = null;
+                _extra = new TypeExtraStats(_golemType, GetBaseStats());
+                _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats()); 
+            });
+            
+        }
+
+        private void InitProvider()
+        {
+            _provider = new GolemTypeStats(_golemType); 
+            _provider = new SpecializationStats(_provider, _specialization);
+        }
+
+        private void SetRate()
+        {
+            Rate = _provider;
+        }
+
+        private void SetDefaultStatsByRate()
+        {
+            _provider = new DefaultStats(MINBaseStats, Rate);
+        }
+
+        private void InitExtraProvider()
+        {
+            _extra = new TypeExtraStats(_golemType, GetBaseStats());
+            _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats());
+        }
+
+        private static GolemBaseStats ParseIStatsToGolemBaseStats(IStatsProvider provider)
         {
             return new GolemBaseStats()
             {
@@ -45,19 +88,54 @@ namespace __Scripts.GolemEntity
                 Intelligence = provider.GetBaseStats().Intelligence
             };
         }
-        
-        private IStatsProvider GetRate()
+
+        private static GolemExtraStats ParseIExtraStatsToGolemExtraStats(IExtraStatsProvider extra)
         {
-            _provider = new GolemTypeStats(_golemType); 
-            _provider = new SpecializationStats(_provider, _specialization);
-            
-            var rate = _provider;
-            return rate;
+            return new GolemExtraStats()
+            {
+                AttackSpeed = extra.GetExtraStats().AttackSpeed,
+                AvoidChance = extra.GetExtraStats().AvoidChance,
+                DamagePerHeat = extra.GetExtraStats().DamagePerHeat,
+                Defence = extra.GetExtraStats().Defence,
+                DodgeChance = extra.GetExtraStats().DodgeChance,
+                Health = extra.GetExtraStats().Health,
+                HitAccuracy = extra.GetExtraStats().HitAccuracy,
+                MagicAccuracy = extra.GetExtraStats().MagicAccuracy,
+                MagicDamage = extra.GetExtraStats().MagicDamage,
+                MagicResistance = extra.GetExtraStats().MagicResistance,
+                ManaPool = extra.GetExtraStats().ManaPool,
+                MoveSpeed = extra.GetExtraStats().MoveSpeed,
+                RegenerationRate = extra.GetExtraStats().RegenerationRate,
+                Stamina = extra.GetExtraStats().Stamina
+            };
+        }
+
+        public async void ShowGolemBaseStats()
+        {
+            await Task.Run(() =>
+            {
+                Debug.Log($"Async: {GetBaseStats().ToString()}");
+            });
         }
         
-        public string GetGolemStats()
+        public async void ShowGolemExtraStats()
         {
-            return _provider.GetBaseStats().ToString();
+            await Task.Run(() =>
+            {
+                Debug.Log($"Async: {GetExtraStats().ToString()}");
+            });
+        }
+        
+        public string GetGolemBaseStats()
+        {
+            //synchronous methods don't work correctly!
+            return GetBaseStats().ToString();
+        }
+        
+        public string GetGolemExtraStats()
+        {
+            //synchronous methods don't work correctly!
+            return GetExtraStats().ToString();
         }
     }
 
