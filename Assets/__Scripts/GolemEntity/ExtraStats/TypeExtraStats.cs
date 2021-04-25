@@ -25,7 +25,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                 case GolemType.IronGolem:
                     TypeExtraArgs typeIron = new TypeExtraArgs(strength, agility, intelligence)
                     {
-                        DefenceArgSt = strength //1.1
+                        DefenceArgSt = strength * 1.1f 
                     };
                     return InitializeExtraStats(typeIron);
                 case GolemType.StoneGolem:
