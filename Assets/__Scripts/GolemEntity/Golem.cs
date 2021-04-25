@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
 using UnityEngine;
@@ -44,17 +46,24 @@ namespace __Scripts.GolemEntity
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
 
+        // private async Task<GolemExtraStats> GetExtraStats()
+        // {
+        //     GolemExtraStats result = default;
+        //     await Task.Run( () => result = ParseIExtraStatsToGolemExtraStats(_extra));
+        //     return result;
+        // }
+
         private async Task RecalculateExtraStats()
         {
             await Task.Run(() =>
             {
                 //mustn't nullify because there may be other modifiers
-                //redo
-                _extra = null;
+                //_extra = null;
+                _extra = new TypeExtraStats(_golemType, GetBaseStats() * 0);
+                _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats() * 0); 
                 _extra = new TypeExtraStats(_golemType, GetBaseStats());
                 _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats()); 
             });
-            
         }
 
         private void InitProvider()
@@ -112,6 +121,7 @@ namespace __Scripts.GolemEntity
 
         public async void ShowGolemBaseStats()
         {
+            //Thread.Sleep(20);
             await Task.Run(() =>
             {
                 Debug.Log($"Async: {GetBaseStats().ToString()}");
@@ -120,6 +130,7 @@ namespace __Scripts.GolemEntity
         
         public async void ShowGolemExtraStats()
         {
+            //Thread.Sleep(20);
             await Task.Run(() =>
             {
                 Debug.Log($"Async: {GetExtraStats().ToString()}");
@@ -128,13 +139,11 @@ namespace __Scripts.GolemEntity
         
         public string GetGolemBaseStats()
         {
-            //synchronous methods don't work correctly!
             return GetBaseStats().ToString();
         }
         
         public string GetGolemExtraStats()
         {
-            //synchronous methods don't work correctly!
             return GetExtraStats().ToString();
         }
     }

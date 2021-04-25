@@ -9,17 +9,12 @@ namespace __Scripts.TestScripts
         private void CreateGolem()
         {
             _golem = new Golem(GolemType.IronGolem, Specialization.Warrior);
-            
-            Debug.Log(_golem.GetGolemBaseStats());
-            Debug.Log(_golem.GetGolemExtraStats());
-            
-            _golem.ShowGolemBaseStats();
-            _golem.ShowGolemExtraStats();
+            ShowAll();
         }
+
         private void Start()
         {
             CreateGolem();
-            
         }
 
         private void Update()
@@ -27,19 +22,32 @@ namespace __Scripts.TestScripts
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 _golem.ChangeBaseStatsProportionally(10);
-                Debug.Log(_golem.GetGolemBaseStats());
-                Debug.Log(_golem.GetGolemExtraStats());
-                _golem.ShowGolemBaseStats();
-                _golem.ShowGolemExtraStats();
+                ShowAll();
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 _golem.ChangeBaseStatsProportionally(-10);
-                Debug.Log(_golem.GetGolemBaseStats());
-                Debug.Log(_golem.GetGolemExtraStats());
-                _golem.ShowGolemBaseStats();
-                _golem.ShowGolemExtraStats();
+                ShowAll();
             }
+        }
+
+        private void ShowAll()
+        {
+            ShowSync("red");
+            ShowSync("blue");
+            //ShowAsync();
+        }
+
+        private void ShowSync(string color)
+        {
+            Debug.Log($"<color={color}>{_golem.GetGolemBaseStats()}</color>");
+            Debug.Log($"<color={color}>{_golem.GetGolemExtraStats()}</color>");
+        }
+
+        private void ShowAsync()
+        {
+            _golem.ShowGolemBaseStats();
+            _golem.ShowGolemExtraStats();
         }
     }
 }
