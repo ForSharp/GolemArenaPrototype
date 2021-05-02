@@ -8,7 +8,7 @@
 
         protected override GolemBaseStats GetStatsInternal()
         {
-            var stats = _wrappedEntity.GetBaseStats();
+            var stats = WrappedEntity.GetBaseStats();
             stats.Intelligence = 0;
             return stats;
         }

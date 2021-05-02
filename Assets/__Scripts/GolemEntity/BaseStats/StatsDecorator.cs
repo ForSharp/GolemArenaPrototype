@@ -4,11 +4,11 @@ namespace __Scripts
 {
     public abstract class StatsDecorator : IStatsProvider
     {
-        protected readonly IStatsProvider _wrappedEntity;
+        protected readonly IStatsProvider WrappedEntity;
 
         protected StatsDecorator(IStatsProvider wrappedEntity)
         {
-            _wrappedEntity = wrappedEntity;
+            WrappedEntity = wrappedEntity;
         }
         
         public GolemBaseStats GetBaseStats()

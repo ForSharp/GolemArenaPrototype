@@ -1,4 +1,4 @@
-﻿namespace __Scripts.ExtraStats
+﻿namespace __Scripts.GolemEntity.ExtraStats
 {
     public enum ExtraStats 
     {

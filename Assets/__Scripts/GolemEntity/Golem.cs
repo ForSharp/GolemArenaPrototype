@@ -59,6 +59,9 @@ namespace __Scripts.GolemEntity
             {
                 //mustn't nullify because there may be other modifiers
                 //_extra = null;
+                
+                //Thread.Sleep(20);
+                
                 _extra = new TypeExtraStats(_golemType, GetBaseStats() * 0);
                 _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats() * 0); 
                 _extra = new TypeExtraStats(_golemType, GetBaseStats());
@@ -84,6 +87,8 @@ namespace __Scripts.GolemEntity
 
         private void InitExtraProvider()
         {
+            //Thread.Sleep(10);
+            
             _extra = new TypeExtraStats(_golemType, GetBaseStats());
             _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats());
         }
@@ -160,7 +165,7 @@ namespace __Scripts.GolemEntity
 
         protected override GolemBaseStats GetStatsInternal()
         {
-            return _wrappedEntity.GetBaseStats() + (_multiplier * _value);
+            return WrappedEntity.GetBaseStats() + (_multiplier * _value);
         }
     }
 
@@ -175,7 +180,7 @@ namespace __Scripts.GolemEntity
 
         protected override GolemBaseStats GetStatsInternal()
         {
-            return _wrappedEntity.GetBaseStats() * _minBaseStats;
+            return WrappedEntity.GetBaseStats() * _minBaseStats;
         }
     }
 }
