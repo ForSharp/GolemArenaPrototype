@@ -15,7 +15,7 @@ namespace __Scripts
 
         protected override GolemBaseStats GetStatsInternal()
         {
-            return _wrappedEntity.GetBaseStats() + GetSpecStats(_specialization);
+            return WrappedEntity.GetBaseStats() + GetSpecStats(_specialization);
         }
 
         private GolemBaseStats GetSpecStats(Specialization specialization)
