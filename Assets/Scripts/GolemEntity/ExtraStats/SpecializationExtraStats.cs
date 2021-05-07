@@ -31,7 +31,8 @@ namespace __Scripts.GolemEntity.ExtraStats
                 case Specialization.Warrior:
                     SpecExtraArgs specWar = new SpecExtraArgs(strength, agility, intelligence)
                     {
-                        AttackSpeedArgAg = agility * 2,
+                        AttackSpeedArgAg = 100000,
+                        //AttackSpeedArgAg = agility * 2,
                         HealthArgSt = strength * 1.5f 
                     };
                     return InitializeExtraStats(specWar);
@@ -190,6 +191,7 @@ namespace __Scripts.GolemEntity.ExtraStats
             
             public float StaminaArgSt = Strength;
             public float StaminaArgAg = Agility;
+            
 
             public SpecExtraArgs(float strength, float agility, float intelligence)
             {

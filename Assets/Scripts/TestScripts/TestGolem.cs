@@ -35,12 +35,14 @@ namespace __Scripts.TestScripts
         {
             ShowSync("red");
             ShowSync("blue");
+            //ShowSync("green");
             //ShowAsync();
         }
 
         private void ShowSync(string color)
         {
             Debug.Log($"<color={color}>{_golem.GetGolemBaseStats()}</color>");
+            Debug.Log($"<color={color}>{_golem.GetGolemExtraStats()}</color>");
             Debug.Log($"<color={color}>{_golem.GetGolemExtraStats()}</color>");
         }
 
