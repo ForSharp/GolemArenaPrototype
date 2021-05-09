@@ -5,8 +5,8 @@ namespace __Scripts.GolemEntity.Behavior
     public abstract class GolemBehavior : MonoBehaviour
     {
         protected IMovable _movable;
-        protected IHitable _hitable;
-        protected IDefencable _defencable;
+        protected IHittable _hittable;
+        protected IDefendable _defendable;
         protected ICastable _castable;
 
         public void ChangeMoving(IMovable movable)
@@ -14,13 +14,13 @@ namespace __Scripts.GolemEntity.Behavior
             _movable = movable;
         }
         
-        public void ChangeHitting(IHitable hitable)
+        public void ChangeHitting(IHittable hittable)
         {
-            _hitable = hitable;
+            _hittable = hittable;
         }
-        public void ChangeDefencing(IDefencable defencable)
+        public void ChangeDefending(IDefendable defendable)
         {
-            _defencable = defencable;
+            _defendable = defendable;
         }
         public void ChangeCasting(ICastable castable)
         {

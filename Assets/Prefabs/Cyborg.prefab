@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4831054505909864244}
-  - component: {fileID: 4831054505909864235}
   - component: {fileID: 4831054505909864234}
   - component: {fileID: 4831054505909864233}
+  - component: {fileID: 4162518107239791481}
   m_Layer: 0
   m_Name: Cyborg
   m_TagString: Untagged
@@ -35,27 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4831054505909864235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4831054505909864232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1598bf37b074b046ac419a906698250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  runSpeed: 9
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
-  gravity: -9.81
-  groundDistance: 0.2
-  jumpHeight: 1.5
-  isGrounded: 0
 --- !u!143 &4831054505909864234
 CharacterController:
   m_ObjectHideFlags: 0
@@ -90,6 +69,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4162518107239791481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4831054505909864232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736fa8b6c1b66b244bcafb6198558113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 0
+  runSpeed: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
+  groundDistance: 0
+  jumpHeight: 0
+  isGrounded: 0
 --- !u!1 &4831054507273139157
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4831054507273139152}
   - component: {fileID: 4831054507273139159}
   - component: {fileID: 4831054507273139158}
-  - component: {fileID: 4831054507273139153}
+  - component: {fileID: 2265996827235296013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -174,7 +174,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4831054507273139157}
   m_Enabled: 1
---- !u!114 &4831054507273139153
+--- !u!114 &2265996827235296013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,10 +183,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4831054507273139157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b4693b18882c0649bc5b8cb179d212c, type: 3}
+  m_Script: {fileID: 11500000, guid: f82b973ed795c8b42a8ed39ab411deff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 250
+  mouseSensitivity: 0
 --- !u!1001 &4831054505923227945
 PrefabInstance:
   m_ObjectHideFlags: 0
