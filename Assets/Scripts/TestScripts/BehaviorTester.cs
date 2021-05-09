@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using __Scripts.GolemEntity.Behavior;
+﻿using __Scripts.GolemEntity.Behavior;
 using UnityEngine;
 
 public class BehaviorTester : GolemBehavior
