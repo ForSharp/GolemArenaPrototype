@@ -3,104 +3,43 @@ using UnityEngine;
 
 namespace GolemEntity
 {
-    public class AnimationChanger : MonoBehaviour
+    public static class AnimationChanger 
     {
-        private Animator _animator;
 
-        private void Start()
+        public static void SetIdle(Animator animator)
         {
-            _animator = GetComponentInChildren<Animator>();
-        }
-        
-        public void SetIdle()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0.5f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHR3()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), -0.5f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHL3()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), -1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGolemNWalk()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0.5f);
-        }
-        
-        public void SetGRSR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0.05f);
-        }
-        
-        public void SetGRR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), -1f);
-        }
-        
-        public void SetGRSL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetRSR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGolemRun()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRSL1Run()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRRRun()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRL1Run()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
+            animator.SetFloat(Animator.StringToHash("Forward"), 0f);
         }
 
+        public static void SetGolemWalk(Animator animator)
+        {
+            animator.SetFloat(Animator.StringToHash("Forward"), 0.5f);
+        }
+
+        public static void SetGolemRun(Animator animator)
+        {
+            animator.SetFloat(Animator.StringToHash("Forward"), 1f);
+        }
+
+        public static void SetGolemLeftHit()
+        {
+            
+        }
+        
+        public static void SetGolemRightHit()
+        {
+            
+        }
+
+        public static void SetGolemDoubleHit()
+        {
+            
+        }
+        
+        public static void SetGolemBlock()
+        {
+            
+        }
+        
     }
 }
