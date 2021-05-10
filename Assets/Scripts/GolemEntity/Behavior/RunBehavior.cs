@@ -21,9 +21,7 @@ namespace __Scripts.GolemEntity.Behavior
             {
                 _transform.position = Vector3.MoveTowards(_transform.localPosition, 
                     _pointsVariants[0], Time.deltaTime * extraStats.MoveSpeed * RunningAcceleration);
-                
                 //DecreaseStaminaAmount();
-
                 //Animation run
             }
         }

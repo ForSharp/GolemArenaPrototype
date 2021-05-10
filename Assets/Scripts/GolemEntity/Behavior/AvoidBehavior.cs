@@ -4,7 +4,7 @@ using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.Behavior;
 using UnityEngine;
 
-public class AvoidBehavior : IDefencable
+public class AvoidBehavior : IDefendable
 {
 
     public void Defence(GolemExtraStats extraStats)

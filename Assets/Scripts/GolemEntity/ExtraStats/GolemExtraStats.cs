@@ -16,6 +16,12 @@
         public float MoveSpeed { get; set; }
         public float RegenerationRate { get; set; }
         public float Stamina { get; set; }
+
+        // public GolemExtraStats(bool isCrutch)
+        // {
+        //     this = new GolemExtraStats();
+        //     AttackSpeed = 99999999;
+        // }
         
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
@@ -36,25 +42,6 @@
                 RegenerationRate = statsA.RegenerationRate + statsB.RegenerationRate,
                 Stamina = statsA.Stamina + statsB.Stamina
             };
-
-            // GolemExtraStats temp = new GolemExtraStats();
-            
-            // temp.AttackSpeed = statsA.AttackSpeed + statsB.AttackSpeed;
-            // temp.AvoidChance = statsA.AvoidChance + statsB.AvoidChance;
-            // temp.DamagePerHeat = statsA.DamagePerHeat + statsB.DamagePerHeat;
-            // temp.Defence = statsA.Defence + statsB.Defence;
-            // temp.DodgeChance = statsA.DodgeChance + statsB.DodgeChance;
-            // temp.Health = statsA.Health + statsB.Health;
-            // temp.HitAccuracy = statsA.HitAccuracy + statsB.HitAccuracy;
-            // temp.MagicAccuracy = statsA.MagicAccuracy + statsB.MagicAccuracy;
-            // temp.MagicDamage = statsA.MagicDamage + statsB.MagicDamage;
-            // temp.MagicResistance = statsA.MagicResistance + statsB.MagicResistance;
-            // temp.ManaPool = statsA.ManaPool + statsB.ManaPool;
-            // temp.MoveSpeed = statsA.MoveSpeed + statsB.MoveSpeed;
-            // temp.RegenerationRate = statsA.RegenerationRate + statsB.RegenerationRate;
-            // temp.Stamina = statsA.Stamina + statsB.Stamina;
-            // return temp;
-
         }
 
         public static GolemExtraStats operator *(GolemExtraStats stats, float multiplier)

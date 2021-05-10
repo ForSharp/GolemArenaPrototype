@@ -105,24 +105,6 @@ namespace __Scripts.GolemEntity
 
         private static GolemExtraStats ParseIExtraStatsToGolemExtraStats(IExtraStatsProvider extra)
         {
-            //GolemExtraStats temp = new GolemExtraStats();
-
-            // temp.AttackSpeed = extra.GetExtraStats().AttackSpeed;
-            // temp.AvoidChance = extra.GetExtraStats().AvoidChance;
-            // temp.DamagePerHeat = extra.GetExtraStats().DamagePerHeat;
-            // temp.Defence = extra.GetExtraStats().Defence;
-            // temp.DodgeChance = extra.GetExtraStats().DodgeChance;
-            // temp.Health = extra.GetExtraStats().Health;
-            // temp.HitAccuracy = extra.GetExtraStats().HitAccuracy;
-            // temp.MagicAccuracy = extra.GetExtraStats().MagicAccuracy;
-            // temp.MagicDamage = extra.GetExtraStats().MagicDamage;
-            // temp.MagicResistance = extra.GetExtraStats().MagicResistance;
-            // temp.ManaPool = extra.GetExtraStats().ManaPool;
-            // temp.MoveSpeed = extra.GetExtraStats().MoveSpeed;
-            // temp.RegenerationRate = extra.GetExtraStats().RegenerationRate;
-            // temp.Stamina = extra.GetExtraStats().Stamina;
-            // return temp;
-            
             return new GolemExtraStats()
             {
                 AttackSpeed = extra.GetExtraStats().AttackSpeed,

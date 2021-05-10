@@ -4,7 +4,7 @@ using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.Behavior;
 using UnityEngine;
 
-public class StrongHitBehavior : IHitable
+public class StrongHitBehavior : IHittable
 {
     //Check the target's reach
     
