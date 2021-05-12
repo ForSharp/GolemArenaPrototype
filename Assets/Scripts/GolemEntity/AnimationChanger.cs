@@ -38,17 +38,22 @@ namespace GolemEntity
         
         public static void SetGolemLeftHit(Animator animator)
         {
+            //1.5
             animator.SetTrigger("LeftPunch");
         }
         
         public static void SetGolemRightHit(Animator animator)
         {
+            //1.5
             animator.SetTrigger("RightPunch");
         }
 
         public static void SetGolemDoubleHit(Animator animator)
         {
+            //1.867
+            //animator.speed = attackSpeed;
             animator.SetTrigger("DoublePunch");
+            //animator.speed = 1;
         }
         
         public static void SetGolemBlock(Animator animator)
