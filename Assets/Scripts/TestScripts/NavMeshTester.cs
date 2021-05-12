@@ -34,7 +34,8 @@ public class NavMeshTester : MonoBehaviour
     {
         if (GetDistanceToTarget() >= _closeDistance)
         {
-            RunToDestination();
+            //RunToDestination();
+            WalkToDestination();
         }
         else if (GetDistanceToTarget() >= _stopDistance || GetDistanceToTarget() < _closeDistance)
         {
@@ -50,7 +51,6 @@ public class NavMeshTester : MonoBehaviour
     private void RunToDestination()
     {
         AnimationChanger.SetGolemRun(_animator);
-        //at the moment golem goes by the animation movement
     }
 
     private void WalkToDestination()
