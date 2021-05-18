@@ -3,104 +3,66 @@ using UnityEngine;
 
 namespace GolemEntity
 {
-    public class AnimationChanger : MonoBehaviour
+    public static class AnimationChanger 
     {
-        private Animator _animator;
 
-        private void Start()
+        public static void SetIdle(Animator animator, bool dampTime = false)
         {
-            _animator = GetComponentInChildren<Animator>();
-        }
-        
-        public void SetIdle()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0.5f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHR3()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), -0.5f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGTHL3()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), -1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGolemNWalk()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0.5f);
-        }
-        
-        public void SetGRSR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 1f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0.05f);
-        }
-        
-        public void SetGRR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), -1f);
-        }
-        
-        public void SetGRSL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRL1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetRSR1()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGolemRun()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRSL1Run()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRRRun()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-        }
-        
-        public void SetGRL1Run()
-        {
-            _animator.SetFloat(Animator.StringToHash("Turn"), 0f);
-            _animator.SetFloat(Animator.StringToHash("Forward"), 0f);
+            if (dampTime)
+            {
+                animator.SetFloat(Animator.StringToHash("Forward"), 0f,0.5f, Time.deltaTime);
+            }
+            
+            animator.SetFloat(Animator.StringToHash("Forward"), 0f);
         }
 
+        public static void SetGolemWalk(Animator animator, bool dampTime = false)
+        {
+            if (dampTime)
+            {
+                animator.SetFloat(Animator.StringToHash("Forward"), 0.5f,0.5f, Time.deltaTime);
+            }
+            
+            animator.SetFloat(Animator.StringToHash("Forward"), 0.5f);
+        }
+
+        public static void SetGolemRun(Animator animator)
+        {
+            animator.SetFloat(Animator.StringToHash("Forward"), 1f);
+        }
+
+        public static void SetGolemDie(Animator animator)
+        {
+            animator.SetTrigger("Die");
+        }
+        
+        public static void SetGolemLeftHit(Animator animator)
+        {
+            //1.5
+            animator.SetTrigger("LeftPunch");
+        }
+        
+        public static void SetGolemRightHit(Animator animator)
+        {
+            //1.5
+            animator.SetTrigger("RightPunch");
+        }
+
+        public static void SetGolemDoubleHit(Animator animator)
+        {
+            //1.867
+            //animator.speed = attackSpeed;
+            animator.SetTrigger("DoublePunch");
+            //animator.speed = 1;
+        }
+        
+        public static void SetGolemBlock(Animator animator)
+        {
+            animator.SetBool("Block", true);
+        }
+        public static void ResetGolemBlock(Animator animator)
+        {
+            animator.SetBool("Block", false);
+        }
     }
 }

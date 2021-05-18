@@ -19,8 +19,6 @@ public class InverseKinematicsController : MonoBehaviour
 
         if (isIkActive)
         {
-            Debug.Log("OnAnimatorIK");
-            
             TurnHeadToTarget();
         }
     }
