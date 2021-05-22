@@ -2,6 +2,7 @@
 {
     public struct GolemExtraStats
     {
+        
         public float AttackSpeed { get ; set; } 
         public float AvoidChance { get; set; }
         public float DamagePerHeat { get; set; }
@@ -17,11 +18,21 @@
         public float RegenerationRate { get; set; }
         public float Stamina { get; set; }
 
-        // public GolemExtraStats(bool isCrutch)
-        // {
-        //     this = new GolemExtraStats();
-        //     AttackSpeed = 99999999;
-        // }
+        // public float AttackSpeed;
+        // public float AvoidChance;
+        // public float DamagePerHeat;
+        // public float Defence;
+        // public float DodgeChance;
+        // public float Health;
+        // public float HitAccuracy;
+        // public float MagicAccuracy;
+        // public float MagicDamage;
+        // public float MagicResistance;
+        // public float ManaPool;
+        // public float MoveSpeed;
+        // public float RegenerationRate;
+        // public float Stamina;
+        
         
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
