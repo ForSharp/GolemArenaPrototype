@@ -72,9 +72,9 @@ public class EnemyAITest : MonoBehaviour
         yield return new WaitForSeconds(0.4F); //задержка между ударами. должна высчитываться на основе текущей скорости атаки
 
         Vector3 spherePosition = transform.position + transform.forward * 0.45F; //радиус зоны поражения
-        spherePosition.y += 0.75F; //высота. скорее всего 0.75 надо изменить. ваще хз че это
+        spherePosition.y += 0.75F; //высота. 
 
-        Collider[] colliders = Physics.OverlapSphere(spherePosition, 0.6F); //все что мы задели походу. хз
+        Collider[] colliders = Physics.OverlapSphere(spherePosition, 0.6F); 
 
         foreach (Collider item in colliders)
         {

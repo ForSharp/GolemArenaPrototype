@@ -40,12 +40,14 @@ namespace GolemEntity
         {
             //1.5
             animator.SetTrigger("LeftPunch");
+            Debug.Log("left");
         }
         
         public static void SetGolemRightHit(Animator animator)
         {
             //1.5
             animator.SetTrigger("RightPunch");
+            Debug.Log("right");
         }
 
         public static void SetGolemDoubleHit(Animator animator)
@@ -53,6 +55,7 @@ namespace GolemEntity
             //1.867
             //animator.speed = attackSpeed;
             animator.SetTrigger("DoublePunch");
+            Debug.Log("double");
             //animator.speed = 1;
         }
         
