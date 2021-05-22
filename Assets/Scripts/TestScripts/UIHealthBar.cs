@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
 {
+    private Transform _npc;
+    private RectTransform _rectTransform;
+    private Slider _slider;
+    private HealthBar _healthBar;
+    
     public Transform NPC
     {
         get { return _npc;}
@@ -19,11 +24,6 @@ public class UIHealthBar : MonoBehaviour
         }
     }
     
-    private Transform _npc;
-    private RectTransform _rectTransform;
-    private Slider _slider;
-    private HealthBar _healthBar;
-    
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -35,10 +35,15 @@ public class UIHealthBar : MonoBehaviour
         if (!NPC)
             return;
         
-        Vector3 posNps = new Vector3(NPC.position.x, NPC.position.y + 2, NPC.position.z);
-        _rectTransform.position = Camera.main.WorldToScreenPoint(posNps);
+        //Vector3 posNps = new Vector3(NPC.position.x, NPC.position.y + 2, NPC.position.z);
+        //_rectTransform.position = Camera.main.WorldToScreenPoint(posNps);
         //GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(posNps);
 
         _slider.value = _healthBar.currentHealth;
+        
+        Vector2 position = Camera.main.WorldToScreenPoint(NPC.transform.position);
+        position.y += 2f;
+
+        transform.position = position;
     }
 }

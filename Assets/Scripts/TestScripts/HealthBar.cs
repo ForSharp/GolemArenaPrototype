@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth = 100;
+    
     public bool idDynamicHealthBarCreate = true;
 
     public GameObject healthBar;
