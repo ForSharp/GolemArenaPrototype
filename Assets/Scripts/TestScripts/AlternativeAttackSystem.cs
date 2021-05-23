@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using GolemEntity;
+﻿using GolemEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class AlternativeAttackSystem : MonoBehaviour
 {
-    public float damagePerHit = 20.0f;
+    public int damagePerHit = 20;
     public float timeBetweenHits = 2.15f;
-    
 
+    [SerializeField] private bool _autoAttack = true;
     private float _timer;
-    private Ray _hitRay;
-    private RaycastHit _targetHit;
-    private int _hittableMask;
     private Animator _animator;
+    private CurrentGameCharacterState _characterState;
 
     private const float HeightHit = 1.75f;
     private const float ArmLenght = 1.55f;
@@ -24,18 +18,21 @@ public class AlternativeAttackSystem : MonoBehaviour
 
     private void Awake()
     {
-        _hittableMask = LayerMask.GetMask("Hittable");
         _animator = GetComponent<Animator>();
+        _characterState = GetComponent<CurrentGameCharacterState>();
     }
 
     private void Update()
     {
-        _timer += Time.deltaTime;
+        if (_characterState.isDead)
+            return;
         
-        StartAttack();
+        _timer += Time.deltaTime;
+        if (_autoAttack)
+            StartAttack();
     }
 
-    private void StartAttack()
+    public void StartAttack()
     {
         if (_timer >= timeBetweenHits && Time.timeScale != 0)
         {
@@ -54,31 +51,54 @@ public class AlternativeAttackSystem : MonoBehaviour
         {
             AnimationChanger.SetGolemLeftHit(_animator);
         }
-        else 
+        else
         {
             AnimationChanger.SetGolemDoubleHit(_animator);
         }
     }
+
     private void Attack()
     {
         _timer = 0;
-        
+
         //attack sound play
-        
+
         SetHitAnimation();
-        
+
         Vector3 spherePosition = transform.position + transform.forward * ArmLenght;
         spherePosition.y += HeightHit;
-        
+
         Collider[] colliders = Physics.OverlapSphere(spherePosition, DestructionRadius);
 
         foreach (Collider item in colliders)
         {
-            if (item.GetComponent<Optimization>())
+            AttackDestructibleObjects(item);
+            
+            AttackGameCharacters(item);
+        }
+    }
+
+    private void AttackGameCharacters(Collider item)
+    {
+        if (item.GetComponent<CurrentGameCharacterState>())
+        {
+            item.GetComponent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
+        }
+    }
+    
+    private void AttackDestructibleObjects(Collider item)
+    {
+        if (item.GetComponent<Optimization>())
+        {
+            StartCoroutine(item.GetComponent<Optimization>().ShowDamage());
+
+            if (item.GetComponentInParent<CurrentGameCharacterState>())
             {
-                StartCoroutine(item.GetComponent<Optimization>().ShowDamage());
-                //Чтобы разрушалось
-                //item.GetComponent<Optimization>().GetComponent<Rigidbody>().AddForce(transform.forward * 300);
+                item.GetComponentInParent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
+                if (item.GetComponentInParent<CurrentGameCharacterState>().currentHealth <= 0)
+                {
+                    item.GetComponent<Optimization>().GetComponent<Rigidbody>().AddForce(transform.forward * 300);
+                }
             }
         }
     }
