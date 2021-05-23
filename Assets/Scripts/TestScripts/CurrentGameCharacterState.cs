@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using GolemEntity;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
@@ -11,11 +12,12 @@ public class CurrentGameCharacterState : MonoBehaviour
 {
     public int maxHealth = 100; //Golem.GetExtraStats.Health
     public int currentHealth = 100;
-    
+
     public int sliderPlacementHeight = 80;
-    
-    [SerializeField]private bool idDynamicHealthBarCreate = true;
-    [SerializeField]private GameObject healthBarPrefab;
+    [HideInInspector] public bool isDead = false;
+
+    [SerializeField] private bool idDynamicHealthBarCreate = true;
+    [SerializeField] private GameObject healthBarPrefab;
 
     private void Start()
     {
@@ -27,6 +29,17 @@ public class CurrentGameCharacterState : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (isDead)
+            return;
+
+        if (currentHealth <= 0)
+        {
+            KillGameCharacter();
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -35,6 +48,11 @@ public class CurrentGameCharacterState : MonoBehaviour
 
     private void KillGameCharacter()
     {
-        
+        isDead = true;
+        if (GetComponent<Animator>())
+        {
+            Animator anim = GetComponent<Animator>();
+            AnimationChanger.SetGolemDie(anim);
+        }
     }
 }

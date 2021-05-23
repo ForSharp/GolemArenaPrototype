@@ -21,7 +21,7 @@ public class UIHealthBar : MonoBehaviour
             return;
         
         _slider.value = characterState.currentHealth;
-        if (characterState.currentHealth <= 0)
+        if (characterState.isDead)
         {
             _fill.SetActive(false); //костыль. при 0 там небольшое значение хп видно (зеленый цвет)
         }

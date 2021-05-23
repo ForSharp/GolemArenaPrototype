@@ -8,50 +8,29 @@ public class ControllerTester : MonoBehaviour
     public float speed = 3.0f;
     public float rotateSpeed = 3.0f;
     private CharacterController _character;
+    private AlternativeAttackSystem _attackSystem;
+    private CurrentGameCharacterState _characterState;
     private Animator _animator;
-    private bool inAttack;
-    public bool InAttack
-    {
-        get { return inAttack; }
-        set
-        {
-            inAttack = value;
-            if (value != false) AnimationChanger.SetGolemRightHit(_animator);
-        }
-    }
-    
+
     private void Start()
     {
+        _characterState = GetComponent<CurrentGameCharacterState>();
+        _attackSystem = GetComponent<AlternativeAttackSystem>();
         _character = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (_characterState.isDead)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            StartCoroutine(Attack());
+            _attackSystem.StartAttack();
         }
 
-        if (InAttack) return;
-
         Move();
-    }
-
-    
-
-    private IEnumerator Attack()
-    {
-        InAttack = true;
-        yield return new WaitForSeconds(0.2F);
-
-        Vector3 spherePosition = transform.position + transform.forward * 0.45F;
-        spherePosition.y += 0.75F;
-        
-        //проверка на коллизии либо эдфорс, либо все вместе в зависимости от ситуации
-        
-        yield return new WaitForSeconds(0.45F);
-        InAttack = false;
     }
 
     private void Move()
@@ -72,5 +51,4 @@ public class ControllerTester : MonoBehaviour
             AnimationChanger.SetIdle(_animator, true);
         }
     }
-    
 }

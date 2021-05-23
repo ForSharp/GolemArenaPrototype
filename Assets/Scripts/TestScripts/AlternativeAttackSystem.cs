@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using GolemEntity;
+﻿using GolemEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class AlternativeAttackSystem : MonoBehaviour
 {
-    public float damagePerHit = 20.0f;
+    public int damagePerHit = 20;
     public float timeBetweenHits = 2.15f;
 
-
+    [SerializeField] private bool _autoAttack = true;
     private float _timer;
-    private Ray _hitRay;
-    private RaycastHit _targetHit;
-    private int _hittableMask;
     private Animator _animator;
+    private CurrentGameCharacterState _characterState;
 
     private const float HeightHit = 1.75f;
     private const float ArmLenght = 1.55f;
@@ -24,18 +18,21 @@ public class AlternativeAttackSystem : MonoBehaviour
 
     private void Awake()
     {
-        _hittableMask = LayerMask.GetMask("Hittable");
         _animator = GetComponent<Animator>();
+        _characterState = GetComponent<CurrentGameCharacterState>();
     }
 
     private void Update()
     {
+        if (_characterState.isDead)
+            return;
+        
         _timer += Time.deltaTime;
-
-        StartAttack();
+        if (_autoAttack)
+            StartAttack();
     }
 
-    private void StartAttack()
+    public void StartAttack()
     {
         if (_timer >= timeBetweenHits && Time.timeScale != 0)
         {
@@ -85,8 +82,7 @@ public class AlternativeAttackSystem : MonoBehaviour
     {
         if (item.GetComponent<CurrentGameCharacterState>())
         {
-            item.GetComponent<CurrentGameCharacterState>().TakeDamage(10);
-            
+            item.GetComponent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
         }
     }
     
@@ -98,7 +94,7 @@ public class AlternativeAttackSystem : MonoBehaviour
 
             if (item.GetComponentInParent<CurrentGameCharacterState>())
             {
-                item.GetComponentInParent<CurrentGameCharacterState>().TakeDamage(10);
+                item.GetComponentInParent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
                 if (item.GetComponentInParent<CurrentGameCharacterState>().currentHealth <= 0)
                 {
                     item.GetComponent<Optimization>().GetComponent<Rigidbody>().AddForce(transform.forward * 300);
