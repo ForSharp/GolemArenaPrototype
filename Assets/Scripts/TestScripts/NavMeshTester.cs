@@ -34,8 +34,8 @@ public class NavMeshTester : MonoBehaviour
     {
         if (GetDistanceToTarget() >= _closeDistance)
         {
-            //RunToDestination();
-            WalkToDestination();
+            RunToDestination();
+            //WalkToDestination();
         }
         else if (GetDistanceToTarget() >= _stopDistance || GetDistanceToTarget() < _closeDistance)
         {

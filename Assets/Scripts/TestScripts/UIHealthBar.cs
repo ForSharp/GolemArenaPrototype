@@ -1,48 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
 {
-    private Transform _npc;
-    private RectTransform _rectTransform;
+    [HideInInspector] public CurrentGameCharacterState characterState;
+    [SerializeField] private GameObject _fill;
     private Slider _slider;
-    private HealthBar _healthBar;
-    
-    public Transform NPC
-    {
-        get { return _npc;}
-        set
-        {
-            _npc = value; 
-            _healthBar = NPC.GetComponent<HealthBar>();
-            _slider = GetComponent<Slider>();
-            _slider.maxValue = _healthBar.maxHealth;
-        }
-    }
     
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        
+        _slider = GetComponent<Slider>();
+        transform.SetParent(GameObject.Find("Canvas").transform);
+        if (characterState)
+            _slider.maxValue = characterState.maxHealth;
     }
 
     private void Update()
     {
-        if (!NPC)
+        if (!characterState)
             return;
         
-        //Vector3 posNps = new Vector3(NPC.position.x, NPC.position.y + 2, NPC.position.z);
-        //_rectTransform.position = Camera.main.WorldToScreenPoint(posNps);
-        //GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(posNps);
-
-        _slider.value = _healthBar.currentHealth;
+        _slider.value = characterState.currentHealth;
+        if (characterState.currentHealth <= 0)
+        {
+            _fill.SetActive(false); //костыль. при 0 там небольшое значение хп видно (зеленый цвет)
+        }
         
-        Vector2 position = Camera.main.WorldToScreenPoint(NPC.transform.position);
-        position.y += 2f;
+        Vector2 position = Camera.main.WorldToScreenPoint(characterState.transform.position);
+        position.y += characterState.sliderPlacementHeight; 
 
         transform.position = position;
     }

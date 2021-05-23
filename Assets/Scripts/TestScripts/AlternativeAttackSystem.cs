@@ -10,7 +10,7 @@ public class AlternativeAttackSystem : MonoBehaviour
 {
     public float damagePerHit = 20.0f;
     public float timeBetweenHits = 2.15f;
-    
+
 
     private float _timer;
     private Ray _hitRay;
@@ -31,7 +31,7 @@ public class AlternativeAttackSystem : MonoBehaviour
     private void Update()
     {
         _timer += Time.deltaTime;
-        
+
         StartAttack();
     }
 
@@ -54,31 +54,55 @@ public class AlternativeAttackSystem : MonoBehaviour
         {
             AnimationChanger.SetGolemLeftHit(_animator);
         }
-        else 
+        else
         {
             AnimationChanger.SetGolemDoubleHit(_animator);
         }
     }
+
     private void Attack()
     {
         _timer = 0;
-        
+
         //attack sound play
-        
+
         SetHitAnimation();
-        
+
         Vector3 spherePosition = transform.position + transform.forward * ArmLenght;
         spherePosition.y += HeightHit;
-        
+
         Collider[] colliders = Physics.OverlapSphere(spherePosition, DestructionRadius);
 
         foreach (Collider item in colliders)
         {
-            if (item.GetComponent<Optimization>())
+            AttackDestructibleObjects(item);
+            
+            AttackGameCharacters(item);
+        }
+    }
+
+    private void AttackGameCharacters(Collider item)
+    {
+        if (item.GetComponent<CurrentGameCharacterState>())
+        {
+            item.GetComponent<CurrentGameCharacterState>().TakeDamage(10);
+            
+        }
+    }
+    
+    private void AttackDestructibleObjects(Collider item)
+    {
+        if (item.GetComponent<Optimization>())
+        {
+            StartCoroutine(item.GetComponent<Optimization>().ShowDamage());
+
+            if (item.GetComponentInParent<CurrentGameCharacterState>())
             {
-                StartCoroutine(item.GetComponent<Optimization>().ShowDamage());
-                //Чтобы разрушалось
-                //item.GetComponent<Optimization>().GetComponent<Rigidbody>().AddForce(transform.forward * 300);
+                item.GetComponentInParent<CurrentGameCharacterState>().TakeDamage(10);
+                if (item.GetComponentInParent<CurrentGameCharacterState>().currentHealth <= 0)
+                {
+                    item.GetComponent<Optimization>().GetComponent<Rigidbody>().AddForce(transform.forward * 300);
+                }
             }
         }
     }
