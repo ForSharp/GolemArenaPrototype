@@ -19,6 +19,8 @@ public class CurrentGameCharacterState : MonoBehaviour
     [SerializeField] private bool idDynamicHealthBarCreate = true;
     [SerializeField] private GameObject healthBarPrefab;
 
+    public int group = 0; //team of a golem
+    
     private void Start()
     {
         if (idDynamicHealthBarCreate)
@@ -54,5 +56,13 @@ public class CurrentGameCharacterState : MonoBehaviour
             Animator anim = GetComponent<Animator>();
             AnimationChanger.SetGolemDie(anim);
         }
+
+        StartCoroutine(DestroyWithDelay());
+    }
+    
+    private IEnumerator DestroyWithDelay()
+    {
+        yield return new WaitForSeconds(7);
+        Destroy(gameObject);
     }
 }

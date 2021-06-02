@@ -1,5 +1,6 @@
 ﻿using GolemEntity;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class AlternativeAttackSystem : MonoBehaviour
@@ -13,7 +14,7 @@ public class AlternativeAttackSystem : MonoBehaviour
     private CurrentGameCharacterState _characterState;
 
     private const float HeightHit = 1.75f;
-    private const float ArmLenght = 1.55f;
+    public readonly float attackRange = 1.55f;
     private const float DestructionRadius = 1f;
 
     private void Awake()
@@ -65,7 +66,7 @@ public class AlternativeAttackSystem : MonoBehaviour
 
         SetHitAnimation();
 
-        Vector3 spherePosition = transform.position + transform.forward * ArmLenght;
+        Vector3 spherePosition = transform.position + transform.forward * attackRange;
         spherePosition.y += HeightHit;
 
         Collider[] colliders = Physics.OverlapSphere(spherePosition, DestructionRadius);
@@ -82,7 +83,11 @@ public class AlternativeAttackSystem : MonoBehaviour
     {
         if (item.GetComponent<CurrentGameCharacterState>())
         {
-            item.GetComponent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
+            if (item.GetComponent<CurrentGameCharacterState>().group !=
+                this.GetComponent<CurrentGameCharacterState>().group) //friendly fire off
+            {
+                item.GetComponent<CurrentGameCharacterState>().TakeDamage(damagePerHit);
+            }
         }
     }
     
