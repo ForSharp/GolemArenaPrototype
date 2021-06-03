@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using __Scripts;
 using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
 using UnityEngine;
 
-namespace __Scripts.GolemEntity
+namespace GolemEntity
 {
     public class Golem 
     {
@@ -29,11 +27,11 @@ namespace __Scripts.GolemEntity
             InitExtraProvider();
         }
         
-        public async void ChangeBaseStatsProportionally(float value)
+        public void ChangeBaseStatsProportionally(float value)
         {
             _provider = new BaseStatsEditor(value, ParseIStatsToGolemBaseStats(Rate), _provider);
             
-            await RecalculateExtraStats();
+            RecalculateExtraStats();
         }
 
         private GolemBaseStats GetBaseStats()
@@ -45,28 +43,12 @@ namespace __Scripts.GolemEntity
         {
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
-
-        // private async Task<GolemExtraStats> GetExtraStats()
-        // {
-        //     GolemExtraStats result = default;
-        //     await Task.Run( () => result = ParseIExtraStatsToGolemExtraStats(_extra));
-        //     return result;
-        // }
-
-        private async Task RecalculateExtraStats()
+        
+        private void RecalculateExtraStats()
         {
-            await Task.Run(() =>
-            {
-                //mustn't nullify because there may be other modifiers
-                //_extra = null;
-                
-                //Thread.Sleep(20);
-                
-                //_extra = new TypeExtraStats(_golemType, GetBaseStats() * 0);
-                //_extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats() * 0); 
-                _extra = new TypeExtraStats(_golemType, GetBaseStats());
-                _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats()); 
-            });
+            _extra = new TypeExtraStats(_golemType, GetBaseStats());
+            _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats()); 
+            
         }
 
         private void InitProvider()
@@ -87,7 +69,6 @@ namespace __Scripts.GolemEntity
 
         private void InitExtraProvider()
         {
-            //Thread.Sleep(10);
             
             _extra = new TypeExtraStats(_golemType, GetBaseStats());
             _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats());
@@ -124,22 +105,14 @@ namespace __Scripts.GolemEntity
             };
         }
 
-        public async void ShowGolemBaseStats()
+        public void ShowGolemBaseStats()
         {
-            //Thread.Sleep(20);
-            await Task.Run(() =>
-            {
-                Debug.Log($"Async: {GetBaseStats().ToString()}");
-            });
+            Debug.Log($"Async: {GetBaseStats().ToString()}");
         }
         
-        public async void ShowGolemExtraStats()
+        public void ShowGolemExtraStats()
         {
-            //Thread.Sleep(20);
-            await Task.Run(() =>
-            {
-                Debug.Log($"Async: {GetExtraStats().ToString()}");
-            });
+            Debug.Log($"Async: {GetExtraStats().ToString()}");
         }
         
         public string GetGolemBaseStats()

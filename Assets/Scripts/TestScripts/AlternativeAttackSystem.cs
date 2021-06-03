@@ -8,7 +8,7 @@ public class AlternativeAttackSystem : MonoBehaviour
     public int damagePerHit = 20;
     public float timeBetweenHits = 2.15f;
 
-    [SerializeField] private bool _autoAttack = true;
+    [SerializeField] private bool _autoAttack = true; //loop attack
     private float _timer;
     private Animator _animator;
     private CurrentGameCharacterState _characterState;

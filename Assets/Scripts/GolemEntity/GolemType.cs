@@ -2,17 +2,17 @@
 {
     public enum GolemType 
     {
-        IronGolem,
-        StoneGolem,
-        FleshGolem,
-        GlassGolem,
-        MithrilGolem,
-        BoneGolem,
-        CoralGolem,
-        SandGolem,
-        ChitinGolem,
-        WoodenGolem,
-        DemonFleshGolem,
-        IceGolem
+        WaterGolem,
+        AirGolem,
+        CristalGolem,
+        FireGolem,
+        PlasmaGolem,
+        SteamGolem,
+        DarkGolem,
+        NatureGolem,
+        FogGolem,
+        ObsidianGolem,
+        InsectGolem,
+        StalagmiteGolem
     }
 }

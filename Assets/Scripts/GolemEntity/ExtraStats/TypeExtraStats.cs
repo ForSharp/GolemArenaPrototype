@@ -22,63 +22,63 @@ namespace __Scripts.GolemEntity.ExtraStats
 
             switch (_type)
             {
-                case GolemType.IronGolem:
+                case GolemType.WaterGolem:
                     TypeExtraArgs typeIron = new TypeExtraArgs(strength, agility, intelligence)
                     {
                         DefenceArgSt = strength * 1.1f 
                     };
                     return InitializeExtraStats(typeIron);
-                case GolemType.StoneGolem:
+                case GolemType.AirGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.FleshGolem:
+                case GolemType.CristalGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.GlassGolem:
+                case GolemType.FireGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.MithrilGolem:
+                case GolemType.PlasmaGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.BoneGolem:
+                case GolemType.SteamGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.CoralGolem:
+                case GolemType.DarkGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.SandGolem:
+                case GolemType.NatureGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.ChitinGolem:
+                case GolemType.FogGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.WoodenGolem:
+                case GolemType.ObsidianGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.DemonFleshGolem:
+                case GolemType.InsectGolem:
                     return new GolemExtraStats()
                     {
 
                     };
-                case GolemType.IceGolem:
+                case GolemType.StalagmiteGolem:
                     return new GolemExtraStats()
                     {
 

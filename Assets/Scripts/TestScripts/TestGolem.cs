@@ -1,5 +1,6 @@
 ﻿using __Scripts;
 using __Scripts.GolemEntity;
+using GolemEntity;
 using UnityEngine;
 
 public class TestGolem : MonoBehaviour
@@ -7,7 +8,7 @@ public class TestGolem : MonoBehaviour
     private Golem _golem;
     private void CreateGolem()
     {
-        _golem = new Golem(GolemType.IronGolem, Specialization.Warrior);
+        _golem = new Golem(GolemType.WaterGolem, Specialization.Warrior);
         ShowAll();
     }
 

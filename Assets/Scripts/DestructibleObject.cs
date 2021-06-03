@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-public class StaticGameObject : MonoBehaviour
+public class DestructibleObject : MonoBehaviour
 {
     private Renderer _renderer;
     private void Start()
@@ -12,6 +12,11 @@ public class StaticGameObject : MonoBehaviour
         _renderer.material.color = GetColorChangeAlpha(_renderer.material.color, 0.5f);
     }
 
+    public void TakeDamage(int damage, int defence = 0)
+    {
+        
+    }
+    
     private Color GetColorChangeAlpha(Color color, float alpha)
     {
         if (alpha < 0 || alpha > 1)
