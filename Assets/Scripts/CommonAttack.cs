@@ -8,15 +8,16 @@ public class CommonAttack : MonoBehaviour
     private readonly float _hitHeight;
     private readonly float _attackRange;
     private readonly float _destructionRadius;
-    private readonly Action _setHitAnimation;
+    private readonly Action<Animator> _setHitAnimation;
     //private readonly Action _setAttackSound;
     private Vector3 _attackerPosition;
     private int _group;
     private bool _isFriendlyFire;
     private float _timer;
 
+
     public CommonAttack(int damagePerHit, float delayBetweenHits, float hitHeight, float attackRange, 
-        float destructionRadius, Action setHitAnimation, Vector3 attackerPosition, int group, 
+        float destructionRadius, Action<Animator> setHitAnimation, Vector3 attackerPosition, int group, 
         bool isFriendlyFire = false)
     {
         _damagePerHit = damagePerHit;
@@ -40,12 +41,12 @@ public class CommonAttack : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    public void Attack()
+    public void Attack(Animator animator)
     {
         if (_timer >= _delayBetweenHits && Time.timeScale != 0)
         {
             _timer = 0;
-            _setHitAnimation.Invoke();
+            _setHitAnimation.Invoke(animator);
             Vector3 spherePosition = _attackerPosition + transform.forward * _attackRange;
             spherePosition.y += _hitHeight;
             Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
@@ -61,8 +62,8 @@ public class CommonAttack : MonoBehaviour
     {
         if (item.GetComponent<GameCharacterState>())
         {
-            var state = GetComponent<GameCharacterState>();
-
+            //var state = GetComponent<GameCharacterState>();
+            var state = new GameCharacterState();
             if (!_isFriendlyFire)
             {
                 if (state.Group != _group)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.Behavior;
+using GolemEntity.ExtraStats;
 using UnityEngine;
 
 public class PetardCast : IFireBlast

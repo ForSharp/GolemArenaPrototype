@@ -1,9 +1,9 @@
-﻿namespace __Scripts.ExtraStats
+﻿namespace GolemEntity.ExtraStats
 {
     public struct GolemExtraStats
     {
-        public static float AttackRange = 1.55f; //не фиксит баг
-        public float AttackSpeed { get ; set; } 
+        public float AttackRange { get; set; }
+        public float AttackSpeed { get; set; } 
         public float AvoidChance { get; set; }
         public float DamagePerHeat { get; set; }
         public float Defence { get; set; }

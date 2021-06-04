@@ -1,4 +1,6 @@
-﻿namespace __Scripts.ExtraStats
+﻿using GolemEntity.ExtraStats;
+
+namespace __Scripts.ExtraStats
 {
     public interface IExtraStatsProvider 
     {

@@ -43,8 +43,10 @@ public class EnemySeeker : MonoBehaviour
 
     private IEnumerator RotateWithDelay()
     {
+        if (_target == null) yield break;
         yield return new WaitForSeconds(2);
         transform.LookAt(_target.transform.position);
+
     }
 
     private IEnumerator Timer() 

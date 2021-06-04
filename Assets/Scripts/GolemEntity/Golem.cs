@@ -1,6 +1,7 @@
 ﻿using __Scripts;
 using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
+using GolemEntity.ExtraStats;
 using UnityEngine;
 
 namespace GolemEntity
