@@ -89,6 +89,7 @@ namespace GolemEntity
         {
             return new GolemExtraStats()
             {
+                AttackRange = extra.GetExtraStats().AttackRange + 1.55f, //NOTE! must be 1st here. Must be immutable
                 AttackSpeed = extra.GetExtraStats().AttackSpeed,
                 AvoidChance = extra.GetExtraStats().AvoidChance,
                 DamagePerHeat = extra.GetExtraStats().DamagePerHeat,
@@ -108,12 +109,12 @@ namespace GolemEntity
 
         public void ShowGolemBaseStats()
         {
-            Debug.Log($"Async: {GetBaseStats().ToString()}");
+            Debug.Log($"BaseStats: {GetBaseStats().ToString()}");
         }
         
         public void ShowGolemExtraStats()
         {
-            Debug.Log($"Async: {GetExtraStats().ToString()}");
+            Debug.Log($"ExtraStats: {GetExtraStats().ToString()}");
         }
         
         public string GetGolemBaseStats()

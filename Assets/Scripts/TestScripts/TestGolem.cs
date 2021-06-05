@@ -35,20 +35,13 @@ public class TestGolem : MonoBehaviour
     {
         ShowSync("red");
         ShowSync("blue");
-        //ShowSync("green");
-        //ShowAsync();
+       
     }
 
     private void ShowSync(string color)
     {
         Debug.Log($"<color={color}>{_golem.GetGolemBaseStats()}</color>");
         Debug.Log($"<color={color}>{_golem.GetGolemExtraStats()}</color>");
-        Debug.Log($"<color={color}>{_golem.GetGolemExtraStats()}</color>");
     }
-
-    private void ShowAsync()
-    {
-        _golem.ShowGolemBaseStats();
-        _golem.ShowGolemExtraStats();
-    }
+    
 }

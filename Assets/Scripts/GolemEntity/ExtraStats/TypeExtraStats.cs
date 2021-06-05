@@ -115,7 +115,7 @@ namespace __Scripts.GolemEntity.ExtraStats
             private static float Strength { get; set; }
             private static float Agility { get; set; }
             private static float Intelligence { get; set; }
-            
+
             public float AttackSpeedArgAg = Agility;
             
             public float AvoidChanceArgSt = Strength;
