@@ -1,4 +1,5 @@
 ﻿using __Scripts.ExtraStats;
+using GolemEntity.ExtraStats;
 using UnityEngine;
 
 namespace __Scripts.GolemEntity.Behavior

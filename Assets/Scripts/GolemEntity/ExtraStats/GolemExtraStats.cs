@@ -1,9 +1,9 @@
-﻿namespace __Scripts.ExtraStats
+﻿namespace GolemEntity.ExtraStats
 {
     public struct GolemExtraStats
     {
-        
-        public float AttackSpeed { get ; set; } 
+        public float AttackRange { get; set; }
+        public float AttackSpeed { get; set; } 
         public float AvoidChance { get; set; }
         public float DamagePerHeat { get; set; }
         public float Defence { get; set; }
@@ -17,22 +17,6 @@
         public float MoveSpeed { get; set; }
         public float RegenerationRate { get; set; }
         public float Stamina { get; set; }
-
-        // public float AttackSpeed;
-        // public float AvoidChance;
-        // public float DamagePerHeat;
-        // public float Defence;
-        // public float DodgeChance;
-        // public float Health;
-        // public float HitAccuracy;
-        // public float MagicAccuracy;
-        // public float MagicDamage;
-        // public float MagicResistance;
-        // public float ManaPool;
-        // public float MoveSpeed;
-        // public float RegenerationRate;
-        // public float Stamina;
-        
         
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
@@ -78,7 +62,8 @@
 
         public override string ToString()
         {
-            return $"AttackSpeed = {AttackSpeed}," +
+            return $"AttackRange = {AttackRange}," +
+                   $"AttackSpeed = {AttackSpeed}," +
                    $"AvoidChance = {AvoidChance}," +
                    $"DamagePerHeat = {DamagePerHeat}," +
                    $"Defence = {Defence}," +

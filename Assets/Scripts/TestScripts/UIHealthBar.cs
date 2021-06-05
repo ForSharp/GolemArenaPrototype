@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
@@ -24,11 +25,18 @@ public class UIHealthBar : MonoBehaviour
         if (characterState.isDead)
         {
             _fill.SetActive(false); //костыль. при 0 там небольшое значение хп видно (зеленый цвет)
+            StartCoroutine(DestroyWithDelay());
         }
         
         Vector2 position = Camera.main.WorldToScreenPoint(characterState.transform.position);
         position.y += characterState.sliderPlacementHeight; 
 
         transform.position = position;
+    }
+
+    private IEnumerator DestroyWithDelay()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 }

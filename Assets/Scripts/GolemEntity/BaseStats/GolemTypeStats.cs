@@ -15,84 +15,84 @@ namespace __Scripts
         {
             switch (_golemType)
             {
-                case GolemType.IronGolem:
+                case GolemType.WaterGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.StoneGolem:
+                case GolemType.AirGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.8f,
                         Agility = 0.1f,
                         Intelligence = 0.2f
                     };
-                case GolemType.FleshGolem:
+                case GolemType.CristalGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.5f,
                         Agility = 0.3f,
                         Intelligence = 0.4f
                     };
-                case GolemType.GlassGolem:
+                case GolemType.FireGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.2f,
                         Agility = 0.7f,
                         Intelligence = 0.5f
                     };
-                case GolemType.MithrilGolem:
+                case GolemType.PlasmaGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.1f,
                         Agility = 0.7f,
                         Intelligence = 0.6f
                     };
-                case GolemType.BoneGolem:
+                case GolemType.SteamGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.4f,
                         Agility = 0.6f,
                         Intelligence = 0.4f
                     };
-                case GolemType.CoralGolem:
+                case GolemType.DarkGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.4f,
                         Agility = 0.4f,
                         Intelligence = 0.6f
                     };
-                case GolemType.SandGolem:
+                case GolemType.NatureGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.5f,
                         Agility = 0.6f,
                         Intelligence = 0.2f
                     };
-                case GolemType.ChitinGolem:
+                case GolemType.FogGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.7f,
                         Agility = 0.2f,
                         Intelligence = 0.2f
                     };
-                case GolemType.WoodenGolem:
+                case GolemType.ObsidianGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.5f,
                         Agility = 0.1f,
                         Intelligence = 0.8f
                     };
-                case GolemType.DemonFleshGolem:
+                case GolemType.InsectGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.5f,
                         Agility = 0.8f,
                         Intelligence = 0.3f
                     };
-                case GolemType.IceGolem:
+                case GolemType.StalagmiteGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
