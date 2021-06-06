@@ -24,66 +24,77 @@ namespace __Scripts.GolemEntity.ExtraStats
             switch (_type)
             {
                 case GolemType.WaterGolem:
-                    TypeExtraArgs typeIron = new TypeExtraArgs(strength, agility, intelligence)
+                    TypeExtraArgs typeWaterGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
                         DefenceArgSt = strength * 1.1f 
                     };
-                    return InitializeExtraStats(typeIron);
+                    return InitializeExtraStats(typeWaterGolem);
                 case GolemType.AirGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeAirGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeAirGolem);
                 case GolemType.CristalGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeCristalGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeCristalGolem);
                 case GolemType.FireGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeFireGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeFireGolem);
                 case GolemType.PlasmaGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typePlasmaGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typePlasmaGolem);
                 case GolemType.SteamGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeSteamGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeSteamGolem);
                 case GolemType.DarkGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeDarkGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeDarkGolem);
                 case GolemType.NatureGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeNatureGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeNatureGolem);
                 case GolemType.FogGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeFogGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeFogGolem);
                 case GolemType.ObsidianGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeObsidianGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeObsidianGolem);
                 case GolemType.InsectGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeInsectGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeInsectGolem);
                 case GolemType.StalagmiteGolem:
-                    return new GolemExtraStats()
+                    TypeExtraArgs typeStalagmiteGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-
+                        DefenceArgSt = strength * 1.1f 
                     };
+                    return InitializeExtraStats(typeStalagmiteGolem);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_type), _type, null);
             }

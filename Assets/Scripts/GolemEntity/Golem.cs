@@ -35,12 +35,12 @@ namespace GolemEntity
             RecalculateExtraStats();
         }
 
-        private GolemBaseStats GetBaseStats()
+        public GolemBaseStats GetBaseStats()
         {
             return ParseIStatsToGolemBaseStats(_provider);
         }
 
-        private GolemExtraStats GetExtraStats()
+        public GolemExtraStats GetExtraStats()
         {
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
