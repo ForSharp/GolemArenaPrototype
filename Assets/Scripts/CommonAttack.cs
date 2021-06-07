@@ -1,39 +1,34 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CommonAttack : MonoBehaviour
 {
-    private int _damagePerHit;
-    private readonly float _delayBetweenHits;
     private readonly float _hitHeight;
     private readonly float _attackRange;
     private readonly float _destructionRadius;
-    private readonly Action<Animator> _setHitAnimation;
+    private readonly Action<Animator>[] _hitAnimationSetters;
+    private Animator _animator;
     //private readonly Action _setAttackSound;
-    private Vector3 _attackerPosition;
     private int _group;
     private bool _isFriendlyFire;
     private float _timer;
-
-
-    public CommonAttack(int damagePerHit, float delayBetweenHits, float hitHeight, float attackRange, 
-        float destructionRadius, Action<Animator> setHitAnimation, Vector3 attackerPosition, int group, 
-        bool isFriendlyFire = false)
+    
+    public CommonAttack(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
+        bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
-        _damagePerHit = damagePerHit;
-        _delayBetweenHits = delayBetweenHits;
         _hitHeight = hitHeight;
         _attackRange = attackRange;
         _destructionRadius = destructionRadius;
-        _setHitAnimation = setHitAnimation;
-        _attackerPosition = attackerPosition;
+        _hitAnimationSetters = hitAnimationSetters;
+        _animator = animator;
         _group = group;
         _isFriendlyFire = isFriendlyFire;
     }
 
     private void Start()
     {
-        _timer = _delayBetweenHits - 0.1f;
+        _timer = 100f; //on the first hit, the attack will start without delay from the attack speed
     }
 
     private void Update()
@@ -41,48 +36,47 @@ public class CommonAttack : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    public void Attack(Animator animator)
+    public void Attack(float damage, float delayBetweenHits, Vector3 attackerPosition)
     {
-        if (_timer >= _delayBetweenHits && Time.timeScale != 0)
+        if (_timer >= delayBetweenHits && Time.timeScale != 0)
         {
             _timer = 0;
-            _setHitAnimation.Invoke(animator);
-            Vector3 spherePosition = _attackerPosition + transform.forward * _attackRange;
+            _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator); 
+            Vector3 spherePosition = attackerPosition + transform.forward * _attackRange;
             spherePosition.y += _hitHeight;
             Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
             foreach (var item in colliders)
             {
-                AttackGameCharacter(item);
-                AttackDestructibleObjects(item);
+                AttackGameCharacter(item, damage);
+                AttackDestructibleObjects(item, damage);
             }
         }
     }
 
-    private void AttackGameCharacter(Collider item)
+    private void AttackGameCharacter(Collider item, float damage)
     {
         if (item.GetComponent<GameCharacterState>())
         {
-            //var state = GetComponent<GameCharacterState>();
-            var state = new GameCharacterState();
+            var state = GetComponent<GameCharacterState>();
             if (!_isFriendlyFire)
             {
                 if (state.Group != _group)
                 {
-                    state.TakeDamage(_damagePerHit);
+                    state.TakeDamage(damage);
                 }
             }
             else if (_isFriendlyFire)
             {
-                state.TakeDamage(_damagePerHit);
+                state.TakeDamage(damage);
             }
         }
     }
 
-    private void AttackDestructibleObjects(Collider item)
+    private void AttackDestructibleObjects(Collider item, float damage)
     {
         if (item.GetComponent<DestructibleObject>())
         {
-            item.GetComponent<DestructibleObject>().TakeDamage(_damagePerHit);
+            item.GetComponent<DestructibleObject>().TakeDamage(damage);
         }
     }
 }

@@ -106,7 +106,7 @@ public class UserInputTest : MonoBehaviour
         textes[20].text = $"Выносливость {_golem.GetExtraStats().Stamina}";
     }
     
-    private Enum ToEnum(string value, Type enumType)
+    private static Enum ToEnum(string value, Type enumType)
     {
         return (Enum)Enum.Parse(enumType, value, true);
     }

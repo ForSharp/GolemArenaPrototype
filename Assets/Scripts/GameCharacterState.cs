@@ -8,7 +8,7 @@ public class GameCharacterState : MonoBehaviour
     public int Group { get; set; }
     private int _defence;
     
-    public void TakeDamage(int damage, int defence = 0)
+    public void TakeDamage(float damage, int defence = 0)
     {
         
     }
