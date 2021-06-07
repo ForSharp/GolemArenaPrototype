@@ -12,7 +12,7 @@ public class DestructibleObject : MonoBehaviour
         _renderer.material.color = GetColorChangeAlpha(_renderer.material.color, 0.5f);
     }
 
-    public void TakeDamage(int damage, int defence = 0)
+    public void TakeDamage(float damage, int defence = 0)
     {
         
     }

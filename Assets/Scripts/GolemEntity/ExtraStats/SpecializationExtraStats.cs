@@ -30,97 +30,114 @@ namespace __Scripts.GolemEntity.ExtraStats
             switch (specialization)
             {
                 case Specialization.Warrior:
-                    SpecExtraArgs specWar = new SpecExtraArgs(strength, agility, intelligence)
+                    SpecExtraArgs specWarrior = new SpecExtraArgs(strength, agility, intelligence)
                     {
                         AttackSpeedArgAg = agility * 2,
                         HealthArgSt = strength * 1.5f 
                     };
-                    return InitializeExtraStats(specWar);
+                    return InitializeExtraStats(specWarrior);
                 case Specialization.Rogue:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specRogue = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specRogue);
                 case Specialization.Wizard:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specWizard = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specWizard);
                 case Specialization.BattleMage:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specBattleMage = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specBattleMage);
                 case Specialization.Priest:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specPriest = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specPriest);
                 case Specialization.Paladin:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specPaladin = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specPaladin);
                 case Specialization.Bard:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specBard = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specBard);
                 case Specialization.Fighter:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specFighter = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specFighter);
                 case Specialization.Ranger:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specRanger = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specRanger);
                 case Specialization.SpecialistWizard:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specSpecialistWizard = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specSpecialistWizard);
                 case Specialization.Illusionist:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specIllusionist = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specIllusionist);
                 case Specialization.Cleric:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specCleric = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specCleric);
                 case Specialization.Druid:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specDruid = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specDruid);
                 case Specialization.Thief:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specThief = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specThief);
                 case Specialization.Barbarian:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specBarbarian = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specBarbarian);
                 case Specialization.Sorcerer:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specSorcerer = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specSorcerer);
                 case Specialization.Monk:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specMonk = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specMonk);
                 case Specialization.Tank:
-                    return new GolemExtraStats()
+                    SpecExtraArgs specTank = new SpecExtraArgs(strength, agility, intelligence)
                     {
-
+                        
                     };
+                    return InitializeExtraStats(specTank);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(specialization), specialization, null);
             }

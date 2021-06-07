@@ -1,6 +1,9 @@
-﻿namespace GolemEntity.ExtraStats
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace GolemEntity.ExtraStats
 {
-    public struct GolemExtraStats
+    public struct GolemExtraStats 
     {
         public float AttackRange { get; set; }
         public float AttackSpeed { get; set; } 
