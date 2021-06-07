@@ -12,4 +12,9 @@ public class GameCharacterState : MonoBehaviour
     {
         
     }
+
+    public void SpendStamina(float energy)
+    {
+        
+    }
 }
