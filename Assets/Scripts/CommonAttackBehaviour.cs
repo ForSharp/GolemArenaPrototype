@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CommonAttack : MonoBehaviour
+public class CommonAttackBehaviour : MonoBehaviour, IAttackable
 {
     private readonly float _hitHeight;
     private readonly float _attackRange;
@@ -14,7 +14,7 @@ public class CommonAttack : MonoBehaviour
     private bool _isFriendlyFire;
     private float _timer;
     
-    public CommonAttack(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
+    public CommonAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
         bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
