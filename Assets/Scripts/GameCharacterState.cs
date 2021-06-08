@@ -1,13 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class GameCharacterState : MonoBehaviour
 {
-    public int Group { get; set; }
-    private int _defence;
-    
+    public float MaxHealth { get; private set; }
+    public float CurrentHealth { get; private set; }
+    public int Group { get; private set; }
+
+    private void Start()
+    {
+        
+    }
+
     public void TakeDamage(float damage, int defence = 0)
     {
         

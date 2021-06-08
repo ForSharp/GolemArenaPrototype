@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GolemEntity
 {
-    public class Golem 
+    public class Golem :MonoBehaviour
     {
         private readonly GolemType _golemType;
         private readonly Specialization _specialization;
