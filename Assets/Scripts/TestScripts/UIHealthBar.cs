@@ -24,12 +24,12 @@ public class UIHealthBar : MonoBehaviour
         
         UpdateMaxValue();
         UpdateSliderValue();
-        SetRequirementPosition();
+        SetRequiredPosition();
         DestroyOnDeath();
         
     }
 
-    private void SetRequirementPosition(float multiplier = 1)
+    private void SetRequiredPosition(float multiplier = 1)
     {
         var requirePos = new Vector3(characterState.transform.position.x,
             characterState.transform.position.y + characterState.GetComponent<Collider>().bounds.size.y * multiplier,

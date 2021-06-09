@@ -12,6 +12,8 @@ public class UserInputTest : MonoBehaviour
     [SerializeField] private GameObject panelGolemType;
     [SerializeField] private GameObject panelGolemSpec;
     [SerializeField] private GameObject panelGolemStats;
+    [SerializeField] private GameObject GolemPrefab;
+    [SerializeField] private Vector3 spawnPoint;
     [SerializeField] private Text[] textes;
 
     private GolemType _golemType;
@@ -74,6 +76,8 @@ public class UserInputTest : MonoBehaviour
     private void CreateGolem()
     {
         Golem = new Golem(_golemType, _specialization);
+        GameObject newGolem = Instantiate(GolemPrefab, spawnPoint, Quaternion.identity);
+        newGolem.GetComponent<GameCharacterState>().golem = Golem;
     }
 
     private void FillUI()
