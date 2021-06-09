@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
 {
     [HideInInspector] public CurrentGameCharacterState characterState;
-    [SerializeField] private GameObject _fill;
+    [SerializeField] private GameObject fill;
     private Slider _slider;
-    
+    private const int TimeToDestroy = 5;
+
     private void Start()
     {
         _slider = GetComponent<Slider>();
@@ -21,22 +22,50 @@ public class UIHealthBar : MonoBehaviour
         if (!characterState)
             return;
         
-        _slider.value = characterState.currentHealth;
-        if (characterState.isDead)
-        {
-            _fill.SetActive(false); //костыль. при 0 там небольшое значение хп видно (зеленый цвет)
-            StartCoroutine(DestroyWithDelay());
-        }
+        UpdateMaxValue();
+        UpdateSliderValue();
+        SetRequirementPosition();
+        DestroyOnDeath();
         
-        Vector2 position = Camera.main.WorldToScreenPoint(characterState.transform.position);
-        position.y += characterState.sliderPlacementHeight; 
+    }
+
+    private void SetRequirementPosition(float multiplier = 1)
+    {
+        var requirePos = new Vector3(characterState.transform.position.x,
+            characterState.transform.position.y + characterState.GetComponent<Collider>().bounds.size.y * multiplier,
+            characterState.transform.position.z);
+        
+        var position = Camera.main.WorldToScreenPoint(requirePos);
 
         transform.position = position;
     }
 
-    private IEnumerator DestroyWithDelay()
+    private void UpdateSliderValue()
     {
-        yield return new WaitForSeconds(5);
-        Destroy(gameObject);
+        _slider.value = characterState.currentHealth;
+    }
+    
+    private void DestroyOnDeath()
+    {
+        if (characterState.isDead)
+        {
+            fill.SetActive(false);
+            Destroy(gameObject, TimeToDestroy);
+        }
+    }
+    
+    private void ChangeMaxValue()
+    {
+        //if an event occurs, in which the maximum health value changes in runtime, this method should be executed
+        
+        _slider.maxValue = characterState.maxHealth;
+    }
+
+    private void UpdateMaxValue()
+    {
+        if (Math.Abs(characterState.maxHealth - _slider.maxValue) > 1)
+        {
+            _slider.maxValue = characterState.maxHealth;
+        }
     }
 }

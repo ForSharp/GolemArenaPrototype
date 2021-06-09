@@ -3,12 +3,13 @@ using GolemEntity;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 
+[RequireComponent(typeof(Collider))]
 public class CurrentGameCharacterState : MonoBehaviour
 {
     public int maxHealth = 100; //Golem.GetExtraStats.Health
     public int currentHealth = 100;
 
-    public int sliderPlacementHeight = 80;
+    
     [HideInInspector] public bool isDead = false;
 
     [SerializeField] private bool idDynamicHealthBarCreate = true;
