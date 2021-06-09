@@ -1,4 +1,5 @@
-﻿using __Scripts;
+﻿using System;
+using __Scripts;
 using __Scripts.ExtraStats;
 using __Scripts.GolemEntity.ExtraStats;
 using GolemEntity.ExtraStats;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace GolemEntity
 {
-    public class Golem 
+    public class Golem :MonoBehaviour
     {
         private readonly GolemType _golemType;
         private readonly Specialization _specialization;
@@ -16,7 +17,12 @@ namespace GolemEntity
         private const float MINBaseStats = 100;
 
         private IStatsProvider Rate { get; set; }
-   
+
+        private void Start()
+        {
+            
+        }
+
         public Golem(GolemType golemType, Specialization specialization)
         {
             _golemType = golemType;
@@ -107,16 +113,6 @@ namespace GolemEntity
             };
         }
 
-        public void ShowGolemBaseStats()
-        {
-            Debug.Log($"BaseStats: {GetBaseStats().ToString()}");
-        }
-        
-        public void ShowGolemExtraStats()
-        {
-            Debug.Log($"ExtraStats: {GetExtraStats().ToString()}");
-        }
-        
         public string GetGolemBaseStats()
         {
             return GetBaseStats().ToString();

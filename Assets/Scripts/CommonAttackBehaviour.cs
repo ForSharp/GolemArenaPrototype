@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -41,18 +43,46 @@ public class CommonAttackBehaviour : MonoBehaviour, IAttackable
         if (_timer >= delayBetweenHits && Time.timeScale != 0)
         {
             _timer = 0;
-            _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator); 
-            Vector3 spherePosition = attackerPosition + transform.forward * _attackRange;
-            spherePosition.y += _hitHeight;
-            Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
-            foreach (var item in colliders)
-            {
-                AttackGameCharacter(item, damage);
-                AttackDestructibleObjects(item, damage);
-            }
+            _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator);
+
+            StartCoroutine(AttackCoroutine(damage, delayBetweenHits, attackerPosition));
         }
     }
 
+    private IEnumerator AttackCoroutine(float damage, float delayBetweenHits, Vector3 attackerPosition)
+    {
+        yield return new WaitForSeconds(delayBetweenHits / 2);
+        
+        Vector3 spherePosition = attackerPosition + transform.forward * _attackRange;
+        spherePosition.y += _hitHeight;
+        Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
+        foreach (var item in FilterCollidersArray(colliders))
+        {
+            AttackGameCharacter(item, damage);
+            AttackDestructibleObjects(item, damage);
+            break; 
+        }
+    }
+
+    private Collider[] FilterCollidersArray(Collider[] colliders)
+    {
+        var filteredGameCharacterColliders = colliders.Where(c =>
+            c.GetComponent<GameCharacterState>()).Where(c => !c.GetComponent<GameCharacterState>().IsDead);
+        var filteredDestructibleObjects = colliders.Where(c =>
+            c.GetComponent<DestructibleObject>()).Where(c => !c.GetComponent<DestructibleObject>().IsDead);
+
+        var gameCharacterColliders = filteredGameCharacterColliders as Collider[] ?? filteredGameCharacterColliders.ToArray();
+        var destructibleObjects = filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
+        
+        var filteredArray = new Collider[gameCharacterColliders.Length +
+                                         destructibleObjects.Length];
+        
+        gameCharacterColliders.CopyTo(filteredArray, 0);
+        destructibleObjects.CopyTo(filteredArray, destructibleObjects.Length);
+
+        return filteredArray;
+    }
+    
     private void AttackGameCharacter(Collider item, float damage)
     {
         if (item.GetComponent<GameCharacterState>())

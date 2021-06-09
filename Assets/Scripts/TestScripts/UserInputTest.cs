@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using __Scripts;
 using GolemEntity;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UserInputTest : MonoBehaviour
@@ -11,11 +12,13 @@ public class UserInputTest : MonoBehaviour
     [SerializeField] private GameObject panelGolemType;
     [SerializeField] private GameObject panelGolemSpec;
     [SerializeField] private GameObject panelGolemStats;
+    [SerializeField] private GameObject GolemPrefab;
+    [SerializeField] private Vector3 spawnPoint;
     [SerializeField] private Text[] textes;
 
     private GolemType _golemType;
     private Specialization _specialization;
-    private Golem _golem;
+    public Golem Golem { get; private set; }
     private int _lvl = 1;
 
     private void Start()
@@ -33,7 +36,7 @@ public class UserInputTest : MonoBehaviour
             _lvl = 1;
         }
 
-        if (_golem != null)
+        if (Golem != null)
         {
             FillUI();
         }
@@ -41,12 +44,12 @@ public class UserInputTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             _lvl++;
-            _golem?.ChangeBaseStatsProportionally(10);
+            Golem?.ChangeBaseStatsProportionally(10);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) && _lvl > 1)
         {
             _lvl--;
-            _golem?.ChangeBaseStatsProportionally(-10);
+            Golem?.ChangeBaseStatsProportionally(-10);
         }
     }
 
@@ -70,15 +73,11 @@ public class UserInputTest : MonoBehaviour
         panelGolemStats.SetActive(true);
     }
 
-    private void ShowResult()
-    {
-        Debug.Log(_golemType.ToString());
-        Debug.Log(_specialization.ToString());
-    }
-
     private void CreateGolem()
     {
-        _golem = new Golem(_golemType, _specialization);
+        Golem = new Golem(_golemType, _specialization);
+        GameObject newGolem = Instantiate(GolemPrefab, spawnPoint, Quaternion.identity);
+        newGolem.GetComponent<GameCharacterState>().golem = Golem;
     }
 
     private void FillUI()
@@ -86,26 +85,26 @@ public class UserInputTest : MonoBehaviour
         textes[0].text = $"Тип голема {_golemType.ToString()}";
         textes[1].text = $"Специализация {_specialization.ToString()}";
         textes[2].text = $"Уровень {_lvl}";
-        textes[3].text = $"Сила {_golem.GetBaseStats().Strength}";
-        textes[4].text = $"Ловкость {_golem.GetBaseStats().Agility}";
-        textes[5].text = $"Интеллект {_golem.GetBaseStats().Intelligence}";
-        textes[6].text = $"Дистанция атаки {_golem.GetExtraStats().AttackRange}";
-        textes[7].text = $"Скорость атаки {_golem.GetExtraStats().AttackSpeed}";
-        textes[8].text = $"Шанс уклонения {_golem.GetExtraStats().AvoidChance}";
-        textes[9].text = $"Физический урон {_golem.GetExtraStats().DamagePerHeat}";
-        textes[10].text = $"Защита {_golem.GetExtraStats().Defence}";
-        textes[11].text = $"Шанс блока магии {_golem.GetExtraStats().DodgeChance}";
-        textes[12].text = $"Здоровье {_golem.GetExtraStats().Health}";
-        textes[13].text = $"Точность удара {_golem.GetExtraStats().HitAccuracy}";
-        textes[14].text = $"Точность магии {_golem.GetExtraStats().MagicAccuracy}";
-        textes[15].text = $"Магический урон {_golem.GetExtraStats().MagicDamage}";
-        textes[16].text = $"Сопротивление магии {_golem.GetExtraStats().MagicResistance}";
-        textes[17].text = $"Мана {_golem.GetExtraStats().ManaPool}";
-        textes[18].text = $"Скорость передвижения {_golem.GetExtraStats().MoveSpeed}";
-        textes[19].text = $"Регенерация здоровья {_golem.GetExtraStats().RegenerationRate}";
-        textes[20].text = $"Выносливость {_golem.GetExtraStats().Stamina}";
+        textes[3].text = $"Сила {Golem.GetBaseStats().Strength}";
+        textes[4].text = $"Ловкость {Golem.GetBaseStats().Agility}";
+        textes[5].text = $"Интеллект {Golem.GetBaseStats().Intelligence}";
+        textes[6].text = $"Дистанция атаки {Golem.GetExtraStats().AttackRange}";
+        textes[7].text = $"Скорость атаки {Golem.GetExtraStats().AttackSpeed}";
+        textes[8].text = $"Шанс уклонения {Golem.GetExtraStats().AvoidChance}";
+        textes[9].text = $"Физический урон {Golem.GetExtraStats().DamagePerHeat}";
+        textes[10].text = $"Защита {Golem.GetExtraStats().Defence}";
+        textes[11].text = $"Шанс блока магии {Golem.GetExtraStats().DodgeChance}";
+        textes[12].text = $"Здоровье {Golem.GetExtraStats().Health}";
+        textes[13].text = $"Точность удара {Golem.GetExtraStats().HitAccuracy}";
+        textes[14].text = $"Точность магии {Golem.GetExtraStats().MagicAccuracy}";
+        textes[15].text = $"Магический урон {Golem.GetExtraStats().MagicDamage}";
+        textes[16].text = $"Сопротивление магии {Golem.GetExtraStats().MagicResistance}";
+        textes[17].text = $"Мана {Golem.GetExtraStats().ManaPool}";
+        textes[18].text = $"Скорость передвижения {Golem.GetExtraStats().MoveSpeed}";
+        textes[19].text = $"Регенерация здоровья {Golem.GetExtraStats().RegenerationRate}";
+        textes[20].text = $"Выносливость {Golem.GetExtraStats().Stamina}";
     }
-    
+
     private static Enum ToEnum(string value, Type enumType)
     {
         return (Enum)Enum.Parse(enumType, value, true);

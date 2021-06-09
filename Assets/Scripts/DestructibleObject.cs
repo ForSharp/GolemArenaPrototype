@@ -5,6 +5,8 @@ using UnityEngine;
 public class DestructibleObject : MonoBehaviour
 {
     private Renderer _renderer;
+    public bool IsDead { get; private set; }
+    
     private void Start()
     {
         _renderer = GetComponent<Renderer>();
