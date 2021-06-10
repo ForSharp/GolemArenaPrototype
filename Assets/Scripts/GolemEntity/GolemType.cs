@@ -4,7 +4,7 @@
     {
         WaterGolem,
         AirGolem,
-        CristalGolem,
+        CrystalGolem,
         FireGolem,
         PlasmaGolem,
         SteamGolem,

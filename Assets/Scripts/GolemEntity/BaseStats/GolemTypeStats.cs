@@ -29,7 +29,7 @@ namespace __Scripts
                         Agility = 0.1f,
                         Intelligence = 0.2f
                     };
-                case GolemType.CristalGolem:
+                case GolemType.CrystalGolem:
                     return new GolemBaseStats()
                     {
                         Strength = 0.5f,
