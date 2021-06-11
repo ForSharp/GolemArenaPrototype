@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using __Scripts;
 using GolemEntity;
 
@@ -10,13 +9,17 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private Vector3 spawnPoint;
 
+    private static int _group = 0;
     public Golem Golem { get; private set; }
 
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
         GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), spawnPoint, Quaternion.identity);
-        newGolem.GetComponent<GameCharacterState>().golem = Golem;
+        var state = newGolem.GetComponent<GameCharacterState>();
+        state.Golem = Golem;
+        state.Group = _group;
+        _group++;
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)
