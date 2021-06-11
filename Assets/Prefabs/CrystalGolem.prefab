@@ -21564,6 +21564,8 @@ GameObject:
   - component: {fileID: 1260623174699369177}
   - component: {fileID: 1260623174703606519}
   - component: {fileID: 2263985958097200509}
+  - component: {fileID: -2760229235707046175}
+  - component: {fileID: 8028929367136020662}
   m_Layer: 0
   m_Name: CrystalGolem
   m_TagString: Player
@@ -21641,6 +21643,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-2760229235707046175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260623174690133817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e519c67cdbd2a8b4f9038a288c531e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDynamicHealthBarCreate: 1
+  healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
+    type: 3}
+--- !u!114 &8028929367136020662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260623174690133817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1260623174690133967
 GameObject:
   m_ObjectHideFlags: 0

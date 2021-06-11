@@ -5439,7 +5439,7 @@ GameObject:
   - component: {fileID: 7456775465287791797}
   - component: {fileID: 690817766315375471}
   m_Layer: 0
-  m_Name: SteamGolem (3)
+  m_Name: SteamGolem
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5529,6 +5529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e519c67cdbd2a8b4f9038a288c531e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDynamicHealthBarCreate: 1
+  healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
+    type: 3}
 --- !u!114 &690817766315375471
 MonoBehaviour:
   m_ObjectHideFlags: 0

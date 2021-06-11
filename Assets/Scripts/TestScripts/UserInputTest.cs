@@ -14,8 +14,8 @@ public class UserInputTest : MonoBehaviour
 
     private GolemType _golemType;
     private Specialization _specialization;
-    public Golem Golem { get; private set; }
-    private int _lvl = 1;
+    public Golem Golem { get; set; }
+    private int _lvl;
 
     private void Start()
     {
@@ -39,10 +39,22 @@ public class UserInputTest : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            _lvl++;
-            Golem?.ChangeBaseStatsProportionally(10);
+            LvlUp();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && _lvl > 1)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            LvlDown();
+        }
+    }
+
+    public void LvlUp()
+    {
+        _lvl++;
+        Golem?.ChangeBaseStatsProportionally(10);
+    }
+    public void LvlDown()
+    {
+        if (_lvl > 1)
         {
             _lvl--;
             Golem?.ChangeBaseStatsProportionally(-10);

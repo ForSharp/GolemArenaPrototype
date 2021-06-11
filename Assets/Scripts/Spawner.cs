@@ -15,11 +15,20 @@ public class Spawner : MonoBehaviour
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
-        GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), spawnPoint, Quaternion.identity);
+        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-10, +11), spawnPoint.y,
+            spawnPoint.z + Random.Range(-10, +11));
+        GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), randomSpawn, Quaternion.identity);
+        
+        Game.AddToAllGolems(Golem);
+        
+        
         var state = newGolem.GetComponent<GameCharacterState>();
         state.Golem = Golem;
         state.Group = _group;
         _group++;
+
+        var user = GetComponent<UserInputTest>();
+        user.Golem = Golem;
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)

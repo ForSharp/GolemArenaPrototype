@@ -1,5 +1,5 @@
-﻿using __Scripts;
-using __Scripts.GolemEntity;
+﻿
+using __Scripts;
 using GolemEntity;
 using UnityEngine;
 
