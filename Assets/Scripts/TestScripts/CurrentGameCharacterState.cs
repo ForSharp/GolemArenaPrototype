@@ -23,7 +23,7 @@ public class CurrentGameCharacterState : MonoBehaviour
         {
             //Instantiate(healthBar.transform, canvas.transform);
             GameObject healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            healthBar.GetComponent<UIHealthBar>().characterState = this;
+            //healthBar.GetComponent<UIHealthBar>().characterState = this;
         }
     }
 

@@ -35,7 +35,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                         DefenceArgSt = strength * 1.1f 
                     };
                     return InitializeExtraStats(typeAirGolem);
-                case GolemType.CristalGolem:
+                case GolemType.CrystalGolem:
                     TypeExtraArgs typeCristalGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
                         DefenceArgSt = strength * 1.1f 

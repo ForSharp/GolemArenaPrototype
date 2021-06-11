@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
 {
-    [HideInInspector] public CurrentGameCharacterState characterState;
+    [HideInInspector] public GameCharacterState characterState;
     [SerializeField] private GameObject fill;
     private Slider _slider;
     private const int TimeToDestroy = 5;
@@ -14,7 +14,7 @@ public class UIHealthBar : MonoBehaviour
         _slider = GetComponent<Slider>();
         transform.SetParent(GameObject.Find("Canvas").transform);
         if (characterState)
-            _slider.maxValue = characterState.maxHealth;
+            _slider.maxValue = characterState.MaxHealth;
     }
 
     private void Update()
@@ -42,12 +42,12 @@ public class UIHealthBar : MonoBehaviour
 
     private void UpdateSliderValue()
     {
-        _slider.value = characterState.currentHealth;
+        _slider.value = characterState.CurrentHealth;
     }
     
     private void DestroyOnDeath()
     {
-        if (characterState.isDead)
+        if (characterState.IsDead)
         {
             fill.SetActive(false);
             Destroy(gameObject, TimeToDestroy);
@@ -58,14 +58,14 @@ public class UIHealthBar : MonoBehaviour
     {
         //if an event occurs, in which the maximum health value changes in runtime, this method should be executed
         
-        _slider.maxValue = characterState.maxHealth;
+        _slider.maxValue = characterState.MaxHealth;
     }
 
     private void UpdateMaxValue()
     {
-        if (Math.Abs(characterState.maxHealth - _slider.maxValue) > 1)
+        if (Math.Abs(characterState.MaxHealth - _slider.maxValue) > 1)
         {
-            _slider.maxValue = characterState.maxHealth;
+            _slider.maxValue = characterState.MaxHealth;
         }
     }
 }

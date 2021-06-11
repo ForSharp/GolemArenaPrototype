@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using __Scripts;
 using GolemEntity;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UserInputTest : MonoBehaviour
@@ -12,14 +9,13 @@ public class UserInputTest : MonoBehaviour
     [SerializeField] private GameObject panelGolemType;
     [SerializeField] private GameObject panelGolemSpec;
     [SerializeField] private GameObject panelGolemStats;
-    [SerializeField] private GameObject GolemPrefab;
-    [SerializeField] private Vector3 spawnPoint;
+    
     [SerializeField] private Text[] textes;
 
     private GolemType _golemType;
     private Specialization _specialization;
-    public Golem Golem { get; private set; }
-    private int _lvl = 1;
+    public Golem Golem { get; set; }
+    private int _lvl;
 
     private void Start()
     {
@@ -43,10 +39,22 @@ public class UserInputTest : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            _lvl++;
-            Golem?.ChangeBaseStatsProportionally(10);
+            LvlUp();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && _lvl > 1)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            LvlDown();
+        }
+    }
+
+    public void LvlUp()
+    {
+        _lvl++;
+        Golem?.ChangeBaseStatsProportionally(10);
+    }
+    public void LvlDown()
+    {
+        if (_lvl > 1)
         {
             _lvl--;
             Golem?.ChangeBaseStatsProportionally(-10);
@@ -75,9 +83,7 @@ public class UserInputTest : MonoBehaviour
 
     private void CreateGolem()
     {
-        Golem = new Golem(_golemType, _specialization);
-        GameObject newGolem = Instantiate(GolemPrefab, spawnPoint, Quaternion.identity);
-        newGolem.GetComponent<GameCharacterState>().golem = Golem;
+        GetComponent<Spawner>().SpawnGolem(_golemType, _specialization);
     }
 
     private void FillUI()
