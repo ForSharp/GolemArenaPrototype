@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3836130112670777075}
   - component: {fileID: 344679661272661194}
   - component: {fileID: 3709162976217769129}
+  - component: {fileID: 3135745557268282862}
   m_Layer: 0
   m_Name: StalagmiteGolem
   m_TagString: Untagged
@@ -120,6 +121,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3135745557268282862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375748776768596559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2376643101881527079

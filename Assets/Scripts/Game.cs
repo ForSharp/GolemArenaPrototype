@@ -7,7 +7,7 @@ public static class Game
 
     public static void AddToAllGolems(Golem golem)
     {
-        _allGolems.Add(golem);
+        //_allGolems.Add(golem);
     }
 
     public static Golem GetGolem(int index)

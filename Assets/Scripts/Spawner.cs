@@ -9,13 +9,12 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private Vector3 spawnPoint;
 
-    private static int _group = 0;
     public Golem Golem { get; private set; }
 
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
-        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-10, +11), spawnPoint.y,
+        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-20, +21), spawnPoint.y,
             spawnPoint.z + Random.Range(-10, +11));
         GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), randomSpawn, Quaternion.identity);
         
@@ -24,8 +23,8 @@ public class Spawner : MonoBehaviour
         
         var state = newGolem.GetComponent<GameCharacterState>();
         state.Golem = Golem;
-        state.Group = _group;
-        _group++;
+        state.Group = Random.Range(1, 10);
+        state.InitProps();
 
         var user = GetComponent<UserInputTest>();
         user.Golem = Golem;

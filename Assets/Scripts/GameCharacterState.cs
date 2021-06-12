@@ -21,12 +21,16 @@ public class GameCharacterState : MonoBehaviour
     private void Start()
     {
         IsDead = false;
+    }
+
+    public void InitProps()
+    {
         Stats = Golem.GetExtraStats();
         MaxHealth = Stats.Health;
         CurrentHealth = MaxHealth;
         CreateHealthBar();
     }
-
+    
     private void Update()
     {
         if (CurrentHealth <= 0)
@@ -48,6 +52,7 @@ public class GameCharacterState : MonoBehaviour
     public void TakeDamage(float damage, int defence = 0)
     {
         CurrentHealth -= damage;
+        Debug.Log($"Группа {Group} Максимум хп {MaxHealth} Текущее хп {CurrentHealth}");
     }
 
     public void SpendStamina(float energy)
