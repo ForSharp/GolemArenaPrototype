@@ -28,8 +28,7 @@ public class GolemAI : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
-        _moveable = new NoMoveBehaviour(_animator, animator => AnimationChanger.SetIdle(animator));
-        _attackable = new NoAttackBehaviour(_animator, animator => AnimationChanger.SetIdle(animator));
+        SetDefaultBehaviour();
 
         StartCoroutine(FindEnemies());
     }
@@ -38,13 +37,35 @@ public class GolemAI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I)) //user input class
             _isAIControlAllowed = true;
-        
-        if (!_isAIControlAllowed || _thisState.IsDead || !_targetState)
+
+        if (_thisState.IsDead)
+        {
+            KillGolem();
             return;
-        OrganizeBehaviour();
+        }
+
+        if (!_isAIControlAllowed || !_targetState)
+        {
+            SetDefaultBehaviour();
+            return; 
+        }
+            
+        SetFightBehaviour();
     }
 
-    private void OrganizeBehaviour()
+    private void KillGolem()
+    {
+        AnimationChanger.SetGolemDie(_animator);
+        Destroy(gameObject, 10);
+    }
+
+    private void SetDefaultBehaviour()
+    {
+        _moveable = new NoMoveBehaviour(_animator, animator => AnimationChanger.SetIdle(animator));
+        _attackable = new NoAttackBehaviour(_animator, animator => AnimationChanger.SetIdle(animator));
+    }
+
+    private void SetFightBehaviour()
     {
         var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
         

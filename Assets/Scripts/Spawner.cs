@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour
         
         var state = newGolem.GetComponent<GameCharacterState>();
         state.Golem = Golem;
-        state.Group = Random.Range(1, 10);
+        state.Group = Random.Range(1, 3);
         state.InitProps();
 
         var user = GetComponent<UserInputTest>();
