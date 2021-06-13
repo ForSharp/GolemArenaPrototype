@@ -1,4 +1,4 @@
-﻿namespace __Scripts
+﻿namespace GolemEntity
 {
     public enum GolemType 
     {

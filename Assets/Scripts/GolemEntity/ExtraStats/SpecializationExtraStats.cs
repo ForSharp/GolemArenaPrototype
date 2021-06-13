@@ -1,8 +1,7 @@
 ﻿using System;
-using __Scripts.ExtraStats;
-using GolemEntity.ExtraStats;
+using GolemEntity.BaseStats;
 
-namespace __Scripts.GolemEntity.ExtraStats
+namespace GolemEntity.ExtraStats
 {
     public class SpecializationExtraStats : ExtraStatsDecorator
     {
@@ -159,7 +158,9 @@ namespace __Scripts.GolemEntity.ExtraStats
                 MagicResistance = ExtraStatsCalculator.GetMagicResistance(specExtraArgs.MagicResistanceArgSt, specExtraArgs.MagicResistanceArgIn),
                 ManaPool = ExtraStatsCalculator.GetManaPool(specExtraArgs.ManaPoolArgIn),
                 MoveSpeed = ExtraStatsCalculator.GetMoveSpeed(specExtraArgs.MoveSpeedArgSt, specExtraArgs.MoveSpeedArgAg),
-                RegenerationRate = ExtraStatsCalculator.GetRegenerationRate(specExtraArgs.RegenerationRateArgSt, specExtraArgs.RegenerationRateArgAg),
+                RegenerationHealth = ExtraStatsCalculator.GetRegenerationHealth(specExtraArgs.RegenerationHealthArgSt, specExtraArgs.RegenerationHealthArgAg),
+                RegenerationMana = ExtraStatsCalculator.GetRegenerationMana(specExtraArgs.RegenerationManaIn),
+                RegenerationStamina = ExtraStatsCalculator.GetRegenerationStamina(specExtraArgs.RegenerationStaminaAg),
                 Stamina = ExtraStatsCalculator.GetStamina(specExtraArgs.StaminaArgSt, specExtraArgs.StaminaArgAg)
             };
         }
@@ -204,8 +205,12 @@ namespace __Scripts.GolemEntity.ExtraStats
             public float MoveSpeedArgSt = Strength;
             public float MoveSpeedArgAg = Agility;
             
-            public float RegenerationRateArgSt = Strength;
-            public float RegenerationRateArgAg = Agility;
+            public float RegenerationHealthArgSt = Strength;
+            public float RegenerationHealthArgAg = Agility;
+
+            public float RegenerationManaIn = Intelligence;
+
+            public float RegenerationStaminaAg = Agility;
             
             public float StaminaArgSt = Strength;
             public float StaminaArgAg = Agility;

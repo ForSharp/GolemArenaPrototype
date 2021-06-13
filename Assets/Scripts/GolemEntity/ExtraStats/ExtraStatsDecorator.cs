@@ -1,6 +1,7 @@
-﻿using GolemEntity.ExtraStats;
+﻿using GolemEntity.BaseStats;
+using Scripts;
 
-namespace __Scripts.ExtraStats
+namespace GolemEntity.ExtraStats
 {
     public abstract class ExtraStatsDecorator: IExtraStatsProvider
     {

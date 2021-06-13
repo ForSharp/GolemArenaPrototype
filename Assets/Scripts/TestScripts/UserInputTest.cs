@@ -1,5 +1,5 @@
 ﻿using System;
-using __Scripts;
+using Scripts;
 using GolemEntity;
 using UnityEngine;
 using UnityEngine.UI;
@@ -107,7 +107,7 @@ public class UserInputTest : MonoBehaviour
         textes[16].text = $"Сопротивление магии {Golem.GetExtraStats().MagicResistance}";
         textes[17].text = $"Мана {Golem.GetExtraStats().ManaPool}";
         textes[18].text = $"Скорость передвижения {Golem.GetExtraStats().MoveSpeed}";
-        textes[19].text = $"Регенерация здоровья {Golem.GetExtraStats().RegenerationRate}";
+        textes[19].text = $"Регенерация здоровья {Golem.GetExtraStats().RegenerationHealth}";
         textes[20].text = $"Выносливость {Golem.GetExtraStats().Stamina}";
     }
 

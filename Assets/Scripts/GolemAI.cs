@@ -74,7 +74,7 @@ public class GolemAI : MonoBehaviour
             SetMoveBehaviour(new NoMoveBehaviour(_animator, animator => AnimationChanger.SetIdle(animator))); 
             _moveable.Move(default, default);
             transform.LookAt(_targetState.transform.position);
-            var attack = gameObject.GetComponent<CommonAttackBehaviour>();
+            var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
             attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, false, AnimationChanger.SetGolemDoubleHit,

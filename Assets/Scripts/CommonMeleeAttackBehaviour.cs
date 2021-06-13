@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CommonAttackBehaviour : MonoBehaviour, IAttackable
+public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
 {
     private float _hitHeight;
     private float _attackRange;
@@ -18,7 +18,7 @@ public class CommonAttackBehaviour : MonoBehaviour, IAttackable
 
     private bool _isReady = false;
     
-    public CommonAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
+    public CommonMeleeAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
         bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
@@ -83,7 +83,6 @@ public class CommonAttackBehaviour : MonoBehaviour, IAttackable
             AttackDestructibleObjects(item, damage);
             break; 
         }
-        
     }
 
     private Collider[] FilterCollidersArray(Collider[] colliders)

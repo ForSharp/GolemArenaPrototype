@@ -1,6 +1,7 @@
 ﻿using System;
+using Scripts;
 
-namespace __Scripts
+namespace GolemEntity.BaseStats
 {
     
     public class SpecializationStats : StatsDecorator

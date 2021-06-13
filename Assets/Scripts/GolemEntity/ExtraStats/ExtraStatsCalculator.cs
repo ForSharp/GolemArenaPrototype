@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace __Scripts.GolemEntity.ExtraStats
+namespace GolemEntity.ExtraStats
 {
     /// <summary>
     /// All methods returns the maximum allowed half,
@@ -8,7 +8,6 @@ namespace __Scripts.GolemEntity.ExtraStats
     /// </summary>
     public static class ExtraStatsCalculator 
     {
-        
         public static float GetHealth(float strength)
         {
             return strength * 12;
@@ -77,7 +76,7 @@ namespace __Scripts.GolemEntity.ExtraStats
                 return 100;
             return speed;
         }
-        public static float GetRegenerationRate(float strength, float agility)
+        public static float GetRegenerationHealth(float strength, float agility)
         {
             var speed = (200 + (strength - agility));
             if (speed > 300)
@@ -85,6 +84,15 @@ namespace __Scripts.GolemEntity.ExtraStats
             if (speed < 100)
                 return 100;
             return speed;
+        }
+        
+        public static float GetRegenerationMana(float intelligence)
+        {
+            return default;
+        }
+        public static float GetRegenerationStamina(float agility)
+        {
+            return default;
         }
     }
 }

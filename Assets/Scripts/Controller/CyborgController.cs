@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace __Scripts
+namespace Scripts
 {
     public class CyborgController : MonoBehaviour
     {

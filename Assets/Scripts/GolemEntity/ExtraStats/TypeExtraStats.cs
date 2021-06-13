@@ -1,8 +1,7 @@
 ﻿using System;
-using __Scripts.ExtraStats;
-using GolemEntity.ExtraStats;
+using GolemEntity.BaseStats;
 
-namespace __Scripts.GolemEntity.ExtraStats
+namespace GolemEntity.ExtraStats
 {
     public class TypeExtraStats : IExtraStatsProvider
     {
@@ -116,7 +115,9 @@ namespace __Scripts.GolemEntity.ExtraStats
                 MagicResistance = ExtraStatsCalculator.GetMagicResistance(typeExtraArgs.MagicResistanceArgSt, typeExtraArgs.MagicResistanceArgIn),
                 ManaPool = ExtraStatsCalculator.GetManaPool(typeExtraArgs.ManaPoolArgIn),
                 MoveSpeed = ExtraStatsCalculator.GetMoveSpeed(typeExtraArgs.MoveSpeedArgSt, typeExtraArgs.MoveSpeedArgAg),
-                RegenerationRate = ExtraStatsCalculator.GetRegenerationRate(typeExtraArgs.RegenerationRateArgSt, typeExtraArgs.RegenerationRateArgAg),
+                RegenerationHealth = ExtraStatsCalculator.GetRegenerationHealth(typeExtraArgs.RegenerationHealthArgSt, typeExtraArgs.RegenerationHealthArgAg),
+                RegenerationMana = ExtraStatsCalculator.GetRegenerationMana(typeExtraArgs.RegenerationManaIn),
+                RegenerationStamina = ExtraStatsCalculator.GetRegenerationStamina(typeExtraArgs.RegenerationStaminaAg),
                 Stamina = ExtraStatsCalculator.GetStamina(typeExtraArgs.StaminaArgSt, typeExtraArgs.StaminaArgAg)
             };
         }
@@ -160,8 +161,12 @@ namespace __Scripts.GolemEntity.ExtraStats
             public float MoveSpeedArgSt = Strength;
             public float MoveSpeedArgAg = Agility;
             
-            public float RegenerationRateArgSt = Strength;
-            public float RegenerationRateArgAg = Agility;
+            public float RegenerationHealthArgSt = Strength;
+            public float RegenerationHealthArgAg = Agility;
+
+            public float RegenerationManaIn = Intelligence;
+
+            public float RegenerationStaminaAg = Agility;
             
             public float StaminaArgSt = Strength;
             public float StaminaArgAg = Agility;

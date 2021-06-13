@@ -52,9 +52,18 @@ public class GameCharacterState : MonoBehaviour
     public void TakeDamage(float damage, int defence = 0)
     {
         CurrentHealth -= damage;
-        Debug.Log($"Группа {Group} Максимум хп {MaxHealth} Текущее хп {CurrentHealth}");
     }
 
+    public void LvlUp()
+    {
+        
+    }
+    
+    public void LvlDown()
+    {
+        
+    }
+    
     public void SpendStamina(float energy)
     {
         

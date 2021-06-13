@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using __Scripts;
+using Scripts;
 using GolemEntity;
 
 public class Spawner : MonoBehaviour
