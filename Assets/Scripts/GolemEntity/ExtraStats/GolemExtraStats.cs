@@ -16,9 +16,7 @@
         public float ManaPool { get; set; }
         public float MoveSpeed { get; set; }
         public float RegenerationHealth { get; set; }
-        
         public float RegenerationMana { get; set; }
-        
         public float RegenerationStamina { get; set; }
         public float Stamina { get; set; }
         
