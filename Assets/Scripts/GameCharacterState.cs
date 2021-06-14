@@ -1,4 +1,5 @@
 ﻿using GolemEntity;
+using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using UnityEngine;
 
@@ -15,8 +16,12 @@ public class GameCharacterState : MonoBehaviour
     public int Group { get; set; } //set in spawner
     public int Lvl { get; set; } //set in user input
     public bool IsDead { get; private set; }
+    
+    public GolemBaseStats BaseStats { get; private set; }
     public GolemExtraStats Stats { get; private set; }
     public Golem Golem;
+    public string Type { get; private set; }
+    public string Spec { get; private set; }
 
     private void Start()
     {

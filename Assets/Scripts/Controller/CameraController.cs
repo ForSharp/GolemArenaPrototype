@@ -1,29 +1,19 @@
 ﻿using UnityEngine;
 
-namespace Scripts
+namespace Controller
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private float mouseSensitivity;
-
-        private Transform _parent;
+        [SerializeField] private GameObject camera3;
+        void Start()
+        {
         
-        private void Start()
-        {
-            _parent = transform.parent;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void FixedUpdate()
+        // Update is called once per frame
+        void Update()
         {
-            RotateView();
-        }
-
-        private void RotateView()
-        {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            
-            _parent.Rotate(Vector3.up, mouseX);
+        
         }
     }
 }

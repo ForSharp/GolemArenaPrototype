@@ -20,6 +20,7 @@
         public float RegenerationStamina { get; set; }
         public float Stamina { get; set; }
         
+        
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
             return new GolemExtraStats ()
