@@ -14,23 +14,24 @@ public class GameCharacterState : MonoBehaviour
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
     public int Group { get; set; } //set in spawner
-    public int Lvl { get; set; } //set in user input
+    public int Lvl { get; private set; }
     public bool IsDead { get; private set; }
-    
     public GolemBaseStats BaseStats { get; private set; }
     public GolemExtraStats Stats { get; private set; }
     public Golem Golem;
-    public string Type { get; private set; }
-    public string Spec { get; private set; }
+    public string Type { get; set; }
+    public string Spec { get; set; }
 
     private void Start()
     {
         IsDead = false;
+        Lvl = 1;
     }
 
     public void InitProps()
     {
         Stats = Golem.GetExtraStats();
+        BaseStats = Golem.GetBaseStats();
         MaxHealth = Stats.Health;
         CurrentHealth = MaxHealth;
         CreateHealthBar();

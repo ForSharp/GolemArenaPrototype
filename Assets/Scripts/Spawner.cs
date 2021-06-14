@@ -6,28 +6,32 @@ using GolemEntity;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] golemPrefabs;
-
     [SerializeField] private Vector3 spawnPoint;
 
-    public Golem Golem { get; private set; }
+    private Golem Golem { get; set; }
+    private static int _group = 0;
 
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
         var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-20, +21), spawnPoint.y,
-            spawnPoint.z + Random.Range(-10, +11));
+            spawnPoint.z + Random.Range(-20, +21));
         GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), randomSpawn, Quaternion.identity);
-        
+
         Game.AddToAllGolems(Golem);
-        
-        
+
+        InitializeCharacterState(newGolem, golemType, specialization);
+        _group++;
+    }
+
+    private void InitializeCharacterState(GameObject newGolem, GolemType golemType, Specialization specialization)
+    {
         var state = newGolem.GetComponent<GameCharacterState>();
         state.Golem = Golem;
-        state.Group = Random.Range(1, 3);
+        state.Group = _group;
         state.InitProps();
-
-        var user = GetComponent<UserInputTest>();
-        user.Golem = Golem;
+        state.Type = golemType.ToString();
+        state.Spec = specialization.ToString();
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)
@@ -49,6 +53,5 @@ public class Spawner : MonoBehaviour
         };
 
         return golemDictionary[golemType.ToString()];
-
     }
 }
