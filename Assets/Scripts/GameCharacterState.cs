@@ -7,6 +7,7 @@ public class GameCharacterState : MonoBehaviour
 {
     //TODO: создать производный от GameCharacterState класс, содержащий все, что есть сейчас, но применимо только к голему.
     //TODO: GameCharacterState сделать простым и универсальным, чтобы использовать для всех персонажей кроме големов.
+    //TODO: change public to privates, create accessors, init by arguments in spawner mb
     
     [SerializeField] private bool isDynamicHealthBarCreate = true;
     [SerializeField] private GameObject healthBarPrefab;
