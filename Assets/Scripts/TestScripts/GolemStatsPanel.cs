@@ -12,9 +12,16 @@ public class GolemStatsPanel : MonoBehaviour
     private GameCharacterState _state;
     private GolemExtraStats _stats;
 
+    private void Start()
+    {
+        EventContainer.GolemStatsChanged += UpdateStatsValues;
+    }
+
     private void Update()
     {
         HandleMouseClick();
+        
+        SetLvl(); 
     }
 
     private void HandleMouseClick()
@@ -31,37 +38,38 @@ public class GolemStatsPanel : MonoBehaviour
                     _stats = _state.Stats;
                     FillMainInfo();
                     FillTexts();
-                    panel.SetActive(true); //mb instantiate there or mb instantiate like health bar
+                    panel.SetActive(true); 
                 }
                 else
                 {
-                    panel.SetActive(false); //
+                    panel.SetActive(false); 
                 }
             }
         }
     }
 
-    private bool TryGetNewState(Collider coll)
+    private void UpdateStatsValues()
     {
-        if (coll.GetComponent<GameCharacterState>())
-        {
-            _state = coll.GetComponent<GameCharacterState>();
-            return true;
-        }
+        _stats = _state.Stats;
+        FillMainInfo();
+        FillTexts();
+    }
 
-        if (coll.GetComponentInParent<GameCharacterState>())
+    private void SetLvl()
+    {
+        if (_state)
         {
-            _state = coll.GetComponentInParent<GameCharacterState>();
-            return true;
-        }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _state.LvlUp();
+                
+            }
 
-        if (coll.GetComponentInChildren<GameCharacterState>())
-        {
-            _state = coll.GetComponentInChildren<GameCharacterState>();
-            return true;
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _state.LvlDown();
+            }
         }
-
-        return false;
     }
 
     private void SetPanelPosition()
@@ -104,5 +112,28 @@ public class GolemStatsPanel : MonoBehaviour
         }
 
         return default;
+    }
+
+    private bool TryGetNewState(Collider coll)
+    {
+        if (coll.GetComponent<GameCharacterState>())
+        {
+            _state = coll.GetComponent<GameCharacterState>();
+            return true;
+        }
+
+        if (coll.GetComponentInParent<GameCharacterState>())
+        {
+            _state = coll.GetComponentInParent<GameCharacterState>();
+            return true;
+        }
+
+        if (coll.GetComponentInChildren<GameCharacterState>())
+        {
+            _state = coll.GetComponentInChildren<GameCharacterState>();
+            return true;
+        }
+
+        return false;
     }
 }

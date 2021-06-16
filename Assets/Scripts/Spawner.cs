@@ -20,18 +20,15 @@ public class Spawner : MonoBehaviour
 
         Game.AddToAllGolems(Golem);
 
-        InitializeCharacterState(newGolem, golemType, specialization);
+        ConnectGolemWithState(newGolem, Golem, golemType, specialization);
+        
         _group++;
     }
 
-    private void InitializeCharacterState(GameObject newGolem, GolemType golemType, Specialization specialization)
+    private void ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
     {
         var state = newGolem.GetComponent<GameCharacterState>();
-        state.Golem = Golem;
-        state.Group = _group;
-        state.InitProps();
-        state.Type = golemType.ToString();
-        state.Spec = specialization.ToString();
+        state.InitializeState(golem, _group, golemType.ToString(), specialization.ToString());
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)
