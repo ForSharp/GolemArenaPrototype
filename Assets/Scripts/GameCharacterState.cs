@@ -47,14 +47,18 @@ public class GameCharacterState : MonoBehaviour
     {
         BaseStats = Golem.GetBaseStats();
         Stats = Golem.GetExtraStats();
-        SetProportionallyCurrentHealth(Stats.Health);
+        SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
         MaxHealth = Stats.Health;
     }
 
     private void SetProportionallyCurrentHealth(float newMaxHealth)
     {
-        float multiplier = MaxHealth / newMaxHealth;
-        CurrentHealth *= multiplier;
+        float difference = MaxHealth - newMaxHealth;
+        CurrentHealth -= difference;
+        if (CurrentHealth > newMaxHealth)
+        {
+            CurrentHealth = newMaxHealth;
+        }
     }
     
     public void InitializeState(Golem golem, int group, string type, string spec)
