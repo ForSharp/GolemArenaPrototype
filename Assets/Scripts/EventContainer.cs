@@ -1,11 +1,18 @@
 ﻿using System;
 
-public class EventContainer
+public static class EventContainer
 {
-    public event Action GolemCreated;
+    public static event Action GolemCreated;
 
-    public virtual void OnGolemCreated()
+    public static void OnGolemCreated()
     {
         GolemCreated?.Invoke();
+    }
+
+    public static event Action GolemStatsChanged;
+
+    public static void OnGolemStatsChanged()
+    {
+        GolemStatsChanged?.Invoke();
     }
 }

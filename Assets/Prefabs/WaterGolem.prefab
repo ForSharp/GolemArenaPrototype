@@ -21307,6 +21307,7 @@ GameObject:
   - component: {fileID: 8105422500313682495}
   - component: {fileID: 1266928487224045277}
   - component: {fileID: 3842931831599647900}
+  - component: {fileID: 3151050554088467978}
   m_Layer: 0
   m_Name: WaterGolem
   m_TagString: Player
@@ -21410,6 +21411,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3151050554088467978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8206197630238949802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8206197630238949846

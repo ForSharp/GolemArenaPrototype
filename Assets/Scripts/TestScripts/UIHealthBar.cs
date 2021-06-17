@@ -8,6 +8,7 @@ public class UIHealthBar : MonoBehaviour
     [SerializeField] private GameObject fill;
     private Slider _slider;
     private const int TimeToDestroy = 5;
+    private Camera _mainCamera;
 
     private void Start()
     {
@@ -15,6 +16,8 @@ public class UIHealthBar : MonoBehaviour
         transform.SetParent(GameObject.Find("Canvas").transform);
         if (characterState)
             _slider.maxValue = characterState.MaxHealth;
+        
+        _mainCamera = Camera.main;
     }
 
     private void Update()
@@ -35,7 +38,7 @@ public class UIHealthBar : MonoBehaviour
             characterState.transform.position.y + characterState.GetComponent<Collider>().bounds.size.y * multiplier,
             characterState.transform.position.z);
         
-        var position = Camera.main.WorldToScreenPoint(requirePos);
+        var position = _mainCamera.WorldToScreenPoint(requirePos);
 
         transform.position = position;
     }

@@ -7,8 +7,8 @@ public class RunBehaviour: WalkBehaviour
     private GameCharacterState _state;
     private bool _isWastingEnergy;
     
-    public RunBehaviour(GameCharacterState thisState, Animator animator, NavMeshAgent agent,
-        bool isWastingEnergy = true, params Action<Animator>[] walkAnimationSetters) : base(animator, agent, walkAnimationSetters)
+    public RunBehaviour(GameCharacterState thisState, float stopDistance, Animator animator, NavMeshAgent agent,
+        bool isWastingEnergy = true, params Action<Animator>[] walkAnimationSetters) : base(stopDistance, animator, agent, walkAnimationSetters)
     {
         _state = thisState;
         _isWastingEnergy = isWastingEnergy;

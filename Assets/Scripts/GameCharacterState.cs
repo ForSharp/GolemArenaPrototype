@@ -1,4 +1,6 @@
-﻿using GolemEntity;
+﻿using System;
+using GolemEntity;
+using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using UnityEngine;
 
@@ -12,28 +14,76 @@ public class GameCharacterState : MonoBehaviour
     
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
-    public int Group { get; set; } //set in spawner
-    public int Lvl { get; set; } //set in user input
+    public int Group { get; private set; } 
+    public int Lvl { get; private set; }
     public bool IsDead { get; private set; }
+    public GolemBaseStats BaseStats { get; private set; }
     public GolemExtraStats Stats { get; private set; }
-    public Golem Golem;
+    public string Type { get; private set; }
+    public string Spec { get; private set; }
+    private Golem Golem { get; set; }
+    private bool _isReady = false;
 
     private void Start()
     {
-        IsDead = false;
-        Stats = Golem.GetExtraStats();
-        MaxHealth = Stats.Health;
-        CurrentHealth = MaxHealth;
-        CreateHealthBar();
+        EventContainer.GolemStatsChanged += UpdateStats;
     }
 
     private void Update()
     {
+        if (!_isReady)
+        {
+            return;
+        }
+        
         if (CurrentHealth <= 0)
         {
             IsDead = true;
             return;
         }
+    }
+
+    private void UpdateStats()
+    {
+        BaseStats = Golem.GetBaseStats();
+        Stats = Golem.GetExtraStats();
+        SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
+        MaxHealth = Stats.Health;
+    }
+
+    private void SetProportionallyCurrentHealth(float newMaxHealth)
+    {
+        float difference = MaxHealth - newMaxHealth;
+        CurrentHealth -= difference;
+        if (CurrentHealth > newMaxHealth)
+        {
+            CurrentHealth = newMaxHealth;
+        }
+    }
+    
+    public void InitializeState(Golem golem, int group, string type, string spec)
+    {
+        Golem = golem;
+        Group = group;
+        Type = type;
+        Spec = spec;
+        
+        SetStartState();
+    }
+
+    private void SetStartState()
+    {
+        if (Golem == null) return;
+        
+        IsDead = false;
+        Lvl = 1;
+        Stats = Golem.GetExtraStats();
+        BaseStats = Golem.GetBaseStats();
+        MaxHealth = Stats.Health;
+        CurrentHealth = MaxHealth;
+        
+        CreateHealthBar();
+        _isReady = true;
     }
 
     private void CreateHealthBar()
@@ -50,6 +100,23 @@ public class GameCharacterState : MonoBehaviour
         CurrentHealth -= damage;
     }
 
+    public void LvlUp()
+    {
+        Golem.ChangeBaseStatsProportionally(10);
+        EventContainer.OnGolemStatsChanged();
+        Lvl++;
+    }
+    
+    public void LvlDown()
+    {
+        if (Lvl > 1)
+        {
+            Golem.ChangeBaseStatsProportionally(-10);
+            EventContainer.OnGolemStatsChanged();
+            Lvl--;
+        }
+    }
+    
     public void SpendStamina(float energy)
     {
         

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace GolemEntity.ExtraStats
+﻿namespace GolemEntity.ExtraStats
 {
     public struct GolemExtraStats 
     {
@@ -18,8 +15,11 @@ namespace GolemEntity.ExtraStats
         public float MagicResistance { get; set; }
         public float ManaPool { get; set; }
         public float MoveSpeed { get; set; }
-        public float RegenerationRate { get; set; }
+        public float RegenerationHealth { get; set; }
+        public float RegenerationMana { get; set; }
+        public float RegenerationStamina { get; set; }
         public float Stamina { get; set; }
+        
         
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
@@ -37,7 +37,9 @@ namespace GolemEntity.ExtraStats
                 MagicResistance = statsA.MagicResistance + statsB.MagicResistance,
                 ManaPool = statsA.ManaPool + statsB.ManaPool,
                 MoveSpeed = statsA.MoveSpeed + statsB.MoveSpeed,
-                RegenerationRate = statsA.RegenerationRate + statsB.RegenerationRate,
+                RegenerationHealth = statsA.RegenerationHealth + statsB.RegenerationHealth,
+                RegenerationMana = statsA.RegenerationMana + statsB.RegenerationMana,
+                RegenerationStamina = statsA.RegenerationStamina + statsB.RegenerationStamina,
                 Stamina = statsA.Stamina + statsB.Stamina
             };
         }
@@ -58,7 +60,9 @@ namespace GolemEntity.ExtraStats
                 MagicResistance = stats.MagicResistance * multiplier,
                 ManaPool = stats.ManaPool * multiplier,
                 MoveSpeed = stats.MoveSpeed * multiplier,
-                RegenerationRate = stats.RegenerationRate * multiplier,
+                RegenerationHealth = stats.RegenerationHealth * multiplier,
+                RegenerationMana = stats.RegenerationMana * multiplier,
+                RegenerationStamina = stats.RegenerationStamina * multiplier,
                 Stamina = stats.Stamina * multiplier
             };
         }
@@ -78,7 +82,9 @@ namespace GolemEntity.ExtraStats
                    $"MagicResistance = {MagicResistance}," +
                    $"ManaPool = {ManaPool}," +
                    $"MoveSpeed = {MoveSpeed}," +
-                   $"RegenerationRate = {RegenerationRate}," +
+                   $"RegenerationHealth = {RegenerationHealth}," +
+                   $"RegenerationMana = {RegenerationMana}," +
+                   $"RegenerationStamina = {RegenerationStamina}," +
                    $"Stamina = {Stamina}";
         }
     }

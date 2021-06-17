@@ -1,9 +1,5 @@
-﻿using System;
-using __Scripts;
-using __Scripts.ExtraStats;
-using __Scripts.GolemEntity.ExtraStats;
+﻿using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
-using UnityEngine;
 
 namespace GolemEntity
 {
@@ -108,7 +104,9 @@ namespace GolemEntity
                 MagicResistance = extra.GetExtraStats().MagicResistance,
                 ManaPool = extra.GetExtraStats().ManaPool,
                 MoveSpeed = extra.GetExtraStats().MoveSpeed,
-                RegenerationRate = extra.GetExtraStats().RegenerationRate,
+                RegenerationHealth = extra.GetExtraStats().RegenerationHealth,
+                RegenerationMana = extra.GetExtraStats().RegenerationMana,
+                RegenerationStamina = extra.GetExtraStats().RegenerationStamina,
                 Stamina = extra.GetExtraStats().Stamina
             };
         }

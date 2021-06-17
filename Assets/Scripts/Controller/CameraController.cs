@@ -1,29 +1,55 @@
 ﻿using UnityEngine;
 
-namespace __Scripts
+namespace Controller
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private float mouseSensitivity;
-
-        private Transform _parent;
+        [SerializeField] private float moveSpeed = 20f;
+        [SerializeField] private float scrollSpeed = 100f;
+        [SerializeField] private Vector2 limitX = new Vector2(-40, 40);
+        [SerializeField] private Vector2 limitY = new Vector2(0, 40);
+        [SerializeField] private Vector2 limitZ = new Vector2(-60, 50);
         
-        private void Start()
+        private const float BorderThickness = 10f;
+        
+        private void Update()
         {
-            _parent = transform.parent;
-            Cursor.lockState = CursorLockMode.Locked;
+            MoveCamera();
         }
 
-        private void FixedUpdate()
+        private void MoveCamera()
         {
-            RotateView();
-        }
-
-        private void RotateView()
-        {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            Vector3 pos = transform.position;
             
-            _parent.Rotate(Vector3.up, mouseX);
+            if (Input.mousePosition.y >= Screen.height - BorderThickness)
+            {
+                pos.z += moveSpeed * Time.deltaTime;
+            }
+
+            if (Input.mousePosition.y <= BorderThickness)
+            {
+                pos.z -= moveSpeed * Time.deltaTime;
+            }
+            
+            if (Input.mousePosition.x >= Screen.width - BorderThickness)
+            {
+                pos.x += moveSpeed * Time.deltaTime;
+            }
+            
+            if (Input.mousePosition.x <= BorderThickness)
+            {
+                pos.x -= moveSpeed * Time.deltaTime;
+            }
+
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            pos.y -= scroll * scrollSpeed * Time.deltaTime;
+            
+            pos.x = Mathf.Clamp(pos.x, limitX.x, limitX.y);
+            pos.y = Mathf.Clamp(pos.y, limitY.x, limitY.y);
+            pos.z = Mathf.Clamp(pos.z, limitZ.x, limitZ.y);
+            
+            transform.position = pos;
+
         }
     }
 }

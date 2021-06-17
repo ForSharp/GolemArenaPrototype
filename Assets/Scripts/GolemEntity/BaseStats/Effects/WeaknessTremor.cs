@@ -1,4 +1,6 @@
-﻿namespace __Scripts.BaseStats.Effects
+﻿using GolemEntity.BaseStats;
+
+namespace Scripts.BaseStats.Effects
 {
     public class WeaknessTremor : StatsDecorator
     {

@@ -3074,6 +3074,7 @@ GameObject:
   - component: {fileID: 7935145971508905141}
   - component: {fileID: 3923237604040833016}
   - component: {fileID: 1885914800406408920}
+  - component: {fileID: -6641197732942207949}
   m_Layer: 0
   m_Name: ObsidianGolem
   m_TagString: Untagged
@@ -3107,7 +3108,7 @@ Animator:
   m_GameObject: {fileID: 9049357595730213333}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5c7615c5345ca924cb6bcbb046659aff, type: 3}
-  m_Controller: {fileID: 9100000, guid: e2cf68ff4b1ffda45a77f7307dd789b9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9ae6b4c1489bc4e1689303d8a6b126eb, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3177,5 +3178,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6641197732942207949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049357595730213333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

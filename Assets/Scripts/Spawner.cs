@@ -1,34 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using __Scripts;
+using Scripts;
 using GolemEntity;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] golemPrefabs;
-
     [SerializeField] private Vector3 spawnPoint;
 
+    private Golem Golem { get; set; }
     private static int _group = 0;
-    public Golem Golem { get; private set; }
 
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
-        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-10, +11), spawnPoint.y,
-            spawnPoint.z + Random.Range(-10, +11));
+        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-20, +21), spawnPoint.y,
+            spawnPoint.z + Random.Range(-20, +21));
         GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), randomSpawn, Quaternion.identity);
-        
-        Game.AddToAllGolems(Golem);
-        
-        
-        var state = newGolem.GetComponent<GameCharacterState>();
-        state.Golem = Golem;
-        state.Group = _group;
-        _group++;
 
-        var user = GetComponent<UserInputTest>();
-        user.Golem = Golem;
+        Game.AddToAllGolems(Golem);
+
+        ConnectGolemWithState(newGolem, Golem, golemType, specialization);
+        
+        _group++;
+    }
+
+    private void ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
+    {
+        var state = newGolem.GetComponent<GameCharacterState>();
+        state.InitializeState(golem, _group, golemType.ToString(), specialization.ToString());
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)
@@ -50,6 +50,5 @@ public class Spawner : MonoBehaviour
         };
 
         return golemDictionary[golemType.ToString()];
-
     }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace __Scripts
+﻿namespace GolemEntity.BaseStats
 {
     public abstract class StatsDecorator : IStatsProvider
     {

@@ -17138,6 +17138,7 @@ GameObject:
   - component: {fileID: 5792968299056729797}
   - component: {fileID: -3891732103723991720}
   - component: {fileID: 634000375634567646}
+  - component: {fileID: 8728895224319458788}
   m_Layer: 0
   m_Name: FireGolem
   m_TagString: Player
@@ -17240,6 +17241,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8728895224319458788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435020152999760548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5435020152999762398

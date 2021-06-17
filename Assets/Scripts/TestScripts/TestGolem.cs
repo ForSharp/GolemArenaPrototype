@@ -1,5 +1,5 @@
 ﻿
-using __Scripts;
+using Scripts;
 using GolemEntity;
 using UnityEngine;
 

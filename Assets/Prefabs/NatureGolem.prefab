@@ -771,6 +771,7 @@ GameObject:
   - component: {fileID: 2388132466335153670}
   - component: {fileID: 5340771795108481057}
   - component: {fileID: 3041326163426584198}
+  - component: {fileID: -1917163489990731323}
   m_Layer: 0
   m_Name: NatureGolem
   m_TagString: Player
@@ -874,6 +875,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1917163489990731323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596171330939807268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8596171330939808586
