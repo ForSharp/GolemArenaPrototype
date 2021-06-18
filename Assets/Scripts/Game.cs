@@ -4,6 +4,8 @@ public static class Game
 {
     private static List<GameCharacterState> _allGolems = new List<GameCharacterState>();
 
+    public static int AllGolemsCount => _allGolems.Count;
+
     public static void AddToAllGolems(GameCharacterState golem)
     {
         _allGolems.Add(golem);

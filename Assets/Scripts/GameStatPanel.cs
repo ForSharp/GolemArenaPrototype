@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class GameStatPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject gameStatTemplatePrefab;
+    [SerializeField] private GameObject content;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
