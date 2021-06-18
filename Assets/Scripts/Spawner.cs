@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] golemPrefabs;
     [SerializeField] private Vector3 spawnPoint;
+    [SerializeField] private float spawnAreaRadius = 50;
+    [SerializeField] private Color[] groupColors;
 
     private Golem Golem { get; set; }
     private static int _group = 0;
@@ -14,21 +16,27 @@ public class Spawner : MonoBehaviour
     public void SpawnGolem(GolemType golemType, Specialization specialization)
     {
         Golem = new Golem(golemType, specialization);
-        var randomSpawn = new Vector3(spawnPoint.x + Random.Range(-20, +21), spawnPoint.y,
-            spawnPoint.z + Random.Range(-20, +21));
-        GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), randomSpawn, Quaternion.identity);
-
-        Game.AddToAllGolems(Golem);
-
+        
+        GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
+        
         ConnectGolemWithState(newGolem, Golem, golemType, specialization);
         
         _group++;
+    }
+
+    private Vector3 GetRandomSpawnPoint()
+    {
+        Vector3 randomPoint = spawnPoint +
+                              new Vector3(Random.value - 0.5f, spawnPoint.y, Random.value - 0.5f).normalized *
+                              spawnAreaRadius;
+        return randomPoint;
     }
 
     private void ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
     {
         var state = newGolem.GetComponent<GameCharacterState>();
         state.InitializeState(golem, _group, golemType.ToString(), specialization.ToString());
+        Game.AddToAllGolems(state);
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)

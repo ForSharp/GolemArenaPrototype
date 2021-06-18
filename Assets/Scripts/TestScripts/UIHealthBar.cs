@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,8 @@ public class UIHealthBar : MonoBehaviour
 {
     [HideInInspector] public GameCharacterState characterState;
     [SerializeField] private GameObject fill;
+    [SerializeField] private Text maxHealthText;
+    [SerializeField] private Text currentHealthText;
     private Slider _slider;
     private const int TimeToDestroy = 5;
     private Camera _mainCamera;
@@ -15,7 +18,10 @@ public class UIHealthBar : MonoBehaviour
         _slider = GetComponent<Slider>();
         transform.SetParent(GameObject.Find("Canvas").transform);
         if (characterState)
+        {
             _slider.maxValue = characterState.MaxHealth;
+            maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
+        }
         
         _mainCamera = Camera.main;
     }
@@ -46,6 +52,7 @@ public class UIHealthBar : MonoBehaviour
     private void UpdateSliderValue()
     {
         _slider.value = characterState.CurrentHealth;
+        currentHealthText.text = _slider.value.ToString(CultureInfo.InvariantCulture);
     }
     
     private void DestroyOnDeath()
@@ -69,6 +76,7 @@ public class UIHealthBar : MonoBehaviour
         if (Math.Abs(characterState.MaxHealth - _slider.maxValue) > 1)
         {
             _slider.maxValue = characterState.MaxHealth;
+            maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
