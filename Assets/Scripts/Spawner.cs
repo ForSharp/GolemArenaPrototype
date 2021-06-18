@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject[] golemPrefabs;
     [SerializeField] private Vector3 spawnPoint;
     [SerializeField] private float spawnAreaRadius = 50;
+    [SerializeField] private Color[] groupColors;
 
     private Golem Golem { get; set; }
     private static int _group = 0;
@@ -17,9 +18,7 @@ public class Spawner : MonoBehaviour
         Golem = new Golem(golemType, specialization);
         
         GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-
-        Game.AddToAllGolems(Golem);
-
+        
         ConnectGolemWithState(newGolem, Golem, golemType, specialization);
         
         _group++;
@@ -37,6 +36,7 @@ public class Spawner : MonoBehaviour
     {
         var state = newGolem.GetComponent<GameCharacterState>();
         state.InitializeState(golem, _group, golemType.ToString(), specialization.ToString());
+        Game.AddToAllGolems(state);
     }
 
     private GameObject GetRelevantPrefab(GolemType golemType)

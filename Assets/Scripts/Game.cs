@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using GolemEntity;
 
 public static class Game
 {
-    private static List<Golem> _allGolems;
+    private static List<GameCharacterState> _allGolems = new List<GameCharacterState>();
 
-    public static void AddToAllGolems(Golem golem)
+    public static void AddToAllGolems(GameCharacterState golem)
     {
-        //_allGolems.Add(golem);
+        _allGolems.Add(golem);
     }
 
-    public static Golem GetGolem(int index)
+    public static GameCharacterState GetGolem(int index)
     {
         return _allGolems[index];
     }
+    
+    
 }
