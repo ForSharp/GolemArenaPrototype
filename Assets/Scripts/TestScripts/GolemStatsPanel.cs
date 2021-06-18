@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +10,7 @@ public class GolemStatsPanel : MonoBehaviour
     [SerializeField] private Text[] extraStatsUI;
     private GameCharacterState _state;
     private GolemExtraStats _stats;
+    private bool _needUpd;
 
     private void Start()
     {
@@ -21,7 +21,12 @@ public class GolemStatsPanel : MonoBehaviour
     {
         HandleMouseClick();
         
-        SetLvl(); 
+        SetLvl();
+
+        if (_needUpd)
+        {
+            UpdateStatsNow();
+        }
     }
 
     private void HandleMouseClick()
@@ -48,11 +53,20 @@ public class GolemStatsPanel : MonoBehaviour
         }
     }
 
-    private void UpdateStatsValues()
+    private void UpdateStatsNow()
     {
         _stats = _state.Stats;
         FillMainInfo();
         FillTexts();
+        _needUpd = false;
+    }
+    
+    private void UpdateStatsValues()
+    {
+        // _stats = _state.Stats;
+        // FillMainInfo();
+        // FillTexts();
+        _needUpd = true;
     }
 
     private void SetLvl()
