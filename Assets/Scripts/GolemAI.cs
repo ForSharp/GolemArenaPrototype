@@ -58,18 +58,20 @@ public class GolemAI : MonoBehaviour
     {
         if (_thisState.IsDead)
         {
-            AnimationChanger.SetGolemDie(_animator);
+            var deathAnims = AnimationChanger.GetAllDeathAnimations(_animator);
+            deathAnims[Random.Range(0, deathAnims.Length)].Invoke();
+            
             _thisState.LastEnemyAttacked.Kills += 1;
             EventContainer.GolemDied -= KillGolem;
-            Destroy(gameObject, 10);
+            //Destroy(gameObject, 10);
             
-            //StartCoroutine(WaitForSecondsToDisable(2));
+            StartCoroutine(WaitForSecondsToDisable(2));
         }
     }
 
     private IEnumerator WaitForSecondsToDisable(int sec)
     {
-        yield return new WaitForSeconds(sec); //кидает эксепшн типо не могу запустить корутину у неактивного объекта, и пох что эта самая корутина его и делает неактивным, это ее главная и единственная задача
+        yield return new WaitForSeconds(sec); 
         gameObject.SetActive(false);
     }
 
@@ -91,9 +93,8 @@ public class GolemAI : MonoBehaviour
             var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
             attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, _thisState.RoundStatistics, false, AnimationChanger.SetGolemDoubleHit,
-                AnimationChanger.SetGolemLeftHit,
-                AnimationChanger.SetGolemRightHit);
+                _animator, _thisState.Group, _thisState.RoundStatistics, false,
+                AnimationChanger.GetAllAttackAnimations(_animator));
             _attackable.Attack(_thisState.Stats.DamagePerHeat, 2, transform.position);
         }
         else if (CloseDistance >= distanceToTarget)

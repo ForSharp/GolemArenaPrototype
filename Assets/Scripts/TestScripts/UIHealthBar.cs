@@ -11,7 +11,7 @@ public class UIHealthBar : MonoBehaviour
     [SerializeField] private Text maxHealthText;
     [SerializeField] private Text currentHealthText;
     private Slider _slider;
-    private const int TimeToDestroy = 5;
+    private const int TimeToDestroy = 1;
     private Camera _mainCamera;
 
     private void Start()
@@ -60,15 +60,15 @@ public class UIHealthBar : MonoBehaviour
         if (characterState.IsDead)
         {
             fill.SetActive(false);
-            Destroy(gameObject, TimeToDestroy);
+            //Destroy(gameObject, TimeToDestroy);
             
-            //StartCoroutine(WaitForSecondsToDisable(TimeToDestroy));
+            StartCoroutine(WaitForSecondsToDisable(TimeToDestroy));
         }
     }
 
     private IEnumerator WaitForSecondsToDisable(int sec)
     {
-        yield return new WaitForSeconds(sec); //кидает эксепшн типо не могу запустить корутину у неактивного объекта, и пох что эта самая корутина его и делает неактивным, это ее главная и единственная задача
+        yield return new WaitForSeconds(sec); 
         gameObject.SetActive(false);
     }
 
