@@ -1,4 +1,4 @@
-﻿public struct RoundStatistics
+﻿public class RoundStatistics
 {
     public float Damage;
     public int Kills;

@@ -60,16 +60,16 @@ public class UIHealthBar : MonoBehaviour
         if (characterState.IsDead)
         {
             fill.SetActive(false);
-            //Destroy(gameObject, TimeToDestroy);
+            Destroy(gameObject, TimeToDestroy);
             
-            StartCoroutine(WaitForSeconds(TimeToDestroy));
-            gameObject.SetActive(false);
+            //StartCoroutine(WaitForSecondsToDisable(TimeToDestroy));
         }
     }
 
-    private IEnumerator WaitForSeconds(int sec)
+    private IEnumerator WaitForSecondsToDisable(int sec)
     {
-        yield return new WaitForSeconds(sec);
+        yield return new WaitForSeconds(sec); //кидает эксепшн типо не могу запустить корутину у неактивного объекта, и пох что эта самая корутина его и делает неактивным, это ее главная и единственная задача
+        gameObject.SetActive(false);
     }
 
     private void ChangeMaxValue()

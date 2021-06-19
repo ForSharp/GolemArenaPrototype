@@ -20,7 +20,7 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
     private bool _isReady = false;
     
     public CommonMeleeAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
-        RoundStatistics statistics, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
+        RoundStatistics statistics = default, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
         _attackRange = attackRange;
@@ -29,10 +29,11 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         _animator = animator;
         _group = group;
         _isFriendlyFire = isFriendlyFire;
+        _statistics = statistics;
     }
 
     public void FactoryMethod(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
-        RoundStatistics statistics, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
+        RoundStatistics statistics = default, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
         _attackRange = attackRange;

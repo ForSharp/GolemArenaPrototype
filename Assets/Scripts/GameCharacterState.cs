@@ -42,6 +42,7 @@ public class GameCharacterState : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             IsDead = true;
+            EventContainer.OnGolemDied();
             return;
         }
     }
