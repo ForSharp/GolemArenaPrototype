@@ -56,9 +56,19 @@ public class GolemAI : MonoBehaviour
     private void KillGolem()
     {
         AnimationChanger.SetGolemDie(_animator);
-        Destroy(gameObject, 10);
+        //Destroy(gameObject, 10);
+
+        _thisState.LastEnemyAttacked.Kills += 1;
+        StartCoroutine(WaitForSeconds(10));
+
+        gameObject.SetActive(false);
     }
 
+    private IEnumerator WaitForSeconds(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+    }
+    
     private void SetDefaultBehaviour()
     {
         _moveable = new NoMoveBehaviour(_animator, animator => AnimationChanger.SetIdle(animator));
@@ -77,7 +87,7 @@ public class GolemAI : MonoBehaviour
             var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
             attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, false, AnimationChanger.SetGolemDoubleHit,
+                _animator, _thisState.Group, _thisState.RoundStatistics,false, AnimationChanger.SetGolemDoubleHit,
                 AnimationChanger.SetGolemLeftHit,
                 AnimationChanger.SetGolemRightHit);
             _attackable.Attack(_thisState.Stats.DamagePerHeat, 2, transform.position);

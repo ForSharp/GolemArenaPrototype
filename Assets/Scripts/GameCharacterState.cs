@@ -15,6 +15,7 @@ public class GameCharacterState : MonoBehaviour
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
     public int Group { get; private set; } 
+    public Color ColorGroup { get; private set; } 
     public int Lvl { get; private set; }
     public bool IsDead { get; private set; }
     public GolemBaseStats BaseStats { get; private set; }
@@ -22,7 +23,9 @@ public class GameCharacterState : MonoBehaviour
     public string Type { get; private set; }
     public string Spec { get; private set; }
     private Golem Golem { get; set; }
-    private bool _isReady = false;
+    private bool _isReady;
+    public RoundStatistics LastEnemyAttacked;
+    public RoundStatistics RoundStatistics = new RoundStatistics() {Damage = 0, Kills = 0, Wins = 0};
 
     private void Start()
     {
@@ -61,10 +64,11 @@ public class GameCharacterState : MonoBehaviour
         }
     }
     
-    public void InitializeState(Golem golem, int group, string type, string spec)
+    public void InitializeState(Golem golem, int group, Color colorGroup, string type, string spec)
     {
         Golem = golem;
         Group = group;
+        ColorGroup = colorGroup;
         Type = type;
         Spec = spec;
         
@@ -95,9 +99,11 @@ public class GameCharacterState : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage, int defence = 0)
+    public void TakeDamage(float damage, int defence = 0, RoundStatistics statistics = default)
     {
         CurrentHealth -= damage;
+        statistics.Damage += damage;
+        LastEnemyAttacked = statistics;
     }
 
     public void LvlUp()

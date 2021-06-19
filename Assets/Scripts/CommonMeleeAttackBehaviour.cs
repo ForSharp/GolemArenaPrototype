@@ -15,11 +15,12 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
     private int _group;
     private bool _isFriendlyFire;
     private float _timer;
-
+    private RoundStatistics _statistics;
+    
     private bool _isReady = false;
     
     public CommonMeleeAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
-        bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
+        RoundStatistics statistics, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
         _attackRange = attackRange;
@@ -30,8 +31,8 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         _isFriendlyFire = isFriendlyFire;
     }
 
-    public void FactoryMethod(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
-        bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
+    public void FactoryMethod(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
+        RoundStatistics statistics, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
         _attackRange = attackRange;
@@ -40,6 +41,7 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         _animator = animator;
         _group = group;
         _isFriendlyFire = isFriendlyFire;
+        _statistics = statistics;
         _isReady = true;
     }
 
@@ -113,7 +115,7 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
             {
                 if (state.Group != _group)
                 {
-                    state.TakeDamage(damage);
+                    state.TakeDamage(damage, statistics: _statistics);
                 }
             }
             else if (_isFriendlyFire)
