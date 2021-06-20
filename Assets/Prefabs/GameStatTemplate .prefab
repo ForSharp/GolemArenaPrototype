@@ -587,11 +587,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8c9de2797249129eac2e65746fb398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  golemTypeText: {fileID: 0}
-  specializationText: {fileID: 0}
-  damageText: {fileID: 0}
-  killsText: {fileID: 0}
-  winsText: {fileID: 0}
+  golemTypeText: {fileID: 8362335050817407851}
+  specializationText: {fileID: 8362335049473384216}
+  damageText: {fileID: 8362335050013325573}
+  killsText: {fileID: 8362335049823861330}
+  winsText: {fileID: 8362335051284950193}
+  backGround: {fileID: 8362335049616841687}
 --- !u!1 &8362335050817407849
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,4 +15,11 @@ public static class EventContainer
     {
         GolemStatsChanged?.Invoke();
     }
+
+    public static event Action GolemDied;
+    
+    public static void OnGolemDied()
+    {
+        GolemDied?.Invoke();
+    }
 }
