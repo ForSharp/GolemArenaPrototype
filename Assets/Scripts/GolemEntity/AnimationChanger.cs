@@ -11,18 +11,8 @@ namespace GolemEntity
             return new Action<Animator>[]
             {
                 (SetGolemLeftHit),
-                (SetGolemLeftHit1),
-                (SetGolemLeftHit2),
-                (SetGolemLeftHit3),
                 (SetGolemRightHit),
-                (SetGolemRightHit1),
-                (SetGolemRightHit2),
-                (SetGolemRightHit3),
-                (SetGolemDoubleHit),
-                (SetGolemLeftKick1),
-                (SetGolemLeftKick2),
-                (SetGolemRightKick1),
-                (SetGolemRightKick2)
+                (SetGolemDoubleHit)
             };
         }
         
@@ -30,10 +20,7 @@ namespace GolemEntity
         {
             return new Action[]
             {
-                (() => SetGolemDie(animator)),
-                (() => SetGolemDieUnarmed(animator)),
-                (() => SetGolemDieStaff(animator)),
-                (() => SetGolemDieShield(animator))
+                (() => SetGolemDie(animator))
             };
         }
         
@@ -66,52 +53,17 @@ namespace GolemEntity
         {
             animator.SetTrigger("Die");
         }
-        public static void SetGolemDieUnarmed(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Death1");
-        }
-        public static void SetGolemDieStaff(Animator animator)
-        {
-            animator.SetTrigger("Staff-Death1");
-        }
-        public static void SetGolemDieShield(Animator animator)
-        {
-            animator.SetTrigger("Shield-Death1");
-        }
-        
+
         public static void SetGolemLeftHit(Animator animator)
         {
             //1.5
             animator.SetTrigger("LeftPunch");
         }
-        public static void SetGolemLeftHit1(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-L1");
-        }
-        public static void SetGolemLeftHit2(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-L2");
-        }
-        public static void SetGolemLeftHit3(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-L3");
-        }
+        
         public static void SetGolemRightHit(Animator animator)
         {
             //1.5
             animator.SetTrigger("RightPunch");
-        }
-        public static void SetGolemRightHit1(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-R1");
-        }
-        public static void SetGolemRightHit2(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-R2");
-        }
-        public static void SetGolemRightHit3(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-R3");
         }
 
         public static void SetGolemDoubleHit(Animator animator)
@@ -121,22 +73,7 @@ namespace GolemEntity
             animator.SetTrigger("DoublePunch");
             //animator.speed = 1;
         }
-        public static void SetGolemLeftKick1(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-Kick-L1");
-        }
-        public static void SetGolemLeftKick2(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-Kick-L2");
-        }
-        public static void SetGolemRightKick1(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-Kick-R1");
-        }
-        public static void SetGolemRightKick2(Animator animator)
-        {
-            animator.SetTrigger("Unarmed-Attack-Kick-R2");
-        }
+        
         public static void SetGolemBlock(Animator animator)
         {
             animator.SetBool("Block", true);
