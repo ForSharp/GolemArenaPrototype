@@ -19052,6 +19052,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9049357595720594389, guid: 70ea7359005078842a2998cac3796f32,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9049357595730213333, guid: 70ea7359005078842a2998cac3796f32,
         type: 3}
       propertyPath: m_Name
@@ -19070,7 +19075,7 @@ PrefabInstance:
     - target: {fileID: 9049357595730370725, guid: 70ea7359005078842a2998cac3796f32,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6683005e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9049357595730370725, guid: 70ea7359005078842a2998cac3796f32,
         type: 3}
