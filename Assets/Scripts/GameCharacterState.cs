@@ -27,6 +27,9 @@ public class GameCharacterState : MonoBehaviour
     public RoundStatistics LastEnemyAttacked;
     public RoundStatistics RoundStatistics = new RoundStatistics() {Damage = 0, Kills = 0, Wins = 0};
 
+
+    public string testStringAttack = null; 
+
     private void Start()
     {
         EventContainer.GolemStatsChanged += UpdateStats;

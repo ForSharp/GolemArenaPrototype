@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
 {
+    [SerializeField] private GameObject spherePrefab;
+    
     private float _hitHeight;
     private float _attackRange;
     private float _destructionRadius;
@@ -18,6 +20,7 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
     private RoundStatistics _statistics;
     
     private bool _isReady = false;
+    
     
     public CommonMeleeAttackBehaviour(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group, 
         RoundStatistics statistics = default, bool isFriendlyFire = false, params Action<Animator>[] hitAnimationSetters)
@@ -68,18 +71,26 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         {
             _timer = 0;
             _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator);
-
+            
             StartCoroutine(AttackCoroutine(damage, delayBetweenHits, attackerPosition));
         }
     }
 
     private IEnumerator AttackCoroutine(float damage, float delayBetweenHits, Vector3 attackerPosition)
     {
-        yield return new WaitForSeconds(delayBetweenHits / 2);
+        //yield return new WaitForSeconds(delayBetweenHits / 2);
+        
+        yield return new WaitForSeconds(0.75f);
         
         Vector3 spherePosition = attackerPosition + transform.forward * _attackRange;
         spherePosition.y += _hitHeight;
+        Debug.DrawLine(new Vector3(transform.position.x, spherePosition.y, transform.position.z), spherePosition, Color.magenta, 5);
         Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
+
+
+        var sphere = Instantiate(spherePrefab, spherePosition, Quaternion.identity);
+        Destroy(sphere, 1);
+        
         foreach (var item in FilterCollidersArray(colliders))
         {
             AttackGameCharacter(item, damage);

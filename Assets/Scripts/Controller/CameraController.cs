@@ -4,6 +4,7 @@ namespace Controller
 {
     public class CameraController : MonoBehaviour
     {
+        [SerializeField] private int inverse = -1;
         [SerializeField] private float moveSpeed = 20f;
         [SerializeField] private float scrollSpeed = 100f;
         [SerializeField] private Vector2 limitX = new Vector2(-40, 40);
@@ -23,22 +24,22 @@ namespace Controller
             
             if (Input.mousePosition.y >= Screen.height - BorderThickness)
             {
-                pos.z += moveSpeed * Time.deltaTime;
+                pos.z += moveSpeed * Time.deltaTime * inverse;
             }
 
             if (Input.mousePosition.y <= BorderThickness)
             {
-                pos.z -= moveSpeed * Time.deltaTime;
+                pos.z -= moveSpeed * Time.deltaTime * inverse;
             }
             
             if (Input.mousePosition.x >= Screen.width - BorderThickness)
             {
-                pos.x += moveSpeed * Time.deltaTime;
+                pos.x += moveSpeed * Time.deltaTime * inverse;
             }
             
             if (Input.mousePosition.x <= BorderThickness)
             {
-                pos.x -= moveSpeed * Time.deltaTime;
+                pos.x -= moveSpeed * Time.deltaTime * inverse;
             }
 
             float scroll = Input.GetAxis("Mouse ScrollWheel");

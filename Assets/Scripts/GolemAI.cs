@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using GolemEntity;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class GolemAI : MonoBehaviour
     private const float CloseDistance = 10;
     private const float HitHeight = 1.75f;
     private const float DestructionRadius = 1f;
+    
 
     private void Start()
     {
@@ -64,7 +66,7 @@ public class GolemAI : MonoBehaviour
             _thisState.LastEnemyAttacked.Kills += 1;
             EventContainer.GolemDied -= KillGolem;
             //Destroy(gameObject, 10);
-            
+            AnimationChanger.ResetFightPos(_animator);
             StartCoroutine(WaitForSecondsToDisable(2));
         }
     }
@@ -85,30 +87,45 @@ public class GolemAI : MonoBehaviour
     {
         var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
 
-        if (_thisState.Stats.AttackRange >= distanceToTarget)
+        if (_thisState.Stats.AttackRange * 1.5 >= distanceToTarget)
         {
             SetMoveBehaviour(new NoMoveBehaviour(_animator, animator => AnimationChanger.SetIdle(animator)));
             _moveable.Move(default, default);
-            transform.LookAt(_targetState.transform.position);
+            
             var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
             attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.RoundStatistics, false,
-                AnimationChanger.GetAllAttackAnimations(_animator));
-            _attackable.Attack(_thisState.Stats.DamagePerHeat, 2, transform.position);
+                AnimationChanger.SetNewAttack);
+            _attackable.Attack(_thisState.Stats.DamagePerHeat, 3f, transform.position);
+
+            TurnSmoothly();
+
+            AnimationChanger.SetFightPos(_animator);
         }
         else if (CloseDistance >= distanceToTarget)
         {
             SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
                 animator => AnimationChanger.SetGolemWalk(animator)));
             _moveable.Move(5, _targetState.transform.position); //5 just for test
+            
+            AnimationChanger.ResetFightPos(_animator);
         }
         else
         {
             SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent, false,
                 animator => AnimationChanger.SetGolemRun(animator)));
             _moveable.Move(10, _targetState.transform.position);
+            
+            AnimationChanger.ResetFightPos(_animator);
         }
+    }
+
+    private void TurnSmoothly()
+    {
+        Vector3 direction = _targetState.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5f * Time.deltaTime);
     }
 
     private void SetMoveBehaviour(IMoveable moveable)
