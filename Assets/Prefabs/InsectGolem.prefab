@@ -1625,7 +1625,7 @@ Animator:
   m_GameObject: {fileID: 2852625455358205004}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fa9ddfaa3368efc469cd4e9ea1c983c5, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9ae6b4c1489bc4e1689303d8a6b126eb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b252b8d1bfe58145986f5cb6af44ee1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1685,6 +1685,7 @@ MonoBehaviour:
   isDynamicHealthBarCreate: 1
   healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
     type: 3}
+  testStringAttack: 
 --- !u!114 &2550601948756503760
 MonoBehaviour:
   m_ObjectHideFlags: 0
