@@ -5435,7 +5435,6 @@ GameObject:
   - component: {fileID: 7862942557947279329}
   - component: {fileID: 7862942557937447437}
   - component: {fileID: 7862942557941537225}
-  - component: {fileID: 749040607065919066}
   - component: {fileID: 7456775465287791797}
   - component: {fileID: 690817766315375471}
   - component: {fileID: 4009382337534377302}
@@ -5496,28 +5495,6 @@ CapsuleCollider:
   m_Height: 2.73
   m_Direction: 1
   m_Center: {x: 0, y: 1.4, z: 0}
---- !u!195 &749040607065919066
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7862942557946861569}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7456775465287791797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5546,6 +5523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathFinderPrefab: {fileID: 246591937335606352, guid: c23f6e5c064ccd14db3c6ab64b207f33,
+    type: 3}
 --- !u!114 &4009382337534377302
 MonoBehaviour:
   m_ObjectHideFlags: 0

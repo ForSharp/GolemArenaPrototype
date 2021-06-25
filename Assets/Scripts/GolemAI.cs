@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GolemAI : MonoBehaviour
 {
+    [SerializeField]private GameObject pathFinderPrefab;
     private bool _isAIControlAllowed = false;
 
     private IMoveable _moveable;
@@ -29,7 +30,11 @@ public class GolemAI : MonoBehaviour
     private void Start()
     {
         _thisState = GetComponent<GameCharacterState>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        var finder = Instantiate(pathFinderPrefab, new Vector3(transform.position.x, 0f, transform.position.z), transform.localRotation);
+        finder.GetComponent<NavMeshAgent>().enabled = true;
+        _navMeshAgent = finder.GetComponent<NavMeshAgent>();
+        //_navMeshAgent.gameObject.SetActive(true);
         _animator = GetComponent<Animator>();
 
         SetDefaultBehaviour();
@@ -85,14 +90,14 @@ public class GolemAI : MonoBehaviour
 
     private void SetFightBehaviour()
     {
-        var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
+        var thisPos = transform.position;
+        
+        var distanceToTarget = Vector3.Distance(thisPos, _targetState.transform.position);
 
         if (_thisState.Stats.AttackRange * 1.5 >= distanceToTarget)
         {
             _animator.applyRootMotion = true;
-            
-            TurnSmoothly();
-            
+            TurnSmoothly();//!!!! поворачивает в апдейте всегда
             SetMoveBehaviour(new NoMoveBehaviour(_animator, AnimationChanger.SetFightIdle));
             _moveable.Move(default, default);
             
@@ -102,16 +107,22 @@ public class GolemAI : MonoBehaviour
                 _animator, _thisState.Group, _thisState.RoundStatistics, false,
                 AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack, 
                 AnimationChanger.SetSuperAttack);
-            _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, transform.position);
+            _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
 
             //TurnSmoothly();
+
+            _navMeshAgent.SetDestination(thisPos);
+            pathFinderPrefab.transform.rotation = transform.rotation;
         }
         else if (CloseDistance >= distanceToTarget)
         {
             _animator.applyRootMotion = false;
             SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
                 AnimationChanger.SetGolemWalk));
-            _moveable.Move(MoveSpeed, _targetState.transform.position); 
+            _moveable.Move(MoveSpeed, _targetState.transform.position);
+
+            FollowPathFinder(MoveSpeed);
+            TurnLikePathFinder();
         }
         else
         {
@@ -119,9 +130,22 @@ public class GolemAI : MonoBehaviour
             SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent, false,
                 AnimationChanger.SetGolemRun));
             _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
+            
+            FollowPathFinder(MoveSpeed * 2);
+            TurnLikePathFinder();
         }
     }
 
+    private void FollowPathFinder(float moveSpeed)
+    {
+        transform.position = Vector3.Lerp(transform.localPosition, pathFinderPrefab.transform.position, moveSpeed * Time.deltaTime);
+    }
+
+    private void TurnLikePathFinder()
+    {
+        transform.rotation = Quaternion.Lerp(transform.localRotation, pathFinderPrefab.transform.rotation, MoveSpeed * Time.deltaTime);
+    }
+    
     private void TurnSmoothly()
     {
         Vector3 direction = _targetState.transform.position - transform.position;

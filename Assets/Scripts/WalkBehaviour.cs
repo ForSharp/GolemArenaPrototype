@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class WalkBehaviour :  IMoveable
+public class WalkBehaviour : IMoveable
 {
     private Animator _animator;
     private NavMeshAgent _agent;
