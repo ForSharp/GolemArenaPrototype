@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GolemAI : MonoBehaviour
 {
-    [SerializeField]private GameObject pathFinderPrefab;
+    //[SerializeField] private GameObject pathFinderPrefab;
     private bool _isAIControlAllowed = false;
 
     private IMoveable _moveable;
@@ -25,15 +25,16 @@ public class GolemAI : MonoBehaviour
     private const float DestructionRadius = 1f;
     private const float MoveSpeed = 5f;
     private const float DelayBetweenHits = 3f;
-    
+
 
     private void Start()
     {
         _thisState = GetComponent<GameCharacterState>();
-
-        var finder = Instantiate(pathFinderPrefab, new Vector3(transform.position.x, 0f, transform.position.z), transform.localRotation);
-        finder.GetComponent<NavMeshAgent>().enabled = true;
-        _navMeshAgent = finder.GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        //var finder = Instantiate(pathFinderPrefab, new Vector3(transform.position.x, 0f, transform.position.z),
+            //transform.localRotation);
+        //finder.GetComponent<NavMeshAgent>().enabled = true;
+        //_navMeshAgent = finder.GetComponent<NavMeshAgent>();
         //_navMeshAgent.gameObject.SetActive(true);
         _animator = GetComponent<Animator>();
 
@@ -59,7 +60,7 @@ public class GolemAI : MonoBehaviour
             SetDefaultBehaviour();
             return;
         }
-        
+
         SetFightBehaviour();
     }
 
@@ -68,51 +69,51 @@ public class GolemAI : MonoBehaviour
         if (_thisState.IsDead)
         {
             AnimationChanger.SetGolemDie(_animator);
-            
+
             _thisState.LastEnemyAttacked.Kills += 1;
             EventContainer.GolemDied -= KillGolem;
-            
-            StartCoroutine(WaitForSecondsToDisable(4));
+
+            StartCoroutine(WaitForSecondsToDisable(6));
         }
     }
 
     private IEnumerator WaitForSecondsToDisable(int sec)
     {
-        yield return new WaitForSeconds(sec); 
+        yield return new WaitForSeconds(sec);
         gameObject.SetActive(false);
     }
 
     private void SetDefaultBehaviour()
     {
-        _moveable = new NoMoveBehaviour(_animator, AnimationChanger.SetFightIdle);
+        _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
         _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
     }
 
     private void SetFightBehaviour()
     {
         var thisPos = transform.position;
-        
+
         var distanceToTarget = Vector3.Distance(thisPos, _targetState.transform.position);
 
         if (_thisState.Stats.AttackRange * 1.5 >= distanceToTarget)
         {
+            transform.LookAt(_targetState.transform.position);
             _animator.applyRootMotion = true;
-            TurnSmoothly();//!!!! поворачивает в апдейте всегда
-            SetMoveBehaviour(new NoMoveBehaviour(_animator, AnimationChanger.SetFightIdle));
+            //TurnSmoothly(); //!!!! поворачивает в апдейте всегда
+            SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
             _moveable.Move(default, default);
-            
+
             var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
             attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, _thisState.RoundStatistics, false,
-                AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack, 
-                AnimationChanger.SetSuperAttack);
+                _animator, _thisState.Group, _targetState.transform.position, _thisState.RoundStatistics, false,
+                AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
 
             //TurnSmoothly();
 
             _navMeshAgent.SetDestination(thisPos);
-            pathFinderPrefab.transform.rotation = transform.rotation;
+            //pathFinderPrefab.transform.rotation = transform.rotation;
         }
         else if (CloseDistance >= distanceToTarget)
         {
@@ -121,31 +122,33 @@ public class GolemAI : MonoBehaviour
                 AnimationChanger.SetGolemWalk));
             _moveable.Move(MoveSpeed, _targetState.transform.position);
 
-            FollowPathFinder(MoveSpeed);
-            TurnLikePathFinder();
+            //FollowPathFinder(MoveSpeed);
+            //TurnLikePathFinder();
         }
         else
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent, false,
-                AnimationChanger.SetGolemRun));
+            SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
+                false, AnimationChanger.SetGolemRun));
             _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
-            
-            FollowPathFinder(MoveSpeed * 2);
-            TurnLikePathFinder();
+
+            //FollowPathFinder(MoveSpeed * 2);
+            //TurnLikePathFinder();
         }
     }
 
-    private void FollowPathFinder(float moveSpeed)
-    {
-        transform.position = Vector3.Lerp(transform.localPosition, pathFinderPrefab.transform.position, moveSpeed * Time.deltaTime);
-    }
+    // private void FollowPathFinder(float moveSpeed)
+    // {
+    //     transform.position = Vector3.Lerp(transform.localPosition, pathFinderPrefab.transform.position,
+    //         moveSpeed * Time.deltaTime);
+    // }
+    //
+    // private void TurnLikePathFinder()
+    // {
+    //     transform.rotation = Quaternion.Lerp(transform.localRotation, pathFinderPrefab.transform.rotation,
+    //         MoveSpeed * Time.deltaTime);
+    // }
 
-    private void TurnLikePathFinder()
-    {
-        transform.rotation = Quaternion.Lerp(transform.localRotation, pathFinderPrefab.transform.rotation, MoveSpeed * Time.deltaTime);
-    }
-    
     private void TurnSmoothly()
     {
         Vector3 direction = _targetState.transform.position - transform.position;
@@ -153,6 +156,13 @@ public class GolemAI : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, MoveSpeed * Time.deltaTime);
     }
 
+    private void Turn()
+    {
+        Vector3 direction = _targetState.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, MoveSpeed);
+    }
+    
     private void SetMoveBehaviour(IMoveable moveable)
     {
         _moveable = moveable;
@@ -182,7 +192,7 @@ public class GolemAI : MonoBehaviour
         if (enemies.Length > 0)
         {
             _targetState = enemies[Random.Range(0, enemies.Length)];
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
             StartCoroutine(FindEnemies());
         }
     }

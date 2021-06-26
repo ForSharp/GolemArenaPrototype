@@ -5438,6 +5438,7 @@ GameObject:
   - component: {fileID: 7456775465287791797}
   - component: {fileID: 690817766315375471}
   - component: {fileID: 4009382337534377302}
+  - component: {fileID: 5036488054991372121}
   m_Layer: 0
   m_Name: SteamGolem
   m_TagString: Player
@@ -5523,8 +5524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathFinderPrefab: {fileID: 246591937335606352, guid: c23f6e5c064ccd14db3c6ab64b207f33,
-    type: 3}
 --- !u!114 &4009382337534377302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5539,6 +5538,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 4467261521040276909, guid: 532d9062d26d34944934cbc60a2ea91f,
     type: 3}
+--- !u!195 &5036488054991372121
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862942557946861569}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7862942557946862837
 GameObject:
   m_ObjectHideFlags: 0

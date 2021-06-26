@@ -13,10 +13,10 @@ namespace GolemEntity
         private static readonly int Dead = Animator.StringToHash("Dead");
         private static readonly int SuperAttack = Animator.StringToHash("SuperAttack");
 
-        private const int KickAnimationAmount = 29;
-        private const int HitAnimationAmount = 35;
+        private const int KickAnimationAmount = 13; //total 29 //22
+        private const int HitAnimationAmount = 34; //total 35
         private const int DeathAnimationAmount = 11;
-        private const int FightIdleAnimationAmount = 5;
+        private const int FightIdleAnimationAmount = 5; //5
         private const int SuperAttackAnimationAmount = 15; //without hurricane kick
 
         public static void SetNeutralPos(Animator animator)
