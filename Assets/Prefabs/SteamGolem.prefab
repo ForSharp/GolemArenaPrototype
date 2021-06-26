@@ -5435,10 +5435,10 @@ GameObject:
   - component: {fileID: 7862942557947279329}
   - component: {fileID: 7862942557937447437}
   - component: {fileID: 7862942557941537225}
-  - component: {fileID: 749040607065919066}
   - component: {fileID: 7456775465287791797}
   - component: {fileID: 690817766315375471}
   - component: {fileID: 4009382337534377302}
+  - component: {fileID: 5036488054991372121}
   m_Layer: 0
   m_Name: SteamGolem
   m_TagString: Player
@@ -5473,10 +5473,10 @@ Animator:
   m_GameObject: {fileID: 7862942557946861569}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 64d5f1851bf3bdc44a421efb8610b59d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9ae6b4c1489bc4e1689303d8a6b126eb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b252b8d1bfe58145986f5cb6af44ee1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5496,28 +5496,6 @@ CapsuleCollider:
   m_Height: 2.73
   m_Direction: 1
   m_Center: {x: 0, y: 1.4, z: 0}
---- !u!195 &749040607065919066
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7862942557946861569}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7456775465287791797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5533,6 +5511,7 @@ MonoBehaviour:
   isDynamicHealthBarCreate: 1
   healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
     type: 3}
+  testStringAttack: 
 --- !u!114 &690817766315375471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5557,6 +5536,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spherePrefab: {fileID: 4467261521040276909, guid: 532d9062d26d34944934cbc60a2ea91f,
+    type: 3}
+--- !u!195 &5036488054991372121
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862942557946861569}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7862942557946862837
 GameObject:
   m_ObjectHideFlags: 0

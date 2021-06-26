@@ -6120,7 +6120,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3572260485321675266}
-  - component: {fileID: 3572260485321675267}
   m_Layer: 0
   m_Name: MainTestingWall
   m_TagString: Untagged
@@ -6137,7 +6136,7 @@ Transform:
   m_GameObject: {fileID: 3572260485321675265}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9.04}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 3572260485779378320}
   - {fileID: 3572260486410080298}
@@ -6158,25 +6157,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3572260485321675267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3572260485321675265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201a670dcdb265e4b8141ab163a3f656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 2000
-  currentHealth: 2000
-  sliderPlacementHeight: 180
-  isDead: 0
-  idDynamicHealthBarCreate: 1
-  healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
-    type: 3}
 --- !u!1 &3572260485331805526
 GameObject:
   m_ObjectHideFlags: 0

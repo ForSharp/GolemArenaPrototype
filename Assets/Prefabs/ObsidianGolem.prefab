@@ -3108,10 +3108,10 @@ Animator:
   m_GameObject: {fileID: 9049357595730213333}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5c7615c5345ca924cb6bcbb046659aff, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9ae6b4c1489bc4e1689303d8a6b126eb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b252b8d1bfe58145986f5cb6af44ee1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -3168,6 +3168,7 @@ MonoBehaviour:
   isDynamicHealthBarCreate: 1
   healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,
     type: 3}
+  testStringAttack: 
 --- !u!114 &1885914800406408920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3192,3 +3193,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f844672d341b2a44b4ebafaba9b94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spherePrefab: {fileID: 4467261521040276909, guid: 532d9062d26d34944934cbc60a2ea91f,
+    type: 3}

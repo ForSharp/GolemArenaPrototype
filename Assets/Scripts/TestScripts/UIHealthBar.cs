@@ -10,6 +10,7 @@ public class UIHealthBar : MonoBehaviour
     [SerializeField] private GameObject fill;
     [SerializeField] private Text maxHealthText;
     [SerializeField] private Text currentHealthText;
+    [SerializeField] private Text attack;
     private Slider _slider;
     private const int TimeToDestroy = 1;
     private Camera _mainCamera;
@@ -36,8 +37,12 @@ public class UIHealthBar : MonoBehaviour
         UpdateSliderValue();
         SetRequiredPosition();
         DestroyOnDeath();
+
+        attack.text = characterState.testStringAttack;
     }
 
+    
+    
     private void SetRequiredPosition(float multiplier = 1)
     {
         var requirePos = new Vector3(characterState.transform.position.x,
