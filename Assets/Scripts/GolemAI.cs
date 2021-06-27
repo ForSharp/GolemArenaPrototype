@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using GolemEntity;
 using UnityEngine;
@@ -8,6 +9,7 @@ using Random = UnityEngine.Random;
 public class GolemAI : MonoBehaviour
 {
     private bool _isAIControlAllowed = false;
+    private bool _isIKAllowed = false;
 
     private IMoveable _moveable;
     private IAttackable _attackable;
@@ -23,7 +25,6 @@ public class GolemAI : MonoBehaviour
     private const float DestructionRadius = 1f;
     private const float MoveSpeed = 5f;
     private const float DelayBetweenHits = 3f;
-
 
     private void Start()
     {
@@ -65,7 +66,7 @@ public class GolemAI : MonoBehaviour
 
             _thisState.LastEnemyAttacked.Kills += 1;
             EventContainer.GolemDied -= KillGolem;
-
+            _navMeshAgent.baseOffset = -0.75f;
             StartCoroutine(WaitForSecondsToDisable(6));
         }
     }
@@ -104,10 +105,18 @@ public class GolemAI : MonoBehaviour
         }
     }
 
+    private void OnAnimatorIK(int layerIndex)
+    {
+        if (_isIKAllowed)
+        {
+            TurnHeadToTarget();
+        }
+    }
+
     private void AttackEnemy()
     {
         var thisPos = transform.position;
-        
+
         transform.LookAt(_targetState.transform.position);
         _animator.applyRootMotion = true;
         SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
@@ -116,11 +125,12 @@ public class GolemAI : MonoBehaviour
         var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
         SetAttackBehaviour(attack);
         attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-            _animator, _thisState.Group, _targetState.transform.position, _thisState.RoundStatistics, false,
+            _animator, _thisState.Group, _thisState.RoundStatistics, false,
             AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
         _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
 
         _navMeshAgent.SetDestination(thisPos);
+        _isIKAllowed = true;
     }
 
     private void WalkSlowlyWithFightPosture()
@@ -129,24 +139,27 @@ public class GolemAI : MonoBehaviour
         SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
             AnimationChanger.SetWalkingFight));
         _moveable.Move(MoveSpeed / 2, _targetState.transform.position);
+        _isIKAllowed = true;
     }
-    
+
     private void WalkToEnemy()
     {
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
             AnimationChanger.SetGolemWalk));
         _moveable.Move(MoveSpeed, _targetState.transform.position);
+        _isIKAllowed = false;
     }
-    
+
     private void RunToEnemy()
     {
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
             false, AnimationChanger.SetGolemRun));
         _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
+        _isIKAllowed = false;
     }
-    
+
     private void SetMoveBehaviour(IMoveable moveable)
     {
         _moveable = moveable;
@@ -179,5 +192,12 @@ public class GolemAI : MonoBehaviour
             yield return new WaitForSeconds(10);
             StartCoroutine(FindEnemies());
         }
+    }
+
+    private void TurnHeadToTarget()
+    {
+        _animator.SetLookAtWeight(1);
+        _animator.SetLookAtPosition(new Vector3(_targetState.transform.position.x,
+            _targetState.transform.position.y + HitHeight, _targetState.transform.position.z));
     }
 }

@@ -20,13 +20,12 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
     private bool _isFriendlyFire;
     private float _timer;
     private RoundStatistics _statistics;
-    private Vector3 _targetPos;
 
     private bool _isReady = false;
     
 
     public void FactoryMethod(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
-        Vector3 targetPos, RoundStatistics statistics = default, bool isFriendlyFire = false,
+        RoundStatistics statistics = default, bool isFriendlyFire = false,
         params Action<Animator>[] hitAnimationSetters)
     {
         _hitHeight = hitHeight;
@@ -35,7 +34,6 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         _hitAnimationSetters = hitAnimationSetters;
         _animator = animator;
         _group = group;
-        _targetPos = targetPos;
         _isFriendlyFire = isFriendlyFire;
         _statistics = statistics;
         _isReady = true;
@@ -61,8 +59,6 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
 
         if (_timer >= delayBetweenHits && Time.timeScale != 0)
         {
-            //TurnSmoothly();
-            
             _timer = 0;
             _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator);
 
@@ -143,10 +139,4 @@ public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
         }
     }
     
-    private void TurnSmoothly()
-    {
-        Vector3 direction = _targetPos - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5);
-    }
 }
