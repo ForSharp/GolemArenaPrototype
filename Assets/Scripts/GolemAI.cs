@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using GolemEntity;
 using UnityEngine;
@@ -8,7 +7,6 @@ using Random = UnityEngine.Random;
 
 public class GolemAI : MonoBehaviour
 {
-    //[SerializeField] private GameObject pathFinderPrefab;
     private bool _isAIControlAllowed = false;
 
     private IMoveable _moveable;
@@ -31,11 +29,6 @@ public class GolemAI : MonoBehaviour
     {
         _thisState = GetComponent<GameCharacterState>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        //var finder = Instantiate(pathFinderPrefab, new Vector3(transform.position.x, 0f, transform.position.z),
-            //transform.localRotation);
-        //finder.GetComponent<NavMeshAgent>().enabled = true;
-        //_navMeshAgent = finder.GetComponent<NavMeshAgent>();
-        //_navMeshAgent.gameObject.SetActive(true);
         _animator = GetComponent<Animator>();
 
         SetDefaultBehaviour();
@@ -91,76 +84,67 @@ public class GolemAI : MonoBehaviour
 
     private void SetFightBehaviour()
     {
-        var thisPos = transform.position;
-
-        var distanceToTarget = Vector3.Distance(thisPos, _targetState.transform.position);
+        var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
 
         if (_thisState.Stats.AttackRange * 1.5 >= distanceToTarget)
         {
-            transform.LookAt(_targetState.transform.position);
-            _animator.applyRootMotion = true;
-            //TurnSmoothly(); //!!!! поворачивает в апдейте всегда
-            SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
-            _moveable.Move(default, default);
-
-            var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
-            SetAttackBehaviour(attack);
-            attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, _targetState.transform.position, _thisState.RoundStatistics, false,
-                AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
-            _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
-
-            //TurnSmoothly();
-
-            _navMeshAgent.SetDestination(thisPos);
-            //pathFinderPrefab.transform.rotation = transform.rotation;
+            AttackEnemy();
+        }
+        else if (CloseDistance - 3 >= distanceToTarget)
+        {
+            WalkSlowlyWithFightPosture();
         }
         else if (CloseDistance >= distanceToTarget)
         {
-            _animator.applyRootMotion = false;
-            SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
-                AnimationChanger.SetGolemWalk));
-            _moveable.Move(MoveSpeed, _targetState.transform.position);
-
-            //FollowPathFinder(MoveSpeed);
-            //TurnLikePathFinder();
+            WalkToEnemy();
         }
         else
         {
-            _animator.applyRootMotion = false;
-            SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
-                false, AnimationChanger.SetGolemRun));
-            _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
-
-            //FollowPathFinder(MoveSpeed * 2);
-            //TurnLikePathFinder();
+            RunToEnemy();
         }
     }
 
-    // private void FollowPathFinder(float moveSpeed)
-    // {
-    //     transform.position = Vector3.Lerp(transform.localPosition, pathFinderPrefab.transform.position,
-    //         moveSpeed * Time.deltaTime);
-    // }
-    //
-    // private void TurnLikePathFinder()
-    // {
-    //     transform.rotation = Quaternion.Lerp(transform.localRotation, pathFinderPrefab.transform.rotation,
-    //         MoveSpeed * Time.deltaTime);
-    // }
-
-    private void TurnSmoothly()
+    private void AttackEnemy()
     {
-        Vector3 direction = _targetState.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, MoveSpeed * Time.deltaTime);
+        var thisPos = transform.position;
+        
+        transform.LookAt(_targetState.transform.position);
+        _animator.applyRootMotion = true;
+        SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
+        _moveable.Move(default, default);
+
+        var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
+        SetAttackBehaviour(attack);
+        attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
+            _animator, _thisState.Group, _targetState.transform.position, _thisState.RoundStatistics, false,
+            AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
+        _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
+
+        _navMeshAgent.SetDestination(thisPos);
     }
 
-    private void Turn()
+    private void WalkSlowlyWithFightPosture()
     {
-        Vector3 direction = _targetState.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, MoveSpeed);
+        _animator.applyRootMotion = false;
+        SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            AnimationChanger.SetWalkingFight));
+        _moveable.Move(MoveSpeed / 2, _targetState.transform.position);
+    }
+    
+    private void WalkToEnemy()
+    {
+        _animator.applyRootMotion = false;
+        SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            AnimationChanger.SetGolemWalk));
+        _moveable.Move(MoveSpeed, _targetState.transform.position);
+    }
+    
+    private void RunToEnemy()
+    {
+        _animator.applyRootMotion = false;
+        SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            false, AnimationChanger.SetGolemRun));
+        _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
     }
     
     private void SetMoveBehaviour(IMoveable moveable)
