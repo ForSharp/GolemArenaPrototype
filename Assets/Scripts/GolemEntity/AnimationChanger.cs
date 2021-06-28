@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Assertions.Must;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GolemEntity
@@ -13,22 +11,17 @@ namespace GolemEntity
         private static readonly int Dead = Animator.StringToHash("Dead");
         private static readonly int SuperAttack = Animator.StringToHash("SuperAttack");
 
-        private const int KickAnimationAmount = 13; //total 29 //22
-        private const int HitAnimationAmount = 34; //total 35
+        private const int KickAnimationAmount = 22;//13; //total 29 //22
+        private const int HitAnimationAmount = 34; //total 35 //13
         private const int DeathAnimationAmount = 11;
         private const int FightIdleAnimationAmount = 5; //5
         private const int SuperAttackAnimationAmount = 15; //without hurricane kick
-
-        public static void SetNeutralPos(Animator animator)
+        
+        public static void SetWalkingFight(Animator animator)
         {
-            animator.SetBool(InFightPos, false);
+            animator.Play("Walking");
         }
         
-        public static void SetFightPos(Animator animator)
-        {
-            animator.SetBool(InFightPos, true);
-        }
-
         public static void SetHitAttack(Animator animator)
         {
             var blendTreeStages = GetBlendTreeStages(KickAnimationAmount);
@@ -75,9 +68,6 @@ namespace GolemEntity
         public static void SetFightIdle(Animator animator)
         {
             animator.SetFloat(Animator.StringToHash("Forward"), 0f);
-            //var blendTreeStages = GetBlendTreeStages(FightIdleAnimationAmount); //дергается анимация при переключении стратегий
-            //animator.SetFloat(Animator.StringToHash("FightIdleVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
-            
         }
 
         public static void SetGolemWalk(Animator animator)
