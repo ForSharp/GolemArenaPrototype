@@ -36,7 +36,7 @@ public class GolemAI : MonoBehaviour
         AnimationChanger.SetFightIdle(_animator, true);
         StartCoroutine(FindEnemies());
 
-        EventContainer.GolemDied += KillGolem;
+        EventContainer.GolemDied += HandleGolemDeath;
     }
 
     private void Update()
@@ -49,26 +49,35 @@ public class GolemAI : MonoBehaviour
             return;
         }
 
-        if (!_isAIControlAllowed || !_targetState)
+        if (_isAIControlAllowed && _targetState)
         {
-            SetDefaultBehaviour();
-            return;
+            SetFightBehaviour();
         }
-
-        SetFightBehaviour();
+        
+        SetDefaultBehaviour();
     }
 
-    private void KillGolem()
+    private void HandleGolemDeath()
     {
         if (_thisState.IsDead)
         {
             AnimationChanger.SetGolemDie(_animator);
 
             _thisState.LastEnemyAttacked.Kills += 1;
-            EventContainer.GolemDied -= KillGolem;
+            EventContainer.GolemDied -= HandleGolemDeath;
             _navMeshAgent.baseOffset = -0.75f;
             StartCoroutine(WaitForSecondsToDisable(6));
+            return;
         }
+        if (_targetState)
+        {
+            if (_targetState.IsDead)
+            {
+                StartCoroutine(FindEnemies());
+            }
+            return;
+        }
+        StartCoroutine(FindEnemies());
     }
 
     private IEnumerator WaitForSecondsToDisable(int sec)
@@ -183,21 +192,25 @@ public class GolemAI : MonoBehaviour
         if (enemies.Length == 0)
         {
             yield return new WaitForSeconds(1);
+            _targetState = null;
             StartCoroutine(FindEnemies());
         }
 
         if (enemies.Length > 0)
         {
             _targetState = enemies[Random.Range(0, enemies.Length)];
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(30);
             StartCoroutine(FindEnemies());
         }
     }
 
     private void TurnHeadToTarget()
     {
-        _animator.SetLookAtWeight(1);
-        _animator.SetLookAtPosition(new Vector3(_targetState.transform.position.x,
-            _targetState.transform.position.y + HitHeight, _targetState.transform.position.z));
+        if (_targetState)
+        {
+            _animator.SetLookAtWeight(1);
+            _animator.SetLookAtPosition(new Vector3(_targetState.transform.position.x,
+                _targetState.transform.position.y + HitHeight, _targetState.transform.position.z));
+        }
     }
 }

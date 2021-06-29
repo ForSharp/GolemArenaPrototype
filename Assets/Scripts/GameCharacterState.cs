@@ -25,7 +25,7 @@ public class GameCharacterState : MonoBehaviour
     private Golem Golem { get; set; }
     private bool _isReady;
     public RoundStatistics LastEnemyAttacked;
-    public RoundStatistics RoundStatistics = new RoundStatistics() {Damage = 0, Kills = 0, Wins = 0};
+    public RoundStatistics RoundStatistics = new RoundStatistics();
 
 
     public string testStringAttack = null; 

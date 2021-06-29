@@ -34,12 +34,12 @@ public class Spawner : MonoBehaviour
     private void ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
     {
         var state = newGolem.GetComponent<GameCharacterState>();
-        if (_group <= groupColors.Length)
+        if (_group < groupColors.Length)
         {
             state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
             Game.AddToAllGolems(state);
         }
-        else
+        else if (_group >= groupColors.Length)
         {
             state.InitializeState(golem, _group, Color.black, golemType.ToString(), specialization.ToString());
             Game.AddToAllGolems(state);
