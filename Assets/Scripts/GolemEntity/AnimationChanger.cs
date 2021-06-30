@@ -5,21 +5,38 @@ namespace GolemEntity
 {
     public static class AnimationChanger 
     {
-        private static readonly int InFightPos = Animator.StringToHash("InFightPos");
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int Kick = Animator.StringToHash("Kick");
         private static readonly int Dead = Animator.StringToHash("Dead");
         private static readonly int SuperAttack = Animator.StringToHash("SuperAttack");
+        private static readonly int AvoidHit = Animator.StringToHash("AvoidHit");
+        private static readonly int GetHit = Animator.StringToHash("GetHit");
 
-        private const int KickAnimationAmount = 22;//13; //total 29 //22
-        private const int HitAnimationAmount = 34; //total 35 //13
+        private const int KickAnimationAmount = 22; //total 29
+        private const int HitAnimationAmount = 34; //total 35
         private const int DeathAnimationAmount = 11;
-        private const int FightIdleAnimationAmount = 5; //5
+        private const int FightIdleAnimationAmount = 5; 
         private const int SuperAttackAnimationAmount = 15; //without hurricane kick
+        private const int AvoidHitAnimationAmount = 10; 
+        private const int GetHitAnimationAmount = 18; 
         
         public static void SetWalkingFight(Animator animator)
         {
             animator.Play("Walking");
+        }
+
+        public static void SetAvoidHit(Animator animator)
+        {
+            var blendTreeStages = GetBlendTreeStages(AvoidHitAnimationAmount);
+            animator.SetTrigger(AvoidHit);
+            animator.SetFloat(Animator.StringToHash("AvoidHitVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+        }
+        
+        public static void SetGetHit(Animator animator)
+        {
+            var blendTreeStages = GetBlendTreeStages(GetHitAnimationAmount);
+            animator.SetTrigger(GetHit);
+            animator.SetFloat(Animator.StringToHash("GetHitVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
         }
         
         public static void SetHitAttack(Animator animator)

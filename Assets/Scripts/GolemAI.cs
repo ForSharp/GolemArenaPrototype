@@ -183,6 +183,21 @@ public class GolemAI : MonoBehaviour
         _isIKAllowed = false;
     }
 
+    private void AvoidHit()
+    {
+        
+    }
+
+    private void GetHit()
+    {
+        
+    }
+
+    private void Fall()
+    {
+        
+    }
+
     private void SetMoveBehaviour(IMoveable moveable)
     {
         _moveable = moveable;
