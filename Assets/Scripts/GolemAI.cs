@@ -19,6 +19,7 @@ public class GolemAI : MonoBehaviour
 
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
+    private FightStatus _status;
 
     private const float CloseDistance = 10;
     private const float HitHeight = 1.75f;
@@ -31,8 +32,8 @@ public class GolemAI : MonoBehaviour
         _thisState = GetComponent<GameCharacterState>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-
-        SetDefaultBehaviour();
+        
+        _status = FightStatus.Neutral;
         AnimationChanger.SetFightIdle(_animator, true);
         StartCoroutine(FindEnemies());
 
@@ -41,49 +42,40 @@ public class GolemAI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I)) //user input class
+        SwitchStatuses();
+        
+        if (Input.GetKeyDown(KeyCode.I))
             _isAIControlAllowed = true;
-
-        if (_thisState.IsDead)
-        {
-            return;
-        }
 
         if (_isAIControlAllowed && _targetState)
         {
-            SetFightBehaviour();
+            _status = FightStatus.Active;
         }
-        
-        SetDefaultBehaviour();
+
+        _status = FightStatus.Neutral;
     }
 
-    private void HandleGolemDeath()
+    private void SwitchStatuses()
     {
-        if (_thisState.IsDead)
+        switch (_status)
         {
-            AnimationChanger.SetGolemDie(_animator);
-
-            _thisState.LastEnemyAttacked.Kills += 1;
-            EventContainer.GolemDied -= HandleGolemDeath;
-            _navMeshAgent.baseOffset = -0.75f;
-            StartCoroutine(WaitForSecondsToDisable(6));
-            return;
+            case FightStatus.Neutral:
+                SetDefaultBehaviour();
+                break;
+            case FightStatus.Active:
+                SetFightBehaviour();
+                break;
+            case FightStatus.Stunned:
+                break;
+            case FightStatus.Fallen:
+                break;
+            case FightStatus.CastsSpell:
+                break;
+            case FightStatus.Dead:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-        if (_targetState)
-        {
-            if (_targetState.IsDead)
-            {
-                StartCoroutine(FindEnemies());
-            }
-            return;
-        }
-        StartCoroutine(FindEnemies());
-    }
-
-    private IEnumerator WaitForSecondsToDisable(int sec)
-    {
-        yield return new WaitForSeconds(sec);
-        gameObject.SetActive(false);
     }
 
     private void SetDefaultBehaviour()
@@ -114,14 +106,6 @@ public class GolemAI : MonoBehaviour
         }
     }
 
-    private void OnAnimatorIK(int layerIndex)
-    {
-        if (_isIKAllowed)
-        {
-            TurnHeadToTarget();
-        }
-    }
-
     private void AttackEnemy()
     {
         var thisPos = transform.position;
@@ -140,6 +124,36 @@ public class GolemAI : MonoBehaviour
 
         _navMeshAgent.SetDestination(thisPos);
         _isIKAllowed = true;
+    }
+
+    private void HandleGolemDeath()
+    {
+        if (_thisState.IsDead)
+        {
+            AnimationChanger.SetGolemDie(_animator);
+
+            _thisState.LastEnemyAttacked.Kills += 1;
+            EventContainer.GolemDied -= HandleGolemDeath;
+            _navMeshAgent.baseOffset = -0.75f;
+            StartCoroutine(WaitForSecondsToDisable(6));
+            _status = FightStatus.Dead;
+            return;
+        }
+        if (_targetState)
+        {
+            if (_targetState.IsDead)
+            {
+                StartCoroutine(FindEnemies());
+            }
+            return;
+        }
+        StartCoroutine(FindEnemies());
+    }
+
+    private IEnumerator WaitForSecondsToDisable(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        gameObject.SetActive(false);
     }
 
     private void WalkSlowlyWithFightPosture()
@@ -201,6 +215,14 @@ public class GolemAI : MonoBehaviour
             _targetState = enemies[Random.Range(0, enemies.Length)];
             yield return new WaitForSeconds(30);
             StartCoroutine(FindEnemies());
+        }
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        if (_isIKAllowed)
+        {
+            TurnHeadToTarget();
         }
     }
 
