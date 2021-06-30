@@ -103,6 +103,5 @@ namespace GolemEntity
             var blendTreeStages = GetBlendTreeStages(DeathAnimationAmount);
             animator.SetFloat(Animator.StringToHash("DeathVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
         }
-
     }
 }

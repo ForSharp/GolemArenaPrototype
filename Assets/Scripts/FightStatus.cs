@@ -5,5 +5,6 @@
     Stunned,
     Fallen,
     CastsSpell,
-    Dead
+    Dead,
+    Scared
 }

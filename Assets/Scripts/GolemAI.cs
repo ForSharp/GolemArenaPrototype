@@ -8,8 +8,8 @@ using Random = UnityEngine.Random;
 
 public class GolemAI : MonoBehaviour
 {
-    private bool _isAIControlAllowed = false;
-    private bool _isIKAllowed = false;
+    private bool _isAIControlAllowed;
+    private bool _isIKAllowed;
 
     private IMoveable _moveable;
     private IAttackable _attackable;
@@ -26,6 +26,7 @@ public class GolemAI : MonoBehaviour
     private const float DestructionRadius = 1f;
     private const float MoveSpeed = 5f;
     private const float DelayBetweenHits = 3f;
+    private const int AutoResetTargetDelay = 10;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class GolemAI : MonoBehaviour
     private void Update()
     {
         SwitchStatuses();
-        
+
         if (Input.GetKeyDown(KeyCode.I))
             _isAIControlAllowed = true;
 
@@ -51,8 +52,10 @@ public class GolemAI : MonoBehaviour
         {
             _status = FightStatus.Active;
         }
-
-        _status = FightStatus.Neutral;
+        else
+        {
+            _status = FightStatus.Neutral;
+        }
     }
 
     private void SwitchStatuses()
@@ -73,6 +76,9 @@ public class GolemAI : MonoBehaviour
                 break;
             case FightStatus.Dead:
                 break;
+            case FightStatus.Scared:
+                SetScaredBehaviour();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -81,32 +87,52 @@ public class GolemAI : MonoBehaviour
     private void SetDefaultBehaviour()
     {
         _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
+        _moveable.Move(default, default);
         _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
     }
 
     private void SetFightBehaviour()
     {
+        if (!_targetState)
+            return;
+
         var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
 
-        if (_thisState.Stats.AttackRange * 1.5 >= distanceToTarget)
+        if (distanceToTarget <= _thisState.Stats.AttackRange * 1.5)
         {
-            AttackEnemy();
+            AttackTarget();
         }
-        else if (CloseDistance - 3 >= distanceToTarget)
+        else if (distanceToTarget <= CloseDistance - 3 )
         {
             WalkSlowlyWithFightPosture();
         }
-        else if (CloseDistance >= distanceToTarget)
+        else if (distanceToTarget <= CloseDistance)
         {
-            WalkToEnemy();
+            WalkToTarget();
         }
         else
         {
-            RunToEnemy();
+            RunToTarget();
         }
     }
 
-    private void AttackEnemy()
+    private void SetScaredBehaviour()
+    {
+        if (!_targetState)
+            return;
+        
+        var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
+        if (distanceToTarget < CloseDistance * 3)
+        {
+            RunToTarget(-1);
+        }
+        else if (distanceToTarget > CloseDistance * 3)
+        {
+            SetDefaultBehaviour();
+        }
+    }
+
+    private void AttackTarget()
     {
         var thisPos = transform.position;
 
@@ -165,7 +191,7 @@ public class GolemAI : MonoBehaviour
         _isIKAllowed = true;
     }
 
-    private void WalkToEnemy()
+    private void WalkToTarget()
     {
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
@@ -174,28 +200,29 @@ public class GolemAI : MonoBehaviour
         _isIKAllowed = false;
     }
 
-    private void RunToEnemy()
+    private void RunToTarget(int direction = 1)
     {
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
             false, AnimationChanger.SetGolemRun));
-        _moveable.Move(MoveSpeed * 2, _targetState.transform.position);
+        _moveable.Move(MoveSpeed * 2, _targetState.transform.position * direction);
         _isIKAllowed = false;
     }
+    
 
     private void AvoidHit()
     {
-        
+        _animator.applyRootMotion = true;
     }
 
     private void GetHit()
     {
-        
+        _animator.applyRootMotion = true;
     }
 
     private void Fall()
     {
-        
+        _animator.applyRootMotion = true;
     }
 
     private void SetMoveBehaviour(IMoveable moveable)
@@ -228,7 +255,7 @@ public class GolemAI : MonoBehaviour
         if (enemies.Length > 0)
         {
             _targetState = enemies[Random.Range(0, enemies.Length)];
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(AutoResetTargetDelay);
             StartCoroutine(FindEnemies());
         }
     }
