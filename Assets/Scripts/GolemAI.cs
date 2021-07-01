@@ -48,11 +48,11 @@ public class GolemAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
             _isAIControlAllowed = true;
 
-        if (_isAIControlAllowed && _targetState)
+        if (CanFight())
         {
             _status = FightStatus.Active;
         }
-        else
+        else if (!_thisState.IsDead)
         {
             _status = FightStatus.Neutral;
         }
@@ -84,11 +84,17 @@ public class GolemAI : MonoBehaviour
         }
     }
 
+    private bool CanFight()
+    {
+        return _isAIControlAllowed && _targetState && !_thisState.IsDead;
+    }
+    
     private void SetDefaultBehaviour()
     {
         _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
         _moveable.Move(default, default);
         _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
+        _attackable.Attack(default, default, default);
     }
 
     private void SetFightBehaviour()
@@ -156,13 +162,13 @@ public class GolemAI : MonoBehaviour
     {
         if (_thisState.IsDead)
         {
+            SetDefaultBehaviour();
             AnimationChanger.SetGolemDie(_animator);
-
+            _status = FightStatus.Dead;
             _thisState.LastEnemyAttacked.Kills += 1;
             EventContainer.GolemDied -= HandleGolemDeath;
             _navMeshAgent.baseOffset = -0.75f;
             StartCoroutine(WaitForSecondsToDisable(6));
-            _status = FightStatus.Dead;
             return;
         }
         if (_targetState)

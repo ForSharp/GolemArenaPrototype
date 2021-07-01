@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStatPanel : MonoBehaviour
@@ -17,8 +18,13 @@ public class GameStatPanel : MonoBehaviour
         //FillAllTemplates();
         if (Input.GetKeyDown(KeyCode.A))
         {
-            FillAllTemplates();
+            //FillAllTemplates();
         }
+    }
+
+    private void LateUpdate()
+    {
+        FillAllTemplates();
     }
 
     private void CreateTemplates()
