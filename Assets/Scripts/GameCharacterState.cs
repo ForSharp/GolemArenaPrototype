@@ -25,7 +25,7 @@ public class GameCharacterState : MonoBehaviour
     private Golem Golem { get; set; }
     private bool _isReady;
     public RoundStatistics LastEnemyAttacked;
-    public RoundStatistics RoundStatistics = new RoundStatistics() {Damage = 0, Kills = 0, Wins = 0};
+    public readonly RoundStatistics RoundStatistics = new RoundStatistics();
 
 
     public string testStringAttack = null; 
@@ -60,7 +60,7 @@ public class GameCharacterState : MonoBehaviour
 
     private void SetProportionallyCurrentHealth(float newMaxHealth)
     {
-        float difference = MaxHealth - newMaxHealth;
+        var difference = MaxHealth - newMaxHealth;
         CurrentHealth -= difference;
         if (CurrentHealth > newMaxHealth)
         {
@@ -96,16 +96,15 @@ public class GameCharacterState : MonoBehaviour
 
     private void CreateHealthBar()
     {
-        if (isDynamicHealthBarCreate)
-        {
-            GameObject healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            healthBar.GetComponent<UIHealthBar>().characterState = this;
-        }
+        if (!isDynamicHealthBarCreate) return;
+        var healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+        healthBar.GetComponent<UIHealthBar>().characterState = this;
     }
 
     public void TakeDamage(float damage, int defence = 0, RoundStatistics statistics = default)
     {
         CurrentHealth -= damage;
+        if (statistics == null) return;
         statistics.Damage += damage;
         LastEnemyAttacked = statistics;
     }
@@ -119,12 +118,10 @@ public class GameCharacterState : MonoBehaviour
     
     public void LvlDown()
     {
-        if (Lvl > 1)
-        {
-            Golem.ChangeBaseStatsProportionally(-10);
-            EventContainer.OnGolemStatsChanged();
-            Lvl--;
-        }
+        if (Lvl <= 1) return;
+        Golem.ChangeBaseStatsProportionally(-10);
+        EventContainer.OnGolemStatsChanged();
+        Lvl--;
     }
     
     public void SpendStamina(float energy)
