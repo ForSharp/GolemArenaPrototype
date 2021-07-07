@@ -15,7 +15,16 @@ namespace GolemEntity.ExtraStats
 
         public static float GetAttackSpeed(float agility)
         {
-            return agility / 10;
+            var result = agility / 3.5f;
+            if (result < 40)
+            {
+                return 40;
+            }
+            if (result > 150)
+            {
+                return 150;
+            }
+            return result;
         }
 
         public static float GetAvoidChance(float strength, float agility)
@@ -80,12 +89,11 @@ namespace GolemEntity.ExtraStats
 
         public static float GetMoveSpeed(float strength, float agility)
         {
-            //min 100, max 300 without buffs
-            var speed = (200 + (agility - strength));
-            if (speed > 300)
-                return 300;
-            if (speed < 100)
-                return 100;
+            var speed = (2.25f + ((agility / 100) - (strength / 100)));
+            if (speed > 3)
+                return 3;
+            if (speed < 2)
+                return 2;
             return speed;
         }
 
