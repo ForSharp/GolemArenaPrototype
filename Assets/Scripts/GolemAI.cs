@@ -24,9 +24,7 @@ public class GolemAI : MonoBehaviour
     private const float CloseDistance = 10;
     private const float HitHeight = 1.75f;
     private const float DestructionRadius = 1f;
-    private const float MoveSpeed = 5f;
-    private const float DelayBetweenHits = 3f;
-    private const int AutoResetTargetDelay = 10;
+    private const int AutoResetTargetDelay = 30;
 
     private void Start()
     {
@@ -152,10 +150,16 @@ public class GolemAI : MonoBehaviour
         attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
             _animator, _thisState.Group, _thisState.RoundStatistics, false,
             AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
-        _attackable.Attack(_thisState.Stats.DamagePerHeat, DelayBetweenHits, thisPos);
+        _attackable.Attack(_thisState.Stats.DamagePerHeat, GetDelayBetweenHits(), thisPos);
 
         _navMeshAgent.SetDestination(thisPos);
         _isIKAllowed = true;
+    }
+
+    private float GetDelayBetweenHits()
+    {
+        float seconds = 60;
+        return seconds / (_thisState.Stats.AttackSpeed / 10);
     }
 
     private void HandleGolemDeath()
@@ -193,7 +197,7 @@ public class GolemAI : MonoBehaviour
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
             AnimationChanger.SetWalkingFight));
-        _moveable.Move(MoveSpeed / 2, _targetState.transform.position);
+        _moveable.Move(_thisState.Stats.MoveSpeed / 2, _targetState.transform.position);
         _isIKAllowed = true;
     }
 
@@ -202,7 +206,7 @@ public class GolemAI : MonoBehaviour
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
             AnimationChanger.SetGolemWalk));
-        _moveable.Move(MoveSpeed, _targetState.transform.position);
+        _moveable.Move(_thisState.Stats.MoveSpeed, _targetState.transform.position);
         _isIKAllowed = false;
     }
 
@@ -211,7 +215,7 @@ public class GolemAI : MonoBehaviour
         _animator.applyRootMotion = false;
         SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
             false, AnimationChanger.SetGolemRun));
-        _moveable.Move(MoveSpeed * 2, _targetState.transform.position * direction);
+        _moveable.Move(_thisState.Stats.MoveSpeed * 2, _targetState.transform.position * direction);
         _isIKAllowed = false;
     }
     
