@@ -48,6 +48,16 @@ namespace BehaviourStrategy
             _timer = 100f; //on the first hit, the attack will start without delay from the attack speed
         }
 
+        private void OnAttack()
+        {
+            
+        }
+        
+        private void OnAttackEnded()
+        {
+            
+        }
+        
         private void Update()
         {
             _timer += Time.deltaTime;
