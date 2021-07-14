@@ -8,9 +8,9 @@ namespace GolemEntity.ExtraStats
     /// </summary>
     public static class ExtraStatsCalculator 
     {
-        public static float GetAttackRange()
+        public static float GetAttackRange(float range = 0.777f)
         {
-            return default;
+            return range;
         }
 
         public static float GetAttackSpeed(float agility)

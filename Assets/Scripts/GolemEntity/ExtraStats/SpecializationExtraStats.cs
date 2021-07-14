@@ -146,6 +146,7 @@ namespace GolemEntity.ExtraStats
         {
             return new GolemExtraStats()
             {
+                AttackRange = ExtraStatsCalculator.GetAttackRange(),
                 AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(specExtraArgs.AttackSpeedArgAg),
                 AvoidChance = ExtraStatsCalculator.GetAvoidChance(specExtraArgs.AvoidChanceArgSt, specExtraArgs.AvoidChanceArgAg),
                 DamagePerHeat = ExtraStatsCalculator.GetDamagePerHeat(specExtraArgs.DamagePerHeatArgSt, specExtraArgs.DamagePerHeatArgAg, specExtraArgs.DamagePerHeatArgIn),
@@ -171,6 +172,7 @@ namespace GolemEntity.ExtraStats
             private static float Agility { get; set; }
             private static float Intelligence { get; set; }
             
+            public float AttackRangeArg;
             
             public float AttackSpeedArgAg = Agility;
             

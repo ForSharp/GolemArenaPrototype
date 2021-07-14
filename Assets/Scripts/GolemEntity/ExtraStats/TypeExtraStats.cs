@@ -25,7 +25,7 @@ namespace GolemEntity.ExtraStats
                 case GolemType.WaterGolem:
                     TypeExtraArgs typeWaterGolem = new TypeExtraArgs(strength, agility, intelligence)
                     {
-                        DefenceArgSt = strength * 1.1f 
+                        DefenceArgSt = strength * 1.1f
                     };
                     return InitializeExtraStats(typeWaterGolem);
                 case GolemType.AirGolem:
@@ -103,6 +103,7 @@ namespace GolemEntity.ExtraStats
         {
             return new GolemExtraStats()
             {
+                AttackRange = ExtraStatsCalculator.GetAttackRange(),
                 AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(typeExtraArgs.AttackSpeedArgAg),
                 AvoidChance = ExtraStatsCalculator.GetAvoidChance(typeExtraArgs.AvoidChanceArgSt, typeExtraArgs.AvoidChanceArgAg),
                 DamagePerHeat = ExtraStatsCalculator.GetDamagePerHeat(typeExtraArgs.DamagePerHeatArgSt, typeExtraArgs.DamagePerHeatArgAg, typeExtraArgs.DamagePerHeatArgIn),
@@ -127,6 +128,8 @@ namespace GolemEntity.ExtraStats
             private static float Strength { get; set; }
             private static float Agility { get; set; }
             private static float Intelligence { get; set; }
+
+            public float AttackRangeArg;
 
             public float AttackSpeedArgAg = Agility;
             
