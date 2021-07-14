@@ -28,7 +28,7 @@ namespace BehaviourStrategy
         private bool _isReady = false;
     
 
-        public void FactoryMethod(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
+        public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
             RoundStatistics statistics = default, bool isFriendlyFire = false,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -57,7 +57,7 @@ namespace BehaviourStrategy
         {
             if (!_isReady)
             {
-                Debug.Log("Before using Attack() You must Invoke FactoryMethod");
+                Debug.Log("Before using Attack You must init fields by CustomConstructor");
                 return;
             }
 
@@ -66,11 +66,11 @@ namespace BehaviourStrategy
                 _timer = 0;
                 _hitAnimationSetters[Random.Range(0, _hitAnimationSetters.Length)].Invoke(_animator);
 
-                StartCoroutine(AttackCoroutine(damage, delayBetweenHits, attackerPosition));
+                StartCoroutine(AttackCoroutine(damage, attackerPosition));
             }
         }
 
-        private IEnumerator AttackCoroutine(float damage, float delayBetweenHits, Vector3 attackerPosition)
+        private IEnumerator AttackCoroutine(float damage, Vector3 attackerPosition)
         {
             //yield return new WaitForSeconds(delayBetweenHits / 2);
 

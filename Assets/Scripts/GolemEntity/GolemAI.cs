@@ -151,7 +151,7 @@ namespace GolemEntity
 
             var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
             SetAttackBehaviour(attack);
-            attack.FactoryMethod(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
+            attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.RoundStatistics, false,
                 AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack(_thisState.Stats.DamagePerHeat, GetDelayBetweenHits(), thisPos);

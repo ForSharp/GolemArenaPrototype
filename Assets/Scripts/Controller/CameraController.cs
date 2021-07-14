@@ -15,6 +15,11 @@ namespace Controller
         
         private void Update()
         {
+            if (Input.GetMouseButton(1))
+            {
+                MoveCamera();
+            }
+            
             MoveCamera();
         }
 

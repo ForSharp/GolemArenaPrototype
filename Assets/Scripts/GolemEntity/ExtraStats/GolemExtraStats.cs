@@ -1,6 +1,6 @@
 ﻿namespace GolemEntity.ExtraStats
 {
-    public struct GolemExtraStats 
+    public class GolemExtraStats 
     {
         public float AttackRange { get; set; }
         public float AttackSpeed { get; set; } 
@@ -25,6 +25,7 @@
         {
             return new GolemExtraStats ()
             {
+                AttackRange = statsA.AttackRange + statsB.AttackRange,
                 AttackSpeed = statsA.AttackSpeed + statsB.AttackSpeed,
                 AvoidChance = statsA.AvoidChance + statsB.AvoidChance,
                 DamagePerHeat = statsA.DamagePerHeat + statsB.DamagePerHeat,

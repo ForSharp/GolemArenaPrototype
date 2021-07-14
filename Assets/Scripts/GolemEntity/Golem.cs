@@ -14,11 +14,6 @@ namespace GolemEntity
 
         private IStatsProvider Rate { get; set; }
 
-        private void Start()
-        {
-            
-        }
-
         public Golem(GolemType golemType, Specialization specialization)
         {
             _golemType = golemType;
@@ -91,7 +86,7 @@ namespace GolemEntity
         {
             return new GolemExtraStats()
             {
-                AttackRange = extra.GetExtraStats().AttackRange + 1.55f, //NOTE! must be 1st here. Must be immutable
+                AttackRange = extra.GetExtraStats().AttackRange, 
                 AttackSpeed = extra.GetExtraStats().AttackSpeed,
                 AvoidChance = extra.GetExtraStats().AvoidChance,
                 DamagePerHeat = extra.GetExtraStats().DamagePerHeat,
