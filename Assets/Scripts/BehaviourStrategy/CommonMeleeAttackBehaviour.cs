@@ -26,9 +26,10 @@ namespace BehaviourStrategy
         private RoundStatistics _statistics;
 
         private bool _isReady = false;
-    
 
-        public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator, int group,
+
+        public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
+            int group,
             RoundStatistics statistics = default, bool isFriendlyFire = false,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -50,14 +51,12 @@ namespace BehaviourStrategy
 
         private void OnAttack()
         {
-            
         }
-        
+
         private void OnAttackEnded()
         {
-            
         }
-        
+
         private void Update()
         {
             _timer += Time.deltaTime;
@@ -98,9 +97,9 @@ namespace BehaviourStrategy
 
             foreach (var item in FilterCollidersArray(colliders))
             {
-                AttackGameCharacter(item, damage);
                 AttackDestructibleObjects(item, damage);
-                break;
+                if (AttackGameCharacter(item, damage))
+                    break;
             }
         }
 
@@ -115,7 +114,8 @@ namespace BehaviourStrategy
 
             var gameCharacterColliders =
                 filteredGameCharacterColliders as Collider[] ?? filteredGameCharacterColliders.ToArray();
-            var destructibleObjects = filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
+            var destructibleObjects =
+                filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
 
             var filteredArray = new Collider[gameCharacterColliders.Length +
                                              destructibleObjects.Length];
@@ -126,7 +126,7 @@ namespace BehaviourStrategy
             return filteredArray;
         }
 
-        private void AttackGameCharacter(Collider item, float damage)
+        private bool AttackGameCharacter(Collider item, float damage)
         {
             if (item.GetComponentInParent<GameCharacterState>())
             {
@@ -136,13 +136,20 @@ namespace BehaviourStrategy
                     if (state.Group != _group)
                     {
                         state.TakeDamage(damage, statistics: _statistics);
+                        return true;
                     }
                 }
                 else if (_isFriendlyFire)
                 {
+                    if (state == GetComponent<GameCharacterState>())
+                        return false;
+                    
                     state.TakeDamage(damage);
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private void AttackDestructibleObjects(Collider item, float damage)
@@ -152,6 +159,5 @@ namespace BehaviourStrategy
                 item.GetComponentInParent<DestructibleObject>().TakeDamage(damage);
             }
         }
-    
     }
 }

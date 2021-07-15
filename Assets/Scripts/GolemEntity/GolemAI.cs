@@ -27,7 +27,7 @@ namespace GolemEntity
 
         private const float CloseDistance = 10;
         private const float HitHeight = 1.75f;
-        private const float DestructionRadius = 1f;
+        private const float DestructionRadius = 0.5f;
         private const int AutoResetTargetDelay = 30;
 
         private void Start()
@@ -77,9 +77,13 @@ namespace GolemEntity
                 case FightStatus.CastsSpell:
                     break;
                 case FightStatus.Dead:
+                    SetDeadBehaviour();
                     break;
                 case FightStatus.Scared:
                     SetScaredBehaviour();
+                    break;
+                case FightStatus.GettingHit:
+                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -106,21 +110,34 @@ namespace GolemEntity
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
 
-            if (distanceToTarget <= _thisState.Stats.AttackRange * 1.5)
+            if (InAttackDistance())
             {
                 AttackTarget();
             }
-            else if (distanceToTarget <= CloseDistance - 3 )
+            else if (NearToTarget())
             {
                 WalkSlowlyWithFightPosture();
             }
-            else if (distanceToTarget <= CloseDistance)
+            else if (SeeTarget())
             {
                 WalkToTarget();
             }
             else
             {
                 RunToTarget();
+            }
+
+            bool InAttackDistance()
+            {
+                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5;
+            }
+            bool NearToTarget()
+            {
+                return distanceToTarget <= CloseDistance - 3;
+            }
+            bool SeeTarget()
+            {
+                return distanceToTarget <= CloseDistance;
             }
         }
 
@@ -162,21 +179,25 @@ namespace GolemEntity
 
         private float GetDelayBetweenHits()
         {
-            float seconds = 60;
+            const float seconds = 60;
             return seconds / (_thisState.Stats.AttackSpeed / 10);
         }
 
+        private void SetDeadBehaviour()
+        {
+            SetDefaultBehaviour();
+            AnimationChanger.SetGolemDie(_animator);
+            _thisState.LastEnemyAttacked.Kills += 1;
+            EventContainer.GolemDied -= HandleGolemDeath;
+            _navMeshAgent.baseOffset = -0.75f;
+            StartCoroutine(WaitForSecondsToDisable(6));
+        }
+        
         private void HandleGolemDeath()
         {
             if (_thisState.IsDead)
             {
-                SetDefaultBehaviour();
-                AnimationChanger.SetGolemDie(_animator);
                 _status = FightStatus.Dead;
-                _thisState.LastEnemyAttacked.Kills += 1;
-                EventContainer.GolemDied -= HandleGolemDeath;
-                _navMeshAgent.baseOffset = -0.75f;
-                StartCoroutine(WaitForSecondsToDisable(6));
                 return;
             }
             if (_targetState)
@@ -222,7 +243,6 @@ namespace GolemEntity
             _moveable.Move(_thisState.Stats.MoveSpeed * 2, _targetState.transform.position * direction);
             _isIKAllowed = false;
         }
-    
 
         private void AvoidHit()
         {

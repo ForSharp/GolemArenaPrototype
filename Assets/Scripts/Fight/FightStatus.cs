@@ -8,6 +8,7 @@
         Fallen,
         CastsSpell,
         Dead,
-        Scared
+        Scared,
+        GettingHit
     }
 }

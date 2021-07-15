@@ -11,7 +11,7 @@ namespace Controller
         [SerializeField] private Vector2 limitY = new Vector2(0, 40);
         [SerializeField] private Vector2 limitZ = new Vector2(-60, 50);
         
-        private const float BorderThickness = 11f;
+        private const float BorderThickness = 10f;
         
         private void Update()
         {
@@ -20,7 +20,6 @@ namespace Controller
                 MoveCamera();
             }
             
-            MoveCamera();
         }
 
         private void MoveCamera()
