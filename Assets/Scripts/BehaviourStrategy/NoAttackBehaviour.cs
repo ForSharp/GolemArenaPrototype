@@ -15,7 +15,7 @@ namespace BehaviourStrategy
             _idleAnimationSetters = idleAnimationSetters;
         }
     
-        public void Attack(float damage = default, float delayBetweenHits = default, Vector3 attackerPosition = default)
+        public void Attack()
         {
             _idleAnimationSetters[Random.Range(0, _idleAnimationSetters.Length)].Invoke(_animator);
         }

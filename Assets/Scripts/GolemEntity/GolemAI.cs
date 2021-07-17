@@ -14,19 +14,21 @@ namespace GolemEntity
     {
         private bool _isAIControlAllowed;
         private bool _isIKAllowed;
+        private bool _isDies;
+        private bool _inAttack;
 
         private IMoveable _moveable;
         private IAttackable _attackable;
 
         private GameCharacterState _thisState;
         private GameCharacterState _targetState;
-
+        private CommonMeleeAttackBehaviour _attack;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private FightStatus _status;
 
-        private const float CloseDistance = 10;
-        private const float HitHeight = 1.75f;
+        private const float CloseDistance = 30;
+        private const float HitHeight = 0.75f;
         private const float DestructionRadius = 0.5f;
         private const int AutoResetTargetDelay = 30;
 
@@ -35,7 +37,7 @@ namespace GolemEntity
             _thisState = GetComponent<GameCharacterState>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
-        
+            _attack = GetComponent<CommonMeleeAttackBehaviour>();
             _status = FightStatus.Neutral;
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
@@ -83,7 +85,7 @@ namespace GolemEntity
                     SetScaredBehaviour();
                     break;
                 case FightStatus.GettingHit:
-                    
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -94,13 +96,13 @@ namespace GolemEntity
         {
             return _isAIControlAllowed && _targetState && !_thisState.IsDead;
         }
-    
+
         private void SetDefaultBehaviour()
         {
             _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
-            _attackable.Attack(default, default, default);
+            _attackable.Attack();
         }
 
         private void SetFightBehaviour()
@@ -122,30 +124,43 @@ namespace GolemEntity
             {
                 WalkToTarget();
             }
-            else
+            else if (!_inAttack)
             {
                 RunToTarget();
             }
 
             bool InAttackDistance()
             {
-                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5;
+                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5f;
             }
+
             bool NearToTarget()
             {
-                return distanceToTarget <= CloseDistance - 3;
+                return distanceToTarget <= CloseDistance - 10 && !_inAttack;
             }
+
             bool SeeTarget()
             {
-                return distanceToTarget <= CloseDistance;
+                return distanceToTarget <= CloseDistance && !_inAttack;
+                ;
             }
+        }
+
+        private void OnAttackStarted()
+        {
+            _inAttack = true;
+        }
+
+        private void OnAttackEnded()
+        {
+            _inAttack = false;
         }
 
         private void SetScaredBehaviour()
         {
             if (!_targetState)
                 return;
-        
+
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
             if (distanceToTarget < CloseDistance * 3)
             {
@@ -159,22 +174,21 @@ namespace GolemEntity
 
         private void AttackTarget()
         {
-            var thisPos = transform.position;
-
-            transform.LookAt(_targetState.transform.position);
             _animator.applyRootMotion = true;
             SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
             _moveable.Move(default, default);
 
-            var attack = gameObject.GetComponent<CommonMeleeAttackBehaviour>();
-            SetAttackBehaviour(attack);
-            attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, _thisState.RoundStatistics, false,
-                AnimationChanger.SetHitAttack, AnimationChanger.SetKickAttack);
-            _attackable.Attack(_thisState.Stats.DamagePerHeat, GetDelayBetweenHits(), thisPos);
-
-            _navMeshAgent.SetDestination(thisPos);
+            SetAttackBehaviour(_attack);
+            _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
+                _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
+                _targetState.transform.position,
+                _thisState.RoundStatistics,
+                AnimationChanger.SetTestAttack);
+            _attackable.Attack();
             _isIKAllowed = true;
+            if (!_inAttack)
+                TurnSmoothlyToTarget();
+
         }
 
         private float GetDelayBetweenHits()
@@ -185,29 +199,36 @@ namespace GolemEntity
 
         private void SetDeadBehaviour()
         {
-            SetDefaultBehaviour();
-            AnimationChanger.SetGolemDie(_animator);
-            _thisState.LastEnemyAttacked.Kills += 1;
-            EventContainer.GolemDied -= HandleGolemDeath;
-            _navMeshAgent.baseOffset = -0.75f;
-            StartCoroutine(WaitForSecondsToDisable(6));
+            if (!_isDies)
+            {
+                AnimationChanger.SetGolemDie(_animator);
+                _isDies = true;
+                EventContainer.GolemDied -= HandleGolemDeath;
+                _navMeshAgent.baseOffset = -1f;
+                StartCoroutine(WaitForSecondsToDisable(6));
+            }
         }
-        
+
         private void HandleGolemDeath()
         {
             if (_thisState.IsDead)
             {
+                SetDefaultBehaviour();
                 _status = FightStatus.Dead;
+                _thisState.LastEnemyAttacked.Kills += 1;
                 return;
             }
+
             if (_targetState)
             {
                 if (_targetState.IsDead)
                 {
                     StartCoroutine(FindEnemies());
                 }
+
                 return;
             }
+
             StartCoroutine(FindEnemies());
         }
 
@@ -309,6 +330,16 @@ namespace GolemEntity
                 _animator.SetLookAtWeight(1);
                 _animator.SetLookAtPosition(new Vector3(_targetState.transform.position.x,
                     _targetState.transform.position.y + HitHeight, _targetState.transform.position.z));
+            }
+        }
+
+        private void TurnSmoothlyToTarget()
+        {
+            if (_targetState)
+            {
+                Vector3 direction = _targetState.transform.position - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _thisState.Stats.MoveSpeed * Time.deltaTime);
             }
         }
     }
