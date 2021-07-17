@@ -11,6 +11,7 @@ namespace GolemEntity
         private static readonly int SuperAttack = Animator.StringToHash("SuperAttack");
         private static readonly int AvoidHit = Animator.StringToHash("AvoidHit");
         private static readonly int GetHit = Animator.StringToHash("GetHit");
+        private static readonly int TestAttack = Animator.StringToHash("TestAttack");
 
         private const int KickAnimationAmount = 22; //total 29
         private const int HitAnimationAmount = 34; //total 35
@@ -25,6 +26,11 @@ namespace GolemEntity
             animator.Play("Walking");
         }
 
+        public static void SetTestAttack(Animator animator)
+        {
+            animator.SetTrigger(TestAttack);
+        }
+        
         public static void SetAvoidHit(Animator animator)
         {
             var blendTreeStages = GetBlendTreeStages(AvoidHitAnimationAmount);
