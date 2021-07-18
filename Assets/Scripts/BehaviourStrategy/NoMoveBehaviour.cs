@@ -22,11 +22,11 @@ namespace BehaviourStrategy
         {
             _idleAnimationSetters[Random.Range(0, _idleAnimationSetters.Length)].Invoke(_animator);
 
-            // if (_navMeshAgent)
-            // {
-            //     _navMeshAgent.speed = 0f;
-            //     _navMeshAgent.stoppingDistance = 0f;
-            // }
+            if (_navMeshAgent)
+            {
+                _navMeshAgent.speed = 0f;
+                _navMeshAgent.stoppingDistance = 0f;
+            }
         }
     
     }

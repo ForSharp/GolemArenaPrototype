@@ -26,10 +26,10 @@ namespace GolemEntity
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private FightStatus _status;
-
-        private const float CloseDistance = 30;
+        private float _timeToResetAttack = 0;
+        private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.5f;
+        private const float DestructionRadius = 0.25f;
         private const int AutoResetTargetDelay = 30;
 
         private void Start()
@@ -48,6 +48,7 @@ namespace GolemEntity
         private void Update()
         {
             SwitchStatuses();
+            ResetAttackIfNeed();
 
             if (Input.GetKeyDown(KeyCode.I))
                 _isAIControlAllowed = true;
@@ -124,14 +125,15 @@ namespace GolemEntity
             {
                 WalkToTarget();
             }
-            else if (!_inAttack)
+            else
             {
                 RunToTarget();
+                _inAttack = false;
             }
 
             bool InAttackDistance()
             {
-                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5f;
+                return distanceToTarget <= _thisState.Stats.AttackRange * 2f;
             }
 
             bool NearToTarget()
@@ -142,13 +144,13 @@ namespace GolemEntity
             bool SeeTarget()
             {
                 return distanceToTarget <= CloseDistance && !_inAttack;
-                ;
             }
         }
 
         private void OnAttackStarted()
         {
             _inAttack = true;
+            _timeToResetAttack = 0;
         }
 
         private void OnAttackEnded()
@@ -181,14 +183,13 @@ namespace GolemEntity
             SetAttackBehaviour(_attack);
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
-                _targetState.transform.position,
+                _targetState.transform, _navMeshAgent,
                 _thisState.RoundStatistics,
-                AnimationChanger.SetTestAttack);
+                AnimationChanger.SetSwordAttack);
             _attackable.Attack();
             _isIKAllowed = true;
             if (!_inAttack)
                 TurnSmoothlyToTarget();
-
         }
 
         private float GetDelayBetweenHits()
@@ -204,7 +205,11 @@ namespace GolemEntity
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
                 EventContainer.GolemDied -= HandleGolemDeath;
-                _navMeshAgent.baseOffset = -1f;
+                while (_navMeshAgent.baseOffset >= -1)
+                {
+                    _navMeshAgent.baseOffset =- Time.deltaTime * 0.7f;
+                }
+                
                 StartCoroutine(WaitForSecondsToDisable(6));
             }
         }
@@ -339,8 +344,27 @@ namespace GolemEntity
             {
                 Vector3 direction = _targetState.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _thisState.Stats.MoveSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation,
+                    _thisState.Stats.MoveSpeed * Time.deltaTime);
             }
+        }
+
+        private void ResetAttackIfNeed()
+        {
+            if (_inAttack)
+            {
+                _timeToResetAttack += Time.deltaTime;
+                if (_timeToResetAttack >= GetDelayBetweenHits() * 1.5f)
+                {
+                    ForceEndAttack();
+                }
+            }
+        }
+
+        private void ForceEndAttack()
+        {
+            _timeToResetAttack = 0;
+            _inAttack = false;
         }
     }
 }
