@@ -4,6 +4,7 @@ using System.Linq;
 using Fight;
 using GameLoop;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 namespace BehaviourStrategy
@@ -17,15 +18,19 @@ namespace BehaviourStrategy
         private Animator _animator;
         private int _group;
         private float _timer;
+        private float _timeToResetJump;
+        private float _timeToEndAttack;
         private RoundStatistics _statistics;
         private float _damage;
         private float _delayBetweenHits;
-        private Vector3 _targetPosition;
+        private Transform _target;
+        private NavMeshAgent _agent;
         private bool _isReady;
         private bool _isLastHitEnd = true;
+        private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
-            int group, float damage, float delayBetweenHits, Vector3 targetPosition,
+            int group, float damage, float delayBetweenHits, Transform target, NavMeshAgent agent,
             RoundStatistics statistics = default,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -38,7 +43,8 @@ namespace BehaviourStrategy
             _statistics = statistics;
             _damage = damage;
             _delayBetweenHits = delayBetweenHits;
-            _targetPosition = targetPosition;
+            _target = target;
+            _agent = agent;
             _isReady = true;
         }
 
@@ -46,23 +52,72 @@ namespace BehaviourStrategy
         {
             _timer = 100f;
         }
+        
+        private void Update()
+        {
+            _timer += Time.deltaTime;
+            if (_isJumpUp)
+            {
+                _timeToResetJump += Time.deltaTime;
+                ForceResetJumping();
+            }
+            EndAttackIfNeed();
+        }
+
+        #region AnimationEvents
+
+        private void OnAttackStarted()
+        {
+            _isLastHitEnd = false;
+            _timeToEndAttack = 0;
+            _agent.baseOffset = 0;
+        }
 
         private void OnAttack()
         {
-            _isLastHitEnd = false;
             AttackEnemy();
         }
 
         private void OnAttackEnded()
         {
             _isLastHitEnd = true;
+            _agent.baseOffset = 0;
+            _isJumpUp = false;
         }
 
-        private void Update()
+        private void OnStartJump()
         {
-            _timer += Time.deltaTime;
+            _isJumpUp = true;
+            while (_isJumpUp && _agent.baseOffset <= 0.85f)
+            {
+                _agent.baseOffset += Time.deltaTime * 1;
+            }
         }
 
+        private void OnStartLanding()
+        {
+            LandHero();
+        }
+
+        #endregion
+
+        private void LandHero()
+        {
+            _isJumpUp = false;
+            while (_agent.baseOffset > 0 && !_isJumpUp)
+            {
+                _agent.baseOffset -= Time.deltaTime * 1;
+            }
+        }
+
+        private void ForceResetJumping()
+        {
+            if (_timeToResetJump >= 1.5f)
+            {
+                LandHero();
+            }
+        }
+        
         public void Attack()
         {
             if (!_isReady)
@@ -70,7 +125,7 @@ namespace BehaviourStrategy
                 Debug.Log("Before using Attack You must init fields by CustomConstructor");
                 return;
             }
-            
+
             if (CanAttack())
             {
                 _timer = 0;
@@ -85,19 +140,35 @@ namespace BehaviourStrategy
 
         private void AttackEnemy()
         {
-            transform.LookAt(_targetPosition);
-            Vector3 spherePosition = transform.position + transform.forward * _attackRange;
-            spherePosition.y += _hitHeight;
-            Debug.DrawLine(new Vector3(transform.position.x, spherePosition.y, transform.position.z), spherePosition,
-                Color.magenta, 5);
-            Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
+            if (_target)
+            {
+                transform.LookAt(_target.position);
+            }
 
+            if (!TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange / 3)))
+            {
+                TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange));
+            }
+        }
+
+        private Vector3 GetDamageArea(float attackRange)
+        {
+            Vector3 spherePosition = transform.position + transform.forward * attackRange;
+            spherePosition.y += _hitHeight;
+            return spherePosition;
+        }
+
+        private bool TryFindEnemiesInSpecifiedArea(Vector3 area)
+        {
+            Collider[] colliders = Physics.OverlapSphere(area, _destructionRadius);
+            
             foreach (var item in FilterCollidersArray(colliders))
             {
                 AttackDestructibleObjects(item, _damage);
                 if (AttackGameCharacter(item, _damage))
-                    break;
+                    return true;
             }
+            return false;
         }
 
         private bool AttackGameCharacter(Collider item, float damage)
@@ -147,5 +218,22 @@ namespace BehaviourStrategy
             return filteredArray;
         }
         
+        private void EndAttackIfNeed()
+        {
+            if (!_isLastHitEnd)
+            {
+                _timeToEndAttack += Time.deltaTime;
+                if (_timeToEndAttack >= _delayBetweenHits * 1.5f)
+                {
+                    ForceEndAttack();
+                }
+            }
+        }
+
+        private void ForceEndAttack()
+        {
+            _timeToEndAttack = 0;
+            _isLastHitEnd = true;
+        }
     }
 }

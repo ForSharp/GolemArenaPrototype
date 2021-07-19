@@ -12,11 +12,12 @@ namespace GolemEntity
         private static readonly int AvoidHit = Animator.StringToHash("AvoidHit");
         private static readonly int GetHit = Animator.StringToHash("GetHit");
         private static readonly int TestAttack = Animator.StringToHash("TestAttack");
+        private static readonly int SwordAttack = Animator.StringToHash("SwordAttack");
 
         private const int KickAnimationAmount = 22; //total 29
         private const int HitAnimationAmount = 34; //total 35
         private const int DeathAnimationAmount = 11;
-        private const int FightIdleAnimationAmount = 5; 
+        private const int FightIdleAnimationAmount = 4; //5 in base animator, 4 in sword
         private const int SuperAttackAnimationAmount = 15; //without hurricane kick
         private const int AvoidHitAnimationAmount = 10; 
         private const int GetHitAnimationAmount = 18; 
@@ -29,6 +30,16 @@ namespace GolemEntity
         public static void SetTestAttack(Animator animator)
         {
             animator.SetTrigger(TestAttack);
+        }
+
+        public static void SetSwordAttack(Animator animator)
+        {
+            // var blendTreeStages = GetBlendTreeStages(9);
+            // animator.SetTrigger(SwordAttack);
+            // animator.SetFloat(Animator.StringToHash("SwordAttackVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+
+            var numb = Random.Range(1, 10);
+            animator.SetTrigger("SwordAttack" + numb);
         }
         
         public static void SetAvoidHit(Animator animator)
