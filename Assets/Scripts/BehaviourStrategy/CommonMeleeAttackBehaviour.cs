@@ -23,14 +23,14 @@ namespace BehaviourStrategy
         private RoundStatistics _statistics;
         private float _damage;
         private float _delayBetweenHits;
-        private Transform _target;
+        private GameObject _target;
         private NavMeshAgent _agent;
         private bool _isReady;
         private bool _isLastHitEnd = true;
         private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
-            int group, float damage, float delayBetweenHits, Transform target, NavMeshAgent agent,
+            int group, float damage, float delayBetweenHits, GameObject target, NavMeshAgent agent,
             RoundStatistics statistics = default,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -81,7 +81,10 @@ namespace BehaviourStrategy
         private void OnAttackEnded()
         {
             _isLastHitEnd = true;
-            _agent.baseOffset = 0;
+            if (_agent)
+            {
+                _agent.baseOffset = 0;
+            }
             _isJumpUp = false;
         }
 
@@ -142,7 +145,7 @@ namespace BehaviourStrategy
         {
             if (_target)
             {
-                transform.LookAt(_target.position);
+                transform.LookAt(_target.transform.position);
             }
 
             if (!TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange / 3)))

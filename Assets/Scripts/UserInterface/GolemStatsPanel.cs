@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Fight;
 using GameLoop;
+using GolemEntity;
 using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
@@ -76,13 +77,13 @@ namespace UserInterface
             {
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    _state.LvlUp();
+                    UpgradeSystem.LvlUp(_state);
                 
                 }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    _state.LvlDown();
+                    UpgradeSystem.LvlDown(_state);
                 }
             }
         }

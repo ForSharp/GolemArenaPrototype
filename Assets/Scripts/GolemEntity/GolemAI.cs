@@ -136,12 +136,10 @@ namespace GolemEntity
             {
                 return distanceToTarget <= _thisState.Stats.AttackRange * 2f;
             }
-
             bool NearToTarget()
             {
                 return distanceToTarget <= CloseDistance - 10 && !_inAttack;
             }
-
             bool SeeTarget()
             {
                 return distanceToTarget <= CloseDistance && !_inAttack;
@@ -184,7 +182,7 @@ namespace GolemEntity
             SetAttackBehaviour(_attack);
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
-                _targetState.transform, _navMeshAgent,
+                _targetState.gameObject, _navMeshAgent,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack);
             _attackable.Attack();
