@@ -26,7 +26,8 @@ namespace GolemEntity
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private FightStatus _status;
-        private float _timeToResetAttack = 0;
+        private float _timeToResetAttack;
+        
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
         private const float DestructionRadius = 0.25f;
@@ -41,7 +42,7 @@ namespace GolemEntity
             _status = FightStatus.Neutral;
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
-
+            _isDies = false;
             EventContainer.GolemDied += HandleGolemDeath;
         }
 
@@ -205,13 +206,9 @@ namespace GolemEntity
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
                 EventContainer.GolemDied -= HandleGolemDeath;
-                while (_navMeshAgent.baseOffset >= -1)
-                {
-                    _navMeshAgent.baseOffset =- Time.deltaTime * 0.7f;
-                }
-                
                 StartCoroutine(WaitForSecondsToDisable(6));
             }
+            _navMeshAgent.baseOffset = -0.8f; 
         }
 
         private void HandleGolemDeath()

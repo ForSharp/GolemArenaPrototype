@@ -104,7 +104,7 @@ namespace BehaviourStrategy
         private void LandHero()
         {
             _isJumpUp = false;
-            while (_agent.baseOffset >= 0)
+            while (_agent.baseOffset > 0 && !_isJumpUp)
             {
                 _agent.baseOffset -= Time.deltaTime * 1;
             }
@@ -144,18 +144,31 @@ namespace BehaviourStrategy
             {
                 transform.LookAt(_target.position);
             }
-            Vector3 spherePosition = transform.position + transform.forward * _attackRange;
-            spherePosition.y += _hitHeight;
-            Debug.DrawLine(new Vector3(transform.position.x, spherePosition.y, transform.position.z), spherePosition,
-                Color.magenta, 5);
-            Collider[] colliders = Physics.OverlapSphere(spherePosition, _destructionRadius);
 
+            if (!TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange / 3)))
+            {
+                TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange));
+            }
+        }
+
+        private Vector3 GetDamageArea(float attackRange)
+        {
+            Vector3 spherePosition = transform.position + transform.forward * attackRange;
+            spherePosition.y += _hitHeight;
+            return spherePosition;
+        }
+
+        private bool TryFindEnemiesInSpecifiedArea(Vector3 area)
+        {
+            Collider[] colliders = Physics.OverlapSphere(area, _destructionRadius);
+            
             foreach (var item in FilterCollidersArray(colliders))
             {
                 AttackDestructibleObjects(item, _damage);
                 if (AttackGameCharacter(item, _damage))
-                    break;
+                    return true;
             }
+            return false;
         }
 
         private bool AttackGameCharacter(Collider item, float damage)
