@@ -1,4 +1,5 @@
-﻿using GameLoop;
+﻿using System;
+using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
@@ -27,9 +28,13 @@ namespace Fight
         private bool _isReady;
         public RoundStatistics LastEnemyAttacked;
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
+        public event EventHandler AttackReceived;
 
-        public string testStringAttack = null;
-
+        public virtual void OnAttackReceived(AttackHitEventArgs args)
+        {
+            AttackReceived?.Invoke(this, args);
+        }
+        
         private void Start()
         {
             EventContainer.GolemStatsChanged += UpdateStats;
@@ -101,7 +106,7 @@ namespace Fight
             healthBar.GetComponent<UIHealthBar>().characterState = this;
         }
 
-        public void TakeDamage(float damage, int defence = 0, RoundStatistics statistics = default)
+        public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)
         {
             CurrentHealth -= damage;
             if (statistics == null) return;
@@ -113,5 +118,7 @@ namespace Fight
         {
         
         }
+
+        
     }
 }

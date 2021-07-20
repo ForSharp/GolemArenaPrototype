@@ -16,6 +16,8 @@ namespace GolemEntity
         private bool _isIKAllowed;
         private bool _isDies;
         private bool _inAttack;
+        private bool _isGetsHit;
+        private bool _isAvoidsHit;
 
         private IMoveable _moveable;
         private IAttackable _attackable;
@@ -27,7 +29,7 @@ namespace GolemEntity
         private Animator _animator;
         private FightStatus _status;
         private float _timeToResetAttack;
-        
+
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
         private const float DestructionRadius = 0.25f;
@@ -44,6 +46,7 @@ namespace GolemEntity
             StartCoroutine(FindEnemies());
             _isDies = false;
             EventContainer.GolemDied += HandleGolemDeath;
+            _thisState.AttackReceived += HandleHitReceiving;
         }
 
         private void Update()
@@ -87,7 +90,10 @@ namespace GolemEntity
                     SetScaredBehaviour();
                     break;
                 case FightStatus.GettingHit:
-
+                    SetGettingHitBehaviour();
+                    break;
+                case FightStatus.AvoidingHit:
+                    SetAvoidingHitBehaviour();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -96,7 +102,7 @@ namespace GolemEntity
 
         private bool CanFight()
         {
-            return _isAIControlAllowed && _targetState && !_thisState.IsDead;
+            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit && _status != FightStatus.AvoidingHit;
         }
 
         private void SetDefaultBehaviour()
@@ -107,6 +113,27 @@ namespace GolemEntity
             _attackable.Attack();
         }
 
+        #region AnimationEvents
+
+        private void OnAttackStarted()
+        {
+            _inAttack = true;
+            _timeToResetAttack = 0;
+        }
+
+        private void OnAttackEnded()
+        {
+            _inAttack = false;
+        }
+
+        private void OnCanFight()
+        {
+            if (CanFight())
+                _status = FightStatus.Active;
+        }
+
+        #endregion
+        
         private void SetFightBehaviour()
         {
             if (!_targetState)
@@ -136,27 +163,18 @@ namespace GolemEntity
             {
                 return distanceToTarget <= _thisState.Stats.AttackRange * 2f;
             }
+
             bool NearToTarget()
             {
                 return distanceToTarget <= CloseDistance - 10 && !_inAttack;
             }
+
             bool SeeTarget()
             {
                 return distanceToTarget <= CloseDistance && !_inAttack;
             }
         }
-
-        private void OnAttackStarted()
-        {
-            _inAttack = true;
-            _timeToResetAttack = 0;
-        }
-
-        private void OnAttackEnded()
-        {
-            _inAttack = false;
-        }
-
+        
         private void SetScaredBehaviour()
         {
             if (!_targetState)
@@ -182,6 +200,7 @@ namespace GolemEntity
             SetAttackBehaviour(_attack);
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
+                _thisState.Stats.HitAccuracy,
                 _targetState.gameObject, _navMeshAgent,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack);
@@ -204,9 +223,11 @@ namespace GolemEntity
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
                 EventContainer.GolemDied -= HandleGolemDeath;
+                _thisState.AttackReceived -= HandleHitReceiving;
                 StartCoroutine(WaitForSecondsToDisable(6));
             }
-            _navMeshAgent.baseOffset = -0.8f; 
+
+            _navMeshAgent.baseOffset = -0.8f;
         }
 
         private void HandleGolemDeath()
@@ -265,14 +286,117 @@ namespace GolemEntity
             _isIKAllowed = false;
         }
 
-        private void AvoidHit()
+        private void HandleHitReceiving(object sender, EventArgs args)
         {
-            _animator.applyRootMotion = true;
+            AttackHitEventArgs hitArgs = (AttackHitEventArgs) args;
+            var hitChance = GetHitChance(hitArgs.hitAccuracy, _thisState.Stats.AvoidChance);
+            var random = Random.Range(0, 1.0f);
+            if (hitChance > random)
+            {
+                _thisState.TakeDamage(hitArgs.damagePerHit, _thisState.Stats.Defence, hitArgs.statistics);
+                if (!_thisState.IsDead)
+                {
+                    _isGetsHit = false;
+                    _status = FightStatus.GettingHit;
+                }
+            }
+            else
+            {
+                _isAvoidsHit = false;
+                _status = FightStatus.AvoidingHit;
+            }
         }
 
-        private void GetHit()
+        private float GetHitChance(float accuracy, float evasion)
         {
-            _animator.applyRootMotion = true;
+            if (accuracy >= evasion)
+            {
+                float difference = accuracy / evasion;
+                if (difference >= 5)
+                    return 0.95f;
+                if (5 > difference && difference >= 4)
+                {
+                    var res = difference - 4f;
+                    var res2 = res / 20f;
+                    return res2 + 0.90f;
+                }
+
+                if (4 > difference && difference >= 3)
+                {
+                    var res = difference - 3f;
+                    var res2 = res / 20f;
+                    return res2 + 0.85f;
+                }
+
+                if (3 > difference && difference >= 2)
+                {
+                    var res = difference - 2f;
+                    var res2 = res / 10f;
+                    return res2 + 0.75f;
+                }
+
+                if (2 > difference && difference >= 1f)
+                {
+                    var res = difference - 1f;
+                    var res2 = res / 4f;
+                    return res2 + 0.5f;
+                }
+            }
+            else
+            {
+                float difference = evasion / accuracy;
+                if (difference >= 5)
+                    return 1 - 0.95f;
+                if (5 > difference && difference >= 4)
+                {
+                    var res = difference - 4f;
+                    var res2 = res / 20f;
+                    return 1 - res2 - 0.90f;
+                }
+
+                if (4 > difference && difference >= 3)
+                {
+                    var res = difference - 3f;
+                    var res2 = res / 20f;
+                    return 1 - res2 - 0.85f;
+                }
+
+                if (3 > difference && difference >= 2)
+                {
+                    var res = difference - 2f;
+                    var res2 = res / 10f;
+                    return 1 - res2 - 0.75f;
+                }
+
+                if (2 > difference && difference >= 1f)
+                {
+                    var res = difference - 1f;
+                    var res2 = res / 4f;
+                    return 1 - res2 - 0.5f;
+                }
+            }
+
+            throw new Exception();
+        }
+
+        private void SetAvoidingHitBehaviour()
+        {
+            if (!_isAvoidsHit)
+            {
+                _isAvoidsHit = true;
+                _animator.applyRootMotion = true;
+                AnimationChanger.SetAvoidHit(_animator);
+            }
+        }
+
+        private void SetGettingHitBehaviour()
+        {
+            if (!_isGetsHit)
+            {
+                _isGetsHit = true;
+                _animator.applyRootMotion = true;
+                AnimationChanger.SetGetHit(_animator);
+            }
         }
 
         private void Fall()

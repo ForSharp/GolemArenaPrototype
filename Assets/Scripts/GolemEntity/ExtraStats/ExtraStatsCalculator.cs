@@ -29,7 +29,7 @@ namespace GolemEntity.ExtraStats
 
         public static float GetAvoidChance(float strength, float agility)
         {
-            return (agility * 0.85f + strength * 0.15f);
+            return (agility * 0.45f + strength * 0.15f);
         }
 
         public static float GetDamagePerHeat(float strength, float agility, float intelligence)
@@ -54,22 +54,12 @@ namespace GolemEntity.ExtraStats
 
         public static float GetHitAccuracy(float strength, float agility)
         {
-            var speed = (200 + (agility - strength));
-            if (speed > 300)
-                return 300;
-            if (speed < 100)
-                return 100;
-            return speed;
+            return (agility * 0.55f + strength * 0.30f);
         }
 
         public static float GetMagicAccuracy(float strength, float intelligence)
         {
-            var speed = (200 + (intelligence - strength));
-            if (speed > 300)
-                return 300;
-            if (speed < 100)
-                return 100;
-            return speed;
+            return (intelligence * 0.65f + strength * 0.15f);
         }
 
         public static float GetMagicDamage(float intelligence)

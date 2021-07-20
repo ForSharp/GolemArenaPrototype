@@ -9,6 +9,7 @@
         CastsSpell,
         Dead,
         Scared,
-        GettingHit
+        GettingHit,
+        AvoidingHit
     }
 }

@@ -23,6 +23,7 @@ namespace BehaviourStrategy
         private RoundStatistics _statistics;
         private float _damage;
         private float _delayBetweenHits;
+        private float _hitAccuracy;
         private GameObject _target;
         private NavMeshAgent _agent;
         private bool _isReady;
@@ -30,7 +31,7 @@ namespace BehaviourStrategy
         private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
-            int group, float damage, float delayBetweenHits, GameObject target, NavMeshAgent agent,
+            int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target, NavMeshAgent agent,
             RoundStatistics statistics = default,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -43,6 +44,7 @@ namespace BehaviourStrategy
             _statistics = statistics;
             _damage = damage;
             _delayBetweenHits = delayBetweenHits;
+            _hitAccuracy = hitAccuracy;
             _target = target;
             _agent = agent;
             _isReady = true;
@@ -93,7 +95,7 @@ namespace BehaviourStrategy
             _isJumpUp = true;
             while (_isJumpUp && _agent.baseOffset <= 0.85f)
             {
-                _agent.baseOffset += Time.deltaTime * 1;
+                _agent.baseOffset += Time.deltaTime * 0.1f;
             }
         }
 
@@ -109,7 +111,7 @@ namespace BehaviourStrategy
             _isJumpUp = false;
             while (_agent.baseOffset > 0 && !_isJumpUp)
             {
-                _agent.baseOffset -= Time.deltaTime * 1;
+                _agent.baseOffset -= Time.deltaTime * 0.1f;
             }
         }
 
@@ -167,14 +169,14 @@ namespace BehaviourStrategy
             
             foreach (var item in FilterCollidersArray(colliders))
             {
-                AttackDestructibleObjects(item, _damage);
-                if (AttackGameCharacter(item, _damage))
+                AttackDestructibleObjects(item);
+                if (AttackGameCharacter(item))
                     return true;
             }
             return false;
         }
 
-        private bool AttackGameCharacter(Collider item, float damage)
+        private bool AttackGameCharacter(Collider item)
         {
             if (item.GetComponentInParent<GameCharacterState>())
             {
@@ -182,7 +184,7 @@ namespace BehaviourStrategy
 
                 if (state.Group != _group)
                 {
-                    state.TakeDamage(damage, statistics: _statistics);
+                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics));
                     return true;
                 }
             }
@@ -190,11 +192,11 @@ namespace BehaviourStrategy
             return false;
         }
 
-        private void AttackDestructibleObjects(Collider item, float damage)
+        private void AttackDestructibleObjects(Collider item)
         {
             if (item.GetComponentInParent<DestructibleObject>())
             {
-                item.GetComponentInParent<DestructibleObject>().TakeDamage(damage);
+                item.GetComponentInParent<DestructibleObject>().TakeDamage(_damage);
             }
         }
 
