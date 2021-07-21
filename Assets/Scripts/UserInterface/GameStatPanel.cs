@@ -15,13 +15,8 @@ namespace UserInterface
             if (_gameStatTemplates.Count < Game.AllGolems.Count)
             {
                 CreateTemplates();
-                //FillAllTemplates();
             }
-            //FillAllTemplates();
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                //FillAllTemplates();
-            }
+            
         }
 
         private void LateUpdate()

@@ -41,11 +41,8 @@ namespace UserInterface
             SetRequiredPosition();
             DestroyOnDeath();
 
-            attack.text = characterState.testStringAttack;
         }
-
-    
-    
+        
         private void SetRequiredPosition(float multiplier = 1)
         {
             var requirePos = new Vector3(characterState.transform.position.x,

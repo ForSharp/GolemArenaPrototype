@@ -1,4 +1,5 @@
-﻿using GameLoop;
+﻿using System;
+using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
@@ -9,9 +10,6 @@ namespace Fight
 {
     public class GameCharacterState : MonoBehaviour
     {
-        //TODO: создать производный от GameCharacterState класс, содержащий все, что есть сейчас, но применимо только к голему.
-        //TODO: GameCharacterState сделать простым и универсальным, чтобы использовать для всех персонажей кроме големов.
-    
         [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
     
@@ -19,20 +17,24 @@ namespace Fight
         public float CurrentHealth { get; private set; }
         public int Group { get; private set; } 
         public Color ColorGroup { get; private set; } 
-        public int Lvl { get; private set; }
+        public int Lvl { get; set; }
         public bool IsDead { get; private set; }
         public GolemBaseStats BaseStats { get; private set; }
         public GolemExtraStats Stats { get; private set; }
         public string Type { get; private set; }
         public string Spec { get; private set; }
-        private Golem Golem { get; set; }
+        public Golem Golem { get; private set; }
+
         private bool _isReady;
         public RoundStatistics LastEnemyAttacked;
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
+        public event EventHandler AttackReceived;
 
-
-        public string testStringAttack = null; 
-
+        public virtual void OnAttackReceived(AttackHitEventArgs args)
+        {
+            AttackReceived?.Invoke(this, args);
+        }
+        
         private void Start()
         {
             EventContainer.GolemStatsChanged += UpdateStats;
@@ -104,7 +106,7 @@ namespace Fight
             healthBar.GetComponent<UIHealthBar>().characterState = this;
         }
 
-        public void TakeDamage(float damage, int defence = 0, RoundStatistics statistics = default)
+        public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)
         {
             CurrentHealth -= damage;
             if (statistics == null) return;
@@ -112,24 +114,11 @@ namespace Fight
             LastEnemyAttacked = statistics;
         }
 
-        public void LvlUp()
-        {
-            Golem.ChangeBaseStatsProportionally(10);
-            EventContainer.OnGolemStatsChanged();
-            Lvl++;
-        }
-    
-        public void LvlDown()
-        {
-            if (Lvl <= 1) return;
-            Golem.ChangeBaseStatsProportionally(-10);
-            EventContainer.OnGolemStatsChanged();
-            Lvl--;
-        }
-    
         public void SpendStamina(float energy)
         {
         
         }
+
+        
     }
 }
