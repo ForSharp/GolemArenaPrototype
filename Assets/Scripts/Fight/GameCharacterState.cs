@@ -8,11 +8,12 @@ using UserInterface;
 
 namespace Fight
 {
-    public class GameCharacterState : MonoBehaviour
+    public sealed class GameCharacterState : MonoBehaviour
     {
         [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
-    
+        [SerializeField] private GolemType type;
+        
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
         public int Group { get; private set; } 
@@ -21,7 +22,7 @@ namespace Fight
         public bool IsDead { get; private set; }
         public GolemBaseStats BaseStats { get; private set; }
         public GolemExtraStats Stats { get; private set; }
-        public string Type { get; private set; }
+        public string Type => type.ToString();
         public string Spec { get; private set; }
         public Golem Golem { get; private set; }
 
@@ -30,7 +31,7 @@ namespace Fight
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
         public event EventHandler AttackReceived;
 
-        public virtual void OnAttackReceived(AttackHitEventArgs args)
+        public void OnAttackReceived(AttackHitEventArgs args)
         {
             AttackReceived?.Invoke(this, args);
         }
@@ -73,12 +74,11 @@ namespace Fight
             }
         }
     
-        public void InitializeState(Golem golem, int group, Color colorGroup, string type, string spec)
+        public void InitializeState(Golem golem, int group, Color colorGroup, string spec)
         {
             Golem = golem;
             Group = group;
             ColorGroup = colorGroup;
-            Type = type;
             Spec = spec;
         
             SetStartState();

@@ -3,22 +3,19 @@ using Fight;
 
 namespace GameLoop
 {
-    public static class Game
+    public class Game
     {
-        public static List<GameCharacterState> AllGolems = new List<GameCharacterState>();
+        public List<GameCharacterState> AllGolems = new List<GameCharacterState>();
 
-    
-
-        public static void AddToAllGolems(GameCharacterState golem)
+        public void AddToAllGolems(GameCharacterState golem)
         {
             AllGolems.Add(golem);
         }
 
-        public static GameCharacterState GetGolem(int index)
+        public void PrepareNewRound()
         {
-            return AllGolems[index];
+            
         }
-    
     
     }
 }

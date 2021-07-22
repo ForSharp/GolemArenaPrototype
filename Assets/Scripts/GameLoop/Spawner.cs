@@ -14,6 +14,7 @@ namespace GameLoop
 
         private Golem Golem { get; set; }
         private static int _group = 0;
+        private readonly Game _game = new Game();
 
         public void SpawnGolem(GolemType golemType, Specialization specialization)
         {
@@ -39,13 +40,13 @@ namespace GameLoop
             var state = newGolem.GetComponent<GameCharacterState>();
             if (_group < groupColors.Length)
             {
-                state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
-                Game.AddToAllGolems(state);
+                state.InitializeState(golem, _group, groupColors[_group], specialization.ToString());
+                _game.AddToAllGolems(state);
             }
             else if (_group >= groupColors.Length)
             {
-                state.InitializeState(golem, _group, Color.black, golemType.ToString(), specialization.ToString());
-                Game.AddToAllGolems(state);
+                state.InitializeState(golem, _group, Color.black, specialization.ToString());
+                _game.AddToAllGolems(state);
             }
         
         }

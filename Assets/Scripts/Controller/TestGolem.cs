@@ -8,7 +8,7 @@ namespace Controller
         private Golem _golem;
         private void CreateGolem()
         {
-            _golem = new Golem(GolemType.WaterGolem, Specialization.Warrior);
+            
             ShowAll();
         }
 

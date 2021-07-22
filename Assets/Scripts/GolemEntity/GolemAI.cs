@@ -32,7 +32,7 @@ namespace GolemEntity
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.25f;
+        private const float DestructionRadius = 0.35f;
         private const int AutoResetTargetDelay = 30;
 
         private void Start()

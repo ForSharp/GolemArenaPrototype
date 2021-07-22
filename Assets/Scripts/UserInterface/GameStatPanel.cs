@@ -9,10 +9,11 @@ namespace UserInterface
         [SerializeField] private GameObject gameStatTemplatePrefab;
         [SerializeField] private Transform content;
         private List<GameObject> _gameStatTemplates = new List<GameObject>();
-
+        private readonly Game _game = new Game();
+        
         private void Update()
         {
-            if (_gameStatTemplates.Count < Game.AllGolems.Count)
+            if (_gameStatTemplates.Count < _game.AllGolems.Count)
             {
                 CreateTemplates();
             }
@@ -26,7 +27,7 @@ namespace UserInterface
 
         private void CreateTemplates()
         {
-            for (int i = _gameStatTemplates.Count; i < Game.AllGolems.Count; i++)
+            for (int i = _gameStatTemplates.Count; i < _game.AllGolems.Count; i++)
             {
                 var gameStatTemplate = Instantiate(gameStatTemplatePrefab, content);
                 _gameStatTemplates.Add(gameStatTemplate);
@@ -37,10 +38,10 @@ namespace UserInterface
         {
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
-                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllGolems[i].Type,
-                    Game.AllGolems[i].Spec, Game.AllGolems[i].RoundStatistics.Damage,
-                    Game.AllGolems[i].RoundStatistics.Kills, Game.AllGolems[i].RoundStatistics.Wins,
-                    Game.AllGolems[i].ColorGroup);
+                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(_game.AllGolems[i].Type,
+                    _game.AllGolems[i].Spec, _game.AllGolems[i].RoundStatistics.Damage,
+                    _game.AllGolems[i].RoundStatistics.Kills, _game.AllGolems[i].RoundStatistics.Wins,
+                    _game.AllGolems[i].ColorGroup);
             }
         }
     }
