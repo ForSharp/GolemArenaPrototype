@@ -3,7 +3,7 @@
     public enum MainCharacterParameter
     {
         Strength,
-        Stamina,
+        Agility,
         Intelligence
     }
 }

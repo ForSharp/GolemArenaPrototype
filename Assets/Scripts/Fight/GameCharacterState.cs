@@ -12,7 +12,6 @@ namespace Fight
     {
         [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
-        [SerializeField] private GolemType type;
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
@@ -22,7 +21,7 @@ namespace Fight
         public bool IsDead { get; private set; }
         public GolemBaseStats BaseStats { get; private set; }
         public GolemExtraStats Stats { get; private set; }
-        public string Type => type.ToString();
+        public string Type { get; private set; }
         public string Spec { get; private set; }
         public Golem Golem { get; private set; }
 
@@ -74,11 +73,12 @@ namespace Fight
             }
         }
     
-        public void InitializeState(Golem golem, int group, Color colorGroup, string spec)
+        public void InitializeState(Golem golem, int group, Color colorGroup, string type, string spec)
         {
             Golem = golem;
             Group = group;
             ColorGroup = colorGroup;
+            Type = type;
             Spec = spec;
         
             SetStartState();

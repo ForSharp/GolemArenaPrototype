@@ -318,6 +318,11 @@ namespace GolemEntity
                     throw new ArgumentOutOfRangeException(nameof(spec), spec, null);
             }
         }
+
+        public static GolemBaseStats GetBaseStats(GolemType type, Specialization spec)
+        {
+            return GetBaseStats(type) + GetBaseStats(spec);
+        }
         
         public static GolemExtraStats GetExtraStats(GolemType golemType, GolemBaseStats baseStats)
         {
@@ -554,6 +559,11 @@ namespace GolemEntity
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
             }
         }
+
+        public static GolemExtraStats GetExtraStats(GolemType type, Specialization spec, GolemBaseStats baseStats)
+        {
+            return GetExtraStats(type, baseStats) + GetExtraStats(spec, baseStats);
+        }
         
         public static MainCharacterParameter GetMainCharacterParameter(GolemType type)
         {
@@ -562,19 +572,19 @@ namespace GolemEntity
                 case GolemType.AncientQueen:
                     return MainCharacterParameter.Intelligence;
                 case GolemType.AncientWarrior:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.BarbarianGiant:
                     return MainCharacterParameter.Strength;
                 case GolemType.BigOrk:
                     return MainCharacterParameter.Strength;
                 case GolemType.Dwarf:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.ElementalGolem:
                     return MainCharacterParameter.Strength;
                 case GolemType.FortGolem:
                     return MainCharacterParameter.Strength;
                 case GolemType.MechanicalGolem:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.MutantGuy:
                     return MainCharacterParameter.Strength;
                 case GolemType.PigButcher:
@@ -582,11 +592,11 @@ namespace GolemEntity
                 case GolemType.RedDemon:
                     return MainCharacterParameter.Intelligence;
                 case GolemType.Slayer:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.Troll:
                     return MainCharacterParameter.Strength;
                 case GolemType.DarkElf:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.EvilGod:
                     return MainCharacterParameter.Intelligence;
                 case GolemType.ForestGuardian:
@@ -598,9 +608,9 @@ namespace GolemEntity
                 case GolemType.Mystic:
                     return MainCharacterParameter.Intelligence;
                 case GolemType.SpiritDemon:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 case GolemType.UndeadKnight:
-                    return MainCharacterParameter.Stamina;
+                    return MainCharacterParameter.Agility;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -652,6 +662,17 @@ namespace GolemEntity
             return GetFeaturesCollection(specStatsColl, defaultStatsColl);
         }
 
+        public static List<string> GetCharacterFeatures(GolemType type, Specialization spec)
+        {
+            var baseStats = new GolemBaseStats() {Strength = 10, Agility = 10, Intelligence = 10};
+            var currentStats = GetExtraStats(type, spec, baseStats);
+            var defaultStats = GetExtraStats(default, default, baseStats);
+            var typeStatsColl = GetStatsCollection(currentStats);
+            var defaultStatsColl = GetStatsCollection(defaultStats);
+
+            return GetFeaturesCollection(typeStatsColl, defaultStatsColl);
+        }
+        
         private static List<string> GetFeaturesCollection(float[] currentStatsColl, float[] defaultStatsColl)
         {
             var features = new List<string>();
@@ -660,8 +681,8 @@ namespace GolemEntity
                 if (Math.Abs(currentStatsColl[i] - defaultStatsColl[i]) > 0.01f)
                 {
                     var result = currentStatsColl[i] - defaultStatsColl[i] > 0
-                        ? $"increased by {currentStatsColl[i] / defaultStatsColl[i] * 100} %"
-                        : $"decreased by {defaultStatsColl[i] / currentStatsColl[i] * 100} %";
+                        ? $"increased by {(int)(currentStatsColl[i] / defaultStatsColl[i] * 100)} %"
+                        : $"decreased by {(int)(defaultStatsColl[i] / currentStatsColl[i] * 100)} %";
                     features.Add($"{GetStatsStringCollection()[i]} " + result);
                 }
             }
