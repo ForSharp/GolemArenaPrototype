@@ -2,26 +2,26 @@
 {
     public enum GolemType 
     {
-        AncientQueen, //I
-        AncientWarrior, //A
-        BarbarianGiant, //S
-        BigOrk, //S
-        Dwarf, //A
-        ElementalGolem, //S
-        FortGolem, //S
-        MechanicalGolem, //A
-        MutantGuy, //S
-        PigButcher, //S
-        RedDemon, //I
-        Slayer, //A
-        Troll, //S
-        DarkElf, //A
-        EvilGod, //I
-        ForestGuardian, //I
-        ForestWitch, //I
+        Cleopatra, //I
+        Ramzes, //A
+        Garruk, //S
+        Bagrak, //S
+        Gloin, //A
+        Rock, //S
+        Fort, //S
+        Mario, //A
+        Freak, //S
+        Peppa, //S
+        Satyr, //I
+        Maron, //A
+        Cudgel, //S
+        Belesar, //A
+        Yama, //I
+        Shanti, //I
+        Aine, //I
         Medusa, //I
-        Mystic, //I
-        SpiritDemon, //A
-        UndeadKnight //A
+        Sazum, //I
+        Nissa, //A
+        Raven //A
     }
 }

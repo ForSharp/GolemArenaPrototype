@@ -11,119 +11,119 @@ namespace GolemEntity
         {
             switch (type)
             {
-                case GolemType.AncientQueen:
+                case GolemType.Cleopatra:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.AncientWarrior:
+                case GolemType.Ramzes:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.BarbarianGiant:
+                case GolemType.Garruk:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.BigOrk:
+                case GolemType.Bagrak:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.Dwarf:
+                case GolemType.Gloin:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.ElementalGolem:
+                case GolemType.Rock:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.FortGolem:
+                case GolemType.Fort:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.MechanicalGolem:
+                case GolemType.Mario:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.MutantGuy:
+                case GolemType.Freak:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.PigButcher:
+                case GolemType.Peppa:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.RedDemon:
+                case GolemType.Satyr:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.Slayer:
+                case GolemType.Maron:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.Troll:
+                case GolemType.Cudgel:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.DarkElf:
+                case GolemType.Belesar:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.EvilGod:
+                case GolemType.Yama:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.ForestGuardian:
+                case GolemType.Shanti:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.ForestWitch:
+                case GolemType.Aine:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
@@ -137,21 +137,21 @@ namespace GolemEntity
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.Mystic:
+                case GolemType.Sazum:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.SpiritDemon:
+                case GolemType.Nissa:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
                         Agility = 0.4f,
                         Intelligence = 0.1f
                     };
-                case GolemType.UndeadKnight:
+                case GolemType.Raven:
                     return new GolemBaseStats()
                     {
                         Strength = 0.6f,
@@ -332,87 +332,87 @@ namespace GolemEntity
 
             switch (golemType)
             {
-                case GolemType.AncientQueen:
+                case GolemType.Cleopatra:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.AncientWarrior:
+                case GolemType.Ramzes:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.BarbarianGiant:
+                case GolemType.Garruk:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.BigOrk:
+                case GolemType.Bagrak:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.Dwarf:
+                case GolemType.Gloin:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.ElementalGolem:
+                case GolemType.Rock:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.FortGolem:
+                case GolemType.Fort:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.MechanicalGolem:
+                case GolemType.Mario:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.MutantGuy:
+                case GolemType.Freak:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.PigButcher:
+                case GolemType.Peppa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.RedDemon:
+                case GolemType.Satyr:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.Slayer:
+                case GolemType.Maron:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.Troll:
+                case GolemType.Cudgel:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.DarkElf:
+                case GolemType.Belesar:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.EvilGod:
+                case GolemType.Yama:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.ForestGuardian:
+                case GolemType.Shanti:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.ForestWitch:
+                case GolemType.Aine:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
@@ -422,17 +422,17 @@ namespace GolemEntity
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.Mystic:
+                case GolemType.Sazum:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.SpiritDemon:
+                case GolemType.Nissa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
                     });
-                case GolemType.UndeadKnight:
+                case GolemType.Raven:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DefenceArgAg = strength * 1.1f
@@ -569,47 +569,47 @@ namespace GolemEntity
         {
             switch (type)
             {
-                case GolemType.AncientQueen:
+                case GolemType.Cleopatra:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.AncientWarrior:
+                case GolemType.Ramzes:
                     return MainCharacterParameter.Agility;
-                case GolemType.BarbarianGiant:
+                case GolemType.Garruk:
                     return MainCharacterParameter.Strength;
-                case GolemType.BigOrk:
+                case GolemType.Bagrak:
                     return MainCharacterParameter.Strength;
-                case GolemType.Dwarf:
+                case GolemType.Gloin:
                     return MainCharacterParameter.Agility;
-                case GolemType.ElementalGolem:
+                case GolemType.Rock:
                     return MainCharacterParameter.Strength;
-                case GolemType.FortGolem:
+                case GolemType.Fort:
                     return MainCharacterParameter.Strength;
-                case GolemType.MechanicalGolem:
+                case GolemType.Mario:
                     return MainCharacterParameter.Agility;
-                case GolemType.MutantGuy:
+                case GolemType.Freak:
                     return MainCharacterParameter.Strength;
-                case GolemType.PigButcher:
+                case GolemType.Peppa:
                     return MainCharacterParameter.Strength;
-                case GolemType.RedDemon:
+                case GolemType.Satyr:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.Slayer:
+                case GolemType.Maron:
                     return MainCharacterParameter.Agility;
-                case GolemType.Troll:
+                case GolemType.Cudgel:
                     return MainCharacterParameter.Strength;
-                case GolemType.DarkElf:
+                case GolemType.Belesar:
                     return MainCharacterParameter.Agility;
-                case GolemType.EvilGod:
+                case GolemType.Yama:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.ForestGuardian:
+                case GolemType.Shanti:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.ForestWitch:
+                case GolemType.Aine:
                     return MainCharacterParameter.Intelligence;
                 case GolemType.Medusa:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.Mystic:
+                case GolemType.Sazum:
                     return MainCharacterParameter.Intelligence;
-                case GolemType.SpiritDemon:
+                case GolemType.Nissa:
                     return MainCharacterParameter.Agility;
-                case GolemType.UndeadKnight:
+                case GolemType.Raven:
                     return MainCharacterParameter.Agility;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
