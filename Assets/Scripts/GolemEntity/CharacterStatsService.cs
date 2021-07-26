@@ -670,6 +670,57 @@ namespace GolemEntity
             }
         }
 
+        public static MainCharacterParameter GetMainCharacterParameter(Specialization spec)
+        {
+            switch (spec)
+            {
+                case Specialization.Barbarian:
+                    return MainCharacterParameter.Strength;
+                case Specialization.Bard:
+                    return MainCharacterParameter.Agility;
+                case Specialization.BattleMage:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Cleric:
+                    return MainCharacterParameter.Strength;
+                case Specialization.DeathKnight:
+                    return MainCharacterParameter.Strength;
+                case Specialization.DemonHunter:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Druid:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Fighter:
+                    return MainCharacterParameter.Strength;
+                case Specialization.Hunter:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Illusionist:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Monk:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Paladin:
+                    return MainCharacterParameter.Strength;
+                case Specialization.Ranger:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Rogue:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Shaman:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Sorcerer:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Tank:
+                    return MainCharacterParameter.Strength;
+                case Specialization.Thief:
+                    return MainCharacterParameter.Agility;
+                case Specialization.Warlock:
+                    return MainCharacterParameter.Intelligence;
+                case Specialization.Warrior:
+                    return MainCharacterParameter.Strength;
+                case Specialization.Wizard:
+                    return MainCharacterParameter.Intelligence;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(spec), spec, null);
+            }
+        }
+
         public static float[] GetStatsCollection(GolemExtraStats stats)
         {
             return new[]
