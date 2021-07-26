@@ -34,12 +34,12 @@ namespace GolemEntity.ExtraStats
 
         public static float GetDamagePerHeat(float strength, float agility, float intelligence)
         {
-            return Mathf.Max(strength, agility, intelligence) * 0.3f;
+            return Mathf.Max(strength, agility, intelligence) * 0.3f + (strength + agility + intelligence) * 0.1f;
         }
 
         public static float GetDefence(float strength, float agility)
         {
-            return (strength * 0.8f + agility * 0.2f) * 10;
+            return (strength * 0.6f + agility * 0.4f);
         }
 
         public static float GetDodgeChance(float agility, float intelligence)
@@ -64,12 +64,12 @@ namespace GolemEntity.ExtraStats
 
         public static float GetMagicDamage(float intelligence)
         {
-            return intelligence * 0.25f;
+            return intelligence * 0.35f;
         }
 
         public static float GetMagicResistance(float strength, float intelligence)
         {
-            return (intelligence * 0.35f + strength * 0.65f);
+            return (intelligence * 0.45f + strength * 0.55f);
         }
 
         public static float GetManaPool(float intelligence)
@@ -89,22 +89,17 @@ namespace GolemEntity.ExtraStats
 
         public static float GetRegenerationHealth(float strength, float agility)
         {
-            var speed = (200 + (strength - agility));
-            if (speed > 300)
-                return 300;
-            if (speed < 100)
-                return 100;
-            return speed;
+            return (agility * 0.06f + strength * 0.12f);
         }
 
         public static float GetRegenerationMana(float intelligence)
         {
-            return default;
+            return intelligence * 0.12f;
         }
 
         public static float GetRegenerationStamina(float agility)
         {
-            return default;
+            return agility * 0.12f;
         }
 
         public static float GetStamina(float strength, float agility)

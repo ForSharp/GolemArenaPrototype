@@ -335,107 +335,128 @@ namespace GolemEntity
                 case GolemType.Cleopatra:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        AvoidChanceArgAg = agility * 1.1f,
+                        ManaPoolArgIn = intelligence * 1.1f
                     });
                 case GolemType.Ramzes:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HitAccuracyArgSt = strength * 1.1f,
+                        MagicResistanceArgSt = strength * 1.1f
                     });
                 case GolemType.Garruk:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DefenceArgSt = strength * 1.05f,
+                        MoveSpeedArgAg = agility * 1.15f
                     });
                 case GolemType.Bagrak:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgIn = intelligence * 1.15f,
+                        DamagePerHeatArgAg = agility * 1.15f
                     });
                 case GolemType.Gloin:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgSt = strength * 1.1f,
+                        StaminaArgSt = strength * 1.1f
                     });
                 case GolemType.Rock:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgAg = agility * 1.15f,
+                        DodgeChanceArgIn = intelligence * 1.15f
                     });
                 case GolemType.Fort:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        AvoidChanceArgSt = strength * 1.05f,
+                        HitAccuracyArgSt = strength * 1.05f
                     });
                 case GolemType.Mario:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        RegenerationManaIn = intelligence * 1.2f,
+                        HealthArgSt = strength * 1.1f
                     });
                 case GolemType.Freak:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DodgeChanceArgIn = intelligence * 1.15f,
+                        HealthArgSt = strength * 1.05f
                     });
                 case GolemType.Peppa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HitAccuracyArgSt = strength * 1.05f,
+                        MagicDamageArgIn = intelligence * 1.15f
                     });
                 case GolemType.Satyr:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HealthArgSt = strength * 1.15f,
+                        MagicDamageArgIn = intelligence * 1.1f
                     });
                 case GolemType.Maron:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgAg = agility * 1.05f,
+                        HitAccuracyArgSt = strength * 1.1f
                     });
                 case GolemType.Cudgel:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        RegenerationManaIn = intelligence * 1.15f,
+                        ManaPoolArgIn = intelligence * 1.15f
                     });
                 case GolemType.Belesar:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgIn = intelligence * 1.2f,
+                        RegenerationHealthArgSt = strength * 1.1f
                     });
                 case GolemType.Yama:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DodgeChanceArgIn = intelligence * 1.1f,
+                        DefenceArgSt = strength * 1.15f
                     });
                 case GolemType.Shanti:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MoveSpeedArgAg = agility * 1.1f,
+                        DamagePerHeatArgAg = agility * 1.1f
                     });
                 case GolemType.Aine:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        StaminaArgSt = strength * 1.15f,
+                        MagicResistanceArgIn = intelligence * 1.1f
                     });
                 case GolemType.Medusa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicAccuracyArgSt = strength * 1.15f,
+                        AvoidChanceArgSt = strength * 1.15f
                     });
                 case GolemType.Sazum:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HitAccuracyArgAg = agility * 1.1f,
+                        MagicAccuracyArgSt = strength * 1.15f
                     });
                 case GolemType.Nissa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        StaminaArgAg = agility * 1.05f,
+                        HitAccuracyArgAg = agility * 1.05f
                     });
                 case GolemType.Raven:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgSt = strength * 1.1f,
+                        HealthArgSt = strength * 1.1f
                     });
                 default:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
@@ -453,107 +474,140 @@ namespace GolemEntity
                 case Specialization.Barbarian:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgSt = strength * 1.05f,
+                        MagicAccuracyArgSt = strength * 1.05f,
+                        DamagePerHeatArgSt = strength * 0.95f
                     });
                 case Specialization.Bard:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HitAccuracyArgAg = agility * 1.05f,
+                        MoveSpeedArgSt = strength * 0.85f,
+                        DefenceArgSt = strength * 0.85f
                     });
                 case Specialization.BattleMage:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        RegenerationStaminaAg = agility * 1.15f,
+                        HitAccuracyArgAg = agility * 1.15f,
+                        DamagePerHeatArgAg = agility * 0.85f
                     });
                 case Specialization.Cleric:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgSt = strength * 1.05f,
+                        AvoidChanceArgSt = strength * 1.05f,
+                        MoveSpeedArgSt = strength * 1.05f
                     });
                 case Specialization.DeathKnight:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DefenceArgSt = strength * 1.05f,
+                        HealthArgSt = strength * 1.05f,
+                        MagicAccuracyArgIn = intelligence * 0.8f
                     });
                 case Specialization.DemonHunter:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgIn = intelligence * 1.15f,
+                        AvoidChanceArgAg = agility * 1.05f,
+                        AttackSpeedArgAg = agility * 0.95f
                     });
                 case Specialization.Druid:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DodgeChanceArgIn = intelligence * 1.1f,
+                        DefenceArgAg = agility * 1.15f,
+                        MoveSpeedArgAg = agility * 0.85f
                     });
                 case Specialization.Fighter:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MoveSpeedArgAg = agility * 1.1f,
+                        HealthArgSt = strength * 1.05f,
+                        MagicAccuracyArgIn = intelligence * 0.8f
                     });
                 case Specialization.Hunter:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        StaminaArgAg = agility * 1.05f,
+                        DamagePerHeatArgSt = strength * 1.15f,
+                        MagicResistanceArgSt = strength * 0.85f
                     });
                 case Specialization.Illusionist:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DodgeChanceArgAg = agility * 1.05f
                     });
                 case Specialization.Monk:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgIn = intelligence * 1.1f,
+                        DefenceArgAg = agility * 1.15f,
+                        MoveSpeedArgSt = strength * 1.1f
                     });
                 case Specialization.Paladin:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        ManaPoolArgIn = intelligence * 1.2f,
+                        DamagePerHeatArgIn = intelligence * 1.2f,
+                        MagicAccuracyArgSt = strength * 0.95f
                     });
                 case Specialization.Ranger:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DamagePerHeatArgIn = intelligence * 1.15f,
+                        AttackSpeedArgAg = agility * 1.05f,
+                        DefenceArgSt = strength * 0.85f
                     });
                 case Specialization.Rogue:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MoveSpeedArgAg = agility * 1.05f
                     });
                 case Specialization.Shaman:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        RegenerationManaIn = intelligence * 1.1f,
+                        HitAccuracyArgAg = agility * 1.15f,
+                        DamagePerHeatArgSt = strength * 0.9f
                     });
                 case Specialization.Sorcerer:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgSt = strength * 1.1f,
+                        RegenerationHealthArgAg = agility * 1.15f,
+                        DodgeChanceArgAg = agility * 0.85f
                     });
                 case Specialization.Tank:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DefenceArgSt = strength * 1.05f,
+                        RegenerationHealthArgSt = strength * 1.05f,
+                        MagicResistanceArgSt = strength * 0.95f
                     });
                 case Specialization.Thief:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicAccuracyArgSt = strength * 1.15f
                     });
                 case Specialization.Warlock:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        DefenceArgSt = strength * 1.1f,
+                        RegenerationHealthArgAg = agility * 1.15f,
+                        DamagePerHeatArgSt = strength * 0.9f
                     });
                 case Specialization.Warrior:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        HitAccuracyArgAg = agility * 1.1f
                     });
                 case Specialization.Wizard:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        DefenceArgAg = strength * 1.1f
+                        MagicResistanceArgSt = strength * 1.2f,
+                        ManaPoolArgIn = intelligence * 0.9f
                     });
                 default:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
@@ -640,11 +694,12 @@ namespace GolemEntity
             };
         }
 
+        private static readonly GolemBaseStats BaseStats = new GolemBaseStats {Strength = 150, Agility = 150, Intelligence = 150};
+        
         public static List<string> GetCharacterFeatures(GolemType type)
         {
-            var baseStats = new GolemBaseStats() {Strength = 100, Agility = 100, Intelligence = 100};
-            var typeStats = GetExtraStats(type, baseStats);
-            var defaultStats = GetExtraStats(golemType: default, baseStats);
+            var typeStats = GetExtraStats(type, BaseStats);
+            var defaultStats = GetExtraStats(golemType: default, BaseStats);
             var typeStatsColl = GetStatsCollection(typeStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
@@ -653,9 +708,8 @@ namespace GolemEntity
 
         public static List<string> GetCharacterFeatures(Specialization spec)
         {
-            var baseStats = new GolemBaseStats() {Strength = 100, Agility = 100, Intelligence = 100};
-            var specStats = GetExtraStats(spec, baseStats);
-            var defaultStats = GetExtraStats(spec: default, baseStats);
+            var specStats = GetExtraStats(spec, BaseStats);
+            var defaultStats = GetExtraStats(spec: default, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
             
@@ -664,9 +718,8 @@ namespace GolemEntity
 
         public static List<string> GetCharacterFeatures(GolemType type, Specialization spec)
         {
-            var baseStats = new GolemBaseStats() {Strength = 100, Agility = 100, Intelligence = 100};
-            var currentStats = GetExtraStats(type, spec, baseStats);
-            var defaultStats = GetExtraStats(default, default, baseStats);
+            var currentStats = GetExtraStats(type, spec, BaseStats);
+            var defaultStats = GetExtraStats(default, default, BaseStats);
             var typeStatsColl = GetStatsCollection(currentStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
