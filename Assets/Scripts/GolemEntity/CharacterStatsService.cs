@@ -746,11 +746,12 @@ namespace GolemEntity
         }
 
         private static readonly GolemBaseStats BaseStats = new GolemBaseStats {Strength = 150, Agility = 150, Intelligence = 150};
-        
+        private const int NonExistentEnumValue = 2222222;
         public static List<string> GetCharacterFeatures(GolemType type)
         {
             var typeStats = GetExtraStats(type, BaseStats);
-            var defaultStats = GetExtraStats(golemType: default, BaseStats);
+            typeStats = GetExtraStats(type, BaseStats);
+            var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, BaseStats);
             var typeStatsColl = GetStatsCollection(typeStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
@@ -760,7 +761,8 @@ namespace GolemEntity
         public static List<string> GetCharacterFeatures(Specialization spec)
         {
             var specStats = GetExtraStats(spec, BaseStats);
-            var defaultStats = GetExtraStats(spec: default, BaseStats);
+            specStats = GetExtraStats(spec, BaseStats);
+            var defaultStats = GetExtraStats((Specialization) NonExistentEnumValue, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
             
@@ -770,7 +772,8 @@ namespace GolemEntity
         public static List<string> GetCharacterFeatures(GolemType type, Specialization spec)
         {
             var currentStats = GetExtraStats(type, spec, BaseStats);
-            var defaultStats = GetExtraStats(default, default, BaseStats);
+            currentStats = GetExtraStats(type, spec, BaseStats);
+            var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, (Specialization) NonExistentEnumValue, BaseStats);
             var typeStatsColl = GetStatsCollection(currentStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
@@ -785,8 +788,8 @@ namespace GolemEntity
                 if (Math.Abs(currentStatsColl[i] - defaultStatsColl[i]) > 0.01f)
                 {
                     var result = currentStatsColl[i] - defaultStatsColl[i] > 0
-                        ? $"increased by {(int)(currentStatsColl[i] / defaultStatsColl[i] * 100)} %"
-                        : $"decreased by {(int)(defaultStatsColl[i] / currentStatsColl[i] * 100)} %";
+                        ? $"<color=green>+ {-(100 - ((int)(currentStatsColl[i] / defaultStatsColl[i] * 100)))} %</color>"
+                        : $"<color=red>- {-(100 - ((int)(defaultStatsColl[i] / currentStatsColl[i] * 100)))} %</color>";
                     features.Add($"{GetStatsStringCollection()[i]} " + result);
                 }
             }
