@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fight;
 using GolemEntity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
@@ -12,26 +14,32 @@ namespace GameLoop
         [SerializeField] private float spawnAreaRadius = 50;
         [SerializeField] private Color[] groupColors;
 
-        private Golem Golem { get; set; }
+        public static Spawner Instance { get; private set; }
         private static int _group = 0;
         private readonly Game _game = new Game();
 
-        public void SpawnGolem(GolemType golemType, Specialization specialization)
+        private void Start()
         {
-            Golem = new Golem(golemType, specialization);
-        
-            GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-        
-            ConnectGolemWithState(newGolem, Golem, golemType, specialization);
-        
+            Instance = this;
+        }
+
+        public void SpawnGolem(GolemType golemType, Specialization specialization, bool isPlayerCharacter = false)
+        {
+            var golem = new Golem(golemType, specialization);
+            var newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
+            ConnectGolemWithState(newGolem, golem, golemType, specialization);
+
             _group++;
+            
+            if (isPlayerCharacter)
+                Player.SetPlayerCharacter(golem);
         }
 
         private Vector3 GetRandomSpawnPoint()
         {
-            Vector3 randomPoint = spawnPoint +
-                                  new Vector3(Random.value - 0.5f, spawnPoint.y, Random.value - 0.5f).normalized *
-                                  spawnAreaRadius;
+            var randomPoint = spawnPoint +
+                              new Vector3(Random.value - 0.5f, spawnPoint.y, Random.value - 0.5f).normalized *
+                              spawnAreaRadius;
             return randomPoint;
         }
 
@@ -48,14 +56,6 @@ namespace GameLoop
                 state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
                 _game.AddToAllGolems(state);
             }
-        
-        }
-
-        private int[] GetThreeCharactersDifferentMainParameter()
-        {
-            var collection = new int[2];
-            var res = Random.Range(0, golemPrefabs.Length);
-            return default;
         }
 
         private GameObject GetRelevantPrefab(GolemType golemType)

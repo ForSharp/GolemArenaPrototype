@@ -19,6 +19,8 @@ namespace GameLoop
             AllGolems = new List<GameCharacterState>();
             FreeTypes = Enum.GetNames(typeof(GolemType)).ToList();
             FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
+
+            EventContainer.PlayerCharacterCreated += CreateBotCharacters;
         }
 
         public void AddToAllGolems(GameCharacterState golem)
@@ -26,6 +28,14 @@ namespace GameLoop
             AllGolems.Add(golem);
             FreeTypes.Remove(golem.Type);
             FreeSpecs.Remove(golem.Spec);
+        }
+
+        private static void CreateBotCharacters()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization(), false);
+            }
         }
 
         public void PrepareNewRound()
@@ -43,7 +53,7 @@ namespace GameLoop
                 typeof(Specialization));
         }
 
-        private static Enum ToEnum(string value, Type enumType)
+        public static Enum ToEnum(string value, Type enumType)
         {
             return (Enum) Enum.Parse(enumType, value, true);
         }

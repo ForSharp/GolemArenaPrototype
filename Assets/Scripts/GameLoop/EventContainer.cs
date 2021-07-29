@@ -4,11 +4,11 @@ namespace GameLoop
 {
     public static class EventContainer
     {
-        public static event Action GolemCreated;
+        public static event Action PlayerCharacterCreated;
 
-        public static void OnGolemCreated()
+        public static void OnPlayerCharacterCreated()
         {
-            GolemCreated?.Invoke();
+            PlayerCharacterCreated?.Invoke();
         }
 
         public static event Action GolemStatsChanged;

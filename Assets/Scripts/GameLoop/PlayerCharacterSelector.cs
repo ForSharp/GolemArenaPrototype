@@ -71,7 +71,7 @@ namespace GameLoop
 
         private void ConfirmChoosing()
         {
-            spawner.SpawnGolem(GetSelectedType(), GetSelectedSpec());
+            spawner.SpawnGolem(GetSelectedType(), GetSelectedSpec(), true);
         }
 
         public void OnConfirmClicked()
