@@ -89,17 +89,17 @@ namespace GolemEntity.ExtraStats
 
         public static float GetRegenerationHealth(float strength, float agility)
         {
-            return (agility * 0.06f + strength * 0.12f);
+            return (agility * 0.006f + strength * 0.012f);
         }
 
         public static float GetRegenerationMana(float intelligence)
         {
-            return intelligence * 0.12f;
+            return intelligence * 0.012f;
         }
 
         public static float GetRegenerationStamina(float agility)
         {
-            return agility * 0.12f;
+            return agility * 0.012f;
         }
 
         public static float GetStamina(float strength, float agility)

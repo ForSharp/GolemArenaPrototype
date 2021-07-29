@@ -6,17 +6,19 @@ using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
-    public class Starter : MonoBehaviour
+    public class PlayerCharacterSelector : MonoBehaviour
     {
-        private const int CharactersCount = 21;
         [SerializeField] private ChoiceHeroPanel panel;
+        [SerializeField] private GameObject confirmButton;
+        [SerializeField] private Text confirmButtonText;
+        [SerializeField] private Spawner spawner;
         private MainCharacterParameter _selectedHero;
         private MainCharacterParameter _selectedSpec;
         private bool _isSpecSelected;
         public GolemType[] Characters { get; private set; }
         public Specialization[] Specializations { get; private set; }
 
-        public static Starter Instance;
+        public static PlayerCharacterSelector Instance;
         
         private void Start()
         {
@@ -25,6 +27,7 @@ namespace GameLoop
             Specializations = GetThreeSpecializations();
             
             SetStartRawImages();
+            
         }
 
         private void SetStartRawImages()
@@ -65,6 +68,18 @@ namespace GameLoop
             panel.specAgilityText.SetTypeText(Specializations[1]);
             panel.specIntelligenceText.SetTypeText(Specializations[2]);
         }
+
+        private void ConfirmChoosing()
+        {
+            spawner.SpawnGolem(GetSelectedType(), GetSelectedSpec());
+        }
+
+        public void OnConfirmClicked()
+        {
+            ConfirmChoosing();
+            panel.gameObject.SetActive(false);
+            
+        }
         
         public void OnHeroStrengthClicked()
         {
@@ -76,6 +91,8 @@ namespace GameLoop
             _selectedHero = MainCharacterParameter.Strength;
             if (_isSpecSelected)
                 SetHeroSpecStats(Characters[0]);
+            
+            SetConfirmText();
         }
         
         public void OnHeroAgilityClicked()
@@ -88,6 +105,8 @@ namespace GameLoop
             _selectedHero = MainCharacterParameter.Agility;
             if (_isSpecSelected)
                 SetHeroSpecStats(Characters[1]);
+            
+            SetConfirmText();
         }
         
         public void OnHeroIntelligenceClicked()
@@ -100,6 +119,8 @@ namespace GameLoop
             _selectedHero = MainCharacterParameter.Intelligence;
             if (_isSpecSelected)
                 SetHeroSpecStats(Characters[2]);
+            
+            SetConfirmText();
         }
 
         public void OnSpecStrengthClicked()
@@ -111,6 +132,8 @@ namespace GameLoop
             SetHeroSpecStats(Specializations[0]);
             _selectedSpec = MainCharacterParameter.Strength;
             _isSpecSelected = true;
+            confirmButton.SetActive(true);
+            SetConfirmText();
         }
         
         public void OnSpecAgilityClicked()
@@ -122,6 +145,8 @@ namespace GameLoop
             SetHeroSpecStats(Specializations[1]);
             _selectedSpec = MainCharacterParameter.Agility;
             _isSpecSelected = true;
+            confirmButton.SetActive(true);
+            SetConfirmText();
         }
         
         public void OnSpecIntelligenceClicked()
@@ -133,6 +158,13 @@ namespace GameLoop
             SetHeroSpecStats(Specializations[2]);
             _selectedSpec = MainCharacterParameter.Intelligence;
             _isSpecSelected = true;
+            confirmButton.SetActive(true);
+            SetConfirmText();
+        }
+
+        private void SetConfirmText()
+        {
+            confirmButtonText.text = $"Choose {GetSelectedType()} {GetSelectedSpec()}";
         }
 
         private void SetHeroSpecStats(GolemType type)
@@ -210,7 +242,6 @@ namespace GameLoop
             }
         }
         
-        
         private void SetHeroSpecStats(Specialization spec)
         {
             switch (_selectedHero)
@@ -249,15 +280,10 @@ namespace GameLoop
         {
             while (true)
             {
-                var character = GetRandomCharacter();
+                var character = Game.GetRandomCharacter();
                 if (CharacterStatsService.GetMainCharacterParameter(character) != parameter) continue;
                 return character;
             }
-        }
-
-        private static GolemType GetRandomCharacter()
-        {
-            return (GolemType) Random.Range(0, CharactersCount);
         }
 
         private static Specialization[] GetThreeSpecializations()
@@ -274,15 +300,41 @@ namespace GameLoop
         {
             while (true)
             {
-                var specialization = GetRandomSpecialization();
+                var specialization = Game.GetRandomSpecialization();
                 if (CharacterStatsService.GetMainCharacterParameter(specialization) != parameter) continue;
                 return specialization;
             }
         }
         
-        private static Specialization GetRandomSpecialization()
+        private GolemType GetSelectedType()
         {
-            return (Specialization) Random.Range(0, CharactersCount);
+            switch (_selectedHero)
+            {
+                case MainCharacterParameter.Strength:
+                    return Characters[0];
+                case MainCharacterParameter.Agility:
+                    return Characters[1];
+                case MainCharacterParameter.Intelligence:
+                    return Characters[2];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }    
         }
+
+        private Specialization GetSelectedSpec()
+        {
+            switch (_selectedSpec)
+            {
+                case MainCharacterParameter.Strength:
+                    return Specializations[0];
+                case MainCharacterParameter.Agility:
+                    return Specializations[1];
+                case MainCharacterParameter.Intelligence:
+                    return Specializations[2];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
     }
 }

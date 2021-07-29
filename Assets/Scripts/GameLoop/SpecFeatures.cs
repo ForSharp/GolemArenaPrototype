@@ -26,13 +26,13 @@ namespace GameLoop
             switch (parameter)
             {
                 case MainCharacterParameter.Strength:
-                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(Starter.Instance.Specializations[0]), _infoPanel.transform);
+                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(PlayerCharacterSelector.Instance.Specializations[0]), _infoPanel.transform);
                     break;
                 case MainCharacterParameter.Agility:
-                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(Starter.Instance.Specializations[1]), _infoPanel.transform);
+                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(PlayerCharacterSelector.Instance.Specializations[1]), _infoPanel.transform);
                     break;
                 case MainCharacterParameter.Intelligence:
-                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(Starter.Instance.Specializations[2]), _infoPanel.transform);
+                    panel.FillValues(CharacterStatsService.GetCharacterFeatures(PlayerCharacterSelector.Instance.Specializations[2]), _infoPanel.transform);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

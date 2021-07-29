@@ -11,7 +11,6 @@ namespace GameLoop
         [SerializeField] private Vector3 spawnPoint;
         [SerializeField] private float spawnAreaRadius = 50;
         [SerializeField] private Color[] groupColors;
-        public Camera[] charactersCameras;
 
         private Golem Golem { get; set; }
         private static int _group = 0;
