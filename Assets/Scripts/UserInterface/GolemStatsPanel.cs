@@ -11,6 +11,7 @@ namespace UserInterface
     public class GolemStatsPanel : MonoBehaviour
     {
         [SerializeField] private GameObject panel;
+        [SerializeField] private HeroPortraitController portrait;
         [SerializeField] private Text[] mainInfo;
         [SerializeField] private Text[] extraStatsUI;
         private GameCharacterState _state;
@@ -47,6 +48,7 @@ namespace UserInterface
                     {
                         _stats = _state.Stats;
                         FillMainInfo();
+                        SetPortrait();
                         FillTexts();
                         panel.SetActive(true); 
                     }
@@ -62,6 +64,7 @@ namespace UserInterface
         {
             _stats = _state.Stats;
             FillMainInfo();
+            SetPortrait();
             FillTexts();
             _allowUpd = false;
         }
@@ -92,6 +95,11 @@ namespace UserInterface
         {
         }
 
+        private void SetPortrait()
+        {
+            portrait.SetTexture((GolemType) Game.ToEnum(_state.Type, typeof(GolemType)));
+        }
+        
         private void FillMainInfo()
         {
             mainInfo[0].text = _state.Type;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using Fight;
 using GameLoop;
@@ -95,7 +94,7 @@ namespace BehaviourStrategy
             _isJumpUp = true;
             while (_isJumpUp && _agent.baseOffset <= 0.85f)
             {
-                _agent.baseOffset += Time.deltaTime * 0.1f;
+                _agent.baseOffset += Time.deltaTime * 0.25f;
             }
         }
 
@@ -111,7 +110,7 @@ namespace BehaviourStrategy
             _isJumpUp = false;
             while (_agent.baseOffset > 0 && !_isJumpUp)
             {
-                _agent.baseOffset -= Time.deltaTime * 0.1f;
+                _agent.baseOffset -= Time.deltaTime * 0.25f;
             }
         }
 

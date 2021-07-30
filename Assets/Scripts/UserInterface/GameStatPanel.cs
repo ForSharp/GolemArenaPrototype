@@ -8,8 +8,8 @@ namespace UserInterface
     {
         [SerializeField] private GameObject gameStatTemplatePrefab;
         [SerializeField] private Transform content;
-        private List<GameObject> _gameStatTemplates = new List<GameObject>();
-
+        private readonly List<GameObject> _gameStatTemplates = new List<GameObject>();
+        
         private void Update()
         {
             if (_gameStatTemplates.Count < Game.AllGolems.Count)

@@ -1,7 +1,16 @@
-﻿namespace GameLoop
+﻿using GolemEntity;
+
+namespace GameLoop
 {
-    public class Player
+    public static class Player
     {
-        
+        public static Golem PlayerCharacter { get; private set; }
+
+        public static void SetPlayerCharacter(Golem character)
+        {
+            PlayerCharacter = character;
+            EventContainer.OnPlayerCharacterCreated();
+            
+        }
     }
 }

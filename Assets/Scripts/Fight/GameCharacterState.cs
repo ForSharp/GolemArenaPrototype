@@ -8,11 +8,11 @@ using UserInterface;
 
 namespace Fight
 {
-    public class GameCharacterState : MonoBehaviour
+    public sealed class GameCharacterState : MonoBehaviour
     {
         [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
-    
+        
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
         public int Group { get; private set; } 
@@ -30,7 +30,7 @@ namespace Fight
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
         public event EventHandler AttackReceived;
 
-        public virtual void OnAttackReceived(AttackHitEventArgs args)
+        public void OnAttackReceived(AttackHitEventArgs args)
         {
             AttackReceived?.Invoke(this, args);
         }

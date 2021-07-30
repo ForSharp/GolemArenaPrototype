@@ -32,7 +32,7 @@ namespace GolemEntity
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.25f;
+        private const float DestructionRadius = 0.35f;
         private const int AutoResetTargetDelay = 30;
 
         private void Start()
@@ -140,7 +140,7 @@ namespace GolemEntity
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
-
+            
             if (InAttackDistance())
             {
                 AttackTarget();
@@ -161,7 +161,7 @@ namespace GolemEntity
 
             bool InAttackDistance()
             {
-                return distanceToTarget <= _thisState.Stats.AttackRange * 2f;
+                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5f;
             }
 
             bool NearToTarget()

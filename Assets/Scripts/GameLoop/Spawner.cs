@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fight;
 using GolemEntity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
@@ -12,25 +14,32 @@ namespace GameLoop
         [SerializeField] private float spawnAreaRadius = 50;
         [SerializeField] private Color[] groupColors;
 
-        private Golem Golem { get; set; }
+        public static Spawner Instance { get; private set; }
         private static int _group = 0;
+        private readonly Game _game = new Game();
 
-        public void SpawnGolem(GolemType golemType, Specialization specialization)
+        private void Start()
         {
-            Golem = new Golem(golemType, specialization);
-        
-            GameObject newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-        
-            ConnectGolemWithState(newGolem, Golem, golemType, specialization);
-        
+            Instance = this;
+        }
+
+        public void SpawnGolem(GolemType golemType, Specialization specialization, bool isPlayerCharacter = false)
+        {
+            var golem = new Golem(golemType, specialization);
+            var newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
+            ConnectGolemWithState(newGolem, golem, golemType, specialization);
+
             _group++;
+            
+            if (isPlayerCharacter)
+                Player.SetPlayerCharacter(golem);
         }
 
         private Vector3 GetRandomSpawnPoint()
         {
-            Vector3 randomPoint = spawnPoint +
-                                  new Vector3(Random.value - 0.5f, spawnPoint.y, Random.value - 0.5f).normalized *
-                                  spawnAreaRadius;
+            var randomPoint = spawnPoint +
+                              new Vector3(Random.value - 0.5f, spawnPoint.y, Random.value - 0.5f).normalized *
+                              spawnAreaRadius;
             return randomPoint;
         }
 
@@ -40,35 +49,19 @@ namespace GameLoop
             if (_group < groupColors.Length)
             {
                 state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
-                Game.AddToAllGolems(state);
+                _game.AddToAllGolems(state);
             }
             else if (_group >= groupColors.Length)
             {
-                state.InitializeState(golem, _group, Color.black, golemType.ToString(), specialization.ToString());
-                Game.AddToAllGolems(state);
+                state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
+                _game.AddToAllGolems(state);
             }
-        
         }
 
         private GameObject GetRelevantPrefab(GolemType golemType)
         {
-            var golemDictionary = new Dictionary<string, GameObject>
-            {
-                {"WaterGolem", golemPrefabs[0]},
-                {"AirGolem", golemPrefabs[1]},
-                {"CrystalGolem", golemPrefabs[2]},
-                {"FireGolem", golemPrefabs[3]},
-                {"PlasmaGolem", golemPrefabs[4]},
-                {"SteamGolem", golemPrefabs[5]},
-                {"DarkGolem", golemPrefabs[6]},
-                {"NatureGolem", golemPrefabs[7]},
-                {"FogGolem", golemPrefabs[8]},
-                {"ObsidianGolem", golemPrefabs[9]},
-                {"InsectGolem", golemPrefabs[10]},
-                {"StalagmiteGolem", golemPrefabs[11]}
-            };
-
-            return golemDictionary[golemType.ToString()];
+            var index = (int) golemType;
+            return golemPrefabs[index];
         }
     }
 }

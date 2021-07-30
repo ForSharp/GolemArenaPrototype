@@ -1,24 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Fight;
+using GolemEntity;
+using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
-    public static class Game
+    public class Game
     {
-        public static List<GameCharacterState> AllGolems = new List<GameCharacterState>();
+        public static List<GameCharacterState> AllGolems { get; }
+        public static List<string> FreeTypes { get; }
+        public static List<string> FreeSpecs { get; }
 
-    
 
-        public static void AddToAllGolems(GameCharacterState golem)
+        static Game()
+        {
+            AllGolems = new List<GameCharacterState>();
+            FreeTypes = Enum.GetNames(typeof(GolemType)).ToList();
+            FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
+
+            EventContainer.PlayerCharacterCreated += CreateBotCharacters;
+        }
+
+        public void AddToAllGolems(GameCharacterState golem)
         {
             AllGolems.Add(golem);
+            FreeTypes.Remove(golem.Type);
+            FreeSpecs.Remove(golem.Spec);
         }
 
-        public static GameCharacterState GetGolem(int index)
+        private static void CreateBotCharacters()
         {
-            return AllGolems[index];
+            for (int i = 0; i < 4; i++)
+            {
+                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization(), false);
+            }
+            
+            HeroViewBoxController.Instance.DeactivateRedundantBoxes();
         }
-    
-    
+
+        public void PrepareNewRound()
+        {
+        }
+
+        public static GolemType GetRandomCharacter()
+        {
+            return (GolemType) ToEnum(FreeTypes[Random.Range(0, FreeTypes.Count)], typeof(GolemType));
+        }
+
+        public static Specialization GetRandomSpecialization()
+        {
+            return (Specialization) ToEnum(FreeSpecs[Random.Range(0, FreeSpecs.Count)],
+                typeof(Specialization));
+        }
+
+        public static Enum ToEnum(string value, Type enumType)
+        {
+            return (Enum) Enum.Parse(enumType, value, true);
+        }
     }
 }
