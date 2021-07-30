@@ -306,7 +306,7 @@ namespace GameLoop
             }
         }
         
-        private GolemType GetSelectedType()
+        public GolemType GetSelectedType()
         {
             switch (_selectedHero)
             {
@@ -321,7 +321,7 @@ namespace GameLoop
             }    
         }
 
-        private Specialization GetSelectedSpec()
+        public Specialization GetSelectedSpec()
         {
             switch (_selectedSpec)
             {

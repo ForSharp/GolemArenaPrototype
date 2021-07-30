@@ -323,7 +323,7 @@ namespace GolemEntity
         {
             return GetBaseStats(type) + GetBaseStats(spec);
         }
-        
+
         public static GolemExtraStats GetExtraStats(GolemType golemType, GolemBaseStats baseStats)
         {
             var strength = baseStats.Strength;
@@ -618,7 +618,7 @@ namespace GolemEntity
         {
             return GetExtraStats(type, baseStats) + GetExtraStats(spec, baseStats);
         }
-        
+
         public static MainCharacterParameter GetMainCharacterParameter(GolemType type)
         {
             switch (type)
@@ -745,8 +745,11 @@ namespace GolemEntity
             };
         }
 
-        private static readonly GolemBaseStats BaseStats = new GolemBaseStats {Strength = 150, Agility = 150, Intelligence = 150};
+        private static readonly GolemBaseStats BaseStats = new GolemBaseStats
+            {Strength = 150, Agility = 150, Intelligence = 150};
+
         private const int NonExistentEnumValue = 2222222;
+
         public static List<string> GetCharacterFeatures(GolemType type)
         {
             var typeStats = GetExtraStats(type, BaseStats);
@@ -765,7 +768,7 @@ namespace GolemEntity
             var defaultStats = GetExtraStats((Specialization) NonExistentEnumValue, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
-            
+
             return GetFeaturesCollection(specStatsColl, defaultStatsColl);
         }
 
@@ -773,13 +776,14 @@ namespace GolemEntity
         {
             var currentStats = GetExtraStats(type, spec, BaseStats);
             currentStats = GetExtraStats(type, spec, BaseStats);
-            var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, (Specialization) NonExistentEnumValue, BaseStats);
+            var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, (Specialization) NonExistentEnumValue,
+                BaseStats);
             var typeStatsColl = GetStatsCollection(currentStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
             return GetFeaturesCollection(typeStatsColl, defaultStatsColl);
         }
-        
+
         private static List<string> GetFeaturesCollection(float[] currentStatsColl, float[] defaultStatsColl)
         {
             var features = new List<string>();
@@ -788,8 +792,8 @@ namespace GolemEntity
                 if (Math.Abs(currentStatsColl[i] - defaultStatsColl[i]) > 0.01f)
                 {
                     var result = currentStatsColl[i] - defaultStatsColl[i] > 0
-                        ? $"<color=green>+ {-(100 - ((int)(currentStatsColl[i] / defaultStatsColl[i] * 100)))} %</color>"
-                        : $"<color=red>- {-(100 - ((int)(defaultStatsColl[i] / currentStatsColl[i] * 100)))} %</color>";
+                        ? $"<color=green>+ {(-(100 - (int) (currentStatsColl[i] / defaultStatsColl[i] * 100)) != 0 ? -(100 - (int) (currentStatsColl[i] / defaultStatsColl[i] * 100)) : 1)} %</color>"
+                        : $"<color=red>- {(-(100 - (int) (defaultStatsColl[i] / currentStatsColl[i] * 100)) != 0 ? -(100 - (int) (defaultStatsColl[i] / currentStatsColl[i] * 100)) : 1)} %</color>";
                     features.Add($"{GetStatsStringCollection()[i]} " + result);
                 }
             }

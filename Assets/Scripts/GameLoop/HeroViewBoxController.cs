@@ -22,6 +22,11 @@ namespace GameLoop
             return portraitTextures[(int) type];
         }
 
+        public void ActivateBox(GolemType type)
+        {
+            heroBoxes[(int) type].SetActive(true);
+        }
+        
         public void DeactivateRedundantBoxes()
         {
             var types = GetRedundantTypes();
