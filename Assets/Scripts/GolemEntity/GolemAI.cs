@@ -140,7 +140,7 @@ namespace GolemEntity
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
-
+            
             if (InAttackDistance())
             {
                 AttackTarget();
@@ -161,7 +161,7 @@ namespace GolemEntity
 
             bool InAttackDistance()
             {
-                return distanceToTarget <= _thisState.Stats.AttackRange * 2f;
+                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5f;
             }
 
             bool NearToTarget()

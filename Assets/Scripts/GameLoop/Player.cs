@@ -10,6 +10,7 @@ namespace GameLoop
         {
             PlayerCharacter = character;
             EventContainer.OnPlayerCharacterCreated();
+            
         }
     }
 }
