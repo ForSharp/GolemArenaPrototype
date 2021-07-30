@@ -344,12 +344,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (11)
+      value: 11_HeroBox_Maron
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -702,12 +702,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (4)
+      value: 4_HeroBox_Gloin
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -866,6 +866,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104473185}
   m_CullTransparentMesh: 0
+--- !u!1 &122789437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1447344767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &127166583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1050,24 @@ MonoBehaviour:
     type: 3}
   hintsPanel: {fileID: 296402829}
   parameter: 0
+--- !u!1 &182941405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1769819050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &186553031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1320609849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &199070531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 56387657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &201569393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,12 +1850,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (18)
+      value: 15_HeroBox_Shanti
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -2084,6 +2108,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288868170}
   m_CullTransparentMesh: 0
+--- !u!1 &291925217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1796032263}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &295448235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,6 +2297,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 349034676}
   m_CullTransparentMesh: 0
+--- !u!1 &356731065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1434178672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &381663946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3809,6 +3845,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466745489}
   m_CullTransparentMesh: 0
+--- !u!1 &478282412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 25703789}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &481710857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4917,6 +4959,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfc29a2edc345ce921e55b163bed38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &600752802 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1200435915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &603693200
 GameObject:
   m_ObjectHideFlags: 0
@@ -5106,6 +5154,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619871687}
   m_CullTransparentMesh: 0
+--- !u!1 &623120544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1597243428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &636600217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5643,12 +5697,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (12)
+      value: 12_HeroBox_Cudgel
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -5707,6 +5761,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 902b2fbc6104f8c4184fefac39cffdab, type: 3}
+--- !u!1 &798261640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 785132591}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &801587450
 GameObject:
   m_ObjectHideFlags: 0
@@ -5880,6 +5940,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801645449}
   m_CullTransparentMesh: 0
+--- !u!1 &806413936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1980084251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &814096746
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,12 +6579,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (8)
+      value: 8_HeroBox_Freak
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -7223,12 +7289,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (3)
+      value: 3_HeroBox_Bagrak
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -7585,11 +7651,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1074031646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1214059613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1089339102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
     type: 3}
   m_PrefabInstance: {fileID: 1980084251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1101099661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1934164413}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1169608003
 GameObject:
@@ -7959,12 +8037,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (10)
+      value: 10_HeroBox_Satyr
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -8098,12 +8176,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (17)
+      value: 18_HeroBox_Sazum
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -8387,12 +8465,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (16)
+      value: 17_HeroBox_Medusa
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -8957,6 +9035,12 @@ Transform:
   m_Father: {fileID: 1299046233}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1291723768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1008069561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1299046232
 GameObject:
   m_ObjectHideFlags: 0
@@ -8981,31 +9065,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299046232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -400, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1285000084}
-  - {fileID: 1265679450}
-  - {fileID: 1875418224}
-  - {fileID: 738840510}
-  - {fileID: 1426953839}
-  - {fileID: 890332766}
-  - {fileID: 1718144018}
-  - {fileID: 1512905709}
-  - {fileID: 1721959687}
-  - {fileID: 520952602}
-  - {fileID: 1713927716}
-  - {fileID: 83304220}
-  - {fileID: 1529214164}
-  - {fileID: 1993596489}
   - {fileID: 38050184}
   - {fileID: 283071864}
-  - {fileID: 1414102136}
   - {fileID: 1783075497}
-  - {fileID: 1730594873}
   - {fileID: 1585446408}
-  - {fileID: 1089339102}
+  - {fileID: 1265679450}
+  - {fileID: 1730594873}
+  - {fileID: 1713927716}
+  - {fileID: 1529214164}
+  - {fileID: 1426953839}
+  - {fileID: 1993596489}
+  - {fileID: 890332766}
   - {fileID: 1619868957}
+  - {fileID: 738840510}
+  - {fileID: 1089339102}
+  - {fileID: 1414102136}
+  - {fileID: 1875418224}
+  - {fileID: 83304220}
+  - {fileID: 1512905709}
+  - {fileID: 1718144018}
+  - {fileID: 520952602}
+  - {fileID: 1721959687}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9183,12 +9267,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (20)
+      value: 20_HeroBox_Raven
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -9371,6 +9455,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1365671067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1969822778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1386520792 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 871654154}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1393950691
 GameObject:
   m_ObjectHideFlags: 0
@@ -9743,12 +9839,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (19)
+      value: 19_HeroBox_Nissa
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -9807,6 +9903,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 902b2fbc6104f8c4184fefac39cffdab, type: 3}
+--- !u!1 &1436428747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 275266752}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1447344767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9882,12 +9984,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (6)
+      value: 6_HeroBox_Fort
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -10281,6 +10383,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1754710670}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1531154583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 2121895079}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1556018893
 GameObject:
   m_ObjectHideFlags: 0
@@ -10528,12 +10636,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (15)
+      value: 16_HeroBox_Aine
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -10822,6 +10930,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640061352}
   m_CullTransparentMesh: 0
+--- !u!1 &1643475226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1754710670}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665348701
 GameObject:
   m_ObjectHideFlags: 0
@@ -11102,6 +11216,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671584977}
   m_CullTransparentMesh: 0
+--- !u!1 &1671831193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 5429632514695303648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1683196407
 GameObject:
   m_ObjectHideFlags: 0
@@ -11679,12 +11799,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (7)
+      value: 7_HeroBox_Mario
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -12098,12 +12218,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (2)
+      value: 2_HeroBox_Garruk
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -12337,12 +12457,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (9)
+      value: 9_HeroBox_Peppa
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -12589,6 +12709,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886435849}
   m_CullTransparentMesh: 0
+--- !u!1 &1888080599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1196333972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1925748308
 GameObject:
   m_ObjectHideFlags: 0
@@ -12738,12 +12864,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (14)
+      value: 14_HeroBox_Yama
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -12877,12 +13003,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (5)
+      value: 5_HeroBox_Rock
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -13110,12 +13236,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (13)
+      value: 13_HeroBox_Belesar
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -14084,12 +14210,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox (1)
+      value: 1_HeroBox_Ramzes
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -41995,12 +42121,12 @@ PrefabInstance:
     - target: {fileID: 5429632514657847399, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_Name
-      value: HeroBox
+      value: 0_HeroBox_Cleopatra
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5429632514657847400, guid: 902b2fbc6104f8c4184fefac39cffdab,
         type: 3}
@@ -71376,6 +71502,7 @@ GameObject:
   - component: {fileID: 8565123770600377069}
   - component: {fileID: 8565123770600377070}
   - component: {fileID: 8565123770600377057}
+  - component: {fileID: 8565123770600377060}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -71427,6 +71554,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelGolemType: {fileID: 8565123770306434979}
   panelGolemSpec: {fileID: 8565123768966275773}
+--- !u!114 &8565123770600377060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565123770600377056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f35b191cbe9417486da32853325a05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroBoxes:
+  - {fileID: 1671831193}
+  - {fileID: 1531154583}
+  - {fileID: 182941405}
+  - {fileID: 1291723768}
+  - {fileID: 199070531}
+  - {fileID: 1365671067}
+  - {fileID: 122789437}
+  - {fileID: 1643475226}
+  - {fileID: 1386520792}
+  - {fileID: 291925217}
+  - {fileID: 1888080599}
+  - {fileID: 478282412}
+  - {fileID: 798261640}
+  - {fileID: 806413936}
+  - {fileID: 1101099661}
+  - {fileID: 1436428747}
+  - {fileID: 623120544}
+  - {fileID: 1074031646}
+  - {fileID: 600752802}
+  - {fileID: 356731065}
+  - {fileID: 186553031}
+  portraitTextures:
+  - {fileID: 8400000, guid: 93a9cb65e80603f45ac8100a4bf5f735, type: 2}
+  - {fileID: 8400000, guid: 52e89b01012a2564c9f8137d1d4af55f, type: 2}
+  - {fileID: 8400000, guid: 989b1db4270f5844b8f0d6299d219ee7, type: 2}
+  - {fileID: 8400000, guid: afe20c4838131be4797bb5fd081555fc, type: 2}
+  - {fileID: 8400000, guid: b38c8ce582a259e4fbc5605cda5b1653, type: 2}
+  - {fileID: 8400000, guid: ae58387d45643dc4d973b5f307f34013, type: 2}
+  - {fileID: 8400000, guid: 8f2380ad27b64bb47b84a063e8e5fade, type: 2}
+  - {fileID: 8400000, guid: 1d0b43ab9fa0d194bb4cfa59df686bc7, type: 2}
+  - {fileID: 8400000, guid: de9a6dbfa1406ef4594e6f1d7ab07cb1, type: 2}
+  - {fileID: 8400000, guid: 049d2f7c368ba9147ad8d5c077c90843, type: 2}
+  - {fileID: 8400000, guid: ae9bce8eaf396c44fb30a169e0dbe7ee, type: 2}
+  - {fileID: 8400000, guid: aebbce86986cc3047a4477cec4012548, type: 2}
+  - {fileID: 8400000, guid: 77dae484c923f914684e6ae64f4e1026, type: 2}
+  - {fileID: 8400000, guid: d362fb1a8f23335449d944c476de78e8, type: 2}
+  - {fileID: 8400000, guid: 8ca8900a16794d143a67e879f603521d, type: 2}
+  - {fileID: 8400000, guid: 5ad25391723fb62439c39a19f048586c, type: 2}
+  - {fileID: 8400000, guid: c10586f139555574283c8157649668ed, type: 2}
+  - {fileID: 8400000, guid: c91dd5ad13c819549941c93a1d80a9ab, type: 2}
+  - {fileID: 8400000, guid: 96734569e6bd9934bb896c4c5caeff80, type: 2}
+  - {fileID: 8400000, guid: e594632d14917b14c8704318cef8b670, type: 2}
+  - {fileID: 8400000, guid: 475839a7c9adb274187b6c50aa58e3a9, type: 2}
 --- !u!114 &8565123770600377068
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,6 +36,8 @@ namespace GameLoop
             {
                 Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization(), false);
             }
+            
+            HeroViewBoxController.Instance.DeactivateRedundantBoxes();
         }
 
         public void PrepareNewRound()
