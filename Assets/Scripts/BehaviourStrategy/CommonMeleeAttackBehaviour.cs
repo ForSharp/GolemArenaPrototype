@@ -177,10 +177,8 @@ namespace BehaviourStrategy
 
         private bool AttackGameCharacter(Collider item)
         {
-            if (item.GetComponentInParent<GameCharacterState>())
+            if (item.TryGetComponent(out GameCharacterState state))
             {
-                var state = item.GetComponentInParent<GameCharacterState>();
-
                 if (state.Group != _group)
                 {
                     state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics));
@@ -193,9 +191,9 @@ namespace BehaviourStrategy
 
         private void AttackDestructibleObjects(Collider item)
         {
-            if (item.GetComponentInParent<DestructibleObject>())
+            if (item.TryGetComponent(out DestructibleObject destructibleObject))
             {
-                item.GetComponentInParent<DestructibleObject>().TakeDamage(_damage);
+                destructibleObject.TakeDamage(_damage);
             }
         }
 
