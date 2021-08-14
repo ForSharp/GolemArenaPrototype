@@ -40,12 +40,12 @@ namespace UserInterface
             if (Input.GetMouseButtonDown(0))
             {
                 var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     var coll = hit.collider;
-                    if (TryGetNewState(coll))
+                    if (coll.TryGetComponent(out GameCharacterState state))
                     {
+                        _state = state;
                         _stats = _state.Stats;
                         FillMainInfo();
                         SetPortrait();
@@ -91,10 +91,6 @@ namespace UserInterface
             }
         }
 
-        private void SetPanelPosition()
-        {
-        }
-
         private void SetPortrait()
         {
             portrait.SetTexture((GolemType) Game.ToEnum(_state.Type, typeof(GolemType)));
@@ -136,29 +132,6 @@ namespace UserInterface
             }
 
             return default;
-        }
-
-        private bool TryGetNewState(Collider coll)
-        {
-            if (coll.GetComponent<GameCharacterState>())
-            {
-                _state = coll.GetComponent<GameCharacterState>();
-                return true;
-            }
-
-            if (coll.GetComponentInParent<GameCharacterState>())
-            {
-                _state = coll.GetComponentInParent<GameCharacterState>();
-                return true;
-            }
-
-            if (coll.GetComponentInChildren<GameCharacterState>())
-            {
-                _state = coll.GetComponentInChildren<GameCharacterState>();
-                return true;
-            }
-
-            return false;
         }
     }
 }

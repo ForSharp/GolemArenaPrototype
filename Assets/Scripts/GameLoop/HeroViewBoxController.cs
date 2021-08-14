@@ -12,7 +12,7 @@ namespace GameLoop
         [SerializeField] private RenderTexture[] portraitTextures;
         public static HeroViewBoxController Instance;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
         }
