@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using UnityEngine;
 
 namespace GolemEntity
 {
@@ -783,7 +784,7 @@ namespace GolemEntity
 
             return GetFeaturesCollection(typeStatsColl, defaultStatsColl);
         }
-
+        
         private static List<string> GetFeaturesCollection(float[] currentStatsColl, float[] defaultStatsColl)
         {
             var features = new List<string>();
