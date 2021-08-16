@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Fight;
 using GameLoop;
 using GolemEntity;
@@ -21,6 +22,11 @@ namespace UserInterface
         private void Start()
         {
             EventContainer.GolemStatsChanged += AllowUpdateStatsValues;
+        }
+
+        private void OnDestroy()
+        {
+            EventContainer.GolemStatsChanged -= AllowUpdateStatsValues;
         }
 
         private void Update()
