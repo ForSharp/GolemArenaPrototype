@@ -13,10 +13,15 @@ namespace GameLoop
         [SerializeField] private MainCharacterParameter parameter;
         [SerializeField] private FeatureType featureType;
         private GameObject _infoPanel;
+        private Coroutine _coroutine;
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            StartCoroutine(ShowInfoPanelAfterDelay());
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+            }
+            _coroutine = StartCoroutine(ShowInfoPanelAfterDelay());
         }
 
         private IEnumerator ShowInfoPanelAfterDelay()
@@ -111,7 +116,10 @@ namespace GameLoop
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            StopAllCoroutines();
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+            }
             
             if (_infoPanel)
                 Destroy(_infoPanel.gameObject);
