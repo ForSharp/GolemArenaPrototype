@@ -34,7 +34,7 @@ namespace GolemEntity.ExtraStats
 
         public static float GetDamagePerHeat(float strength, float agility, float intelligence)
         {
-            return Mathf.Max(strength, agility, intelligence) * 0.3f + (strength + agility + intelligence) * 0.1f;
+            return Mathf.Max(strength, agility, intelligence) * 0.6f + (strength + agility + intelligence) * 0.3f;
         }
 
         public static float GetDefence(float strength, float agility)
