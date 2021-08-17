@@ -156,7 +156,6 @@ namespace GolemEntity
             else
             {
                 RunToTarget();
-                _inAttack = false;
             }
 
             bool InAttackDistance()
@@ -203,7 +202,7 @@ namespace GolemEntity
                 _thisState.Stats.HitAccuracy,
                 _targetState.gameObject, _navMeshAgent,
                 _thisState.RoundStatistics,
-                AnimationChanger.SetSwordAttack);
+                AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
             if (!_inAttack)
@@ -284,6 +283,13 @@ namespace GolemEntity
                 false, AnimationChanger.SetGolemRun));
             _moveable.Move(_thisState.Stats.MoveSpeed * 2, _targetState.transform.position * direction);
             _isIKAllowed = false;
+            
+            while (_navMeshAgent.baseOffset > 0 && _inAttack)
+            {
+                _navMeshAgent.baseOffset -= Time.deltaTime * 0.25f;
+            }
+
+            _inAttack = false;
         }
 
         private void HandleHitReceiving(object sender, EventArgs args)

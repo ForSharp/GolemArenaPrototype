@@ -11,63 +11,52 @@ namespace GolemEntity
         private static readonly int SuperAttack = Animator.StringToHash("SuperAttack");
         private static readonly int AvoidHit = Animator.StringToHash("AvoidHit");
         private static readonly int GetHit = Animator.StringToHash("GetHit");
-        private static readonly int TestAttack = Animator.StringToHash("TestAttack");
         private static readonly int SwordAttack = Animator.StringToHash("SwordAttack");
 
-        private const int KickAnimationAmount = 22; //total 29
-        private const int HitAnimationAmount = 34; //total 35
-        private const int DeathAnimationAmount = 11;
-        private const int FightIdleAnimationAmount = 4; //5 in base animator, 4 in sword
-        private const int SuperAttackAnimationAmount = 15; //without hurricane kick
-        private const int AvoidHitAnimationAmount = 10; 
-        private const int GetHitAnimationAmount = 18; 
+        private const int KickAnimationAmount = 31; 
+        private const int SwordHitAnimationAmount = 16; 
+        private const int DeathAnimationAmount = 12;
+        private const int FightIdleAnimationAmount = 5;
+        private const int AvoidHitAnimationAmount = 17; 
+        private const int GetHitAnimationAmount = 23; 
+        
+        private const int SuperAttackAnimationAmount = 15; 
         
         public static void SetWalkingFight(Animator animator)
         {
             animator.Play("Walking");
         }
 
-        public static void SetTestAttack(Animator animator)
-        {
-            animator.SetTrigger(TestAttack);
-        }
-
         public static void SetSwordAttack(Animator animator)
         {
-            // var blendTreeStages = GetBlendTreeStages(9);
-            // animator.SetTrigger(SwordAttack);
-            // animator.SetFloat(Animator.StringToHash("SwordAttackVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+            animator.SetTrigger(SwordAttack);
+            animator.SetFloat(Animator.StringToHash("SwordAttackVariation"), Random.Range(0, SwordHitAnimationAmount));
 
-            var numb = Random.Range(1, 10);
-            animator.SetTrigger("SwordAttack" + numb);
         }
         
         public static void SetAvoidHit(Animator animator)
         {
-            var blendTreeStages = GetBlendTreeStages(AvoidHitAnimationAmount);
             animator.SetTrigger(AvoidHit);
-            animator.SetFloat(Animator.StringToHash("AvoidHitVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+            animator.SetFloat(Animator.StringToHash("AvoidHitVariation"), Random.Range(0, AvoidHitAnimationAmount));
         }
         
         public static void SetGetHit(Animator animator)
         {
-            var blendTreeStages = GetBlendTreeStages(GetHitAnimationAmount);
             animator.SetTrigger(GetHit);
-            animator.SetFloat(Animator.StringToHash("GetHitVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+            animator.SetFloat(Animator.StringToHash("GetHitVariation"), Random.Range(0, GetHitAnimationAmount));
         }
-        
+
+        public static void SetKickAttack(Animator animator)
+        {
+            animator.SetTrigger(Kick);
+            animator.SetFloat(Animator.StringToHash("KickVariation"), Random.Range(0, KickAnimationAmount));
+        }
+
         public static void SetHitAttack(Animator animator)
         {
             var blendTreeStages = GetBlendTreeStages(KickAnimationAmount);
             animator.SetTrigger(Hit);
             animator.SetFloat(Animator.StringToHash("HitVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
-        }
-
-        public static void SetKickAttack(Animator animator)
-        {
-            var blendTreeStages = GetBlendTreeStages(HitAnimationAmount);
-            animator.SetTrigger(Kick);
-            animator.SetFloat(Animator.StringToHash("KickVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
         }
 
         public static void SetSuperAttack(Animator animator)
@@ -95,8 +84,7 @@ namespace GolemEntity
             animator.SetFloat(Animator.StringToHash("Forward"), 0f);
             if (variation)
             {
-                var blendTreeStages = GetBlendTreeStages(FightIdleAnimationAmount);
-                animator.SetFloat(Animator.StringToHash("FightIdleVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+                animator.SetFloat(Animator.StringToHash("FightIdleVariation"), Random.Range(0, FightIdleAnimationAmount));
             }
         }
         public static void SetFightIdle(Animator animator)
@@ -117,8 +105,7 @@ namespace GolemEntity
         public static void SetGolemDie(Animator animator)
         {
             animator.SetTrigger(Dead);
-            var blendTreeStages = GetBlendTreeStages(DeathAnimationAmount);
-            animator.SetFloat(Animator.StringToHash("DeathVariation"), blendTreeStages[Random.Range(0, blendTreeStages.Length)]);
+            animator.SetFloat(Animator.StringToHash("DeathVariation"), Random.Range(0, DeathAnimationAmount));
         }
     }
 }
