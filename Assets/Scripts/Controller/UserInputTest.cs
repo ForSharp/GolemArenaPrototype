@@ -2,7 +2,6 @@
 using GameLoop;
 using GolemEntity;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Controller
 {
@@ -16,35 +15,12 @@ namespace Controller
 
         private void Update()
         {
-            // if (Input.GetKeyDown(KeyCode.G))
-            // {
-            //     panelGolemType.SetActive(true);
-            //     panelGolemSpec.SetActive(false);
-            // }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Game.Stage = Game.GameStage.Battle;
+            }
+
         }
-    
-        // public void SetGolemType(Text text)
-        // {
-        //     panelGolemType.SetActive(false);
-        //
-        //     _golemType = (GolemType) ToEnum(text.text, typeof(GolemType));
-        //
-        //     panelGolemSpec.SetActive(true);
-        // }
-
-        // public void SetGolemSpec(Text text)
-        // {
-        //     _specialization = (Specialization) ToEnum(text.text, typeof(Specialization));
-        //
-        //     panelGolemSpec.SetActive(false);
-        //
-        //     CreateGolem();
-        // }
-
-        // private void CreateGolem()
-        // {
-        //     GetComponent<Spawner>().SpawnGolem(_golemType, _specialization);
-        // }
 
         private static Enum ToEnum(string value, Type enumType)
         {
