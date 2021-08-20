@@ -44,7 +44,7 @@ namespace GameLoop
 
         private GameCharacterState[] GetEnemies()
         {
-            return FindObjectsOfType<GameCharacterState>().Where(p => p.IsDead == false).ToArray();
+            return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
         }
 
         private IEnumerator FindTargets()
