@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLoop
+namespace Controller
 {
     public class PathFollower : MonoBehaviour
     {
@@ -15,8 +15,6 @@ namespace GameLoop
         [SerializeField] private MovementType movementType;
         [SerializeField] private float speed = 1;
         [SerializeField] private float maxDistance = 0.1f;
-        [SerializeField] private bool allowLookAt;
-        [SerializeField] private Transform trackingTarget;
         [SerializeField] private MovementPath movementPath;
         private IEnumerator<Transform> _pointInPath;
 
@@ -34,11 +32,44 @@ namespace GameLoop
             get => movementType;
             set => movementType = value;
         }
-        public Transform TrackingTarget {
-            get => trackingTarget;
-            set => trackingTarget = value;
+        public float Speed
+        {
+            get => speed;
+            set
+            {
+                if (value > 0)
+                {
+                    speed = value;
+                }
+                else if (value < 0)
+                {
+                    speed = -value;
+                }
+                else
+                {
+                    speed = 1;
+                }
+            }
         }
-
+        public float MaxDistance
+        {
+            get => maxDistance;
+            set
+            {
+                if (value > 0)
+                {
+                    maxDistance = value;
+                }
+                else if (value < 0)
+                {
+                    maxDistance = -value;
+                }
+                else
+                {
+                    maxDistance = 1;
+                }
+            }
+        }
         private void Start()
         {
             if (movementPath == null)
@@ -63,14 +94,6 @@ namespace GameLoop
         {
             if (!HasPoint())
                 return;
-
-            if (allowLookAt)
-            {
-                if (trackingTarget != null)
-                {
-                    transform.LookAt(trackingTarget);
-                }
-            }
 
             if (CloseEnoughToMoveNext())
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLoop
+namespace Controller
 {
     public class MovementPath : MonoBehaviour
     {

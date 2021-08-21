@@ -54,9 +54,6 @@ namespace GolemEntity
             SwitchStatuses();
             ResetAttackIfNeed();
 
-            if (Input.GetKeyDown(KeyCode.I))
-                _isAIControlAllowed = true;
-
             if (CanFight())
             {
                 _status = FightStatus.Active;
@@ -67,6 +64,21 @@ namespace GolemEntity
             }
         }
 
+        private void OnEnable()
+        {
+            Game.StartBattle += AllowFight;
+        }
+
+        private void OnDisable()
+        {
+            Game.StartBattle -= AllowFight;
+        }
+
+        private void AllowFight()
+        {
+            _isAIControlAllowed = true;
+        }
+        
         private void SwitchStatuses()
         {
             switch (_status)
