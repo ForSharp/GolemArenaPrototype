@@ -16,7 +16,6 @@ namespace GameLoop
 
         public static Spawner Instance { get; private set; }
         private static int _group = 0;
-        private readonly Game _game = new Game();
 
         private void Start()
         {
@@ -49,12 +48,12 @@ namespace GameLoop
             if (_group < groupColors.Length)
             {
                 state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
-                _game.AddToAllGolems(state);
+                Game.AddToAllGolems(state);
             }
             else if (_group >= groupColors.Length)
             {
                 state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
-                _game.AddToAllGolems(state);
+                Game.AddToAllGolems(state);
             }
         }
 

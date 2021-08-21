@@ -7,8 +7,15 @@ using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
-    public class Game
+    public static class Game
     {
+        public enum GameStage
+        {
+            MainMenu,
+            Battle
+        }
+        
+        public static GameStage Stage { get; set; }
         public static List<GameCharacterState> AllGolems { get; }
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
@@ -23,7 +30,7 @@ namespace GameLoop
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
         }
 
-        public void AddToAllGolems(GameCharacterState golem)
+        public static void AddToAllGolems(GameCharacterState golem)
         {
             AllGolems.Add(golem);
             FreeTypes.Remove(golem.Type);
@@ -40,7 +47,7 @@ namespace GameLoop
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
         }
 
-        public void PrepareNewRound()
+        public static void PrepareNewRound()
         {
         }
 

@@ -422,7 +422,7 @@ namespace GolemEntity
 
         private GameCharacterState[] GetEnemies()
         {
-            return FindObjectsOfType<GameCharacterState>().Where(p => p.IsDead == false)
+            return Game.AllGolems.Where(p => p.IsDead == false)
                 .Where(p => p.Group != _thisState.Group).ToArray();
         }
 
