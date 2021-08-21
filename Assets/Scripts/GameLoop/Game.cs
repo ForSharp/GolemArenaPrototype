@@ -20,7 +20,9 @@ namespace GameLoop
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
 
-
+        public static event Action StartBattle;
+        public static event Action OpenMainMenu;
+        
         static Game()
         {
             AllGolems = new List<GameCharacterState>();
@@ -30,6 +32,16 @@ namespace GameLoop
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
         }
 
+        public static void OnStartBattle()
+        {
+            StartBattle?.Invoke();
+        }
+        
+        public static void OnOpenMainMenu()
+        {
+            OpenMainMenu?.Invoke();
+        }
+        
         public static void AddToAllGolems(GameCharacterState golem)
         {
             AllGolems.Add(golem);
