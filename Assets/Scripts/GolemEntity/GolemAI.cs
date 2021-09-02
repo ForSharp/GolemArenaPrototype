@@ -46,6 +46,9 @@ namespace GolemEntity
             StartCoroutine(FindEnemies());
             _isDies = false;
             
+            EventContainer.GolemDied += HandleGolemDeath;
+            _thisState.AttackReceived += HandleHitReceiving;
+            
         }
 
         private void Update()
@@ -65,15 +68,11 @@ namespace GolemEntity
 
         private void OnEnable()
         {
-            EventContainer.GolemDied += HandleGolemDeath;
-            _thisState.AttackReceived += HandleHitReceiving;
             Game.StartBattle += AllowFight;
         }
 
         private void OnDisable()
         {
-            EventContainer.GolemDied -= HandleGolemDeath;
-            _thisState.AttackReceived -= HandleHitReceiving;
             Game.StartBattle -= AllowFight;
         }
 
@@ -249,6 +248,8 @@ namespace GolemEntity
                 SetDefaultBehaviour();
                 _status = FightStatus.Dead;
                 _thisState.LastEnemyAttacked.Kills += 1;
+                EventContainer.GolemDied -= HandleGolemDeath;
+                _thisState.AttackReceived -= HandleHitReceiving;
                 return;
             }
 
@@ -348,7 +349,7 @@ namespace GolemEntity
             }
         }
 
-        private float GetHitChance(float accuracy, float evasion)
+        private static float GetHitChance(float accuracy, float evasion)
         {
             if (accuracy >= evasion)
             {

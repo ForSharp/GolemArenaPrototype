@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLoop
+namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
@@ -9,21 +9,25 @@ namespace GameLoop
         [SerializeField] private GameObject exitButton;
         [SerializeField] private GameObject chooseHeroPanel;
         [SerializeField] private GameObject statsPanel;
+        [SerializeField] private AudioSource buttonClickSound;
 
         public void StartGame()
         {
             chooseHeroPanel.SetActive(true);
             statsPanel.SetActive(true);
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            buttonClickSound.Play();
         }
 
         public void Options()
         {
             //DoSomething
+            buttonClickSound.Play();
         }
 
         public void ExitGame()
         {
+            buttonClickSound.Play();
             Application.Quit();
         }
     }

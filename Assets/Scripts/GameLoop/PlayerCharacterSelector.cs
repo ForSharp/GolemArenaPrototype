@@ -2,7 +2,6 @@
 using GolemEntity;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
@@ -12,6 +11,8 @@ namespace GameLoop
         [SerializeField] private GameObject confirmButton;
         [SerializeField] private Text confirmButtonText;
         [SerializeField] private Spawner spawner;
+        [SerializeField] private AudioSource chooseHeroClickSound;
+        [SerializeField] private AudioSource confirmHeroClickSound;
         private MainCharacterParameter _selectedHero;
         private MainCharacterParameter _selectedSpec;
         private bool _isSpecSelected;
@@ -78,7 +79,7 @@ namespace GameLoop
         {
             ConfirmChoosing();
             panel.gameObject.SetActive(false);
-            
+            confirmHeroClickSound.Play();
         }
         
         public void OnHeroStrengthClicked()
@@ -93,6 +94,8 @@ namespace GameLoop
                 SetHeroSpecStats(Characters[0]);
             
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
         
         public void OnHeroAgilityClicked()
@@ -107,6 +110,8 @@ namespace GameLoop
                 SetHeroSpecStats(Characters[1]);
             
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
         
         public void OnHeroIntelligenceClicked()
@@ -121,6 +126,8 @@ namespace GameLoop
                 SetHeroSpecStats(Characters[2]);
             
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
 
         public void OnSpecStrengthClicked()
@@ -134,6 +141,8 @@ namespace GameLoop
             _isSpecSelected = true;
             confirmButton.SetActive(true);
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
         
         public void OnSpecAgilityClicked()
@@ -147,6 +156,8 @@ namespace GameLoop
             _isSpecSelected = true;
             confirmButton.SetActive(true);
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
         
         public void OnSpecIntelligenceClicked()
@@ -160,6 +171,8 @@ namespace GameLoop
             _isSpecSelected = true;
             confirmButton.SetActive(true);
             SetConfirmText();
+            
+            chooseHeroClickSound.Play();
         }
 
         private void SetConfirmText()
