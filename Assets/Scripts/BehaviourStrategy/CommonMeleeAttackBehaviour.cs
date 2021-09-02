@@ -181,7 +181,7 @@ namespace BehaviourStrategy
             {
                 if (state.Group != _group)
                 {
-                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics));
+                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics, transform.rotation.y));
                     return true;
                 }
             }
