@@ -45,8 +45,7 @@ namespace GolemEntity
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
             _isDies = false;
-            EventContainer.GolemDied += HandleGolemDeath;
-            _thisState.AttackReceived += HandleHitReceiving;
+            
         }
 
         private void Update()
@@ -66,11 +65,15 @@ namespace GolemEntity
 
         private void OnEnable()
         {
+            EventContainer.GolemDied += HandleGolemDeath;
+            _thisState.AttackReceived += HandleHitReceiving;
             Game.StartBattle += AllowFight;
         }
 
         private void OnDisable()
         {
+            EventContainer.GolemDied -= HandleGolemDeath;
+            _thisState.AttackReceived -= HandleHitReceiving;
             Game.StartBattle -= AllowFight;
         }
 
@@ -233,8 +236,6 @@ namespace GolemEntity
             {
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
-                EventContainer.GolemDied -= HandleGolemDeath;
-                _thisState.AttackReceived -= HandleHitReceiving;
                 StartCoroutine(WaitForSecondsToDisable(6));
             }
 
@@ -307,21 +308,43 @@ namespace GolemEntity
         private void HandleHitReceiving(object sender, EventArgs args)
         {
             AttackHitEventArgs hitArgs = (AttackHitEventArgs) args;
-            var hitChance = GetHitChance(hitArgs.hitAccuracy, _thisState.Stats.AvoidChance);
+
+            if (AttackFromBehind())
+            {
+                GetHit(hitArgs);
+                return;
+            }
+
+            GetHitOrAvoid(hitArgs);
+
+            bool AttackFromBehind()
+            {
+                return Math.Abs(transform.rotation.y - hitArgs.AttackerRotationY) < 90;
+            }
+        }
+
+        private void GetHitOrAvoid(AttackHitEventArgs hitArgs)
+        {
+            var hitChance = GetHitChance(hitArgs.HitAccuracy, _thisState.Stats.AvoidChance);
             var random = Random.Range(0, 1.0f);
             if (hitChance > random)
             {
-                _thisState.TakeDamage(hitArgs.damagePerHit, _thisState.Stats.Defence, hitArgs.statistics);
-                if (!_thisState.IsDead)
-                {
-                    _isGetsHit = false;
-                    _status = FightStatus.GettingHit;
-                }
+                GetHit(hitArgs);
             }
             else
             {
                 _isAvoidsHit = false;
                 _status = FightStatus.AvoidingHit;
+            }
+        }
+
+        private void GetHit(AttackHitEventArgs hitArgs)
+        {
+            _thisState.TakeDamage(hitArgs.DamagePerHit, _thisState.Stats.Defence, hitArgs.Statistics);
+            if (!_thisState.IsDead)
+            {
+                _isGetsHit = false;
+                _status = FightStatus.GettingHit;
             }
         }
 

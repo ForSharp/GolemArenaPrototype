@@ -5,15 +5,17 @@ namespace Fight
 {
     public class AttackHitEventArgs : EventArgs
     {
-        public float damagePerHit;
-        public float hitAccuracy;
-        public RoundStatistics statistics;
+        public readonly float DamagePerHit;
+        public readonly float HitAccuracy;
+        public readonly RoundStatistics Statistics;
+        public readonly float AttackerRotationY;
 
-        public AttackHitEventArgs(float damagePerHit, float hitAccuracy, RoundStatistics statistics)
+        public AttackHitEventArgs(float damagePerHit, float hitAccuracy, RoundStatistics statistics, float attackerRotationY)
         {
-            this.damagePerHit = damagePerHit;
-            this.hitAccuracy = hitAccuracy;
-            this.statistics = statistics;
+            DamagePerHit = damagePerHit;
+            HitAccuracy = hitAccuracy;
+            Statistics = statistics;
+            AttackerRotationY = attackerRotationY;
         }
     }
 }
