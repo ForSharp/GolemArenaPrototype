@@ -4,6 +4,14 @@ namespace GameLoop
 {
     public static class EventContainer
     {
+
+        public static event EventHandler FightEvent;
+        
+        public static void OnFightEvent(FightEventArgs args)
+        {
+            FightEvent?.Invoke(null, args);
+        }
+        
         public static event Action PlayerCharacterCreated;
 
         public static void OnPlayerCharacterCreated()
@@ -25,5 +33,6 @@ namespace GameLoop
             GolemDied?.Invoke();
         }
 
+        
     }
 }

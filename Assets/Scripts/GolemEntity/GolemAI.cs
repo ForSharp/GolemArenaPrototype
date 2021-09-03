@@ -29,6 +29,7 @@ namespace GolemEntity
         private Animator _animator;
         private FightStatus _status;
         private float _timeToResetAttack;
+        private SoundsController _soundsController;
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
@@ -45,6 +46,8 @@ namespace GolemEntity
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
             _isDies = false;
+            _soundsController = GetComponent<SoundsController>();
+            
             
             EventContainer.GolemDied += HandleGolemDeath;
             _thisState.AttackReceived += HandleHitReceiving;
@@ -214,7 +217,7 @@ namespace GolemEntity
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.HitAccuracy,
-                _targetState.gameObject, _navMeshAgent,
+                _targetState.gameObject, _navMeshAgent, _thisState.Type,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
@@ -313,6 +316,7 @@ namespace GolemEntity
             if (AttackFromBehind())
             {
                 GetHit(hitArgs);
+                EventContainer.OnFightEvent(new FightEventArgs((AttackHitEventArgs) args, _thisState.Type, true));
                 return;
             }
 
@@ -331,11 +335,13 @@ namespace GolemEntity
             if (hitChance > random)
             {
                 GetHit(hitArgs);
+                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false));
             }
             else
             {
                 _isAvoidsHit = false;
                 _status = FightStatus.AvoidingHit;
+                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }
 
@@ -346,6 +352,7 @@ namespace GolemEntity
             {
                 _isGetsHit = false;
                 _status = FightStatus.GettingHit;
+                _soundsController.PlayHittingEnemySound();
             }
         }
 

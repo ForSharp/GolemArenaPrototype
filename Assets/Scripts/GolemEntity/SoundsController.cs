@@ -1,6 +1,7 @@
 ﻿using System;
 using GameLoop;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GolemEntity
 {
@@ -22,27 +23,29 @@ namespace GolemEntity
 
         public void PlayHittingEnemySound()
         {
-            //тыдыщ
+            _audioSource.PlayOneShot(hittingEnemyClips[Random.Range(0, hittingEnemyClips.Length)]);
         }
         
+        #region AnimationEvents
         public void OnFootStep()
         {
-            //step sound
+            _audioSource.PlayOneShot(footStepClips[Random.Range(0, footStepClips.Length)]);
         }
         
-        private void OnAttackStarted()
+        public void OnAttackStarted()
         {
-            //attack sound
+            _audioSource.PlayOneShot(attackClips[Random.Range(0, attackClips.Length)]);
         }
 
-        private void OnGettingHit()
+        public void OnGettingHit()
         {
-            //grunt pain sound
+            _audioSource.PlayOneShot(gettingHitClips[Random.Range(0, gettingHitClips.Length)]);
         }
 
-        private void OnDying()
+        public void OnDying()
         {
-            //dying sound
+            _audioSource.PlayOneShot(dyingClips[Random.Range(0, dyingClips.Length)]);
         }
+        #endregion
     }
 }

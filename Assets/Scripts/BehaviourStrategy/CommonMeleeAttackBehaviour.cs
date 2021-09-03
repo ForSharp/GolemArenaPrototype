@@ -25,12 +25,14 @@ namespace BehaviourStrategy
         private float _hitAccuracy;
         private GameObject _target;
         private NavMeshAgent _agent;
+        private string _name;
         private bool _isReady;
         private bool _isLastHitEnd = true;
         private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
             int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target, NavMeshAgent agent,
+            string nameCharacter,
             RoundStatistics statistics = default,
             params Action<Animator>[] hitAnimationSetters)
         {
@@ -46,6 +48,7 @@ namespace BehaviourStrategy
             _hitAccuracy = hitAccuracy;
             _target = target;
             _agent = agent;
+            _name = nameCharacter;
             _isReady = true;
         }
 
@@ -53,7 +56,7 @@ namespace BehaviourStrategy
         {
             _timer = 100f;
         }
-        
+
         private void Update()
         {
             _timer += Time.deltaTime;
@@ -62,6 +65,7 @@ namespace BehaviourStrategy
                 _timeToResetJump += Time.deltaTime;
                 ForceResetJumping();
             }
+
             EndAttackIfNeed();
         }
 
@@ -86,6 +90,7 @@ namespace BehaviourStrategy
             {
                 _agent.baseOffset = 0;
             }
+
             _isJumpUp = false;
         }
 
@@ -121,7 +126,7 @@ namespace BehaviourStrategy
                 LandHero();
             }
         }
-        
+
         public void Attack()
         {
             if (!_isReady)
@@ -165,13 +170,14 @@ namespace BehaviourStrategy
         private bool TryFindEnemiesInSpecifiedArea(Vector3 area)
         {
             Collider[] colliders = Physics.OverlapSphere(area, _destructionRadius);
-            
+
             foreach (var item in FilterCollidersArray(colliders))
             {
                 AttackDestructibleObjects(item);
                 if (AttackGameCharacter(item))
                     return true;
             }
+
             return false;
         }
 
@@ -181,7 +187,8 @@ namespace BehaviourStrategy
             {
                 if (state.Group != _group)
                 {
-                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics, transform.rotation.y));
+                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics,
+                        transform.rotation.y, _name));
                     return true;
                 }
             }
@@ -219,7 +226,7 @@ namespace BehaviourStrategy
 
             return filteredArray;
         }
-        
+
         private void EndAttackIfNeed()
         {
             if (!_isLastHitEnd)
