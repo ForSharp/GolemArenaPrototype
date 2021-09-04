@@ -47,8 +47,7 @@ namespace GolemEntity
             StartCoroutine(FindEnemies());
             _isDies = false;
             _soundsController = GetComponent<SoundsController>();
-            
-            
+
             EventContainer.GolemDied += HandleGolemDeath;
             _thisState.AttackReceived += HandleHitReceiving;
             
@@ -324,7 +323,8 @@ namespace GolemEntity
 
             bool AttackFromBehind()
             {
-                return Math.Abs(transform.rotation.y - hitArgs.AttackerRotationY) < 90;
+                //Debug.Log($" {_thisState.Type} {transform.rotation.y}, {hitArgs.AttackerName} {hitArgs.AttackerRotationY}"); 
+                return Math.Abs(transform.rotation.y - hitArgs.AttackerRotationY) < 0.35f;
             }
         }
 

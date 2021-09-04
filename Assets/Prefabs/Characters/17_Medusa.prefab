@@ -959,7 +959,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b1327e21cab2de24c8cac70a4f45c09c, type: 3}
   - {fileID: 8300000, guid: 806dceb13df26b34d91415fcdad9d67b, type: 3}
   - {fileID: 8300000, guid: 326b2a4a9ea589e41abe11cb3a5e5c6a, type: 3}
-  victoryClips:
+  clickAndVictoryClips:
   - {fileID: 8300000, guid: 92a653fc9d7445846a805548c4f861e6, type: 3}
   - {fileID: 8300000, guid: 2d59bcc8cacd55d4999534bc98d46681, type: 3}
   - {fileID: 8300000, guid: 7c3ae7b40c42fce45957ff44899210aa, type: 3}
@@ -969,7 +969,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 52154f2ff6ace2c42b482a5fc5dc0bc8, type: 3}
   - {fileID: 8300000, guid: 8e241dbcf8254aa4f83fec8cd9d15e76, type: 3}
   - {fileID: 8300000, guid: c3d174a7a242dff42bbeabc3cfafebdc, type: 3}
-  clickClips:
+  avoidingClips:
   - {fileID: 8300000, guid: 92a653fc9d7445846a805548c4f861e6, type: 3}
   - {fileID: 8300000, guid: 2d59bcc8cacd55d4999534bc98d46681, type: 3}
   - {fileID: 8300000, guid: 7c3ae7b40c42fce45957ff44899210aa, type: 3}

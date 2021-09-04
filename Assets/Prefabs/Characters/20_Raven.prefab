@@ -627,7 +627,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b1327e21cab2de24c8cac70a4f45c09c, type: 3}
   - {fileID: 8300000, guid: 806dceb13df26b34d91415fcdad9d67b, type: 3}
   - {fileID: 8300000, guid: 326b2a4a9ea589e41abe11cb3a5e5c6a, type: 3}
-  victoryClips:
+  clickAndVictoryClips:
   - {fileID: 8300000, guid: 9b9297fca51bb8b4d9dc6a02389ceefe, type: 3}
   - {fileID: 8300000, guid: e3708cc1d5cc63242b65c777810e30ac, type: 3}
   - {fileID: 8300000, guid: 9a991bb5a87a996408723a9ce853639c, type: 3}
@@ -635,6 +635,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e78909ab634938846b2aa3803cb4fb3f, type: 3}
   - {fileID: 8300000, guid: 6a65e801584b4d6499e7fbfe6fe3c34b, type: 3}
   - {fileID: 8300000, guid: 15ea4908e031ab44a9e38ca703ff93b1, type: 3}
+  - {fileID: 8300000, guid: 254b631b2b5bea54e9f1afdcc38b877b, type: 3}
   - {fileID: 8300000, guid: 4c31b112be9d6c84e98c424989685d14, type: 3}
   - {fileID: 8300000, guid: 3a4207a21bdab564ba3e91a07e3d2581, type: 3}
   - {fileID: 8300000, guid: e2af4e81f47474046890271518677a53, type: 3}
@@ -653,7 +654,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5d02e8f351a85774db5d9b58c53895b9, type: 3}
   - {fileID: 8300000, guid: 0ce87c71cb6a77e49908bfabd1bdad74, type: 3}
   - {fileID: 8300000, guid: 6c18cd60990640849a3e50f954dfc0d8, type: 3}
-  clickClips:
+  avoidingClips:
   - {fileID: 8300000, guid: 9b9297fca51bb8b4d9dc6a02389ceefe, type: 3}
   - {fileID: 8300000, guid: e3708cc1d5cc63242b65c777810e30ac, type: 3}
   - {fileID: 8300000, guid: 9a991bb5a87a996408723a9ce853639c, type: 3}
@@ -661,6 +662,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e78909ab634938846b2aa3803cb4fb3f, type: 3}
   - {fileID: 8300000, guid: 6a65e801584b4d6499e7fbfe6fe3c34b, type: 3}
   - {fileID: 8300000, guid: 15ea4908e031ab44a9e38ca703ff93b1, type: 3}
+  - {fileID: 8300000, guid: 254b631b2b5bea54e9f1afdcc38b877b, type: 3}
   - {fileID: 8300000, guid: 4c31b112be9d6c84e98c424989685d14, type: 3}
   - {fileID: 8300000, guid: 3a4207a21bdab564ba3e91a07e3d2581, type: 3}
   - {fileID: 8300000, guid: e2af4e81f47474046890271518677a53, type: 3}

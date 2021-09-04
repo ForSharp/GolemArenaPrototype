@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using Controller;
 using Fight;
 using GameLoop;
 using GolemEntity;
@@ -6,9 +8,9 @@ using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace UI
 {
-    public class GolemStatsPanel : MonoBehaviour
+    public sealed class GolemStatsPanel : MonoBehaviour
     {
         [SerializeField] private GameObject panel;
         [SerializeField] private HeroPortraitController portrait;
@@ -17,7 +19,7 @@ namespace UserInterface
         private GameCharacterState _state;
         private GolemExtraStats _stats;
         private bool _allowUpd;
-
+        
         private void Start()
         {
             EventContainer.GolemStatsChanged += AllowUpdateStatsValues;
@@ -56,10 +58,13 @@ namespace UserInterface
                         SetPortrait();
                         FillTexts();
                         panel.SetActive(true); 
+                        CameraMovement.Instance.SetTarget(state);
+                        _state.SoundsController.PlayClickAndVictorySound();
                     }
                     else
                     {
                         panel.SetActive(false); 
+                        CameraMovement.Instance.SetDefaultTargetChanging();
                     }
                 }
             }

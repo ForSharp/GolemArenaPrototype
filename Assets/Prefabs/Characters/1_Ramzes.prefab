@@ -719,11 +719,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b1327e21cab2de24c8cac70a4f45c09c, type: 3}
   - {fileID: 8300000, guid: 806dceb13df26b34d91415fcdad9d67b, type: 3}
   - {fileID: 8300000, guid: 326b2a4a9ea589e41abe11cb3a5e5c6a, type: 3}
-  victoryClips:
+  clickAndVictoryClips:
   - {fileID: 8300000, guid: 5c827170ef1a00b4db9ce5e98b54a928, type: 3}
   - {fileID: 8300000, guid: a25019f93fcc2e74da556ed5f514efc5, type: 3}
   - {fileID: 8300000, guid: 210518f8395269a4fb6a29c62b0c5c6b, type: 3}
-  clickClips:
+  avoidingClips:
   - {fileID: 8300000, guid: 5c827170ef1a00b4db9ce5e98b54a928, type: 3}
   - {fileID: 8300000, guid: a25019f93fcc2e74da556ed5f514efc5, type: 3}
   - {fileID: 8300000, guid: 210518f8395269a4fb6a29c62b0c5c6b, type: 3}
