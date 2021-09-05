@@ -52,6 +52,5 @@ namespace UserInterface
 
             return stars;
         }
-    
     }
 }

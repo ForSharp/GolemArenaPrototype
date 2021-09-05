@@ -7,9 +7,6 @@ namespace Controller
 {
     public class UserInputTest : MonoBehaviour
     {
-        [SerializeField] private GameObject panelGolemType;
-        [SerializeField] private GameObject panelGolemSpec;
-
         private GolemType _golemType;
         private Specialization _specialization;
 
