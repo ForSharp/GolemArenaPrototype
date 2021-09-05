@@ -3,7 +3,6 @@ using System.Collections;
 using System.Linq;
 using Fight;
 using GameLoop;
-using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -82,7 +81,6 @@ namespace Controller
             if (!Equals(trackingTarget, state.transform))
             {
                 trackingTarget = state.transform;
-                Debug.Log($"{state.Type} {Time.deltaTime}");
             }
         }
 
@@ -93,13 +91,14 @@ namespace Controller
         
         private void ChangeTargetIfNeed()
         {
-            if (battleTrackingTarget.GetComponent<GameCharacterState>().IsDead)
+            if (trackingTarget.TryGetComponent(out GameCharacterState state))
             {
-                StartCoroutine(FindTargets());
+                if (state.IsDead)
+                    StartCoroutine(FindTargets());
             }
         }
         
-        private GameCharacterState[] GetEnemies()
+        private GameCharacterState[] GetTargets()
         {
             return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
         }
@@ -107,15 +106,13 @@ namespace Controller
         private IEnumerator FindTargets()
         {
             
-            var target = GetEnemies();
+            var target = GetTargets();
 
             if (target.Length == 0)
             {
                 yield return new WaitForSeconds(1);
-                battleTrackingTarget = null;
+                trackingTarget = null;
                 StartCoroutine(FindTargets());
-                
-                Debug.Log($"Zero characters {Time.deltaTime}");
             }
 
             if (target.Length > 0)
@@ -123,9 +120,7 @@ namespace Controller
                 if (_defaultTargetChanging)
                 {
                     var randomTarget = target[Random.Range(0, target.Length)];
-                    battleTrackingTarget = randomTarget.transform;
-                    
-                    Debug.Log($"{randomTarget.Type} {Time.deltaTime}");
+                    trackingTarget = randomTarget.transform;
                     
                     yield return new WaitForSeconds(5);
                     StartCoroutine(FindTargets());
