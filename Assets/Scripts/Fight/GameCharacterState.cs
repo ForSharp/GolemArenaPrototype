@@ -3,6 +3,7 @@ using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using UI;
 using UnityEngine;
 using UserInterface;
 

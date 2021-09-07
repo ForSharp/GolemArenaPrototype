@@ -314,6 +314,7 @@ namespace GolemEntity
 
             if (AttackFromBehind())
             {
+                hitArgs.DamagePerHit *= 1.5f;
                 GetHit(hitArgs);
                 EventContainer.OnFightEvent(new FightEventArgs((AttackHitEventArgs) args, _thisState.Type, true));
                 return;

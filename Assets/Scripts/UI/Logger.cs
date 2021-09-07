@@ -89,7 +89,7 @@ namespace UI
             else if (fightArgs.IsAttackFromBehind)
             {
                 obj.GetComponent<Text>().text =
-                    $"<color=red><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit}</b> damage from behind from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
+                    $"<color=red><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit}</b> critical damage from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
             }
             else
             {
