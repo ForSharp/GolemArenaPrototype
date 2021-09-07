@@ -5,7 +5,7 @@ using Fight;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace UI
 {
     public class UIHealthBar : MonoBehaviour
     {
@@ -24,7 +24,7 @@ namespace UserInterface
             transform.SetParent(GameObject.Find("Canvas").transform);
             if (characterState)
             {
-                _slider.maxValue = characterState.MaxHealth;
+                _slider.maxValue = (int)characterState.MaxHealth;
                 maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
             }
 
@@ -56,7 +56,7 @@ namespace UserInterface
 
         private void UpdateSliderValue()
         {
-            _slider.value = characterState.CurrentHealth;
+            _slider.value = (int)characterState.CurrentHealth;
             currentHealthText.text = _slider.value.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -88,7 +88,7 @@ namespace UserInterface
         {
             if (Math.Abs(characterState.MaxHealth - _slider.maxValue) > 1)
             {
-                _slider.maxValue = characterState.MaxHealth;
+                _slider.maxValue = (int)characterState.MaxHealth;
                 maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
             }
         }

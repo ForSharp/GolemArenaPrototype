@@ -17,6 +17,14 @@ namespace Controller
         [SerializeField] private Transform trackingTarget;
         
         private PathFollower _cameraPathFollower;
+        private bool _defaultTargetChanging = true;
+
+        public static CameraMovement Instance { get; private set; }
+        
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -41,41 +49,87 @@ namespace Controller
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (NeedToDecreaseSpeed())
+            {
+                DecreaseSpeed();
+            }
+
+            bool NeedToDecreaseSpeed()
+            {
+                return _cameraPathFollower.Speed > 1 && Vector3.Distance(transform.position, Vector3.zero) < 15;
+            }
         }
 
         private void OnEnable()
         {
             Game.StartBattle += SetBattleMovement;
             Game.OpenMainMenu += SetMainMenuMovement;
+            EventContainer.GolemDied += ChangeTargetIfNeed;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= SetBattleMovement;
             Game.OpenMainMenu -= SetMainMenuMovement;
+            EventContainer.GolemDied -= ChangeTargetIfNeed;
         }
 
-        private GameCharacterState[] GetEnemies()
+        public void SetTarget(GameCharacterState state)
+        {
+            _defaultTargetChanging = false;
+            if (!Equals(trackingTarget, state.transform))
+            {
+                trackingTarget = state.transform;
+            }
+        }
+
+        public void SetDefaultTargetChanging()
+        {
+            _defaultTargetChanging = true;
+        }
+        
+        private void ChangeTargetIfNeed()
+        {
+            if (trackingTarget.TryGetComponent(out GameCharacterState state))
+            {
+                if (state.IsDead)
+                    StartCoroutine(FindTargets());
+            }
+        }
+        
+        private GameCharacterState[] GetTargets()
         {
             return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
         }
 
         private IEnumerator FindTargets()
         {
-            var target = GetEnemies();
+            
+            var target = GetTargets();
 
             if (target.Length == 0)
             {
                 yield return new WaitForSeconds(1);
-                battleTrackingTarget = null;
+                trackingTarget = null;
                 StartCoroutine(FindTargets());
             }
 
             if (target.Length > 0)
             {
-                battleTrackingTarget = target[Random.Range(0, target.Length)].transform;
-                yield return new WaitForSeconds(15);
-                StartCoroutine(FindTargets());
+                if (_defaultTargetChanging)
+                {
+                    var randomTarget = target[Random.Range(0, target.Length)];
+                    trackingTarget = randomTarget.transform;
+                    
+                    yield return new WaitForSeconds(5);
+                    StartCoroutine(FindTargets());
+                }
+                else if (!_defaultTargetChanging)
+                {
+                    yield return new WaitForSeconds(1);
+                    StartCoroutine(FindTargets());
+                }
             }
         }
         
@@ -95,13 +149,10 @@ namespace Controller
             _cameraPathFollower.Speed = 100;
             _cameraPathFollower.MaxDistance = 0.005f;
             trackingTarget = battleTrackingTarget;
-
-            StartCoroutine(ChangeSpeed());
         }
 
-        private IEnumerator ChangeSpeed()
+        private void DecreaseSpeed()
         {
-            yield return new WaitForSeconds(1);
             _cameraPathFollower.Speed = 1f;
         }
         

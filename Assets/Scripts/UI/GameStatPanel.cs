@@ -16,7 +16,6 @@ namespace UserInterface
             {
                 CreateTemplates();
             }
-            
         }
 
         private void LateUpdate()

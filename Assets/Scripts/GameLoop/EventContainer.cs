@@ -4,7 +4,6 @@ namespace GameLoop
 {
     public static class EventContainer
     {
-
         public static event EventHandler FightEvent;
         
         public static void OnFightEvent(FightEventArgs args)

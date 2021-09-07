@@ -3,6 +3,7 @@ using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using UI;
 using UnityEngine;
 using UserInterface;
 
@@ -24,6 +25,7 @@ namespace Fight
         public string Type { get; private set; }
         public string Spec { get; private set; }
         public Golem Golem { get; private set; }
+        public SoundsController SoundsController { get; private set; }
 
         private bool _isReady;
         public RoundStatistics LastEnemyAttacked;
@@ -38,6 +40,7 @@ namespace Fight
         private void Start()
         {
             EventContainer.GolemStatsChanged += UpdateStats;
+            SoundsController = GetComponent<SoundsController>();
         }
 
         private void Update()

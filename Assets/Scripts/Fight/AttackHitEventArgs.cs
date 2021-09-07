@@ -5,7 +5,7 @@ namespace Fight
 {
     public class AttackHitEventArgs : EventArgs
     {
-        public readonly float DamagePerHit;
+        public float DamagePerHit;
         public readonly float HitAccuracy;
         public readonly RoundStatistics Statistics;
         public readonly float AttackerRotationY;

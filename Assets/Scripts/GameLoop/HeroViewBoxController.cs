@@ -29,7 +29,7 @@ namespace GameLoop
         
         public void DeactivateRedundantBoxes()
         {
-            var types = GetRedundantTypes();
+            var types = GetFreeTypes();
 
             for (var i = 0; i < heroBoxes.Length; i++)
             {
@@ -45,7 +45,7 @@ namespace GameLoop
             }
         }
 
-        private static List<GolemType> GetRedundantTypes()
+        private static List<GolemType> GetFreeTypes()
         {
             return Game.FreeTypes.Select(type => (GolemType) Game.ToEnum(type, typeof(GolemType))).ToList();
         }
