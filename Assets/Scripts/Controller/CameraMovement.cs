@@ -89,7 +89,7 @@ namespace Controller
             _defaultTargetChanging = true;
         }
         
-        private void ChangeTargetIfNeed()
+        private void ChangeTargetIfNeed(RoundStatistics killer)
         {
             if (trackingTarget.TryGetComponent(out GameCharacterState state))
             {

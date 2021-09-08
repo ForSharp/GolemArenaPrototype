@@ -50,10 +50,11 @@ namespace Fight
                 return;
             }
         
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && !IsDead)
             {
+                LastEnemyAttacked.Kills += 1;
                 IsDead = true;
-                EventContainer.OnGolemDied();
+                EventContainer.OnGolemDied(LastEnemyAttacked);
                 return;
             }
         }

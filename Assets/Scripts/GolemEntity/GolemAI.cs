@@ -243,13 +243,12 @@ namespace GolemEntity
             _navMeshAgent.baseOffset = -0.8f;
         }
 
-        private void HandleGolemDeath()
+        private void HandleGolemDeath(RoundStatistics killer)
         {
             if (_thisState.IsDead)
             {
                 SetDefaultBehaviour();
                 _status = FightStatus.Dead;
-                _thisState.LastEnemyAttacked.Kills += 1;
                 EventContainer.GolemDied -= HandleGolemDeath;
                 _thisState.AttackReceived -= HandleHitReceiving;
                 return;

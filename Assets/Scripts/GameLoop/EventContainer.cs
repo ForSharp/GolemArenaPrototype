@@ -1,4 +1,5 @@
 ﻿using System;
+using Fight;
 
 namespace GameLoop
 {
@@ -25,11 +26,11 @@ namespace GameLoop
             GolemStatsChanged?.Invoke();
         }
 
-        public static event Action GolemDied;
+        public static event Action<RoundStatistics> GolemDied;
     
-        public static void OnGolemDied()
+        public static void OnGolemDied(RoundStatistics killer)
         {
-            GolemDied?.Invoke();
+            GolemDied?.Invoke(killer);
         }
 
         
