@@ -11,18 +11,21 @@ namespace GameLoop
         [SerializeField] private AudioClip[] tripleKillClips;
         [SerializeField] private AudioClip rampageClip;
         [SerializeField] private AudioClip fightClip;
+        [SerializeField] private AudioClip endGame;
         [SerializeField] private AudioSource audioSource;
 
         private void OnEnable()
         {
             EventContainer.GolemDied += AnnounceKilling;
             Game.StartBattle += StartFight;
+            Game.EndGame += EndGame;
         }
 
         private void OnDisable()
         {
             EventContainer.GolemDied -= AnnounceKilling;
             Game.StartBattle -= StartFight;
+            Game.EndGame -= EndGame;
         }
 
         private void StartFight()
@@ -30,9 +33,14 @@ namespace GameLoop
             audioSource.PlayOneShot(fightClip);
         }
 
+        private void EndGame()
+        {
+            audioSource.PlayOneShot(endGame);
+        }
+
         private void AnnounceKilling(RoundStatistics killer)
         {
-            switch (killer.Kills)
+            switch (killer.RoundKills)
             {
                 case 1:
                     audioSource.PlayOneShot(oneKillClips[Random.Range(0, oneKillClips.Length)]);

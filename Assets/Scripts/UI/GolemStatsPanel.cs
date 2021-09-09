@@ -19,13 +19,13 @@ namespace UI
         private GameCharacterState _state;
         private GolemExtraStats _stats;
         private bool _allowUpd;
-        
-        private void Start()
+
+        private void OnEnable()
         {
             EventContainer.GolemStatsChanged += AllowUpdateStatsValues;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             EventContainer.GolemStatsChanged -= AllowUpdateStatsValues;
         }
@@ -33,10 +33,10 @@ namespace UI
         private void Update()
         {
             HandleMouseClick();
-        
+
             SetLvl();
 
-            if (_allowUpd)
+            if (_allowUpd && _state)
             {
                 UpdateStats();
             }
@@ -57,13 +57,13 @@ namespace UI
                         FillMainInfo();
                         SetPortrait();
                         FillTexts();
-                        panel.SetActive(true); 
+                        panel.SetActive(true);
                         CameraMovement.Instance.SetTarget(state);
                         _state.SoundsController.PlayClickAndVictorySound();
                     }
                     else
                     {
-                        panel.SetActive(false); 
+                        panel.SetActive(false);
                         CameraMovement.Instance.SetDefaultTargetChanging();
                     }
                 }
@@ -72,14 +72,18 @@ namespace UI
 
         private void UpdateStats()
         {
-            _stats = _state.Stats;
-            FillMainInfo();
-            SetPortrait();
-            FillTexts();
-            _allowUpd = false;
+            if (_state.Stats != null)
+            {
+                _stats = _state.Stats;
+                FillMainInfo();
+                SetPortrait();
+                FillTexts();
+                _allowUpd = false;
+            }
+            
         }
-    
-        private void AllowUpdateStatsValues()
+
+        private void AllowUpdateStatsValues(GameCharacterState state)
         {
             _allowUpd = true;
         }
@@ -91,7 +95,6 @@ namespace UI
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     UpgradeSystem.LvlUp(_state);
-                
                 }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -103,9 +106,9 @@ namespace UI
 
         private void SetPortrait()
         {
-            portrait.SetTexture((GolemType) Game.ToEnum(_state.Type, typeof(GolemType)));
+            portrait.SetTexture((GolemType)Game.ToEnum(_state.Type, typeof(GolemType)));
         }
-        
+
         private void FillMainInfo()
         {
             mainInfo[0].text = _state.Type;

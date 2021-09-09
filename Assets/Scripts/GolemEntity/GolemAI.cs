@@ -18,6 +18,7 @@ namespace GolemEntity
         private bool _inAttack;
         private bool _isGetsHit;
         private bool _isAvoidsHit;
+        private bool _isWin;
 
         private IMoveable _moveable;
         private IAttackable _attackable;
@@ -48,8 +49,7 @@ namespace GolemEntity
             _isDies = false;
             _soundsController = GetComponent<SoundsController>();
 
-            EventContainer.GolemDied += HandleGolemDeath;
-            _thisState.AttackReceived += HandleHitReceiving;
+            
             
         }
 
@@ -71,16 +71,28 @@ namespace GolemEntity
         private void OnEnable()
         {
             Game.StartBattle += AllowFight;
+            EventContainer.GolemDied += HandleGolemDeath;
+            _isDies = false;
+            StartCoroutine(AddListenerAfterLittleDelay());
         }
 
+        private IEnumerator AddListenerAfterLittleDelay()
+        {
+            yield return new WaitForSeconds(0.05f);
+            _thisState.AttackReceived += HandleHitReceiving;
+        }
+        
         private void OnDisable()
         {
             Game.StartBattle -= AllowFight;
+            EventContainer.GolemDied -= HandleGolemDeath;
+            _thisState.AttackReceived -= HandleHitReceiving;
         }
 
         private void AllowFight()
         {
             _isAIControlAllowed = true;
+            _isWin = false;
         }
         
         private void SwitchStatuses()
@@ -118,7 +130,7 @@ namespace GolemEntity
 
         private bool CanFight()
         {
-            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit && _status != FightStatus.AvoidingHit;
+            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit && _status != FightStatus.AvoidingHit && Game.Stage == Game.GameStage.Battle;
         }
 
         private void SetDefaultBehaviour()
@@ -127,6 +139,7 @@ namespace GolemEntity
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
             _attackable.Attack();
+            _navMeshAgent.baseOffset = 0;
         }
 
         #region AnimationEvents
@@ -140,6 +153,7 @@ namespace GolemEntity
         private void OnAttackEnded()
         {
             _inAttack = false;
+            _navMeshAgent.baseOffset = 0;
         }
 
         private void OnCanFight()
@@ -249,8 +263,6 @@ namespace GolemEntity
             {
                 SetDefaultBehaviour();
                 _status = FightStatus.Dead;
-                EventContainer.GolemDied -= HandleGolemDeath;
-                _thisState.AttackReceived -= HandleHitReceiving;
                 return;
             }
 
@@ -271,6 +283,11 @@ namespace GolemEntity
         {
             yield return new WaitForSeconds(sec);
             gameObject.SetActive(false);
+            if (Game.RoundEnded)
+            {
+                EventContainer.OnNewRound();
+            }
+            
         }
 
         private void WalkSlowlyWithFightPosture()
@@ -475,6 +492,13 @@ namespace GolemEntity
 
             if (enemies.Length == 0)
             {
+                if (Game.Stage == Game.GameStage.Battle && !_isWin)
+                {
+                    _isWin = true;
+                    EventContainer.OnWinBattle(_thisState);
+                    _thisState.RoundStatistics.Wins++;
+                }
+                
                 yield return new WaitForSeconds(1);
                 _targetState = null;
                 StartCoroutine(FindEnemies());

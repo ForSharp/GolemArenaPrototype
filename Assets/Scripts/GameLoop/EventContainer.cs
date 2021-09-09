@@ -19,11 +19,11 @@ namespace GameLoop
             PlayerCharacterCreated?.Invoke();
         }
 
-        public static event Action GolemStatsChanged;
+        public static event Action<GameCharacterState> GolemStatsChanged;
 
-        public static void OnGolemStatsChanged()
+        public static void OnGolemStatsChanged(GameCharacterState state)
         {
-            GolemStatsChanged?.Invoke();
+            GolemStatsChanged?.Invoke(state);
         }
 
         public static event Action<RoundStatistics> GolemDied;
@@ -33,6 +33,18 @@ namespace GameLoop
             GolemDied?.Invoke(killer);
         }
 
-        
+        public static event Action<GameCharacterState> WinBattle;
+
+        public static void OnWinBattle(GameCharacterState obj)
+        {
+            WinBattle?.Invoke(obj);
+        }
+
+        public static event Action NewRound;
+
+        public static void OnNewRound()
+        {
+            NewRound?.Invoke();
+        }
     }
 }
