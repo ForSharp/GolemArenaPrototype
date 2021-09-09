@@ -8,7 +8,7 @@ namespace GolemEntity
         public static void LvlUp(GameCharacterState state)
         {
             state.Golem.ChangeBaseStatsProportionally(10);
-            EventContainer.OnGolemStatsChanged();
+            EventContainer.OnGolemStatsChanged(state);
             state.Lvl++;
         }
 
@@ -16,7 +16,7 @@ namespace GolemEntity
         {
             if (state.Lvl <= 1) return;
             state.Golem.ChangeBaseStatsProportionally(-10);
-            EventContainer.OnGolemStatsChanged();
+            EventContainer.OnGolemStatsChanged(state);
             state.Lvl--;
         }
     }

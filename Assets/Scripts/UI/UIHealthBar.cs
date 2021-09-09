@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Globalization;
 using Fight;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,10 +66,10 @@ namespace UI
             if (characterState.IsDead)
             {
                 fill.SetActive(false);
-                //Destroy(gameObject, TimeToDestroy);
             
                 StartCoroutine(WaitForSecondsToDisable(TimeToDestroy));
             }
+            
         }
 
         private IEnumerator WaitForSecondsToDisable(int sec)
@@ -77,11 +78,17 @@ namespace UI
             gameObject.SetActive(false);
         }
 
-        private void ChangeMaxValue()
+        public void ChangeMaxValue()
         {
-            //if an event occurs, in which the maximum health value changes in runtime, this method should be executed
+            _slider.maxValue = (int)characterState.MaxHealth;
+            maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
+            
+            UpdateSliderValue();
+        }
 
-            _slider.maxValue = characterState.MaxHealth;
+        public void ShowFill()
+        {
+            fill.SetActive(true);
         }
 
         private void UpdateMaxValue()

@@ -5,6 +5,7 @@ using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using UI;
 using UnityEngine;
+using UnityEngine.AI;
 using UserInterface;
 
 namespace Fight
@@ -13,6 +14,7 @@ namespace Fight
     {
         [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
+        private GameObject _healthBar;
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
@@ -39,8 +41,18 @@ namespace Fight
         
         private void Start()
         {
-            EventContainer.GolemStatsChanged += UpdateStats;
             SoundsController = GetComponent<SoundsController>();
+            EventContainer.GolemStatsChanged += UpdateStats;
+        }
+
+        private void OnEnable()
+        {
+            
+        }
+
+        private void OnDestroy()
+        {
+            EventContainer.GolemStatsChanged -= UpdateStats;
         }
 
         private void Update()
@@ -50,16 +62,19 @@ namespace Fight
                 return;
             }
         
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && !IsDead)
             {
+                LastEnemyAttacked.Kills += 1;
+                LastEnemyAttacked.RoundKills += 1;
                 IsDead = true;
-                EventContainer.OnGolemDied();
+                EventContainer.OnGolemDied(LastEnemyAttacked);
                 return;
             }
         }
 
-        private void UpdateStats()
+        private void UpdateStats(GameCharacterState state)
         {
+            if (state != this) return;
             BaseStats = Golem.GetBaseStats();
             Stats = Golem.GetExtraStats();
             SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
@@ -105,8 +120,8 @@ namespace Fight
         private void CreateHealthBar()
         {
             if (!isDynamicHealthBarCreate) return;
-            var healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            healthBar.GetComponent<UIHealthBar>().characterState = this;
+            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+            _healthBar.GetComponent<UIHealthBar>().characterState = this;
         }
 
         public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)
@@ -114,9 +129,38 @@ namespace Fight
             CurrentHealth -= damage;
             if (statistics == null) return;
             statistics.Damage += damage;
+            statistics.RoundDamage += damage;
             LastEnemyAttacked = statistics;
         }
 
+        public void PrepareAfterNewRound()
+        {
+            IsDead = false;
+            UpgradeSystem.LvlUp(this);
+            Heal();
+            ShowHealthBar();
+            NullRoundStatistics();
+        }
+
+        private void NullRoundStatistics()
+        {
+            RoundStatistics.RoundDamage = 0;
+            RoundStatistics.RoundKills = 0;
+        }
+        
+        private void Heal()
+        {
+            CurrentHealth = MaxHealth;
+        }
+
+        private void ShowHealthBar()
+        {
+            _healthBar.gameObject.SetActive(true);
+            var uiHealth = _healthBar.GetComponent<UIHealthBar>();
+            uiHealth.ChangeMaxValue();
+            uiHealth.ShowFill();
+        }
+        
         public void SpendStamina(float energy)
         {
         

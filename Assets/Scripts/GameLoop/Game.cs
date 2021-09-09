@@ -12,16 +12,21 @@ namespace GameLoop
         public enum GameStage
         {
             MainMenu,
-            Battle
+            Battle,
+            BetweenBattles
         }
         
         public static GameStage Stage { get; set; }
         public static List<GameCharacterState> AllGolems { get; }
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
+        
+        public static int Round { get; private set; }
 
+        public static bool RoundEnded { get; private set; }
         public static event Action StartBattle;
         public static event Action OpenMainMenu;
+        public static event Action EndGame;
         
         static Game()
         {
@@ -30,11 +35,17 @@ namespace GameLoop
             FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
 
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
+            EventContainer.WinBattle += CheckEndOfRound;
+            EventContainer.NewRound += PrepareNewRound;
+
+            Round = 1;
         }
 
         public static void OnStartBattle()
         {
             StartBattle?.Invoke();
+            Stage = GameStage.Battle;
+            RoundEnded = false;
         }
         
         public static void OnOpenMainMenu()
@@ -61,7 +72,30 @@ namespace GameLoop
 
         public static void PrepareNewRound()
         {
+            if (Round > 4)
+            {
+                OnEndGame();
+                Stage = GameStage.MainMenu;
+                return;
+            }
+
+            foreach (var character in AllGolems)
+            {
+                character.gameObject.SetActive(true);
+                character.PrepareAfterNewRound();
+            }
+            
+            OnStartBattle();
+            
         }
+        
+        public static void CheckEndOfRound(GameCharacterState winner)
+        {
+            RoundEnded = true;
+            Game.Stage = GameStage.BetweenBattles;
+            Round++;
+        }
+        
 
         public static GolemType GetRandomCharacter()
         {
@@ -77,6 +111,11 @@ namespace GameLoop
         public static Enum ToEnum(string value, Type enumType)
         {
             return (Enum) Enum.Parse(enumType, value, true);
+        }
+
+        public static void OnEndGame()
+        {
+            EndGame?.Invoke();
         }
     }
 }

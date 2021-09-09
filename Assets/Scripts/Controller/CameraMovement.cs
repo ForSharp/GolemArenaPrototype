@@ -43,6 +43,7 @@ namespace Controller
                         transform.LookAt(trackingTarget);
                     }
                     break;
+                case Game.GameStage.BetweenBattles:
                 case Game.GameStage.Battle:
                     TurnSmoothlyToTarget(trackingTarget, 1);
                     break;
@@ -89,7 +90,7 @@ namespace Controller
             _defaultTargetChanging = true;
         }
         
-        private void ChangeTargetIfNeed()
+        private void ChangeTargetIfNeed(RoundStatistics killer)
         {
             if (trackingTarget.TryGetComponent(out GameCharacterState state))
             {
@@ -149,6 +150,7 @@ namespace Controller
             _cameraPathFollower.Speed = 100;
             _cameraPathFollower.MaxDistance = 0.005f;
             trackingTarget = battleTrackingTarget;
+            _defaultTargetChanging = true;
         }
 
         private void DecreaseSpeed()
