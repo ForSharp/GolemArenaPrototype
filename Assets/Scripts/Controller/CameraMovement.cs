@@ -38,10 +38,7 @@ namespace Controller
             switch (Game.Stage)
             {
                 case Game.GameStage.MainMenu:
-                    if (trackingTarget != null)
-                    {
-                        transform.LookAt(trackingTarget);
-                    }
+                    transform.LookAt(mainMenuTrackingTarget);
                     break;
                 case Game.GameStage.BetweenBattles:
                 case Game.GameStage.Battle:

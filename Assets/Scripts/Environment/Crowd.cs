@@ -5,12 +5,20 @@ using Random = UnityEngine.Random;
 
 namespace Environment
 {
+    public enum CrowdIntensity
+    {
+        High,
+        Medium,
+        Low
+    }
+    
     public class Crowd : MonoBehaviour
     {
         [SerializeField] private GameObject[] spectatorPrefab;
         [SerializeField] private Transform[] standingSpectatorPlaces;
         [SerializeField] private Transform[] sittingSpectatorPlaces;
         [SerializeField] private Transform target;
+        [SerializeField] private CrowdIntensity crowdIntensity; 
 
         [Header("Set Dynamically")] 
         private readonly List<GameObject> _standingSpectators = new List<GameObject>();
@@ -36,15 +44,18 @@ namespace Environment
         {
             for (var i = 0; i < standingSpectatorPlaces.Length; i++)
             {
-                var spectator = Instantiate(spectatorPrefab[Random.Range(0, spectatorPrefab.Length)], 
-                    standingSpectatorPlaces[i].position, Quaternion.identity, transform);
-                _standingSpectators.Add(spectator);
-                var animator = spectator.GetComponent<Animator>();
-                animator.Play("StandTree");
-                animator.SetFloat(StandingCrowd, Random.Range(0, StandAnimationAmount));
-                animator.speed = Random.Range(0.75f, 1.25f);
-                
-                SetSpectatorRotation(spectator);
+                if (CanContinue())
+                {
+                    var spectator = Instantiate(spectatorPrefab[Random.Range(0, spectatorPrefab.Length)],
+                        standingSpectatorPlaces[i].position, Quaternion.identity, transform);
+                    _standingSpectators.Add(spectator);
+                    var animator = spectator.GetComponent<Animator>();
+                    animator.Play("StandTree");
+                    animator.SetFloat(StandingCrowd, Random.Range(0, StandAnimationAmount));
+                    animator.speed = Random.Range(0.75f, 1.25f);
+
+                    SetSpectatorRotation(spectator);
+                }
             }
         }
 
@@ -52,14 +63,17 @@ namespace Environment
         {
             for (var i = 0; i < sittingSpectatorPlaces.Length; i++)
             {
-                var spectator = Instantiate(spectatorPrefab[Random.Range(0, spectatorPrefab.Length)],
-                    sittingSpectatorPlaces[i].position, Quaternion.identity, transform);
-                _sittingSpectators.Add(spectator);
-                var animator = spectator.GetComponent<Animator>();
-                animator.SetFloat(SittingIdle, Random.Range(0, SittingIdleAnimationAmount));
-                animator.speed = Random.Range(0.75f, 1.25f);
+                if (CanContinue())
+                {
+                    var spectator = Instantiate(spectatorPrefab[Random.Range(0, spectatorPrefab.Length)],
+                        sittingSpectatorPlaces[i].position, Quaternion.identity, transform);
+                    _sittingSpectators.Add(spectator);
+                    var animator = spectator.GetComponent<Animator>();
+                    animator.SetFloat(SittingIdle, Random.Range(0, SittingIdleAnimationAmount));
+                    animator.speed = Random.Range(0.75f, 1.25f);
                 
-                SetSpectatorRotation(spectator);
+                    SetSpectatorRotation(spectator); 
+                }
             }
         }
 
@@ -68,6 +82,27 @@ namespace Environment
             spectator.transform.LookAt(target);
             var rot = spectator.transform.rotation;
             spectator.transform.rotation = new Quaternion(0, rot.y, 0, rot.w);
+        }
+
+        private bool CanContinue()
+        {
+            var chance = Random.Range(0, 1.0f);
+            
+            switch (crowdIntensity)
+            {
+                case CrowdIntensity.High:
+                    return true;
+                case CrowdIntensity.Medium:
+                    if (chance > 0.5f)
+                        return true;
+                    return false;
+                case CrowdIntensity.Low:
+                    if (chance > 0.75f)
+                        return true;
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -34,6 +34,8 @@ namespace GameLoop
             FreeTypes = Enum.GetNames(typeof(GolemType)).ToList();
             FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
 
+            Stage = GameStage.MainMenu;
+            
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
             EventContainer.WinBattle += CheckEndOfRound;
             EventContainer.NewRound += PrepareNewRound;
