@@ -48,9 +48,6 @@ namespace GolemEntity
             StartCoroutine(FindEnemies());
             _isDies = false;
             _soundsController = GetComponent<SoundsController>();
-
-            
-            
         }
 
         private void Update()
@@ -340,7 +337,6 @@ namespace GolemEntity
 
             bool AttackFromBehind()
             {
-                //Debug.Log($" {_thisState.Type} {transform.rotation.y}, {hitArgs.AttackerName} {hitArgs.AttackerRotationY}"); 
                 return Math.Abs(transform.rotation.y - hitArgs.AttackerRotationY) < 0.35f;
             }
         }

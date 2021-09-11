@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,7 +10,8 @@ namespace Environment
     {
         High,
         Medium,
-        Low
+        Low,
+        VeryLow
     }
     
     public class Crowd : MonoBehaviour
@@ -17,10 +19,13 @@ namespace Environment
         [SerializeField] private GameObject[] spectatorPrefab;
         [SerializeField] private Transform[] standingSpectatorPlaces;
         [SerializeField] private Transform[] sittingSpectatorPlaces;
+        [SerializeField] private Transform[] staticSittingSpectatorPlaces;
         [SerializeField] private Transform target;
-        [SerializeField] private CrowdIntensity crowdIntensity; 
+        [SerializeField] private CrowdIntensity crowdIntensity;
 
-        [Header("Set Dynamically")] 
+        [Header("Not Optimized")] 
+        [SerializeField] private bool fullFilling;
+        
         private readonly List<GameObject> _standingSpectators = new List<GameObject>();
         private readonly List<GameObject> _sittingSpectators = new List<GameObject>();
         
@@ -28,6 +33,8 @@ namespace Environment
         private static readonly int SittingIdle = Animator.StringToHash("SittingIdle");
         private static readonly int SittingCrowd = Animator.StringToHash("SittingCrowd");
         private static readonly int SitStandingCrowd = Animator.StringToHash("SitStandingCrowd");
+        private static readonly int Sit = Animator.StringToHash("Sit");
+        private static readonly int SitStandSit = Animator.StringToHash("SitStandSit");
 
         private const int StandAnimationAmount = 21;
         private const int SittingIdleAnimationAmount = 5;
@@ -38,8 +45,63 @@ namespace Environment
         {
             InstantiateSittingSpectators();
             InstantiateStandingSpectators();
+
+            if (fullFilling)
+            {
+                InstantiateStaticSittingSpectators();
+            }
         }
 
+        private void OnEnable()
+        {
+            EventContainer.GolemDied += SetHeroDiedReaction;
+            Game.StartBattle += SetStartRoundReaction;
+        }
+
+        private void OnDisable()
+        {
+            EventContainer.GolemDied -= SetHeroDiedReaction;
+            Game.StartBattle -= SetStartRoundReaction;
+        }
+
+        private void SetHeroDiedReaction(RoundStatistics statistics)
+        {
+            foreach (var spectator in _sittingSpectators)
+            {
+                var chance = Random.Range(0, 1.0f);
+                if (chance > 0.5f)
+                {
+                    SetRandomSittingAnimation(spectator);
+                }
+            }
+        }
+
+        private void SetStartRoundReaction()
+        {
+            foreach (var spectator in _sittingSpectators)
+            {
+                var chance = Random.Range(0, 1.0f);
+                if (chance > 0.5f)
+                {
+                    SetRandomSitStandingAnimation(spectator);
+                }
+            }
+        }
+
+        private static void SetRandomSittingAnimation(GameObject spectator)
+        {
+            var animator = spectator.GetComponent<Animator>();
+            animator.SetTrigger(Sit);
+            animator.SetFloat(SittingCrowd, Random.Range(0, SittingCrowdAnimationAmount));
+        }
+
+        private static void SetRandomSitStandingAnimation(GameObject spectator)
+        {
+            var animator = spectator.GetComponent<Animator>();
+            animator.SetTrigger(SitStandSit);
+            animator.SetFloat(SitStandingCrowd, Random.Range(0, SitStandSitAnimationAmount));
+        }
+        
         private void InstantiateStandingSpectators()
         {
             for (var i = 0; i < standingSpectatorPlaces.Length; i++)
@@ -77,6 +139,21 @@ namespace Environment
             }
         }
 
+        private void InstantiateStaticSittingSpectators()
+        {
+            for (var i = 0; i < staticSittingSpectatorPlaces.Length; i++)
+            {
+                if (CanContinue())
+                {
+                    var spectator = Instantiate(spectatorPrefab[Random.Range(0, spectatorPrefab.Length)],
+                        staticSittingSpectatorPlaces[i].position, Quaternion.identity, transform);
+                    var animator = spectator.GetComponent<Animator>();
+                    animator.Play("SittingPose");
+                    SetSpectatorRotation(spectator);
+                }
+            }
+        }
+
         private void SetSpectatorRotation(GameObject spectator)
         {
             spectator.transform.LookAt(target);
@@ -98,6 +175,10 @@ namespace Environment
                     return false;
                 case CrowdIntensity.Low:
                     if (chance > 0.75f)
+                        return true;
+                    return false;
+                case CrowdIntensity.VeryLow:
+                    if (chance > 0.9f)
                         return true;
                     return false;
                 default:
