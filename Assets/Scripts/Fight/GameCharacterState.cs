@@ -136,7 +136,7 @@ namespace Fight
         public void PrepareAfterNewRound()
         {
             IsDead = false;
-            UpgradeSystem.LvlUp(this);
+            UpgradeSystem.LvlUp(this, 7);
             Heal();
             ShowHealthBar();
             NullRoundStatistics();

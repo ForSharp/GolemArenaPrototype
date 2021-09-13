@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +12,17 @@ namespace UI
         [SerializeField] private Text roundNumber;
         [SerializeField] private GameObject gameStatTemplatePrefab;
         [SerializeField] private Transform content;
+
+        private CanvasGroup _canvasGroup;
+        private bool _isVisible = false;
         private readonly List<GameObject> _gameStatTemplates = new List<GameObject>();
         private bool _isEndGame = false;
+
+        private void Start()
+        {
+            _canvasGroup = GetComponent<CanvasGroup>();
+            _canvasGroup.alpha = 0;
+        }
 
         private void OnEnable()
         {
@@ -26,6 +36,18 @@ namespace UI
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (!_isVisible)
+                {
+                    ShowPanel();
+                }
+                else if (_isVisible)
+                {
+                    HidePanel();
+                }
+            }
+            
             if (_gameStatTemplates.Count < Game.AllGolems.Count)
             {
                 CreateTemplates();
@@ -39,6 +61,18 @@ namespace UI
         {
             if (gameStatTemplatePrefab && !_isEndGame)
                 FillAllTemplates();
+        }
+        
+        private void HidePanel()
+        {
+            _canvasGroup.alpha = 0;
+            _isVisible = false;
+        }
+
+        private void ShowPanel()
+        {
+            _canvasGroup.alpha = 1;
+            _isVisible = true;
         }
 
         private void CreateTemplates()
@@ -71,6 +105,8 @@ namespace UI
                     Game.AllGolems[i].RoundStatistics.Kills, Game.AllGolems[i].RoundStatistics.Wins,
                     Game.AllGolems[i].ColorGroup);
             }
+            
+            ShowPanel();
         }
     }
 }

@@ -1,24 +1,31 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using Controller;
 using Fight;
 using GameLoop;
 using GolemEntity;
 using GolemEntity.ExtraStats;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public sealed class GolemStatsPanel : MonoBehaviour
+    public sealed class GolemStatsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
         [SerializeField] private GameObject panel;
         [SerializeField] private HeroPortraitController portrait;
         [SerializeField] private Text[] mainInfo;
+        [SerializeField] private Text[] mainInfoExtraPanel;
         [SerializeField] private Text[] extraStatsUI;
+        [SerializeField] private GameObject openedPanel;
+        [SerializeField] private GameObject closedPanel;
+
+        [HideInInspector] public bool inPanel;
+
         private GameCharacterState _state;
         private GolemExtraStats _stats;
         private bool _allowUpd;
+        private bool _opened;
 
         private void OnEnable()
         {
@@ -32,8 +39,6 @@ namespace UI
 
         private void Update()
         {
-            HandleMouseClick();
-
             SetLvl();
 
             if (_allowUpd && _state)
@@ -42,32 +47,30 @@ namespace UI
             }
         }
 
-        private void HandleMouseClick()
+        public void OpenExtraStatsPanel()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    var coll = hit.collider;
-                    if (coll.TryGetComponent(out GameCharacterState state))
-                    {
-                        _state = state;
-                        _stats = _state.Stats;
-                        FillMainInfo();
-                        SetPortrait();
-                        FillTexts();
-                        panel.SetActive(true);
-                        CameraMovement.Instance.SetTarget(state);
-                        _state.SoundsController.PlayClickAndVictorySound();
-                    }
-                    else
-                    {
-                        panel.SetActive(false);
-                        CameraMovement.Instance.SetDefaultTargetChanging();
-                    }
-                }
-            }
+            openedPanel.SetActive(true);
+            closedPanel.SetActive(false);
+            _opened = true;
+        }
+
+        public void CloseExtraStatsPanel()
+        {
+            openedPanel.SetActive(false);
+            closedPanel.SetActive(true);
+            _opened = false;
+        }
+
+        public void HandleClick(GameCharacterState state)
+        {
+            _state = state;
+            _stats = _state.Stats;
+            FillMainInfo();
+            SetPortrait();
+            FillTexts();
+            panel.SetActive(true);
+            CameraMovement.Instance.SetTarget(state);
+            _state.SoundsController.PlayClickAndVictorySound();
         }
 
         private void UpdateStats()
@@ -80,7 +83,6 @@ namespace UI
                 FillTexts();
                 _allowUpd = false;
             }
-            
         }
 
         private void AllowUpdateStatsValues(GameCharacterState state)
@@ -117,6 +119,13 @@ namespace UI
             mainInfo[3].text = _state.BaseStats.Strength.ToString(CultureInfo.InvariantCulture);
             mainInfo[4].text = _state.BaseStats.Agility.ToString(CultureInfo.InvariantCulture);
             mainInfo[5].text = _state.BaseStats.Intelligence.ToString(CultureInfo.InvariantCulture);
+
+            mainInfoExtraPanel[0].text = _state.Type;
+            mainInfoExtraPanel[1].text = _state.Spec;
+            mainInfoExtraPanel[2].text = _state.Lvl.ToString();
+            mainInfoExtraPanel[3].text = _state.BaseStats.Strength.ToString(CultureInfo.InvariantCulture);
+            mainInfoExtraPanel[4].text = _state.BaseStats.Agility.ToString(CultureInfo.InvariantCulture);
+            mainInfoExtraPanel[5].text = _state.BaseStats.Intelligence.ToString(CultureInfo.InvariantCulture);
         }
 
         private void FillTexts()
@@ -145,6 +154,16 @@ namespace UI
             }
 
             return default;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            inPanel = false;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            inPanel = true;
         }
     }
 }
