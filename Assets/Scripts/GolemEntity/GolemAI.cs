@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using BehaviourStrategy;
+using Controller;
 using Fight;
 using GameLoop;
 using UnityEngine;
@@ -54,7 +55,12 @@ namespace GolemEntity
         {
             SwitchStatuses();
             ResetAttackIfNeed();
-
+            
+            // if (Player.PlayerCharacter == _thisState)
+            // {
+            //     _isAIControlAllowed = PlayerController.AIControl;
+            // }
+            
             if (CanFight())
             {
                 _status = FightStatus.Active;
@@ -88,7 +94,11 @@ namespace GolemEntity
 
         private void AllowFight()
         {
-            _isAIControlAllowed = true;
+            //if (Player.PlayerCharacter != _thisState)
+            {
+                _isAIControlAllowed = true;
+            }
+            
             _isWin = false;
         }
         

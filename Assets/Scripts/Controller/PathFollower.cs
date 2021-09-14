@@ -9,7 +9,8 @@ namespace Controller
         public enum MovementType
         {
             Moving,
-            Lerp
+            Lerp,
+            None
         }
 
         [SerializeField] private MovementType movementType;
@@ -94,14 +95,14 @@ namespace Controller
         {
             if (!HasPoint())
                 return;
-
+            
             if (CloseEnoughToMoveNext())
             {
                 _pointInPath.MoveNext();
             }
-
+            
             MoveObject();
-
+            
             bool HasPoint()
             {
                 return _pointInPath != null && _pointInPath.Current != null;
@@ -124,6 +125,8 @@ namespace Controller
                 case MovementType.Lerp:
                     transform.position = Vector3.Lerp(transform.position, _pointInPath.Current.position,
                         Time.deltaTime * speed);
+                    break;
+                case MovementType.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
