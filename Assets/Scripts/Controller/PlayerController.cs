@@ -25,6 +25,7 @@ namespace Controller
         [SerializeField] private float groundDistance = 0.05f;
         [SerializeField] private LayerMask groundMask;
 
+        public static bool AIControl { get; private set; }
         public static PlayMode PlayMode = PlayMode.Cinematic;
 
         private GameCharacterState _state;
@@ -33,26 +34,34 @@ namespace Controller
         private CharacterController _controller;
         private Vector3 _velocity;
         private Vector3 _moveDirection;
-        private bool _aiControl;
         private bool _isGrounded;
         private bool _isCanMove;
+        private bool _isDead;
         private float _moveSpeed;
 
         private void Awake()
         {
-            _aiControl = true;
+            AIControl = true;
         }
 
         private void OnEnable()
         {
             Game.StartBattle += SetStandard;
+            EventContainer.GolemDied += CheckDeath;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= SetStandard;
+            EventContainer.GolemDied -= CheckDeath;
         }
 
+        private void CheckDeath(RoundStatistics killer)
+        {
+            if (_state.IsDead)
+                _isDead = true;
+        }
+        
         private void SetStandard()
         {
             PlayMode = PlayMode.Standard;
@@ -62,6 +71,7 @@ namespace Controller
             _animator = _state.GetComponent<Animator>();
             _agent = _state.GetComponent<NavMeshAgent>();
             _controller = _state.GetComponent<CharacterController>();
+            _isDead = false;
         }
         
         #region AnimationEvents
@@ -126,44 +136,46 @@ namespace Controller
 
         private void TryShowHeroStates()
         {
+            if (Camera.main is null) return;
             var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (!Physics.Raycast(ray, out var hit)) return;
+            var coll = hit.collider;
+            if (coll.TryGetComponent(out GameCharacterState state))
             {
-                var coll = hit.collider;
-                if (coll.TryGetComponent(out GameCharacterState state))
-                {
-                    rtsPanel.gameObject.SetActive(true);
-                    rtsPanel.HandleClick(state);
-                }
-                else if (!rtsPanel.inPanel)
-                {
-                    rtsPanel.gameObject.SetActive(false);
-                    CameraMovement.Instance.SetDefaultTargetChanging();
-                }
+                rtsPanel.gameObject.SetActive(true);
+                rtsPanel.HandleClick(state);
+            }
+            else if (!rtsPanel.inPanel)
+            {
+                rtsPanel.gameObject.SetActive(false);
+                CameraMovement.Instance.SetDefaultTargetChanging();
             }
         }
 
         public static event Action<bool> AllowAI;
+        public static event Action AttackByController;
         
         public void AutoButtonClicked()
         {
-            _aiControl = !_aiControl;
-            AllowAI?.Invoke(_aiControl);
+            AIControl = !AIControl;
+            AllowAI?.Invoke(AIControl);
 
             SetNavMeshOrController();
         }
 
         private void SetNavMeshOrController()
         {
-            if (_aiControl)
+            if (AIControl)
             {
                 _agent.enabled = true;
                 _controller.enabled = false;
+                _isCanMove = false;
             }
             else
             {
                 _agent.enabled = false;
                 _controller.enabled = true;
+                _isCanMove = true;
             }
         }
 
@@ -191,10 +203,19 @@ namespace Controller
 
         private void HandleJoystickInput()
         {
-            if (!_aiControl && _isCanMove)
+            if (!AIControl && _isCanMove && !_isDead)
             {
                 MoveCharacter();
                 MakeSomersault();
+                Attack();
+            }
+        }
+
+        private void Attack()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                AttackByController?.Invoke();
             }
         }
 
@@ -207,8 +228,8 @@ namespace Controller
                 _velocity.y = -2f;
             }
             
-            float moveZ = Input.GetAxis("Vertical");
-            float rotateX = Input.GetAxis("Horizontal") * 250 * Time.deltaTime;
+            var moveZ = Input.GetAxis("Vertical");
+            var rotateX = Input.GetAxis("Horizontal") * 250 * Time.deltaTime;
 
             _moveDirection = new Vector3(0, 0, moveZ);
             _moveDirection = _state.transform.TransformDirection(_moveDirection);

@@ -53,7 +53,6 @@ namespace GolemEntity
 
         private void Update()
         {
-
             SwitchStatuses();
             ResetAttackIfNeed();
 
@@ -84,6 +83,7 @@ namespace GolemEntity
             if (_thisState == Player.PlayerCharacter)
             {
                 PlayerController.AllowAI += SetAIBehaviour;
+                PlayerController.AttackByController += AttackTarget;
             }
         }
         
@@ -95,6 +95,7 @@ namespace GolemEntity
             if (_thisState == Player.PlayerCharacter)
             {
                 PlayerController.AllowAI -= SetAIBehaviour;
+                PlayerController.AttackByController -= AttackTarget;
             }
         }
 
@@ -109,7 +110,6 @@ namespace GolemEntity
             {
                 _isAIControlAllowed = true;
             }
-            
             
             _isWin = false;
         }
@@ -207,8 +207,12 @@ namespace GolemEntity
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
-            
-            if (InAttackDistance())
+
+            if (NeedToCatchUpPlayer())
+            {
+                RunToTarget();
+            }
+            else if (InAttackDistance())
             {
                 AttackTarget();
             }
@@ -239,6 +243,11 @@ namespace GolemEntity
             {
                 return distanceToTarget <= CloseDistance && !_inAttack;
             }
+
+            bool NeedToCatchUpPlayer()
+            {
+                return !InAttackDistance() && _targetState == Player.PlayerCharacter && !PlayerController.AIControl;
+            }
         }
         
         private void SetScaredBehaviour()
@@ -267,7 +276,7 @@ namespace GolemEntity
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.HitAccuracy,
-                _targetState.gameObject, _navMeshAgent, _thisState.Type,
+                _targetState.gameObject, _thisState.Type,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();

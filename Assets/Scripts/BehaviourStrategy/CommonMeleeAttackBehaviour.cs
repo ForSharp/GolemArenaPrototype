@@ -24,13 +24,12 @@ namespace BehaviourStrategy
         private float _delayBetweenHits;
         private float _hitAccuracy;
         private GameObject _target;
-        private NavMeshAgent _agent;
         private string _name;
         private bool _isReady;
         private bool _isLastHitEnd = true;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
-            int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target, NavMeshAgent agent,
+            int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target,
             string nameCharacter,
             RoundStatistics statistics = default,
             params Action<Animator>[] hitAnimationSetters)
@@ -46,7 +45,6 @@ namespace BehaviourStrategy
             _delayBetweenHits = delayBetweenHits;
             _hitAccuracy = hitAccuracy;
             _target = target;
-            _agent = agent;
             _name = nameCharacter;
             _isReady = true;
         }
