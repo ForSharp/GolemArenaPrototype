@@ -1,8 +1,9 @@
-﻿using GolemEntity;
+﻿using GameLoop;
+using GolemEntity;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameLoop
+namespace UI
 {
     public class HeroPortraitController : MonoBehaviour
     {

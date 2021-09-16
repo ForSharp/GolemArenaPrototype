@@ -28,7 +28,6 @@ namespace BehaviourStrategy
         private string _name;
         private bool _isReady;
         private bool _isLastHitEnd = true;
-        private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
             int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target, NavMeshAgent agent,
@@ -60,12 +59,6 @@ namespace BehaviourStrategy
         private void Update()
         {
             _timer += Time.deltaTime;
-            if (_isJumpUp)
-            {
-                _timeToResetJump += Time.deltaTime;
-                ForceResetJumping();
-            }
-
             EndAttackIfNeed();
         }
 
@@ -75,7 +68,6 @@ namespace BehaviourStrategy
         {
             _isLastHitEnd = false;
             _timeToEndAttack = 0;
-            _agent.baseOffset = 0;
         }
 
         private void OnAttack()
@@ -86,46 +78,10 @@ namespace BehaviourStrategy
         private void OnAttackEnded()
         {
             _isLastHitEnd = true;
-            if (_agent)
-            {
-                _agent.baseOffset = 0;
-            }
-
-            _isJumpUp = false;
         }
-
-        private void OnStartJump()
-        {
-            _isJumpUp = true;
-            while (_isJumpUp && _agent.baseOffset <= 0.85f)
-            {
-                _agent.baseOffset += Time.deltaTime * 0.25f;
-            }
-        }
-
-        private void OnStartLanding()
-        {
-            LandHero();
-        }
-
+        
         #endregion
-
-        private void LandHero()
-        {
-            _isJumpUp = false;
-            while (_agent.baseOffset > 0 && !_isJumpUp)
-            {
-                _agent.baseOffset -= Time.deltaTime * 0.25f;
-            }
-        }
-
-        private void ForceResetJumping()
-        {
-            if (_timeToResetJump >= 1.5f)
-            {
-                LandHero();
-            }
-        }
+        
 
         public void Attack()
         {

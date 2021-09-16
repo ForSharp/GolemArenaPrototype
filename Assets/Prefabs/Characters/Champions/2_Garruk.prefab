@@ -981,6 +981,7 @@ GameObject:
   - component: {fileID: 572043482322058571}
   - component: {fileID: 4851289292439712942}
   - component: {fileID: -3654087567149564490}
+  - component: {fileID: 3198774863234627030}
   m_Layer: 0
   m_Name: 2_Garruk
   m_TagString: Untagged
@@ -1524,6 +1525,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &3198774863234627030
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071977361841678309}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &9072013964762720815
 GameObject:
   m_ObjectHideFlags: 0

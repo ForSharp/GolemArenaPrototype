@@ -29,9 +29,12 @@ namespace GameLoop
             var state = ConnectGolemWithState(newGolem, golem, golemType, specialization);
 
             _group++;
-            
+
             if (isPlayerCharacter)
+            {
                 Player.SetPlayerCharacter(state);
+            }
+                
         }
 
         private Vector3 GetRandomSpawnPoint()
