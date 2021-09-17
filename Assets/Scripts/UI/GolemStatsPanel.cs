@@ -25,7 +25,6 @@ namespace UI
         private GameCharacterState _state;
         private GolemExtraStats _stats;
         private bool _allowUpd;
-        private bool _opened;
 
         private void OnEnable()
         {
@@ -51,14 +50,12 @@ namespace UI
         {
             openedPanel.SetActive(true);
             closedPanel.SetActive(false);
-            _opened = true;
         }
 
         public void CloseExtraStatsPanel()
         {
             openedPanel.SetActive(false);
             closedPanel.SetActive(true);
-            _opened = false;
         }
 
         public void HandleClick(GameCharacterState state)

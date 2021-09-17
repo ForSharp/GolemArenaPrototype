@@ -9,9 +9,8 @@ namespace Controller
         public Vector3 offset;
         public float sensitivity = 3; 
         public float limit = 80; 
-        public float zoom = 0.25f; 
+        public float zoom = 3.25f; 
         public float zoomMax = 10; 
-        public float zoomMin = 3; 
-        private float X, Y;
+        public float zoomMin = 3;
     }
 }

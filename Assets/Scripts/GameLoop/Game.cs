@@ -91,6 +91,7 @@ namespace GameLoop
             
         }
         
+        
         public static void CheckEndOfRound(GameCharacterState winner)
         {
             RoundEnded = true;

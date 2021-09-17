@@ -15,7 +15,7 @@ namespace Controller
         Cinematic
     }
 
-    public class PlayerController : MonoBehaviour
+    public sealed class PlayerController : MonoBehaviour
     {
         [SerializeField] private HeroControllerPanel standardPanel;
         [SerializeField] private GolemStatsPanel rtsPanel;
@@ -25,9 +25,9 @@ namespace Controller
         [SerializeField] private float groundDistance = 0.05f;
         [SerializeField] private LayerMask groundMask;
 
-        public static bool AIControl { get; private set; }
-        public static PlayMode PlayMode = PlayMode.Cinematic;
-
+        private static bool AIControl { get; set; }
+        
+        private static PlayMode _playMode = PlayMode.Cinematic;
         private GameCharacterState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
@@ -64,7 +64,7 @@ namespace Controller
         
         private void SetStandard()
         {
-            PlayMode = PlayMode.Standard;
+            _playMode = PlayMode.Standard;
             SetStandardPanel();
             autoButton.SetActive(true);
             _state = Player.PlayerCharacter;
@@ -72,6 +72,7 @@ namespace Controller
             _agent = _state.GetComponent<NavMeshAgent>();
             _controller = _state.GetComponent<CharacterController>();
             _isDead = false;
+            OnStandardCamera();
         }
         
         #region AnimationEvents
@@ -105,12 +106,16 @@ namespace Controller
         
         private void Update()
         {
-            switch (PlayMode)
+            switch (_playMode)
             {
                 case PlayMode.Standard:
                     HandleJoystickInput();
                     break;
                 case PlayMode.Rts:
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        TryAimCharacter();
+                    }
                     break;
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
@@ -134,6 +139,32 @@ namespace Controller
             }
         }
 
+        private void TryAimCharacter()
+        {
+            if (!AIControl && !_isDead)
+            {
+                if (Camera.main is null) return;
+                var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+                if (!Physics.Raycast(ray, out var hit)) return;
+                var coll = hit.collider;
+                if (coll.TryGetComponent(out GameCharacterState state))
+                {
+                    if (state == _state)
+                    {
+                        state.SoundsController.PlayClickAndVictorySound();
+                    }
+                    else
+                    {
+                        SetTargetByController?.Invoke(state);
+                    }
+                }
+                else
+                {
+                    SetMovementPointByController?.Invoke(hit.point);
+                }
+            }
+        }
+        
         private void TryShowHeroStates()
         {
             if (Camera.main is null) return;
@@ -148,12 +179,13 @@ namespace Controller
             else if (!rtsPanel.inPanel)
             {
                 rtsPanel.gameObject.SetActive(false);
-                CameraMovement.Instance.SetDefaultTargetChanging();
             }
         }
 
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
+        public static event Action<GameCharacterState> SetTargetByController;
+        public static event Action<Vector3> SetMovementPointByController;
         
         public void AutoButtonClicked()
         {
@@ -179,35 +211,20 @@ namespace Controller
             }
         }
 
-        public void SwitchMode(string mode)
-        {
-            switch (mode)
-            {
-                case "Standard":
-                    PlayMode = PlayMode.Standard;
-                    autoButton.SetActive(true);
-                    SetStandardPanel();
-                    break;
-                case "Rts":
-                    PlayMode = PlayMode.Rts;
-                    autoButton.SetActive(true);
-                    SetRtsPanel();
-                    break;
-                case "Cinematic":
-                    PlayMode = PlayMode.Cinematic;
-                    autoButton.SetActive(false);
-                    SetRtsPanel();
-                    break;
-            }
-        }
+        #region StandardController
 
         private void HandleJoystickInput()
         {
-            if (!AIControl && _isCanMove && !_isDead)
+            if (CanMove())
             {
                 MoveCharacter();
                 MakeSomersault();
                 Attack();
+            }
+
+            bool CanMove()
+            {
+                return !AIControl && _isCanMove && !_isDead && _playMode == PlayMode.Standard;
             }
         }
 
@@ -240,12 +257,10 @@ namespace Controller
                 
                 if (_moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
                 {
-                    print("walk");
                     Walk();
                 }
                 else if (_moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
                 {
-                    print("run");
                     Run();
                 }
                 else
@@ -254,8 +269,6 @@ namespace Controller
                 }
 
                 _moveDirection *= _moveSpeed;
-
-                
             }
             
             _controller.Move(_moveDirection * Time.deltaTime);
@@ -274,7 +287,7 @@ namespace Controller
                 }
             }
         }
-        
+
         private void Idle()
         {
             AnimationChanger.SetFightIdle(_animator);
@@ -282,18 +295,18 @@ namespace Controller
 
         private void Walk()
         {
-            print("walk anim");
             _moveSpeed = _state.Stats.MoveSpeed;
             AnimationChanger.SetGolemWalk(_animator);
         }
 
         private void Run()
         {
-            print("run anim");
-            _moveSpeed = _state.Stats.MoveSpeed * 2;
+            _moveSpeed = _state.Stats.MoveSpeed * 1.5f;
             AnimationChanger.SetGolemRun(_animator);
         }
-        
+
+        #endregion
+
         private void SetStandardPanel()
         {
             standardPanel.gameObject.SetActive(true);
@@ -306,14 +319,54 @@ namespace Controller
             rtsPanel.gameObject.SetActive(true);
             rtsPanel.HandleClick(Player.PlayerCharacter);
         }
-        
+
         public void StartButtonClick()
         {
-            if (Game.Stage != Game.GameStage.Battle)
+            Game.OnStartBattle();
+        }
+
+        public void SwitchMode(string mode)
+        {
+            switch (mode)
             {
-                Game.Stage = Game.GameStage.Battle;
-                Game.OnStartBattle();
+                case "Standard":
+                    _playMode = PlayMode.Standard;
+                    autoButton.SetActive(true);
+                    SetStandardPanel();
+                    OnStandardCamera();
+                    break;
+                case "Rts":
+                    _playMode = PlayMode.Rts;
+                    autoButton.SetActive(true);
+                    SetRtsPanel();
+                    OnRtsCamera();
+                    break;
+                case "Cinematic":
+                    _playMode = PlayMode.Cinematic;
+                    autoButton.SetActive(false);
+                    SetRtsPanel();
+                    OnCinematicCamera();
+                    break;
             }
+        }
+
+        public static event Action StandardCamera;
+        public static event Action RtsCamera;
+        public static event Action CinematicCamera;
+
+        private static void OnStandardCamera()
+        {
+            StandardCamera?.Invoke();
+        }
+
+        private static void OnRtsCamera()
+        {
+            RtsCamera?.Invoke();
+        }
+
+        private static void OnCinematicCamera()
+        {
+            CinematicCamera?.Invoke();
         }
     }
 }

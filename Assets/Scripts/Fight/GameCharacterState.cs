@@ -5,8 +5,6 @@ using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using UI;
 using UnityEngine;
-using UnityEngine.AI;
-using UserInterface;
 
 namespace Fight
 {
@@ -30,7 +28,7 @@ namespace Fight
         public SoundsController SoundsController { get; private set; }
 
         private bool _isReady;
-        public RoundStatistics LastEnemyAttacked;
+        private RoundStatistics _lastEnemyAttacked;
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
         public event EventHandler AttackReceived;
 
@@ -42,12 +40,11 @@ namespace Fight
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            EventContainer.GolemStatsChanged += UpdateStats;
         }
 
         private void OnEnable()
         {
-            
+            EventContainer.GolemStatsChanged += UpdateStats;
         }
 
         private void OnDestroy()
@@ -64,10 +61,10 @@ namespace Fight
         
             if (CurrentHealth <= 0 && !IsDead)
             {
-                LastEnemyAttacked.Kills += 1;
-                LastEnemyAttacked.RoundKills += 1;
+                _lastEnemyAttacked.Kills += 1;
+                _lastEnemyAttacked.RoundKills += 1;
                 IsDead = true;
-                EventContainer.OnGolemDied(LastEnemyAttacked);
+                EventContainer.OnGolemDied(_lastEnemyAttacked);
                 return;
             }
         }
@@ -130,7 +127,7 @@ namespace Fight
             if (statistics == null) return;
             statistics.Damage += damage;
             statistics.RoundDamage += damage;
-            LastEnemyAttacked = statistics;
+            _lastEnemyAttacked = statistics;
         }
 
         public void PrepareAfterNewRound()
@@ -165,7 +162,5 @@ namespace Fight
         {
         
         }
-
-        
     }
 }

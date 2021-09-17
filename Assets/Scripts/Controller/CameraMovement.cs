@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using Fight;
 using GameLoop;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Controller
 {
@@ -18,8 +16,8 @@ namespace Controller
          [SerializeField] private CameraSettings cameraSettings = new CameraSettings();
     
          private PathFollower _cameraPathFollower;
-         private bool _defaultTargetChanging = true;
-         private float X, Y;
+         private float _x, _y;
+         private PlayMode _playMode = PlayMode.Cinematic;
     
          public static CameraMovement Instance { get; private set; }
          
@@ -31,7 +29,6 @@ namespace Controller
          private void Start()
          {
              _cameraPathFollower = GetComponent<PathFollower>();
-             //StartCoroutine(FindTargets());
              SetMainMenuMovement();
          }
     
@@ -42,12 +39,13 @@ namespace Controller
     
          private void SetCameraMode()
          {
-             switch (PlayerController.PlayMode)
+             switch (_playMode)
              {
                  case PlayMode.Standard:
-                     SetRotateAroundMovement();
+                     SetStandardMovement();
                      break;
                  case PlayMode.Rts:
+                     SetRtsMovement();
                      break;
                  case PlayMode.Cinematic:
                      if (Game.Stage == Game.GameStage.MainMenu)
@@ -66,20 +64,23 @@ namespace Controller
          
          private void OnEnable()
          {
-             Game.StartBattle += SetBattleMovement;
+             PlayerController.StandardCamera += SetStandardMovementValues;
+             PlayerController.RtsCamera += SetRtsMovementValues;
+             PlayerController.CinematicCamera += SetCinematicMovement;
              Game.OpenMainMenu += SetMainMenuMovement;
-             EventContainer.GolemDied += ChangeTargetIfNeed;
          }
     
          private void OnDisable()
          {
-             Game.StartBattle -= SetBattleMovement;
+             PlayerController.StandardCamera -= SetStandardMovementValues;
+             PlayerController.RtsCamera -= SetRtsMovementValues;
+             PlayerController.CinematicCamera -= SetCinematicMovement;
              Game.OpenMainMenu -= SetMainMenuMovement;
-             EventContainer.GolemDied -= ChangeTargetIfNeed;
          }
     
-         private void SetRotateAroundValues()
+         private void SetStandardMovementValues()
          {
+             _playMode = PlayMode.Standard;
              _cameraPathFollower.MoveType = PathFollower.MovementType.None;
              
              cameraSettings.limit = Mathf.Abs(cameraSettings.limit);
@@ -91,85 +92,58 @@ namespace Controller
                  Time.deltaTime * 100);
          }
          
-         private void SetRotateAroundMovement()
+         private void SetStandardMovement()
          {
-             if (transform.position.y < 0)
+             MoveCameraAroundHero(false);
+         }
+
+         private void MoveCameraAroundHero(bool rts, float multiplier = 1)
+         {
+             if (Input.GetAxis("Mouse ScrollWheel") > 0)
              {
-                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                 cameraSettings.offset.z += cameraSettings.zoom;
+             }
+             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+             {
+                 cameraSettings.offset.z -= cameraSettings.zoom;
              }
              
-             if(Input.GetAxis("Mouse ScrollWheel") > 0) cameraSettings.offset.z += cameraSettings.zoom;
-             else if(Input.GetAxis("Mouse ScrollWheel") < 0) cameraSettings.offset.z -= cameraSettings.zoom;
-             cameraSettings.offset.z = Mathf.Clamp(cameraSettings.offset.z, -Mathf.Abs(cameraSettings.zoomMax), -Mathf.Abs(cameraSettings.zoomMin));
-    
-             X = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraSettings.sensitivity;
-             Y += Input.GetAxis("Mouse Y") * cameraSettings.sensitivity;
-             Y = Mathf.Clamp (Y, -cameraSettings.limit, cameraSettings.limit);
-             transform.localEulerAngles = new Vector3(-Y, X, 0);
-             //transform.position = transform.localRotation * cameraSettings.offset + trackingTarget.position;
+             cameraSettings.offset.z = Mathf.Clamp(cameraSettings.offset.z * multiplier, -Mathf.Abs(cameraSettings.zoomMax), -Mathf.Abs(cameraSettings.zoomMin));
+
+             if (!rts)
+             {
+                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraSettings.sensitivity;
+                 _y += Input.GetAxis("Mouse Y") * cameraSettings.sensitivity;
+                 _y = Mathf.Clamp (_y, -cameraSettings.limit, cameraSettings.limit);
+                 transform.localEulerAngles = new Vector3(-_y, _x, 0);
+             }
+             
              transform.position = transform.localRotation * cameraSettings.offset + Player.PlayerCharacter.transform.position;
          }
-    
-         public void SetTarget(GameCharacterState state)
+         
+         private void SetRtsMovementValues()
          {
-             if (_cameraPathFollower.MoveType != PathFollower.MovementType.None)
+             _playMode = PlayMode.Rts;
+         }
+
+         private void SetRtsMovement()
+         {
+             MoveCameraAroundHero(true,2);
+         }
+
+         private void SetCinematicMovement()
+         {
+             _playMode = PlayMode.Cinematic;
+             if (Game.Stage == Game.GameStage.MainMenu)
              {
-                 _defaultTargetChanging = false;
-                 if (!Equals(trackingTarget, state.transform))
-                 {
-                     trackingTarget = state.transform;
-                 }
+                 SetMainMenuMovement();
+             }
+             else if (Game.Stage == Game.GameStage.Battle || Game.Stage == Game.GameStage.BetweenBattles)
+             {
+                 SetBattleCinematicMovement();
              }
          }
-    
-         public void SetDefaultTargetChanging()
-         {
-             _defaultTargetChanging = true;
-         }
-         
-         private void ChangeTargetIfNeed(RoundStatistics killer)
-         {
-             // if (trackingTarget.TryGetComponent(out GameCharacterState state))
-             // {
-             //     if (state.IsDead)
-             //         StartCoroutine(FindTargets());
-             // }
-         }
-         
-         private GameCharacterState[] GetTargets()
-         {
-             return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
-         }
-    
-         // private IEnumerator FindTargets()
-         // {
-         //     var target = GetTargets();
-         //
-         //     if (target.Length == 0 || PlayerController.PlayMode != PlayMode.Cinematic)
-         //     {
-         //         yield return new WaitForSeconds(1);
-         //         trackingTarget = null;
-         //         StartCoroutine(FindTargets());
-         //     }
-         //
-         //     if (target.Length > 0)
-         //     {
-         //         if (_defaultTargetChanging)
-         //         {
-         //             var randomTarget = target[Random.Range(0, target.Length)];
-         //             trackingTarget = randomTarget.transform;
-         //             
-         //             yield return new WaitForSeconds(5);
-         //             StartCoroutine(FindTargets());
-         //         }
-         //         else if (!_defaultTargetChanging)
-         //         {
-         //             yield return new WaitForSeconds(1);
-         //             StartCoroutine(FindTargets());
-         //         }
-         //     }
-         // }
-         
+
          private void SetMainMenuMovement()
          {
              _cameraPathFollower.MovePath = movementPathMainMenu;
@@ -178,24 +152,32 @@ namespace Controller
              _cameraPathFollower.MaxDistance = 0.1f;
              trackingTarget = mainMenuTrackingTarget;
          }
-    
-         private void SetBattleMovement()
+
+         private void SetBattleCinematicMovement()
          {
-             if (PlayerController.PlayMode == PlayMode.Cinematic)
+             _cameraPathFollower.MovePath = movementPathBattle;
+             _cameraPathFollower.MoveType = PathFollower.MovementType.Moving;
+             _cameraPathFollower.Speed = 1f;
+             _cameraPathFollower.MaxDistance = 0.005f;
+             trackingTarget = battleTrackingTarget;
+         }
+
+         public void SetTarget(GameCharacterState state)
+         {
+             if (_cameraPathFollower.MoveType != PathFollower.MovementType.None)
              {
-                 _cameraPathFollower.MovePath = movementPathBattle;
-                 _cameraPathFollower.MoveType = PathFollower.MovementType.Moving;
-                 _cameraPathFollower.Speed = 1f;
-                 _cameraPathFollower.MaxDistance = 0.005f;
-                 trackingTarget = battleTrackingTarget;
-                 _defaultTargetChanging = true;
-             }
-             else if (PlayerController.PlayMode == PlayMode.Standard)
-             {
-                 SetRotateAroundValues();
+                 if (!Equals(trackingTarget, state.transform))
+                 {
+                     trackingTarget = state.transform;
+                 }
              }
          }
-    
+         
+         private GameCharacterState[] GetTargets()
+         {
+             return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
+         }
+
          private void TurnSmoothlyToTarget(Transform target, float speed)
          {
              if (target)
