@@ -19,15 +19,15 @@ namespace Controller
     {
         [SerializeField] private HeroControllerPanel standardPanel;
         [SerializeField] private GolemStatsPanel rtsPanel;
-        [SerializeField] private GameObject autoButton;
+        [SerializeField] private GameObject autoButtonFalse;
+        [SerializeField] private GameObject autoButtonTrue;
         
         [SerializeField] private float gravity = -9.81f;
         [SerializeField] private float groundDistance = 0.05f;
         [SerializeField] private LayerMask groundMask;
 
-        private static bool AIControl { get; set; }
-        
-        private static PlayMode _playMode = PlayMode.Cinematic;
+        private bool _aiControl = true;
+        private PlayMode _playMode = PlayMode.Cinematic;
         private GameCharacterState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
@@ -38,12 +38,13 @@ namespace Controller
         private bool _isCanMove;
         private bool _isDead;
         private float _moveSpeed;
-
-        private void Awake()
-        {
-            AIControl = true;
-        }
-
+        
+        public static event Action<bool> AllowAI;
+        public static event Action AttackByController;
+        public static event Action<GameCharacterState> SetTargetByController;
+        public static event Action<Vector3> SetMovementPointByController;
+        public static event Action<PlayMode> PlayModeChanged;
+        
         private void OnEnable()
         {
             Game.StartBattle += SetStandard;
@@ -65,14 +66,28 @@ namespace Controller
         private void SetStandard()
         {
             _playMode = PlayMode.Standard;
+            PlayModeChanged?.Invoke(PlayMode.Standard);
             SetStandardPanel();
-            autoButton.SetActive(true);
-            _state = Player.PlayerCharacter;
-            _animator = _state.GetComponent<Animator>();
-            _agent = _state.GetComponent<NavMeshAgent>();
-            _controller = _state.GetComponent<CharacterController>();
+            autoButtonFalse.SetActive(false);
+            autoButtonTrue.SetActive(true);
+            _aiControl = true;
+            AllowAI?.Invoke(true);
+            SetComponents();
+            SetNavMeshOrController();
             _isDead = false;
             OnStandardCamera();
+        }
+
+        private void SetComponents()
+        {
+            if(!_state)
+                _state = Player.PlayerCharacter;
+            if (!_animator)
+                _animator = _state.GetComponent<Animator>();
+            if (!_agent)
+                _agent = _state.GetComponent<NavMeshAgent>();
+            if (!_controller)
+                _controller = _state.GetComponent<CharacterController>();
         }
         
         #region AnimationEvents
@@ -114,7 +129,7 @@ namespace Controller
                 case PlayMode.Rts:
                     if (Input.GetMouseButtonDown(1))
                     {
-                        TryAimCharacter();
+                        TrySetCharacterAsTargetOrMove();
                     }
                     break;
                 case PlayMode.Cinematic:
@@ -139,9 +154,9 @@ namespace Controller
             }
         }
 
-        private void TryAimCharacter()
+        private void TrySetCharacterAsTargetOrMove()
         {
-            if (!AIControl && !_isDead)
+            if (!_aiControl && !_isDead)
             {
                 if (Camera.main is null) return;
                 var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
@@ -181,23 +196,36 @@ namespace Controller
                 rtsPanel.gameObject.SetActive(false);
             }
         }
-
-        public static event Action<bool> AllowAI;
-        public static event Action AttackByController;
-        public static event Action<GameCharacterState> SetTargetByController;
-        public static event Action<Vector3> SetMovementPointByController;
         
-        public void AutoButtonClicked()
+        public void AutoButtonTrueClicked()
         {
-            AIControl = !AIControl;
-            AllowAI?.Invoke(AIControl);
+            _aiControl = false;
+            if (_playMode == PlayMode.Standard)
+            {
+                SetNavMeshOrController();
+            }
+            AllowAI?.Invoke(false);
+            
+            autoButtonFalse.SetActive(true);
+            autoButtonTrue.SetActive(false);
+        }
+        
+        public void AutoButtonFalseClicked()
+        {
+            _aiControl = true;
+            if (_playMode == PlayMode.Standard)
+            {
+                SetNavMeshOrController();
+            }
+            AllowAI?.Invoke(true);
 
-            SetNavMeshOrController();
+            autoButtonTrue.SetActive(true);
+            autoButtonFalse.SetActive(false);
         }
 
         private void SetNavMeshOrController()
         {
-            if (AIControl)
+            if (_aiControl)
             {
                 _agent.enabled = true;
                 _controller.enabled = false;
@@ -224,7 +252,7 @@ namespace Controller
 
             bool CanMove()
             {
-                return !AIControl && _isCanMove && !_isDead && _playMode == PlayMode.Standard;
+                return !_aiControl && _isCanMove && !_isDead && _playMode == PlayMode.Standard && _controller.enabled;
             }
         }
 
@@ -331,21 +359,59 @@ namespace Controller
             {
                 case "Standard":
                     _playMode = PlayMode.Standard;
-                    autoButton.SetActive(true);
+                    if (_aiControl)
+                    {
+                        autoButtonFalse.SetActive(false);
+                        autoButtonTrue.SetActive(true);
+                        
+                        _agent.enabled = true;
+                        _controller.enabled = false;
+                        _isCanMove = false;
+                    }
+                    else
+                    {
+                        autoButtonFalse.SetActive(true);
+                        autoButtonTrue.SetActive(false);
+                        
+                        _agent.enabled = false;
+                        _controller.enabled = true;
+                        _isCanMove = true;
+                    }
                     SetStandardPanel();
                     OnStandardCamera();
+                    PlayModeChanged?.Invoke(PlayMode.Standard);
                     break;
                 case "Rts":
                     _playMode = PlayMode.Rts;
-                    autoButton.SetActive(true);
+                    if (_aiControl)
+                    {
+                        autoButtonFalse.SetActive(false);
+                        autoButtonTrue.SetActive(true);
+                    }
+                    else
+                    {
+                        autoButtonFalse.SetActive(true);
+                        autoButtonTrue.SetActive(false);
+                    }
                     SetRtsPanel();
                     OnRtsCamera();
+                    PlayModeChanged?.Invoke(PlayMode.Rts);
+                    _agent.enabled = true;
+                    _controller.enabled = false;
+                    _isCanMove = false;
                     break;
                 case "Cinematic":
                     _playMode = PlayMode.Cinematic;
-                    autoButton.SetActive(false);
+                    autoButtonFalse.SetActive(false);
+                    autoButtonTrue.SetActive(false);
                     SetRtsPanel();
                     OnCinematicCamera();
+                    PlayModeChanged?.Invoke(PlayMode.Cinematic);
+                    _agent.enabled = true;
+                    _controller.enabled = false;
+                    _isCanMove = false;
+                    _aiControl = true;
+                    AllowAI?.Invoke(_aiControl);
                     break;
             }
         }

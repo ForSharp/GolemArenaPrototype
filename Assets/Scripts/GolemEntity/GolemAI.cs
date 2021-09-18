@@ -7,6 +7,7 @@ using Fight;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.AI;
+using PlayMode = Controller.PlayMode;
 using Random = UnityEngine.Random;
 
 namespace GolemEntity
@@ -34,6 +35,7 @@ namespace GolemEntity
         private float _timeToResetAttack;
         private SoundsController _soundsController;
         private Vector3 _targetPoint;
+        private PlayMode _playMode = PlayMode.Cinematic;
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
@@ -88,6 +90,7 @@ namespace GolemEntity
                 PlayerController.AttackByController += AttackTarget;
                 PlayerController.SetMovementPointByController += RunToTargetByController;
                 PlayerController.SetTargetByController += SetTarget;
+                PlayerController.PlayModeChanged += ChangeMode;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
@@ -106,11 +109,17 @@ namespace GolemEntity
                 PlayerController.AttackByController -= AttackTarget;
                 PlayerController.SetMovementPointByController -= RunToTargetByController;
                 PlayerController.SetTargetByController -= SetTarget;
+                PlayerController.PlayModeChanged -= ChangeMode;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
                 PlayerController.AllowAI -= CheckHumanAllowAI;
             }
+        }
+
+        private void ChangeMode(PlayMode mode)
+        {
+            _playMode = mode;
         }
 
         private void CheckHumanAllowAI(bool isAllow)
@@ -210,7 +219,8 @@ namespace GolemEntity
             {
                 _navMeshAgent.enabled = true;
             }
-            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed)
+            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed ||
+                     _thisState == Player.PlayerCharacter && _playMode != PlayMode.Standard && _isAIControlAllowed)
             {
                 _navMeshAgent.enabled = true;
             }
@@ -227,7 +237,8 @@ namespace GolemEntity
             {
                 _navMeshAgent.enabled = true;
             }
-            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed)
+            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed ||
+                     _thisState == Player.PlayerCharacter && _playMode != PlayMode.Standard && _isAIControlAllowed)
             {
                 _navMeshAgent.enabled = true;
             }
@@ -323,8 +334,7 @@ namespace GolemEntity
             _isIKAllowed = true;
             if (!_inAttack)
                 TurnSmoothlyToTarget();
-            
-            _isAIControlAllowed = true;
+
         }
 
         private float GetDelayBetweenHits()

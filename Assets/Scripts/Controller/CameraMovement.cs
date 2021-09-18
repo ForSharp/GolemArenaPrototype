@@ -13,8 +13,9 @@ namespace Controller
          [SerializeField] private Transform mainMenuTrackingTarget;
          [SerializeField] private Transform battleTrackingTarget;
          [SerializeField] private Transform trackingTarget;
-         [SerializeField] private CameraSettings cameraSettings = new CameraSettings();
-    
+         [SerializeField] private CameraMoveAroundSettings cameraMoveAroundSettings = new CameraMoveAroundSettings();
+         [SerializeField] private CameraRtsSettings cameraRtsSettings = new CameraRtsSettings();
+         
          private PathFollower _cameraPathFollower;
          private float _x, _y;
          private PlayMode _playMode = PlayMode.Cinematic;
@@ -83,12 +84,12 @@ namespace Controller
              _playMode = PlayMode.Standard;
              _cameraPathFollower.MoveType = PathFollower.MovementType.None;
              
-             cameraSettings.limit = Mathf.Abs(cameraSettings.limit);
-             if(cameraSettings.limit > 90) cameraSettings.limit = 90;
-             cameraSettings.offset = new Vector3(cameraSettings.offset.x, cameraSettings.offset.y, -Mathf.Abs(cameraSettings.zoomMax)/2);
+             cameraMoveAroundSettings.limit = Mathf.Abs(cameraMoveAroundSettings.limit);
+             if(cameraMoveAroundSettings.limit > 90) cameraMoveAroundSettings.limit = 90;
+             cameraMoveAroundSettings.offset = new Vector3(cameraMoveAroundSettings.offset.x, cameraMoveAroundSettings.offset.y, -Mathf.Abs(cameraMoveAroundSettings.zoomMax)/2);
              trackingTarget = Player.PlayerCharacter.transform;
     
-             transform.position = Vector3.MoveTowards(transform.position, trackingTarget.position + cameraSettings.offset,
+             transform.position = Vector3.MoveTowards(transform.position, trackingTarget.position + cameraMoveAroundSettings.offset,
                  Time.deltaTime * 100);
          }
          
@@ -101,24 +102,24 @@ namespace Controller
          {
              if (Input.GetAxis("Mouse ScrollWheel") > 0)
              {
-                 cameraSettings.offset.z += cameraSettings.zoom;
+                 cameraMoveAroundSettings.offset.z += cameraMoveAroundSettings.zoom;
              }
              else if (Input.GetAxis("Mouse ScrollWheel") < 0)
              {
-                 cameraSettings.offset.z -= cameraSettings.zoom;
+                 cameraMoveAroundSettings.offset.z -= cameraMoveAroundSettings.zoom;
              }
              
-             cameraSettings.offset.z = Mathf.Clamp(cameraSettings.offset.z * multiplier, -Mathf.Abs(cameraSettings.zoomMax), -Mathf.Abs(cameraSettings.zoomMin));
+             cameraMoveAroundSettings.offset.z = Mathf.Clamp(cameraMoveAroundSettings.offset.z * multiplier, -Mathf.Abs(cameraMoveAroundSettings.zoomMax), -Mathf.Abs(cameraMoveAroundSettings.zoomMin));
 
              if (!rts)
              {
-                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraSettings.sensitivity;
-                 _y += Input.GetAxis("Mouse Y") * cameraSettings.sensitivity;
-                 _y = Mathf.Clamp (_y, -cameraSettings.limit, cameraSettings.limit);
+                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
+                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
+                 _y = Mathf.Clamp (_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
                  transform.localEulerAngles = new Vector3(-_y, _x, 0);
              }
              
-             transform.position = transform.localRotation * cameraSettings.offset + Player.PlayerCharacter.transform.position;
+             transform.position = transform.localRotation * cameraMoveAroundSettings.offset + Player.PlayerCharacter.transform.position;
          }
          
          private void SetRtsMovementValues()
@@ -128,7 +129,40 @@ namespace Controller
 
          private void SetRtsMovement()
          {
-             MoveCameraAroundHero(true,2);
+             //MoveCameraAroundHero(true,2);
+             
+             Vector3 pos = transform.position;
+            
+             if (Input.mousePosition.y >= Screen.height - cameraRtsSettings.borderThickness)
+             {
+                 pos.z += cameraRtsSettings.moveSpeed * Time.deltaTime;
+             }
+
+             if (Input.mousePosition.y <= cameraRtsSettings.borderThickness)
+             {
+                 pos.z -= cameraRtsSettings.moveSpeed * Time.deltaTime;
+             }
+            
+             if (Input.mousePosition.x >= Screen.width - cameraRtsSettings.borderThickness)
+             {
+                 pos.x += cameraRtsSettings.moveSpeed * Time.deltaTime;
+             }
+            
+             if (Input.mousePosition.x <= cameraRtsSettings.borderThickness)
+             {
+                 pos.x -= cameraRtsSettings.moveSpeed * Time.deltaTime;
+             }
+
+             float scroll = Input.GetAxis("Mouse ScrollWheel");
+             pos.y -= scroll * cameraRtsSettings.scrollSpeed * Time.deltaTime;
+            
+             pos.x = Mathf.Clamp(pos.x, cameraRtsSettings.limitX.x, cameraRtsSettings.limitX.y);
+             pos.y = Mathf.Clamp(pos.y, cameraRtsSettings.limitY.x, cameraRtsSettings.limitY.y);
+             pos.z = Mathf.Clamp(pos.z, cameraRtsSettings.limitZ.x, cameraRtsSettings.limitZ.y);
+            
+             transform.position = pos;
+             
+             transform.LookAt(Player.PlayerCharacter.transform);
          }
 
          private void SetCinematicMovement()
