@@ -1,7 +1,7 @@
-﻿using UI;
+﻿using GameLoop;
 using UnityEngine;
 
-namespace GameLoop
+namespace UI
 {
     public class ChoiceHeroPanel : MonoBehaviour
     {

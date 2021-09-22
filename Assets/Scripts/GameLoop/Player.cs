@@ -1,5 +1,4 @@
 ﻿using Fight;
-using GolemEntity;
 
 namespace GameLoop
 {

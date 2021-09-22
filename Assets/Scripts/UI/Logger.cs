@@ -11,7 +11,7 @@ namespace UI
         [SerializeField] private GameObject[] loggerTexts;
         private readonly string[] _textsPool = new string[7];
 
-        private static int _activeTexts = 0;
+        private static int _activeTexts;
         
         private void Start()
         {

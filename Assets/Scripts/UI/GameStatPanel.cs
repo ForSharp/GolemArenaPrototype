@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
-using UserInterface;
 
 namespace UI
 {
@@ -14,9 +12,9 @@ namespace UI
         [SerializeField] private Transform content;
 
         private CanvasGroup _canvasGroup;
-        private bool _isVisible = false;
+        private bool _isVisible;
         private readonly List<GameObject> _gameStatTemplates = new List<GameObject>();
-        private bool _isEndGame = false;
+        private bool _isEndGame;
 
         private void Start()
         {

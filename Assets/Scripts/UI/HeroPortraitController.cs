@@ -1,5 +1,5 @@
-﻿using GameLoop;
-using GolemEntity;
+﻿using GolemEntity;
+using Optimization;
 using UnityEngine;
 using UnityEngine.UI;
 

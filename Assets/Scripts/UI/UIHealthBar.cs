@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Globalization;
 using Fight;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Fight;
+﻿using Fight;
 using GolemEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,9 +13,9 @@ namespace GameLoop
         [SerializeField] private Color[] groupColors;
 
         public static Spawner Instance { get; private set; }
-        private static int _group = 0;
+        private static int _group;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
         }
@@ -34,7 +32,6 @@ namespace GameLoop
             {
                 Player.SetPlayerCharacter(state);
             }
-                
         }
 
         private Vector3 GetRandomSpawnPoint()

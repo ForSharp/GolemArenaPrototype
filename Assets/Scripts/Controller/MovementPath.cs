@@ -15,7 +15,7 @@ namespace Controller
         [SerializeField] private PathTypes pathType;
         [SerializeField] private Transform[] pathElements;
         private int _movementDirection = 1;
-        private int _targetPoint = 0;
+        private int _targetPoint;
 
         public void OnDrawGizmos()
         {

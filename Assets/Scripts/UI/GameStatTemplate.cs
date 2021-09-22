@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace UI
 {
     public class GameStatTemplate : MonoBehaviour
     {

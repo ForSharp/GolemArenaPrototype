@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
+using GameLoop;
 using GolemEntity;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace GameLoop
+namespace UI
 {
     public class FeaturesInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
