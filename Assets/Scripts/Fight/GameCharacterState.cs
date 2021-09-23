@@ -16,6 +16,10 @@ namespace Fight
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
+        public float MaxStamina { get; private set; }
+        public float CurrentStamina { get; private set; }
+        public float MaxMana { get; private set; }
+        public float CurrentMana { get; private set; }
         public int Group { get; private set; } 
         public Color ColorGroup { get; private set; } 
         public int Lvl { get; set; }
@@ -75,7 +79,11 @@ namespace Fight
             BaseStats = Golem.GetBaseStats();
             Stats = Golem.GetExtraStats();
             SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
+            SetProportionallyCurrentStamina(Golem.GetExtraStats().Stamina);
+            SetProportionallyCurrentMana(Golem.GetExtraStats().ManaPool);
             MaxHealth = Stats.Health;
+            MaxStamina = Stats.Stamina;
+            MaxMana = Stats.ManaPool;
         }
 
         private void SetProportionallyCurrentHealth(float newMaxHealth)
@@ -85,6 +93,26 @@ namespace Fight
             if (CurrentHealth > newMaxHealth)
             {
                 CurrentHealth = newMaxHealth;
+            }
+        }
+        
+        private void SetProportionallyCurrentStamina(float newMaxStamina)
+        {
+            var difference = MaxStamina - newMaxStamina;
+            CurrentStamina -= difference;
+            if (CurrentStamina > newMaxStamina)
+            {
+                CurrentStamina = newMaxStamina;
+            }
+        }
+        
+        private void SetProportionallyCurrentMana(float newMaxMana)
+        {
+            var difference = MaxMana - newMaxMana;
+            CurrentMana -= difference;
+            if (CurrentMana > newMaxMana)
+            {
+                CurrentMana = newMaxMana;
             }
         }
     
@@ -109,6 +137,10 @@ namespace Fight
             BaseStats = Golem.GetBaseStats();
             MaxHealth = Stats.Health;
             CurrentHealth = MaxHealth;
+            MaxStamina = Stats.Stamina;
+            CurrentStamina = MaxStamina;
+            MaxMana = Stats.ManaPool;
+            CurrentMana = MaxMana;
         
             CreateHealthBar();
             _isReady = true;
@@ -134,7 +166,7 @@ namespace Fight
         {
             IsDead = false;
             UpgradeSystem.LvlUp(this, 7);
-            Heal();
+            HealAllParameters();
             ShowHealthBar();
             NullRoundStatistics();
         }
@@ -145,9 +177,11 @@ namespace Fight
             RoundStatistics.RoundKills = 0;
         }
         
-        private void Heal()
+        private void HealAllParameters()
         {
             CurrentHealth = MaxHealth;
+            CurrentStamina = MaxStamina;
+            CurrentMana = MaxMana;
         }
 
         private void ShowHealthBar()

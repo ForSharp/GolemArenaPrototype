@@ -13,19 +13,30 @@ namespace UI
         [SerializeField] private GameObject fill;
         [SerializeField] private Text maxHealthText;
         [SerializeField] private Text currentHealthText;
+        [SerializeField] private Text maxStaminaText;
+        [SerializeField] private Text currentStaminaText;
+        [SerializeField] private Text maxManaText;
+        [SerializeField] private Text currentManaText;
         [SerializeField] private Text attack;
-        private Slider _slider;
+        [SerializeField] private Slider sliderHealth;
+        [SerializeField] private Slider sliderStamina;
+        [SerializeField] private Slider sliderMana;
         private const int TimeToDestroy = 1;
         private Camera _mainCamera;
 
         private void Start()
         {
-            _slider = GetComponent<Slider>();
             transform.SetParent(GameObject.Find("Canvas").transform);
             if (characterState)
             {
-                _slider.maxValue = (int)characterState.MaxHealth;
-                maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
+                sliderHealth.maxValue = (int)characterState.MaxHealth;
+                maxHealthText.text = sliderHealth.maxValue.ToString(CultureInfo.InvariantCulture);
+                
+                sliderStamina.maxValue = (int)characterState.MaxStamina;
+                maxStaminaText.text = sliderStamina.maxValue.ToString(CultureInfo.InvariantCulture);
+                
+                sliderMana.maxValue = (int)characterState.MaxMana;
+                maxManaText.text = sliderMana.maxValue.ToString(CultureInfo.InvariantCulture);
             }
 
             _mainCamera = Camera.main;
@@ -56,8 +67,14 @@ namespace UI
 
         private void UpdateSliderValue()
         {
-            _slider.value = (int)characterState.CurrentHealth;
-            currentHealthText.text = _slider.value.ToString(CultureInfo.InvariantCulture);
+            sliderHealth.value = (int)characterState.CurrentHealth;
+            currentHealthText.text = sliderHealth.value.ToString(CultureInfo.InvariantCulture);
+            
+            sliderStamina.value = (int)characterState.CurrentStamina;
+            currentStaminaText.text = sliderStamina.value.ToString(CultureInfo.InvariantCulture);
+                
+            sliderMana.value = (int)characterState.CurrentMana;
+            currentManaText.text = sliderMana.value.ToString(CultureInfo.InvariantCulture);
         }
 
         private void DestroyOnDeath()
@@ -79,8 +96,14 @@ namespace UI
 
         public void ChangeMaxValue()
         {
-            _slider.maxValue = (int)characterState.MaxHealth;
-            maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
+            sliderHealth.maxValue = (int)characterState.MaxHealth;
+            maxHealthText.text = sliderHealth.maxValue.ToString(CultureInfo.InvariantCulture);
+            
+            sliderStamina.maxValue = (int)characterState.MaxStamina;
+            maxStaminaText.text = sliderStamina.maxValue.ToString(CultureInfo.InvariantCulture);
+                
+            sliderMana.maxValue = (int)characterState.MaxMana;
+            maxManaText.text = sliderMana.maxValue.ToString(CultureInfo.InvariantCulture);
             
             UpdateSliderValue();
         }
@@ -92,10 +115,22 @@ namespace UI
 
         private void UpdateMaxValue()
         {
-            if (Math.Abs(characterState.MaxHealth - _slider.maxValue) > 1)
+            if (Math.Abs(characterState.MaxHealth - sliderHealth.maxValue) > 1)
             {
-                _slider.maxValue = (int)characterState.MaxHealth;
-                maxHealthText.text = _slider.maxValue.ToString(CultureInfo.InvariantCulture);
+                sliderHealth.maxValue = (int)characterState.MaxHealth;
+                maxHealthText.text = sliderHealth.maxValue.ToString(CultureInfo.InvariantCulture);
+            }
+            
+            if (Math.Abs(characterState.MaxStamina - sliderStamina.maxValue) > 1)
+            {
+                sliderStamina.maxValue = (int)characterState.MaxStamina;
+                maxStaminaText.text = sliderStamina.maxValue.ToString(CultureInfo.InvariantCulture);
+            }
+            
+            if (Math.Abs(characterState.MaxMana - sliderMana.maxValue) > 1)
+            {
+                sliderMana.maxValue = (int)characterState.MaxMana;
+                maxManaText.text = sliderMana.maxValue.ToString(CultureInfo.InvariantCulture);
             }
         }
     }
