@@ -35,10 +35,14 @@ namespace Fight
         private RoundStatistics _lastEnemyAttacked;
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
         public event EventHandler AttackReceived;
-
-        public void OnAttackReceived(AttackHitEventArgs args)
+        public event Action<float> CurrentHealthChanged;
+        public event Action<float> CurrentStaminaChanged;
+        public event Action<float> CurrentManaChanged;
+        public event Action<GolemExtraStats> StatsChanged;
+        
+        public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
-            AttackReceived?.Invoke(this, args);
+            AttackReceived?.Invoke(sender, args);
         }
         
         private void Start()
@@ -84,6 +88,7 @@ namespace Fight
             MaxHealth = Stats.Health;
             MaxStamina = Stats.Stamina;
             MaxMana = Stats.ManaPool;
+            OnStatsChanged(Stats);
         }
 
         private void SetProportionallyCurrentHealth(float newMaxHealth)
@@ -93,6 +98,7 @@ namespace Fight
             if (CurrentHealth > newMaxHealth)
             {
                 CurrentHealth = newMaxHealth;
+                OnCurrentHealthChanged(CurrentHealth);
             }
         }
         
@@ -103,6 +109,7 @@ namespace Fight
             if (CurrentStamina > newMaxStamina)
             {
                 CurrentStamina = newMaxStamina;
+                OnCurrentStaminaChanged(CurrentStamina);
             }
         }
         
@@ -113,6 +120,7 @@ namespace Fight
             if (CurrentMana > newMaxMana)
             {
                 CurrentMana = newMaxMana;
+                OnCurrentManaChanged(CurrentMana);
             }
         }
     
@@ -150,7 +158,7 @@ namespace Fight
         {
             if (!isDynamicHealthBarCreate) return;
             _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            _healthBar.GetComponent<UIHealthBar>().characterState = this;
+            _healthBar.GetComponent<UIHealthBar>().SetCharacterState(this);
         }
 
         public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)
@@ -160,6 +168,7 @@ namespace Fight
             statistics.Damage += damage;
             statistics.RoundDamage += damage;
             _lastEnemyAttacked = statistics;
+            OnCurrentHealthChanged(CurrentHealth);
         }
 
         public void PrepareAfterNewRound()
@@ -182,19 +191,40 @@ namespace Fight
             CurrentHealth = MaxHealth;
             CurrentStamina = MaxStamina;
             CurrentMana = MaxMana;
+            
+            OnCurrentHealthChanged(CurrentHealth);
+            OnCurrentStaminaChanged(CurrentStamina);
+            OnCurrentManaChanged(CurrentMana);
         }
 
         private void ShowHealthBar()
         {
             _healthBar.gameObject.SetActive(true);
-            var uiHealth = _healthBar.GetComponent<UIHealthBar>();
-            uiHealth.ChangeMaxValue();
-            uiHealth.ShowFill();
         }
         
         public void SpendStamina(float energy)
         {
         
+        }
+
+        private void OnCurrentHealthChanged(float health)
+        {
+            CurrentHealthChanged?.Invoke(health);
+        }
+
+        private void OnCurrentStaminaChanged(float stamina)
+        {
+            CurrentStaminaChanged?.Invoke(stamina);
+        }
+
+        private void OnCurrentManaChanged(float mana)
+        {
+            CurrentManaChanged?.Invoke(mana);
+        }
+
+        private void OnStatsChanged(GolemExtraStats stats)
+        {
+            StatsChanged?.Invoke(stats);
         }
     }
 }

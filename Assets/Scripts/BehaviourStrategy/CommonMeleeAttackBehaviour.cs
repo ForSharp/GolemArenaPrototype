@@ -30,9 +30,7 @@ namespace BehaviourStrategy
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
             int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target,
-            string nameCharacter,
-            RoundStatistics statistics = default,
-            params Action<Animator>[] hitAnimationSetters)
+            string nameCharacter, RoundStatistics statistics = default, params Action<Animator>[] hitAnimationSetters)
         {
             _hitHeight = hitHeight;
             _attackRange = attackRange;
@@ -80,7 +78,6 @@ namespace BehaviourStrategy
         
         #endregion
         
-
         public void Attack()
         {
             if (!_isReady)
@@ -141,7 +138,7 @@ namespace BehaviourStrategy
             {
                 if (state.Group != _group)
                 {
-                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics,
+                    state.OnAttackReceived(this, new AttackHitEventArgs(_damage, _hitAccuracy, _statistics,
                         transform.rotation.y, _name));
                     return true;
                 }

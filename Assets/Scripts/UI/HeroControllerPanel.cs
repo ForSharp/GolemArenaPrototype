@@ -12,6 +12,7 @@ namespace UI
         [SerializeField] private Text heroType;
         [SerializeField] private Text heroSpec;
         [SerializeField] private Text heroLvl;
+        [SerializeField] private UIHealthBar healthBar;
         
         private GameCharacterState _state;
 
@@ -34,6 +35,8 @@ namespace UI
             heroType.text = _state.Type;
             heroSpec.text = _state.Spec;
             heroLvl.text = _state.Lvl.ToString();
+            
+            healthBar.SetCharacterState(_state);
         }
 
         private void UpdateLvl(GameCharacterState state)

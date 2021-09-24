@@ -19,6 +19,7 @@ namespace UI
         [SerializeField] private Text[] extraStatsUI;
         [SerializeField] private GameObject openedPanel;
         [SerializeField] private GameObject closedPanel;
+        [SerializeField] private UIHealthBar healthBar;
 
         [HideInInspector] public bool inPanel;
 
@@ -68,6 +69,8 @@ namespace UI
             panel.SetActive(true);
             CameraMovement.Instance.SetTarget(state);
             _state.SoundsController.PlayClickAndVictorySound();
+            
+            healthBar.SetCharacterState(state);
         }
 
         private void UpdateStats()
