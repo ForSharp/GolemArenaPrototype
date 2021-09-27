@@ -7,9 +7,9 @@ namespace GameLoop
     {
         public static event EventHandler FightEvent;
         
-        public static void OnFightEvent(FightEventArgs args)
+        public static void OnFightEvent(object sender, FightEventArgs args)
         {
-            FightEvent?.Invoke(null, args);
+            FightEvent?.Invoke(sender, args);
         }
         
         public static event Action PlayerCharacterCreated;

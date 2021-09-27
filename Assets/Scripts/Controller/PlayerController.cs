@@ -355,6 +355,9 @@ namespace Controller
 
         public void SwitchMode(string mode)
         {
+            if (Game.Stage == Game.GameStage.MainMenu)
+                return;
+            
             switch (mode)
             {
                 case "Standard":

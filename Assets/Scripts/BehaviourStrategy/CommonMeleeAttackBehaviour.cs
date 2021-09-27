@@ -3,7 +3,6 @@ using System.Linq;
 using Fight;
 using GameLoop;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 namespace BehaviourStrategy
@@ -13,18 +12,21 @@ namespace BehaviourStrategy
         private float _hitHeight;
         private float _attackRange;
         private float _destructionRadius;
-        private Action<Animator>[] _hitAnimationSetters;
-        private Animator _animator;
-        private int _group;
         private float _timer;
         private float _timeToResetJump;
         private float _timeToEndAttack;
-        private RoundStatistics _statistics;
         private float _damage;
         private float _delayBetweenHits;
         private float _hitAccuracy;
-        private GameObject _target;
+
+        private int _group;
         private string _name;
+
+        private RoundStatistics _statistics;
+        private GameObject _target;
+        private Action<Animator>[] _hitAnimationSetters;
+        private Animator _animator;
+        
         private bool _isReady;
         private bool _isLastHitEnd = true;
 
@@ -82,7 +84,7 @@ namespace BehaviourStrategy
         {
             if (!_isReady)
             {
-                Debug.Log("Before using Attack You must init fields by CustomConstructor");
+                Debug.LogError("Before using Attack You must initialize the fields with CustomConstructor");
                 return;
             }
 

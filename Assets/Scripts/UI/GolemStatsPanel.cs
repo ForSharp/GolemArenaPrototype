@@ -61,6 +61,9 @@ namespace UI
 
         public void HandleClick(GameCharacterState state)
         {
+            if (Game.Stage == Game.GameStage.MainMenu)
+                return;
+                
             _state = state;
             _stats = _state.Stats;
             FillMainInfo();
@@ -116,16 +119,16 @@ namespace UI
             mainInfo[0].text = _state.Type;
             mainInfo[1].text = _state.Spec;
             mainInfo[2].text = _state.Lvl.ToString();
-            mainInfo[3].text = _state.BaseStats.Strength.ToString(CultureInfo.InvariantCulture);
-            mainInfo[4].text = _state.BaseStats.Agility.ToString(CultureInfo.InvariantCulture);
-            mainInfo[5].text = _state.BaseStats.Intelligence.ToString(CultureInfo.InvariantCulture);
+            mainInfo[3].text = _state.BaseStats.Strength.ToString("#.00");
+            mainInfo[4].text = _state.BaseStats.Agility.ToString("#.00");
+            mainInfo[5].text = _state.BaseStats.Intelligence.ToString("#.00");
 
             mainInfoExtraPanel[0].text = _state.Type;
             mainInfoExtraPanel[1].text = _state.Spec;
             mainInfoExtraPanel[2].text = _state.Lvl.ToString();
-            mainInfoExtraPanel[3].text = _state.BaseStats.Strength.ToString(CultureInfo.InvariantCulture);
-            mainInfoExtraPanel[4].text = _state.BaseStats.Agility.ToString(CultureInfo.InvariantCulture);
-            mainInfoExtraPanel[5].text = _state.BaseStats.Intelligence.ToString(CultureInfo.InvariantCulture);
+            mainInfoExtraPanel[3].text = _state.BaseStats.Strength.ToString("#.00");
+            mainInfoExtraPanel[4].text = _state.BaseStats.Agility.ToString("#.00");
+            mainInfoExtraPanel[5].text = _state.BaseStats.Intelligence.ToString("#.00");
         }
 
         private void FillTexts()
@@ -134,7 +137,7 @@ namespace UI
 
             for (var i = 0; i < extraStatsUI.Length; i++)
             {
-                extraStatsUI[i].text = currentStats[i].ToString(CultureInfo.InvariantCulture);
+                extraStatsUI[i].text = currentStats[i].ToString("#.00");
             }
         }
 

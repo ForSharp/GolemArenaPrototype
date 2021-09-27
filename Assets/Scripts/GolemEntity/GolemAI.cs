@@ -15,7 +15,7 @@ namespace GolemEntity
     public class GolemAI : MonoBehaviour
     {
         private bool _isAIControlAllowed = true;
-        private bool _playerAI;
+        private bool _playerAI = true;
         private bool _isIKAllowed;
         private bool _isDies;
         private bool _inAttack;
@@ -462,7 +462,7 @@ namespace GolemEntity
             {
                 hitArgs.DamagePerHit *= 1.5f;
                 GetHit(hitArgs);
-                EventContainer.OnFightEvent(new FightEventArgs((AttackHitEventArgs)args, _thisState.Type, true));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs((AttackHitEventArgs)args, _thisState.Type, true));
                 return;
             }
 
@@ -481,13 +481,13 @@ namespace GolemEntity
             if (hitChance > random)
             {
                 GetHit(hitArgs);
-                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false));
             }
             else
             {
                 _isAvoidsHit = false;
                 _status = FightStatus.AvoidingHit;
-                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false, true));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Globalization;
+﻿using System;
+using System.Collections;
 using Fight;
 using GameLoop;
 using GolemEntity.ExtraStats;
@@ -17,16 +17,20 @@ namespace UI
         [SerializeField] private Text currentStaminaText;
         [SerializeField] private Text maxManaText;
         [SerializeField] private Text currentManaText;
-        [SerializeField] private Text attack;
         [SerializeField] private Slider sliderHealth;
         [SerializeField] private Slider sliderStamina;
         [SerializeField] private Slider sliderMana;
         [SerializeField] private bool inPanel;
-        
+        [SerializeField] private Text[] attack;
+        [SerializeField] private Animator[] animatorAttack;
+
+        private int _attackInfoQueueNumber = 0;
         private GameCharacterState _characterState;
         private const int TimeToDestroy = 1;
         private Camera _mainCamera;
         private bool _isDead;
+        private static readonly int HitReceived = Animator.StringToHash("HitReceived");
+        private static readonly int CriticalHitReceived = Animator.StringToHash("CriticalHitReceived");
 
         private void Start()
         {
@@ -64,20 +68,20 @@ namespace UI
 
         private void SetStartValues()
         {
-            sliderHealth.maxValue = (int)_characterState.MaxHealth;
-            maxHealthText.text = sliderHealth.maxValue.ToString(CultureInfo.InvariantCulture);
-            sliderHealth.value = (int)_characterState.CurrentHealth;
-            currentHealthText.text = sliderHealth.value.ToString(CultureInfo.InvariantCulture);
+            sliderHealth.maxValue = _characterState.MaxHealth;
+            maxHealthText.text = sliderHealth.maxValue.ToString("#.");
+            sliderHealth.value = _characterState.CurrentHealth;
+            currentHealthText.text = sliderHealth.value.ToString("#.");
                 
-            sliderStamina.maxValue = (int)_characterState.MaxStamina;
-            maxStaminaText.text = sliderStamina.maxValue.ToString(CultureInfo.InvariantCulture);
-            sliderStamina.value = (int)_characterState.CurrentStamina;
-            currentStaminaText.text = sliderStamina.value.ToString(CultureInfo.InvariantCulture);
+            sliderStamina.maxValue = _characterState.MaxStamina;
+            maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
+            sliderStamina.value = _characterState.CurrentStamina;
+            currentStaminaText.text = sliderStamina.value.ToString("#.");
                 
-            sliderMana.maxValue = (int)_characterState.MaxMana;
-            maxManaText.text = sliderMana.maxValue.ToString(CultureInfo.InvariantCulture);
-            sliderMana.value = (int)_characterState.CurrentMana;
-            currentManaText.text = sliderMana.value.ToString(CultureInfo.InvariantCulture);
+            sliderMana.maxValue = _characterState.MaxMana;
+            maxManaText.text = sliderMana.maxValue.ToString("#.");
+            sliderMana.value = _characterState.CurrentMana;
+            currentManaText.text = sliderMana.value.ToString("#.");
         }
 
         private void AddListeners()
@@ -87,6 +91,11 @@ namespace UI
             _characterState.CurrentStaminaChanged += SetCurrentStamina;
             _characterState.CurrentManaChanged += SetCurrentMana;
             EventContainer.GolemDied += DisableOnDeath;
+
+            if (!inPanel)
+            {
+                EventContainer.FightEvent += HandleFightEvent;
+            }
         }
 
         private void RemoveListeners()
@@ -96,38 +105,72 @@ namespace UI
             _characterState.CurrentStaminaChanged -= SetCurrentStamina;
             _characterState.CurrentManaChanged -= SetCurrentMana;
             EventContainer.GolemDied -= DisableOnDeath;
+            
+            if (!inPanel)
+            {
+                EventContainer.FightEvent -= HandleFightEvent;
+            }
         }
         
+        private void HandleFightEvent(object sender, EventArgs args)
+        {
+            if ((GameCharacterState)sender == _characterState)
+            {
+                var fightArgs = (FightEventArgs)args;
+                if (fightArgs.IsAvoiding)
+                {
+                    animatorAttack[_attackInfoQueueNumber].SetTrigger(HitReceived);
+                    attack[_attackInfoQueueNumber].text = "AVOID";
+                }
+                else if (fightArgs.IsAttackFromBehind)
+                {
+                    animatorAttack[_attackInfoQueueNumber].SetTrigger(CriticalHitReceived);
+                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}!";
+                }
+                else
+                {
+                    animatorAttack[_attackInfoQueueNumber].SetTrigger(HitReceived);
+                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}";
+                }
+
+                _attackInfoQueueNumber++;
+                if (_attackInfoQueueNumber >= 3)
+                {
+                    _attackInfoQueueNumber = 0;
+                }
+            }
+        }
+
         private void SetMaxValues(GolemExtraStats stats)
         {
-            sliderHealth.maxValue = (int)stats.Health;
-            maxHealthText.text = sliderHealth.maxValue.ToString(CultureInfo.InvariantCulture);
+            sliderHealth.maxValue = stats.Health;
+            maxHealthText.text = sliderHealth.maxValue.ToString("#.");
                 
-            sliderStamina.maxValue = (int)stats.Stamina;
-            maxStaminaText.text = sliderStamina.maxValue.ToString(CultureInfo.InvariantCulture);
+            sliderStamina.maxValue = stats.Stamina;
+            maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
                 
-            sliderMana.maxValue = (int)stats.ManaPool;
-            maxManaText.text = sliderMana.maxValue.ToString(CultureInfo.InvariantCulture);
+            sliderMana.maxValue = stats.ManaPool;
+            maxManaText.text = sliderMana.maxValue.ToString("#.");
         }
 
         private void SetCurrentHealth(float health)
         {
-            var roundedValue = (int)health;
-            currentHealthText.text = roundedValue.ToString(CultureInfo.InvariantCulture);
+            var roundedValue = health;
+            currentHealthText.text = roundedValue.ToString("#.");
             sliderHealth.value = roundedValue;
         }
         
         private void SetCurrentStamina(float stamina)
         {
-            var roundedValue = (int)stamina;
-            currentStaminaText.text = roundedValue.ToString(CultureInfo.InvariantCulture);
+            var roundedValue = stamina;
+            currentStaminaText.text = roundedValue.ToString("#.");
             sliderStamina.value = roundedValue;
         }
         
         private void SetCurrentMana(float mana)
         {
-            var roundedValue = (int)mana;
-            currentManaText.text = roundedValue.ToString(CultureInfo.InvariantCulture);
+            var roundedValue = mana;
+            currentManaText.text = roundedValue.ToString("#.");
             sliderMana.value = roundedValue;
         }
         
