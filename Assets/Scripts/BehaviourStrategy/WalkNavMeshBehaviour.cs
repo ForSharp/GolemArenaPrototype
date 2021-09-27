@@ -1,4 +1,5 @@
 ﻿using System;
+using BehaviourStrategy.Abstracts;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;

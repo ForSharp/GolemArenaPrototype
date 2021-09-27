@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using BehaviourStrategy;
+using BehaviourStrategy.Abstracts;
 using Controller;
 using Fight;
 using GameLoop;
@@ -25,6 +26,8 @@ namespace GolemEntity
 
         private IMoveable _moveable;
         private IAttackable _attackable;
+        private ICastable _spellCast;
+        private DefaultSpell _defaultSpell; //получить через гет компонент, когда он будет готов и будет висеть на персонаже
 
         private GameCharacterState _thisState;
         private GameCharacterState _targetState;
@@ -334,7 +337,15 @@ namespace GolemEntity
             _isIKAllowed = true;
             if (!_inAttack)
                 TurnSmoothlyToTarget();
+        }
 
+        private void CastSpell()
+        {
+            //привести к нужному типу, эти данные могут храниться например в каррент стэйт
+            
+            // SetSpellCast((Fireball)_defaultSpell);
+            // _defaultSpell.CustomConstructor();
+            // _spellCast.CastSpell();
         }
 
         private float GetDelayBetweenHits()
@@ -607,6 +618,11 @@ namespace GolemEntity
         private void SetAttackBehaviour(IAttackable attackable)
         {
             _attackable = attackable;
+        }
+
+        private void SetSpellCast(ICastable castable)
+        {
+            _spellCast = castable;
         }
 
         private GameCharacterState[] GetEnemies()
