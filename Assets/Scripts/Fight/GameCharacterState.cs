@@ -5,8 +5,6 @@ using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using UI;
 using UnityEngine;
-using UnityEngine.AI;
-using UserInterface;
 
 namespace Fight
 {
@@ -18,6 +16,10 @@ namespace Fight
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
+        public float MaxStamina { get; private set; }
+        public float CurrentStamina { get; private set; }
+        public float MaxMana { get; private set; }
+        public float CurrentMana { get; private set; }
         public int Group { get; private set; } 
         public Color ColorGroup { get; private set; } 
         public int Lvl { get; set; }
@@ -30,24 +32,27 @@ namespace Fight
         public SoundsController SoundsController { get; private set; }
 
         private bool _isReady;
-        public RoundStatistics LastEnemyAttacked;
+        private RoundStatistics _lastEnemyAttacked;
         public readonly RoundStatistics RoundStatistics = new RoundStatistics();
         public event EventHandler AttackReceived;
-
-        public void OnAttackReceived(AttackHitEventArgs args)
+        public event Action<float> CurrentHealthChanged;
+        public event Action<float> CurrentStaminaChanged;
+        public event Action<float> CurrentManaChanged;
+        public event Action<GolemExtraStats> StatsChanged;
+        
+        public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
-            AttackReceived?.Invoke(this, args);
+            AttackReceived?.Invoke(sender, args);
         }
         
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            EventContainer.GolemStatsChanged += UpdateStats;
         }
 
         private void OnEnable()
         {
-            
+            EventContainer.GolemStatsChanged += UpdateStats;
         }
 
         private void OnDestroy()
@@ -64,10 +69,10 @@ namespace Fight
         
             if (CurrentHealth <= 0 && !IsDead)
             {
-                LastEnemyAttacked.Kills += 1;
-                LastEnemyAttacked.RoundKills += 1;
+                _lastEnemyAttacked.Kills += 1;
+                _lastEnemyAttacked.RoundKills += 1;
                 IsDead = true;
-                EventContainer.OnGolemDied(LastEnemyAttacked);
+                EventContainer.OnGolemDied(_lastEnemyAttacked);
                 return;
             }
         }
@@ -78,7 +83,12 @@ namespace Fight
             BaseStats = Golem.GetBaseStats();
             Stats = Golem.GetExtraStats();
             SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
+            SetProportionallyCurrentStamina(Golem.GetExtraStats().Stamina);
+            SetProportionallyCurrentMana(Golem.GetExtraStats().ManaPool);
             MaxHealth = Stats.Health;
+            MaxStamina = Stats.Stamina;
+            MaxMana = Stats.ManaPool;
+            OnStatsChanged(Stats);
         }
 
         private void SetProportionallyCurrentHealth(float newMaxHealth)
@@ -88,6 +98,29 @@ namespace Fight
             if (CurrentHealth > newMaxHealth)
             {
                 CurrentHealth = newMaxHealth;
+                OnCurrentHealthChanged(CurrentHealth);
+            }
+        }
+        
+        private void SetProportionallyCurrentStamina(float newMaxStamina)
+        {
+            var difference = MaxStamina - newMaxStamina;
+            CurrentStamina -= difference;
+            if (CurrentStamina > newMaxStamina)
+            {
+                CurrentStamina = newMaxStamina;
+                OnCurrentStaminaChanged(CurrentStamina);
+            }
+        }
+        
+        private void SetProportionallyCurrentMana(float newMaxMana)
+        {
+            var difference = MaxMana - newMaxMana;
+            CurrentMana -= difference;
+            if (CurrentMana > newMaxMana)
+            {
+                CurrentMana = newMaxMana;
+                OnCurrentManaChanged(CurrentMana);
             }
         }
     
@@ -112,6 +145,10 @@ namespace Fight
             BaseStats = Golem.GetBaseStats();
             MaxHealth = Stats.Health;
             CurrentHealth = MaxHealth;
+            MaxStamina = Stats.Stamina;
+            CurrentStamina = MaxStamina;
+            MaxMana = Stats.ManaPool;
+            CurrentMana = MaxMana;
         
             CreateHealthBar();
             _isReady = true;
@@ -121,7 +158,7 @@ namespace Fight
         {
             if (!isDynamicHealthBarCreate) return;
             _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            _healthBar.GetComponent<UIHealthBar>().characterState = this;
+            _healthBar.GetComponent<UIHealthBar>().SetCharacterState(this);
         }
 
         public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)
@@ -130,14 +167,15 @@ namespace Fight
             if (statistics == null) return;
             statistics.Damage += damage;
             statistics.RoundDamage += damage;
-            LastEnemyAttacked = statistics;
+            _lastEnemyAttacked = statistics;
+            OnCurrentHealthChanged(CurrentHealth);
         }
 
         public void PrepareAfterNewRound()
         {
             IsDead = false;
-            UpgradeSystem.LvlUp(this);
-            Heal();
+            UpgradeSystem.LvlUp(this, 7);
+            HealAllParameters();
             ShowHealthBar();
             NullRoundStatistics();
         }
@@ -148,17 +186,20 @@ namespace Fight
             RoundStatistics.RoundKills = 0;
         }
         
-        private void Heal()
+        private void HealAllParameters()
         {
             CurrentHealth = MaxHealth;
+            CurrentStamina = MaxStamina;
+            CurrentMana = MaxMana;
+            
+            OnCurrentHealthChanged(CurrentHealth);
+            OnCurrentStaminaChanged(CurrentStamina);
+            OnCurrentManaChanged(CurrentMana);
         }
 
         private void ShowHealthBar()
         {
             _healthBar.gameObject.SetActive(true);
-            var uiHealth = _healthBar.GetComponent<UIHealthBar>();
-            uiHealth.ChangeMaxValue();
-            uiHealth.ShowFill();
         }
         
         public void SpendStamina(float energy)
@@ -166,6 +207,24 @@ namespace Fight
         
         }
 
-        
+        private void OnCurrentHealthChanged(float health)
+        {
+            CurrentHealthChanged?.Invoke(health);
+        }
+
+        private void OnCurrentStaminaChanged(float stamina)
+        {
+            CurrentStaminaChanged?.Invoke(stamina);
+        }
+
+        private void OnCurrentManaChanged(float mana)
+        {
+            CurrentManaChanged?.Invoke(mana);
+        }
+
+        private void OnStatsChanged(GolemExtraStats stats)
+        {
+            StatsChanged?.Invoke(stats);
+        }
     }
 }

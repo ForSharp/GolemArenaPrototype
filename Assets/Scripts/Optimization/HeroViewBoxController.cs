@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using GameLoop;
 using GolemEntity;
 using UnityEngine;
 
-namespace GameLoop
+namespace Optimization
 {
     public class HeroViewBoxController : MonoBehaviour
     {

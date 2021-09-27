@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 1057268904865617688}
   - component: {fileID: 366610025610937108}
   - component: {fileID: 5081720534319728432}
+  - component: {fileID: -4787751841131031987}
   m_Layer: 0
   m_Name: 14_Yama
   m_TagString: Untagged
@@ -626,6 +627,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &-4787751841131031987
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701594228384270095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7701644445810978747
 GameObject:
   m_ObjectHideFlags: 0

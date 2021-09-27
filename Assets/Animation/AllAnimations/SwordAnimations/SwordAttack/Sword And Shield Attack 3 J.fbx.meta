@@ -73,15 +73,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.37410074
-        functionName: OnStartLanding
+      - time: 0.46402878
+        functionName: OnAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.46402878
-        functionName: OnAttack
+      - time: 0.5226951
+        functionName: OnEndJump
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

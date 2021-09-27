@@ -1,7 +1,4 @@
-﻿using System;
-using Scripts;
-
-namespace GolemEntity.BaseStats
+﻿namespace GolemEntity.BaseStats
 {
     public class GolemTypeStats : IStatsProvider
     {

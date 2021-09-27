@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameLoop
+namespace UI
 {
     public class HeroFeaturesInfoPanel : MonoBehaviour
     {

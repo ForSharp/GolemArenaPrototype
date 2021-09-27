@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 209158636581292949}
   - component: {fileID: 3075280390106956329}
   - component: {fileID: -6974179914970302310}
+  - component: {fileID: 1829425338140157371}
   m_Layer: 0
   m_Name: 9_Peppa
   m_TagString: Untagged
@@ -782,6 +783,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &1829425338140157371
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376323333242507354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2376801595255655324
 GameObject:
   m_ObjectHideFlags: 0

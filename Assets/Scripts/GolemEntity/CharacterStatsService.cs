@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
-using UnityEngine;
 
 namespace GolemEntity
 {
@@ -753,7 +752,7 @@ namespace GolemEntity
 
         public static List<string> GetCharacterFeatures(GolemType type)
         {
-            var typeStats = GetExtraStats(type, BaseStats);
+            var typeStats = GetExtraStats(type, BaseStats); //must be here
             typeStats = GetExtraStats(type, BaseStats);
             var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, BaseStats);
             var typeStatsColl = GetStatsCollection(typeStats);
@@ -764,7 +763,7 @@ namespace GolemEntity
 
         public static List<string> GetCharacterFeatures(Specialization spec)
         {
-            var specStats = GetExtraStats(spec, BaseStats);
+            var specStats = GetExtraStats(spec, BaseStats); //must be here
             specStats = GetExtraStats(spec, BaseStats);
             var defaultStats = GetExtraStats((Specialization) NonExistentEnumValue, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
@@ -775,7 +774,7 @@ namespace GolemEntity
 
         public static List<string> GetCharacterFeatures(GolemType type, Specialization spec)
         {
-            var currentStats = GetExtraStats(type, spec, BaseStats);
+            var currentStats = GetExtraStats(type, spec, BaseStats); //must be here
             currentStats = GetExtraStats(type, spec, BaseStats);
             var defaultStats = GetExtraStats((GolemType) NonExistentEnumValue, (Specialization) NonExistentEnumValue,
                 BaseStats);

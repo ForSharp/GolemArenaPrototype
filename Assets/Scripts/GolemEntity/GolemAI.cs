@@ -2,17 +2,21 @@
 using System.Collections;
 using System.Linq;
 using BehaviourStrategy;
+using BehaviourStrategy.Abstracts;
+using Controller;
 using Fight;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.AI;
+using PlayMode = Controller.PlayMode;
 using Random = UnityEngine.Random;
 
 namespace GolemEntity
 {
     public class GolemAI : MonoBehaviour
     {
-        private bool _isAIControlAllowed;
+        private bool _isAIControlAllowed = true;
+        private bool _playerAI = true;
         private bool _isIKAllowed;
         private bool _isDies;
         private bool _inAttack;
@@ -22,6 +26,8 @@ namespace GolemEntity
 
         private IMoveable _moveable;
         private IAttackable _attackable;
+        private ICastable _spellCast;
+        private DefaultSpell _defaultSpell; //получить через гет компонент, когда он будет готов и будет висеть на персонаже
 
         private GameCharacterState _thisState;
         private GameCharacterState _targetState;
@@ -31,6 +37,8 @@ namespace GolemEntity
         private FightStatus _status;
         private float _timeToResetAttack;
         private SoundsController _soundsController;
+        private Vector3 _targetPoint;
+        private PlayMode _playMode = PlayMode.Cinematic;
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
@@ -70,28 +78,79 @@ namespace GolemEntity
             Game.StartBattle += AllowFight;
             EventContainer.GolemDied += HandleGolemDeath;
             _isDies = false;
-            StartCoroutine(AddListenerAfterLittleDelay());
+
+            StartCoroutine(AddListenerAfterDelay());
         }
 
-        private IEnumerator AddListenerAfterLittleDelay()
+        private IEnumerator AddListenerAfterDelay()
         {
             yield return new WaitForSeconds(0.05f);
             _thisState.AttackReceived += HandleHitReceiving;
+            _navMeshAgent.enabled = true;
+            if (_thisState == Player.PlayerCharacter)
+            {
+                PlayerController.AllowAI += SetAIBehaviour;
+                PlayerController.AttackByController += AttackTarget;
+                PlayerController.SetMovementPointByController += RunToTargetByController;
+                PlayerController.SetTargetByController += SetTarget;
+                PlayerController.PlayModeChanged += ChangeMode;
+            }
+            else if (_thisState != Player.PlayerCharacter)
+            {
+                PlayerController.AllowAI += CheckHumanAllowAI;
+            }
         }
-        
+
         private void OnDisable()
         {
             Game.StartBattle -= AllowFight;
             EventContainer.GolemDied -= HandleGolemDeath;
             _thisState.AttackReceived -= HandleHitReceiving;
+            if (_thisState == Player.PlayerCharacter)
+            {
+                PlayerController.AllowAI -= SetAIBehaviour;
+                PlayerController.AttackByController -= AttackTarget;
+                PlayerController.SetMovementPointByController -= RunToTargetByController;
+                PlayerController.SetTargetByController -= SetTarget;
+                PlayerController.PlayModeChanged -= ChangeMode;
+            }
+            else if (_thisState != Player.PlayerCharacter)
+            {
+                PlayerController.AllowAI -= CheckHumanAllowAI;
+            }
+        }
+
+        private void ChangeMode(PlayMode mode)
+        {
+            _playMode = mode;
+        }
+
+        private void CheckHumanAllowAI(bool isAllow)
+        {
+            if (_thisState != Player.PlayerCharacter)
+            {
+                _playerAI = isAllow;
+            }
+        }
+
+        private void SetAIBehaviour(bool isAllow)
+        {
+            if (_thisState == Player.PlayerCharacter)
+            {
+                _isAIControlAllowed = isAllow;
+            }
         }
 
         private void AllowFight()
         {
-            _isAIControlAllowed = true;
+            if (_thisState != Player.PlayerCharacter)
+            {
+                _isAIControlAllowed = true;
+            }
+
             _isWin = false;
         }
-        
+
         private void SwitchStatuses()
         {
             switch (_status)
@@ -120,6 +179,9 @@ namespace GolemEntity
                 case FightStatus.AvoidingHit:
                     SetAvoidingHitBehaviour();
                     break;
+                case FightStatus.RunningToTarget:
+                    RunToTarget(_targetPoint);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -127,16 +189,22 @@ namespace GolemEntity
 
         private bool CanFight()
         {
-            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit && _status != FightStatus.AvoidingHit && Game.Stage == Game.GameStage.Battle;
+            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit &&
+                   _status != FightStatus.AvoidingHit && Game.Stage == Game.GameStage.Battle;
         }
 
         private void SetDefaultBehaviour()
         {
+            if (!_isAIControlAllowed)
+            {
+                return;
+            }
+
             _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
             _attackable.Attack();
-            _navMeshAgent.baseOffset = 0;
+            _navMeshAgent.enabled = true;
         }
 
         #region AnimationEvents
@@ -150,7 +218,33 @@ namespace GolemEntity
         private void OnAttackEnded()
         {
             _inAttack = false;
-            _navMeshAgent.baseOffset = 0;
+            if (_thisState != Player.PlayerCharacter)
+            {
+                _navMeshAgent.enabled = true;
+            }
+            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed ||
+                     _thisState == Player.PlayerCharacter && _playMode != PlayMode.Standard && _isAIControlAllowed)
+            {
+                _navMeshAgent.enabled = true;
+            }
+        }
+
+        private void OnStartJump()
+        {
+            _navMeshAgent.enabled = false;
+        }
+
+        private void OnEndJump()
+        {
+            if (_thisState != Player.PlayerCharacter)
+            {
+                _navMeshAgent.enabled = true;
+            }
+            else if (_thisState == Player.PlayerCharacter && _isAIControlAllowed ||
+                     _thisState == Player.PlayerCharacter && _playMode != PlayMode.Standard && _isAIControlAllowed)
+            {
+                _navMeshAgent.enabled = true;
+            }
         }
 
         private void OnCanFight()
@@ -160,15 +254,19 @@ namespace GolemEntity
         }
 
         #endregion
-        
+
         private void SetFightBehaviour()
         {
             if (!_targetState)
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
-            
-            if (InAttackDistance())
+
+            if (NeedToCatchUpPlayer())
+            {
+                RunToTarget();
+            }
+            else if (InAttackDistance())
             {
                 AttackTarget();
             }
@@ -199,8 +297,13 @@ namespace GolemEntity
             {
                 return distanceToTarget <= CloseDistance && !_inAttack;
             }
+
+            bool NeedToCatchUpPlayer()
+            {
+                return !InAttackDistance() && _targetState == Player.PlayerCharacter && !_playerAI;
+            }
         }
-        
+
         private void SetScaredBehaviour()
         {
             if (!_targetState)
@@ -227,13 +330,22 @@ namespace GolemEntity
             _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
                 _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.HitAccuracy,
-                _targetState.gameObject, _navMeshAgent, _thisState.Type,
+                _targetState.gameObject, _thisState.Type,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
             if (!_inAttack)
                 TurnSmoothlyToTarget();
+        }
+
+        private void CastSpell()
+        {
+            //привести к нужному типу, эти данные могут храниться например в каррент стэйт
+            
+            // SetSpellCast((Fireball)_defaultSpell);
+            // _defaultSpell.CustomConstructor();
+            // _spellCast.CastSpell();
         }
 
         private float GetDelayBetweenHits()
@@ -251,7 +363,7 @@ namespace GolemEntity
                 StartCoroutine(WaitForSecondsToDisable(6));
             }
 
-            _navMeshAgent.baseOffset = -0.8f;
+            _navMeshAgent.enabled = false;
         }
 
         private void HandleGolemDeath(RoundStatistics killer)
@@ -284,13 +396,12 @@ namespace GolemEntity
             {
                 EventContainer.OnNewRound();
             }
-            
         }
 
         private void WalkSlowlyWithFightPosture()
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
                 AnimationChanger.SetWalkingFight));
             _moveable.Move(_thisState.Stats.MoveSpeed / 2, _targetState.transform.position);
             _isIKAllowed = true;
@@ -299,37 +410,70 @@ namespace GolemEntity
         private void WalkToTarget()
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new WalkBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
                 AnimationChanger.SetGolemWalk));
             _moveable.Move(_thisState.Stats.MoveSpeed, _targetState.transform.position);
             _isIKAllowed = false;
         }
 
+        private void RunToTargetByController(Vector3 point)
+        {
+            if (_thisState == Player.PlayerCharacter)
+            {
+                _targetPoint = point;
+                _status = FightStatus.RunningToTarget;
+            }
+        }
+
         private void RunToTarget(int direction = 1)
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new RunBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
                 false, AnimationChanger.SetGolemRun));
             _moveable.Move(_thisState.Stats.MoveSpeed * 2, _targetState.transform.position * direction);
             _isIKAllowed = false;
-            
-            while (_navMeshAgent.baseOffset > 0 && _inAttack)
-            {
-                _navMeshAgent.baseOffset -= Time.deltaTime * 0.25f;
-            }
 
             _inAttack = false;
         }
 
+        private void RunToTarget(Vector3 point)
+        {
+            if (_thisState == Player.PlayerCharacter)
+            {
+                _animator.applyRootMotion = false;
+                SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.AttackRange, _animator,
+                    _navMeshAgent,
+                    false, AnimationChanger.SetGolemRun));
+                _moveable.Move(_thisState.Stats.MoveSpeed * 2, point);
+                _isIKAllowed = false;
+                _isAIControlAllowed = false;
+
+                if ((point - transform.position).sqrMagnitude < 30)
+                {
+                    _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
+                    _moveable.Move(default, default);
+                }
+            }
+        }
+
+        private void SetTarget(GameCharacterState target)
+        {
+            if (_thisState == Player.PlayerCharacter)
+            {
+                _targetState = target;
+                _isAIControlAllowed = true;
+            }
+        }
+
         private void HandleHitReceiving(object sender, EventArgs args)
         {
-            AttackHitEventArgs hitArgs = (AttackHitEventArgs) args;
+            AttackHitEventArgs hitArgs = (AttackHitEventArgs)args;
 
             if (AttackFromBehind())
             {
                 hitArgs.DamagePerHit *= 1.5f;
                 GetHit(hitArgs);
-                EventContainer.OnFightEvent(new FightEventArgs((AttackHitEventArgs) args, _thisState.Type, true));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs((AttackHitEventArgs)args, _thisState.Type, true));
                 return;
             }
 
@@ -348,13 +492,13 @@ namespace GolemEntity
             if (hitChance > random)
             {
                 GetHit(hitArgs);
-                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false));
             }
             else
             {
                 _isAvoidsHit = false;
                 _status = FightStatus.AvoidingHit;
-                EventContainer.OnFightEvent(new FightEventArgs(hitArgs, _thisState.Type, false, true));
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }
 
@@ -476,6 +620,11 @@ namespace GolemEntity
             _attackable = attackable;
         }
 
+        private void SetSpellCast(ICastable castable)
+        {
+            _spellCast = castable;
+        }
+
         private GameCharacterState[] GetEnemies()
         {
             return Game.AllGolems.Where(p => p.IsDead == false)
@@ -494,7 +643,7 @@ namespace GolemEntity
                     EventContainer.OnWinBattle(_thisState);
                     _thisState.RoundStatistics.Wins++;
                 }
-                
+
                 yield return new WaitForSeconds(1);
                 _targetState = null;
                 StartCoroutine(FindEnemies());

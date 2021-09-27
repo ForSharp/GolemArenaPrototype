@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace BehaviourStrategy
+﻿namespace BehaviourStrategy.Abstracts
 {
     public interface IAttackable
     {

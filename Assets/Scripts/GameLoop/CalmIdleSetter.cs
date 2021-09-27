@@ -14,7 +14,7 @@ namespace GameLoop
             SetRandomCalmAnimation();
         }
 
-        public void SetRandomCalmAnimation()
+        private void SetRandomCalmAnimation()
         {
             _animator.SetFloat(Blend, Random.Range(0, 21));
         }

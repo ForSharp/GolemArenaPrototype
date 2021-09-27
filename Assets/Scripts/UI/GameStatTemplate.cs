@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace UI
 {
     public class GameStatTemplate : MonoBehaviour
     {
@@ -33,7 +33,7 @@ namespace UserInterface
         {
             golemTypeText.text = golemType;
             specializationText.text = specialization;
-            damageText.text = damage.ToString(CultureInfo.InvariantCulture);
+            damageText.text = damage.ToString("#.00");
             killsText.text = kills.ToString();
             winsText.text = GetStarsBasedOnWins(wins);
             backGround.GetComponent<Image>().color = color;

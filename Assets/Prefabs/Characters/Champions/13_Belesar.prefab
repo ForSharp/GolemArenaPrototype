@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: -4107821474013188090}
   - component: {fileID: 8619057844939286516}
   - component: {fileID: -7431919807540173832}
+  - component: {fileID: -6069434339782443944}
   m_Layer: 0
   m_Name: 13_Belesar
   m_TagString: Untagged
@@ -656,6 +657,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &-6069434339782443944
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927335765472606236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &3927391760347250390
 GameObject:
   m_ObjectHideFlags: 0

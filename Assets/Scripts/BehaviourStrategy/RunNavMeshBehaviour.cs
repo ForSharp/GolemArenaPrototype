@@ -5,12 +5,12 @@ using UnityEngine.AI;
 
 namespace BehaviourStrategy
 {
-    public class RunBehaviour: WalkBehaviour
+    public class RunNavMeshBehaviour: WalkNavMeshBehaviour
     {
         private GameCharacterState _state;
         private bool _isWastingEnergy;
     
-        public RunBehaviour(GameCharacterState thisState, float stopDistance, Animator animator, NavMeshAgent agent,
+        public RunNavMeshBehaviour(GameCharacterState thisState, float stopDistance, Animator animator, NavMeshAgent agent,
             bool isWastingEnergy = true, params Action<Animator>[] walkAnimationSetters) : base(stopDistance, animator, agent, walkAnimationSetters)
         {
             _state = thisState;

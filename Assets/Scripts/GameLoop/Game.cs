@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Fight;
 using GolemEntity;
+using Optimization;
 using Random = UnityEngine.Random;
 
 namespace GameLoop
@@ -66,7 +67,7 @@ namespace GameLoop
         {
             for (int i = 0; i < 4; i++)
             {
-                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization(), false);
+                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization());
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
@@ -90,6 +91,7 @@ namespace GameLoop
             OnStartBattle();
             
         }
+        
         
         public static void CheckEndOfRound(GameCharacterState winner)
         {

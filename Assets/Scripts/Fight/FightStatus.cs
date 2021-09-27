@@ -10,6 +10,7 @@
         Dead,
         Scared,
         GettingHit,
-        AvoidingHit
+        AvoidingHit,
+        RunningToTarget
     }
 }

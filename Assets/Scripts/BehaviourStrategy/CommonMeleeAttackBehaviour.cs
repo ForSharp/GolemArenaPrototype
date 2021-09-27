@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
+using BehaviourStrategy.Abstracts;
 using Fight;
 using GameLoop;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 namespace BehaviourStrategy
@@ -13,28 +13,27 @@ namespace BehaviourStrategy
         private float _hitHeight;
         private float _attackRange;
         private float _destructionRadius;
-        private Action<Animator>[] _hitAnimationSetters;
-        private Animator _animator;
-        private int _group;
         private float _timer;
         private float _timeToResetJump;
         private float _timeToEndAttack;
-        private RoundStatistics _statistics;
         private float _damage;
         private float _delayBetweenHits;
         private float _hitAccuracy;
-        private GameObject _target;
-        private NavMeshAgent _agent;
+
+        private int _group;
         private string _name;
+
+        private RoundStatistics _statistics;
+        private GameObject _target;
+        private Action<Animator>[] _hitAnimationSetters;
+        private Animator _animator;
+        
         private bool _isReady;
         private bool _isLastHitEnd = true;
-        private bool _isJumpUp;
 
         public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
-            int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target, NavMeshAgent agent,
-            string nameCharacter,
-            RoundStatistics statistics = default,
-            params Action<Animator>[] hitAnimationSetters)
+            int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target,
+            string nameCharacter, RoundStatistics statistics = default, params Action<Animator>[] hitAnimationSetters)
         {
             _hitHeight = hitHeight;
             _attackRange = attackRange;
@@ -47,7 +46,6 @@ namespace BehaviourStrategy
             _delayBetweenHits = delayBetweenHits;
             _hitAccuracy = hitAccuracy;
             _target = target;
-            _agent = agent;
             _name = nameCharacter;
             _isReady = true;
         }
@@ -60,12 +58,6 @@ namespace BehaviourStrategy
         private void Update()
         {
             _timer += Time.deltaTime;
-            if (_isJumpUp)
-            {
-                _timeToResetJump += Time.deltaTime;
-                ForceResetJumping();
-            }
-
             EndAttackIfNeed();
         }
 
@@ -75,7 +67,6 @@ namespace BehaviourStrategy
         {
             _isLastHitEnd = false;
             _timeToEndAttack = 0;
-            _agent.baseOffset = 0;
         }
 
         private void OnAttack()
@@ -86,52 +77,15 @@ namespace BehaviourStrategy
         private void OnAttackEnded()
         {
             _isLastHitEnd = true;
-            if (_agent)
-            {
-                _agent.baseOffset = 0;
-            }
-
-            _isJumpUp = false;
         }
-
-        private void OnStartJump()
-        {
-            _isJumpUp = true;
-            while (_isJumpUp && _agent.baseOffset <= 0.85f)
-            {
-                _agent.baseOffset += Time.deltaTime * 0.25f;
-            }
-        }
-
-        private void OnStartLanding()
-        {
-            LandHero();
-        }
-
+        
         #endregion
-
-        private void LandHero()
-        {
-            _isJumpUp = false;
-            while (_agent.baseOffset > 0 && !_isJumpUp)
-            {
-                _agent.baseOffset -= Time.deltaTime * 0.25f;
-            }
-        }
-
-        private void ForceResetJumping()
-        {
-            if (_timeToResetJump >= 1.5f)
-            {
-                LandHero();
-            }
-        }
-
+        
         public void Attack()
         {
             if (!_isReady)
             {
-                Debug.Log("Before using Attack You must init fields by CustomConstructor");
+                Debug.LogError("Before using Attack You must initialize the fields with CustomConstructor");
                 return;
             }
 
@@ -187,7 +141,7 @@ namespace BehaviourStrategy
             {
                 if (state.Group != _group)
                 {
-                    state.OnAttackReceived(new AttackHitEventArgs(_damage, _hitAccuracy, _statistics,
+                    state.OnAttackReceived(this, new AttackHitEventArgs(_damage, _hitAccuracy, _statistics,
                         transform.rotation.y, _name));
                     return true;
                 }

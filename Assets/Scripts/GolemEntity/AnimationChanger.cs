@@ -27,6 +27,12 @@ namespace GolemEntity
             animator.Play("Walking");
         }
 
+        public static void SetSomersault(Animator animator)
+        {
+            animator.Play("StandToRoll");
+            animator.applyRootMotion = true;
+        }
+
         public static void SetSwordAttack(Animator animator)
         {
             animator.SetTrigger(SwordAttack);

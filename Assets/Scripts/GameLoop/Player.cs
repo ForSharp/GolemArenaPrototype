@@ -1,12 +1,12 @@
-﻿using GolemEntity;
+﻿using Fight;
 
 namespace GameLoop
 {
     public static class Player
     {
-        public static Golem PlayerCharacter { get; private set; }
+        public static GameCharacterState PlayerCharacter { get; private set; }
 
-        public static void SetPlayerCharacter(Golem character)
+        public static void SetPlayerCharacter(GameCharacterState character)
         {
             PlayerCharacter = character;
             EventContainer.OnPlayerCharacterCreated();

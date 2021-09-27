@@ -1,9 +1,8 @@
-﻿using System;
-using GolemEntity;
+﻿using GolemEntity;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameLoop
+namespace UI
 {
     public class HeroBaseStatsController : MonoBehaviour
     {

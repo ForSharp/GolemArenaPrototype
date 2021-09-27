@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Fight;
+﻿using Fight;
 using GolemEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,9 +13,9 @@ namespace GameLoop
         [SerializeField] private Color[] groupColors;
 
         public static Spawner Instance { get; private set; }
-        private static int _group = 0;
+        private static int _group;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
         }
@@ -26,12 +24,14 @@ namespace GameLoop
         {
             var golem = new Golem(golemType, specialization);
             var newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-            ConnectGolemWithState(newGolem, golem, golemType, specialization);
+            var state = ConnectGolemWithState(newGolem, golem, golemType, specialization);
 
             _group++;
-            
+
             if (isPlayerCharacter)
-                Player.SetPlayerCharacter(golem);
+            {
+                Player.SetPlayerCharacter(state);
+            }
         }
 
         private Vector3 GetRandomSpawnPoint()
@@ -42,7 +42,7 @@ namespace GameLoop
             return randomPoint;
         }
 
-        private void ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
+        private GameCharacterState ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
         {
             var state = newGolem.GetComponent<GameCharacterState>();
             if (_group < groupColors.Length)
@@ -55,6 +55,8 @@ namespace GameLoop
                 state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
                 Game.AddToAllGolems(state);
             }
+
+            return state;
         }
 
         private GameObject GetRelevantPrefab(GolemType golemType)

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace GameLoop
+namespace Optimization
 {
     public class Optimization : MonoBehaviour
     {

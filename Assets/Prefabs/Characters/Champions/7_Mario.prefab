@@ -1430,6 +1430,7 @@ GameObject:
   - component: {fileID: 1859095464210764699}
   - component: {fileID: -5815637549818575811}
   - component: {fileID: 5958639783325426232}
+  - component: {fileID: -7193479508542772030}
   m_Layer: 0
   m_Name: 7_Mario
   m_TagString: Untagged
@@ -1973,6 +1974,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &-7193479508542772030
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739811393562177581}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4739852204668627317
 GameObject:
   m_ObjectHideFlags: 0
