@@ -12,7 +12,7 @@ namespace UI
         [SerializeField] private Text heroType;
         [SerializeField] private Text heroSpec;
         [SerializeField] private Text heroLvl;
-        [SerializeField] private UIHealthBar healthBar;
+        [SerializeField] private StaticHealthBar healthBar;
         
         private GameCharacterState _state;
 

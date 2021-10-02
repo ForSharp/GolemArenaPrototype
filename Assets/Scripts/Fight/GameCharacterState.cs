@@ -158,7 +158,7 @@ namespace Fight
         {
             if (!isDynamicHealthBarCreate) return;
             _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-            _healthBar.GetComponent<UIHealthBar>().SetCharacterState(this);
+            _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
 
         public void TakeDamage(float damage, float defence = 0, RoundStatistics statistics = default)

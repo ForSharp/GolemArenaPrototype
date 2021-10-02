@@ -19,7 +19,7 @@ namespace UI
         [SerializeField] private Text[] extraStatsUI;
         [SerializeField] private GameObject openedPanel;
         [SerializeField] private GameObject closedPanel;
-        [SerializeField] private UIHealthBar healthBar;
+        [SerializeField] private StaticHealthBar healthBar;
 
         [HideInInspector] public bool inPanel;
 
