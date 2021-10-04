@@ -11,7 +11,11 @@ namespace UI
     {
         [SerializeField] private GameObject fill;
         [SerializeField] private Slider sliderHealth;
+        [SerializeField] private Slider sliderBack;
         [SerializeField] private DamageViewer damageViewer;
+        [SerializeField] private Color fullHpColor;
+        [SerializeField] private Color lowHpColor;
+        [SerializeField] private Image currentColor;
         
         private GameCharacterState _characterState;
         private const int TimeToDestroy = 1;
@@ -41,6 +45,7 @@ namespace UI
         {
             if (_characterState)
                 SetRequiredPosition();
+            
         }
 
         public void SetCharacterState(GameCharacterState state)
@@ -55,6 +60,10 @@ namespace UI
         {
             sliderHealth.maxValue = _characterState.MaxHealth;
             sliderHealth.value = _characterState.CurrentHealth;
+            SetCurrentColor();
+
+            sliderBack.maxValue = sliderHealth.maxValue;
+            sliderBack.value = sliderHealth.value;
         }
 
         private void AddListeners()
@@ -70,16 +79,40 @@ namespace UI
             _characterState.CurrentHealthChanged -= SetCurrentHealth;
             EventContainer.GolemDied -= DisableOnDeath;
         }
-        
+
+        private void SetCurrentColor()
+        {
+            currentColor.color = Color.Lerp(fullHpColor, lowHpColor, GetCombineValue());
+        }
+
+        private float GetCombineValue()
+        {
+            var difference = sliderHealth.maxValue - sliderHealth.value;
+            return difference / sliderHealth.maxValue;
+        }
+
         private void SetMaxValues(GolemExtraStats stats)
         {
             sliderHealth.maxValue = stats.Health;
+            SetCurrentColor();
+            
         }
 
         private void SetCurrentHealth(float health)
         {
             var roundedValue = health;
             sliderHealth.value = roundedValue;
+            SetCurrentColor();
+
+            StartCoroutine(SetCurrentBackAfterDelay());
+        }
+
+        private IEnumerator SetCurrentBackAfterDelay()
+        {
+            yield return new WaitForSeconds(1);
+            
+            sliderBack.value = sliderHealth.value;
+
         }
         
         private void SetRequiredPosition(float multiplier = 1)

@@ -1,4 +1,5 @@
-﻿using Fight;
+﻿using System;
+using Fight;
 using GameLoop;
 using GolemEntity.ExtraStats;
 using UnityEngine;
@@ -30,6 +31,14 @@ namespace UI
             {
                 AddListeners();
                 SetStartValues();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_characterState)
+            {
+                RemoveListeners();
             }
         }
 
@@ -114,7 +123,6 @@ namespace UI
             if (_characterState.IsDead && !_isDead)
             {
                 _isDead = true;
-                RemoveListeners();
             }
         }
     }
