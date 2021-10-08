@@ -286,7 +286,8 @@ namespace GameLoop
             {
                 GetCharacterWithRightMainParameter(MainCharacterParameter.Strength),
                 GetCharacterWithRightMainParameter(MainCharacterParameter.Agility),
-                GetCharacterWithRightMainParameter(MainCharacterParameter.Intelligence)
+                //GetCharacterWithRightMainParameter(MainCharacterParameter.Intelligence)
+                GolemType.Cleopatra
             };
         }
 

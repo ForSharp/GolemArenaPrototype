@@ -1,4 +1,4 @@
-﻿using Fight;
+﻿using FightState;
 
 namespace GameLoop
 {

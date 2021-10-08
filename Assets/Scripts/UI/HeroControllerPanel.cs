@@ -1,4 +1,4 @@
-﻿using Fight;
+﻿using FightState;
 using GameLoop;
 using GolemEntity;
 using UnityEngine;

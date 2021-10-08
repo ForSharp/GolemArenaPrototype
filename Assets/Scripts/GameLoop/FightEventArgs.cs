@@ -1,5 +1,5 @@
 ﻿using System;
-using Fight;
+using FightState;
 
 namespace GameLoop
 {

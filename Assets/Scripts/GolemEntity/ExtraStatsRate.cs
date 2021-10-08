@@ -33,7 +33,7 @@ namespace GolemEntity
         public float MagicAccuracyArgSt = Strength;
         public float MagicAccuracyArgIn = Intelligence;
 
-        public float MagicDamageArgIn = Intelligence;
+        public float MagicPowerArgIn = Intelligence;
 
         public float MagicResistanceArgSt = Strength;
         public float MagicResistanceArgIn = Intelligence;
@@ -73,7 +73,7 @@ namespace GolemEntity
                 Health = ExtraStatsCalculator.GetHealth(typeExtraArgs.HealthArgSt),
                 HitAccuracy = ExtraStatsCalculator.GetHitAccuracy(typeExtraArgs.HitAccuracyArgSt, typeExtraArgs.HitAccuracyArgAg),
                 MagicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(typeExtraArgs.MagicAccuracyArgSt, typeExtraArgs.MagicAccuracyArgIn),
-                MagicDamage = ExtraStatsCalculator.GetMagicDamage(typeExtraArgs.MagicDamageArgIn),
+                MagicPower = ExtraStatsCalculator.GetMagicPower(typeExtraArgs.MagicPowerArgIn),
                 MagicResistance = ExtraStatsCalculator.GetMagicResistance(typeExtraArgs.MagicResistanceArgSt, typeExtraArgs.MagicResistanceArgIn),
                 ManaPool = ExtraStatsCalculator.GetManaPool(typeExtraArgs.ManaPoolArgIn),
                 MoveSpeed = ExtraStatsCalculator.GetMoveSpeed(typeExtraArgs.MoveSpeedArgSt, typeExtraArgs.MoveSpeedArgAg),

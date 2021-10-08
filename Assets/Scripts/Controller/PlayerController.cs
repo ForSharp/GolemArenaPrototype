@@ -1,5 +1,5 @@
 ﻿using System;
-using Fight;
+using FightState;
 using GameLoop;
 using GolemEntity;
 using UI;
@@ -41,6 +41,8 @@ namespace Controller
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
+        
+        public static event Action SpellCastByController;
         public static event Action<GameCharacterState> SetTargetByController;
         public static event Action<Vector3> SetMovementPointByController;
         public static event Action<PlayMode> PlayModeChanged;
@@ -121,6 +123,12 @@ namespace Controller
         
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                SpellCastByController?.Invoke();
+            }
+            
+            
             switch (_playMode)
             {
                 case PlayMode.Standard:

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BehaviourStrategy.Abstracts;
-using Fight;
+using FightState;
 using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -154,7 +154,7 @@ namespace BehaviourStrategy
         {
             if (item.TryGetComponent(out DestructibleObject destructibleObject))
             {
-                destructibleObject.TakeDamage(_damage);
+                destructibleObject.TakeDamage(_damage, _statistics);
             }
         }
 
@@ -171,6 +171,19 @@ namespace BehaviourStrategy
                 filteredGameCharacterColliders as Collider[] ?? filteredGameCharacterColliders.ToArray();
             var destructibleObjects =
                 filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
+
+            if (gameCharacterColliders.Length == 0 && destructibleObjects.Length == 0)
+            {
+                return Array.Empty<Collider>();
+            }
+            if (gameCharacterColliders.Length == 0)
+            {
+                return destructibleObjects;
+            }
+            if (destructibleObjects.Length == 0)
+            {
+                return gameCharacterColliders;
+            }
 
             var filteredArray = new Collider[gameCharacterColliders.Length +
                                              destructibleObjects.Length];

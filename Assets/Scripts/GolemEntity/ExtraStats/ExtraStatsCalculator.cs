@@ -62,7 +62,7 @@ namespace GolemEntity.ExtraStats
             return (intelligence * 0.65f + strength * 0.15f);
         }
 
-        public static float GetMagicDamage(float intelligence)
+        public static float GetMagicPower(float intelligence)
         {
             return intelligence * 0.35f;
         }

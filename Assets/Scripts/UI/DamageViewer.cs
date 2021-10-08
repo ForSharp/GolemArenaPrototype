@@ -1,5 +1,5 @@
 ﻿using System;
-using Fight;
+using FightState;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,12 +20,31 @@ namespace UI
         private void OnEnable()
         {
             EventContainer.FightEvent += HandleFightEvent;
+            EventContainer.MagicDamageReceived += HandleMagicDamageReceiving;
         }
 
         private void OnDisable()
         {
             EventContainer.FightEvent -= HandleFightEvent;
+            EventContainer.MagicDamageReceived -= HandleMagicDamageReceiving;
         }
+
+        private void HandleMagicDamageReceiving(GameCharacterState sender, GameCharacterState target, float damage,
+            bool isPeriodic)
+        {
+            if (target == State)
+            {
+                animatorAttack[_attackInfoQueueNumber].SetTrigger(HitReceived);
+                attack[_attackInfoQueueNumber].text = $"-{damage:#.00}";
+            
+                _attackInfoQueueNumber++;
+                if (_attackInfoQueueNumber >= 3)
+                {
+                    _attackInfoQueueNumber = 0;
+                }
+            }
+        }
+        
         
         private void HandleFightEvent(object sender, EventArgs args)
         {

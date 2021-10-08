@@ -11,7 +11,7 @@
         public float Health { get; set; }
         public float HitAccuracy { get; set; }
         public float MagicAccuracy { get; set; }
-        public float MagicDamage { get; set; }
+        public float MagicPower { get; set; }
         public float MagicResistance { get; set; }
         public float ManaPool { get; set; }
         public float MoveSpeed { get; set; }
@@ -33,7 +33,7 @@
                 Health = statsA.Health + statsB.Health,
                 HitAccuracy = statsA.HitAccuracy + statsB.HitAccuracy,
                 MagicAccuracy = statsA.MagicAccuracy + statsB.MagicAccuracy,
-                MagicDamage = statsA.MagicDamage + statsB.MagicDamage,
+                MagicPower = statsA.MagicPower + statsB.MagicPower,
                 MagicResistance = statsA.MagicResistance + statsB.MagicResistance,
                 ManaPool = statsA.ManaPool + statsB.ManaPool,
                 MoveSpeed = statsA.MoveSpeed + statsB.MoveSpeed,
@@ -56,7 +56,7 @@
                 Health = stats.Health * multiplier,
                 HitAccuracy = stats.HitAccuracy * multiplier,
                 MagicAccuracy = stats.MagicAccuracy * multiplier,
-                MagicDamage = stats.MagicDamage * multiplier,
+                MagicPower = stats.MagicPower * multiplier,
                 MagicResistance = stats.MagicResistance * multiplier,
                 ManaPool = stats.ManaPool * multiplier,
                 MoveSpeed = stats.MoveSpeed * multiplier,
@@ -78,7 +78,7 @@
                    $"Health = {Health}," +
                    $"HitAccuracy = {HitAccuracy}," +
                    $"MagicAccuracy = {MagicAccuracy}," +
-                   $"MagicDamage = {MagicDamage}," +
+                   $"MagicDamage = {MagicPower}," +
                    $"MagicResistance = {MagicResistance}," +
                    $"ManaPool = {ManaPool}," +
                    $"MoveSpeed = {MoveSpeed}," +

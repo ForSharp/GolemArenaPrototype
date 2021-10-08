@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Fight;
+using FightState;
 using GameLoop;
 using GolemEntity.ExtraStats;
 using UnityEngine;
