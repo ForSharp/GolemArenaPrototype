@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Fight;
+using FightState;
 using GameLoop;
 using UnityEngine;
 

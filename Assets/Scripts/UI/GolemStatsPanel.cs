@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Controller;
-using Fight;
+using FightState;
 using GameLoop;
 using GolemEntity;
 using GolemEntity.ExtraStats;
@@ -19,7 +19,7 @@ namespace UI
         [SerializeField] private Text[] extraStatsUI;
         [SerializeField] private GameObject openedPanel;
         [SerializeField] private GameObject closedPanel;
-        [SerializeField] private UIHealthBar healthBar;
+        [SerializeField] private StaticHealthBar healthBar;
 
         [HideInInspector] public bool inPanel;
 
@@ -149,7 +149,7 @@ namespace UI
                 {
                     _stats.AttackRange, _stats.AttackSpeed, _stats.AvoidChance, _stats.DamagePerHeat, _stats.Defence,
                     _stats.DodgeChance, _stats.Health, _stats.HitAccuracy,
-                    _stats.MagicAccuracy, _stats.MagicDamage, _stats.MagicResistance, _stats.ManaPool, _stats.MoveSpeed,
+                    _stats.MagicAccuracy, _stats.MagicPower, _stats.MagicResistance, _stats.ManaPool, _stats.MoveSpeed,
                     _stats.RegenerationHealth, _stats.RegenerationMana,
                     _stats.RegenerationStamina, _stats.Stamina
                 };

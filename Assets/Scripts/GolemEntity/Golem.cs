@@ -95,7 +95,7 @@ namespace GolemEntity
                 Health = extra.GetExtraStats().Health,
                 HitAccuracy = extra.GetExtraStats().HitAccuracy,
                 MagicAccuracy = extra.GetExtraStats().MagicAccuracy,
-                MagicDamage = extra.GetExtraStats().MagicDamage,
+                MagicPower = extra.GetExtraStats().MagicPower,
                 MagicResistance = extra.GetExtraStats().MagicResistance,
                 ManaPool = extra.GetExtraStats().ManaPool,
                 MoveSpeed = extra.GetExtraStats().MoveSpeed,

@@ -1,4 +1,4 @@
-﻿using Fight;
+﻿using FightState;
 using GolemEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;

@@ -33,6 +33,12 @@ namespace GolemEntity
             animator.applyRootMotion = true;
         }
 
+        public static void SetCastFireBall(Animator animator)
+        {
+            animator.SetTrigger("CastSpell");
+            animator.SetFloat(Animator.StringToHash("CastSpellVariation"), 0);
+        }
+        
         public static void SetSwordAttack(Animator animator)
         {
             animator.SetTrigger(SwordAttack);

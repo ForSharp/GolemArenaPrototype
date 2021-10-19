@@ -1,5 +1,5 @@
 ﻿using System;
-using Fight;
+using FightState;
 
 namespace GameLoop
 {
@@ -11,7 +11,15 @@ namespace GameLoop
         {
             FightEvent?.Invoke(sender, args);
         }
-        
+
+        public static event Action<GameCharacterState, GameCharacterState, float, bool> MagicDamageReceived;
+
+        public static void OnMagicDamageReceived(GameCharacterState sender, GameCharacterState target, float damage,
+            bool isPeriodic)
+        {
+            MagicDamageReceived?.Invoke(sender, target, damage, isPeriodic);
+        }
+
         public static event Action PlayerCharacterCreated;
 
         public static void OnPlayerCharacterCreated()

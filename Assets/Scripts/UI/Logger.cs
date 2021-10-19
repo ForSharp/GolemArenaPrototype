@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using FightState;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,14 +22,33 @@ namespace UI
             }
             
             EventContainer.FightEvent += PrintFightInfo;
+            EventContainer.MagicDamageReceived += PrintFightInfo;
             StartCoroutine(ClearOldInfo());
         }
 
         private void OnDisable()
         {
             EventContainer.FightEvent -= PrintFightInfo;
+            EventContainer.MagicDamageReceived -= PrintFightInfo;
         }
 
+        private void PrintFightInfo(GameCharacterState sender, GameCharacterState target, float damage,
+            bool isPeriodic)
+        {
+            if (isPeriodic)
+                return;
+            
+            if (_activeTexts < loggerTexts.Length - 1)
+            {
+                AddNewInfo(sender, target, damage);
+            }
+            else
+            {
+                MoveNext();
+                AddNewInfo(sender, target, damage);
+            }
+        }
+        
         private void PrintFightInfo(object sender, EventArgs args)
         {
             var fightArgs = (FightEventArgs)args;
@@ -41,6 +61,12 @@ namespace UI
                 MoveNext();
                 AddNewInfo(fightArgs);
             }
+        }
+
+        private void AddNewInfo(GameCharacterState sender, GameCharacterState target, float damage)
+        {
+            _textsPool[_activeTexts] = HandleInfo(sender, target, damage, loggerTexts[_activeTexts]);
+            _activeTexts++;
         }
 
         private void AddNewInfo(FightEventArgs fightArgs)
@@ -78,6 +104,15 @@ namespace UI
             }
         }
 
+        private static string HandleInfo(GameCharacterState sender, GameCharacterState target, float damage, GameObject text)
+        {
+            var obj = text.GetComponent<Text>();
+            
+            obj.GetComponent<Text>().text = $"<color=yellow><b>{target.Type}</b> takes <b>{damage:#.00}</b> magic damage from <b>{sender.Type}</b></color>";
+            
+            return obj.text;
+        }
+        
         private static string HandleInfo(FightEventArgs fightArgs, GameObject text)
         {
             var obj = text.GetComponent<Text>();

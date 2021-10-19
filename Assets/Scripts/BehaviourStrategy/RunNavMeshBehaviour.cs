@@ -1,5 +1,5 @@
 ﻿using System;
-using Fight;
+using FightState;
 using UnityEngine;
 using UnityEngine.AI;
 

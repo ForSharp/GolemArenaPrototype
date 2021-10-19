@@ -4,7 +4,7 @@ using System.Linq;
 using BehaviourStrategy;
 using BehaviourStrategy.Abstracts;
 using Controller;
-using Fight;
+using FightState;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,6 +15,11 @@ namespace GolemEntity
 {
     public class GolemAI : MonoBehaviour
     {
+        [SerializeField] private SpellInfo spellInfo; //!!!
+        [SerializeField] private GameObject spellEffect; //!!!
+        //не должны быть тут
+        private FireballSpell _fireballSpell; //вынести туда, где вся логика работы со спеллами
+        
         private bool _isAIControlAllowed = true;
         private bool _playerAI = true;
         private bool _isIKAllowed;
@@ -27,7 +32,6 @@ namespace GolemEntity
         private IMoveable _moveable;
         private IAttackable _attackable;
         private ICastable _spellCast;
-        private DefaultSpell _defaultSpell; //получить через гет компонент, когда он будет готов и будет висеть на персонаже
 
         private GameCharacterState _thisState;
         private GameCharacterState _targetState;
@@ -51,11 +55,17 @@ namespace GolemEntity
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _attack = GetComponent<CommonMeleeAttackBehaviour>();
+            
             _status = FightStatus.Neutral;
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
             _isDies = false;
             _soundsController = GetComponent<SoundsController>();
+
+            if (_thisState == Player.PlayerCharacter)
+            {
+                _fireballSpell = GetComponent<FireballSpell>();
+            }
         }
 
         private void Update()
@@ -63,11 +73,11 @@ namespace GolemEntity
             SwitchStatuses();
             ResetAttackIfNeed();
 
-            if (CanFight())
+            if (CanFight() && _targetState)
             {
                 _status = FightStatus.Active;
             }
-            else if (!_thisState.IsDead)
+            else if (CanFight() && !_targetState)
             {
                 _status = FightStatus.Neutral;
             }
@@ -94,6 +104,8 @@ namespace GolemEntity
                 PlayerController.SetMovementPointByController += RunToTargetByController;
                 PlayerController.SetTargetByController += SetTarget;
                 PlayerController.PlayModeChanged += ChangeMode;
+
+                PlayerController.SpellCastByController += CastSpell;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
@@ -113,6 +125,8 @@ namespace GolemEntity
                 PlayerController.SetMovementPointByController -= RunToTargetByController;
                 PlayerController.SetTargetByController -= SetTarget;
                 PlayerController.PlayModeChanged -= ChangeMode;
+                
+                PlayerController.SpellCastByController -= CastSpell;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
@@ -189,8 +203,8 @@ namespace GolemEntity
 
         private bool CanFight()
         {
-            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit &&
-                   _status != FightStatus.AvoidingHit && Game.Stage == Game.GameStage.Battle;
+            return _isAIControlAllowed && !_thisState.IsDead && _status != FightStatus.GettingHit &&
+                   _status != FightStatus.AvoidingHit && _status != FightStatus.CastsSpell && Game.Stage == Game.GameStage.Battle;
         }
 
         private void SetDefaultBehaviour()
@@ -249,10 +263,26 @@ namespace GolemEntity
 
         private void OnCanFight()
         {
-            if (CanFight())
+            if (!_thisState.IsDead && _isAIControlAllowed)
+            {
                 _status = FightStatus.Active;
+            }
+            else if (!_thisState.IsDead && !_isAIControlAllowed && _thisState == Player.PlayerCharacter)
+            {
+                _status = FightStatus.Neutral;
+            }
         }
 
+        private void OnSpellCastStarted()
+        {
+            _status = FightStatus.CastsSpell;
+        }
+
+        private void OnSpellCasted()
+        {
+            _status = FightStatus.Neutral;
+        }
+        
         #endregion
 
         private void SetFightBehaviour()
@@ -339,14 +369,18 @@ namespace GolemEntity
                 TurnSmoothlyToTarget();
         }
 
-        private void CastSpell()
+        public void CastSpell()
         {
+            
+            
             //привести к нужному типу, эти данные могут храниться например в каррент стэйт
             
-            // SetSpellCast((Fireball)_defaultSpell);
-            // _defaultSpell.CustomConstructor();
-            // _spellCast.CastSpell();
+            SetSpellCast(_fireballSpell);
+            _fireballSpell.CustomConstructor(spellInfo, _targetState.transform, _animator, AnimationChanger.SetCastFireBall, spellEffect, _thisState);
+            _spellCast.CastSpell();
         }
+
+        
 
         private float GetDelayBetweenHits()
         {
@@ -487,6 +521,12 @@ namespace GolemEntity
 
         private void GetHitOrAvoid(AttackHitEventArgs hitArgs)
         {
+            if (_status == FightStatus.CastsSpell)
+            {
+                GetHit(hitArgs);
+                return;
+            }
+            
             var hitChance = GetHitChance(hitArgs.HitAccuracy, _thisState.Stats.AvoidChance);
             var random = Random.Range(0, 1.0f);
             if (hitChance > random)
@@ -497,18 +537,24 @@ namespace GolemEntity
             else
             {
                 _isAvoidsHit = false;
+                
                 _status = FightStatus.AvoidingHit;
+                
+                
                 EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }
 
         private void GetHit(AttackHitEventArgs hitArgs)
         {
-            _thisState.TakeDamage(hitArgs.DamagePerHit, _thisState.Stats.Defence, hitArgs.Statistics);
+            _thisState.TakeDamage(hitArgs.DamagePerHit, hitArgs.Statistics);
             if (!_thisState.IsDead)
             {
-                _isGetsHit = false;
-                _status = FightStatus.GettingHit;
+                if (_status != FightStatus.CastsSpell)
+                {
+                    _isGetsHit = false;
+                    _status = FightStatus.GettingHit;
+                }
                 _soundsController.PlayHittingEnemySound();
             }
         }

@@ -390,13 +390,13 @@ namespace GolemEntity
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         HitAccuracyArgSt = strength * 1.05f,
-                        MagicDamageArgIn = intelligence * 1.15f
+                        MagicPowerArgIn = intelligence * 1.15f
                     });
                 case GolemType.Satyr:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         HealthArgSt = strength * 1.15f,
-                        MagicDamageArgIn = intelligence * 1.1f
+                        MagicPowerArgIn = intelligence * 1.1f
                     });
                 case GolemType.Maron:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
@@ -734,7 +734,7 @@ namespace GolemEntity
                 stats.Health,
                 stats.HitAccuracy,
                 stats.MagicAccuracy,
-                stats.MagicDamage,
+                stats.MagicPower,
                 stats.MagicResistance,
                 stats.ManaPool,
                 stats.MoveSpeed,
