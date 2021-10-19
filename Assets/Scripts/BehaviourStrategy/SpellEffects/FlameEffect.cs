@@ -30,7 +30,7 @@ namespace BehaviourStrategy.SpellEffects
             target.TakeDamage(periodicDamage, attacker.RoundStatistics);
             EventContainer.OnMagicDamageReceived(attacker, target, periodicDamage, true);
 
-            StartCoroutine(SetPeriodicDamage(target, attacker, periodicDamage));
+            StartCoroutine(SetPeriodicDamage(attacker, target, periodicDamage));
         }
         
         private IEnumerator SetPeriodicDamage(DestructibleObject target, float periodicDamage)

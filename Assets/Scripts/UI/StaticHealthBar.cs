@@ -46,6 +46,7 @@ namespace UI
         {
             _characterState = state;
             SetStartValues();
+            RemoveListeners();
             AddListeners();
         }
 

@@ -18,6 +18,7 @@ namespace GolemEntity
         [SerializeField] private SpellInfo spellInfo; //!!!
         [SerializeField] private GameObject spellEffect; //!!!
         //не должны быть тут
+        private FireballSpell _fireballSpell; //вынести туда, где вся логика работы со спеллами
         
         private bool _isAIControlAllowed = true;
         private bool _playerAI = true;
@@ -31,8 +32,6 @@ namespace GolemEntity
         private IMoveable _moveable;
         private IAttackable _attackable;
         private ICastable _spellCast;
-        //private DefaultSpell _defaultSpell; 
-        private FireballSpell _fireballSpell; //возможно придется оставить
 
         private GameCharacterState _thisState;
         private GameCharacterState _targetState;
@@ -56,7 +55,6 @@ namespace GolemEntity
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _attack = GetComponent<CommonMeleeAttackBehaviour>();
-            //_defaultSpell = GetComponent<DefaultSpell>();
             
             _status = FightStatus.Neutral;
             AnimationChanger.SetFightIdle(_animator, true);
@@ -75,11 +73,11 @@ namespace GolemEntity
             SwitchStatuses();
             ResetAttackIfNeed();
 
-            if (CanFight())
+            if (CanFight() && _targetState)
             {
                 _status = FightStatus.Active;
             }
-            else if (!_thisState.IsDead)
+            else if (CanFight() && !_targetState)
             {
                 _status = FightStatus.Neutral;
             }
@@ -205,7 +203,7 @@ namespace GolemEntity
 
         private bool CanFight()
         {
-            return _isAIControlAllowed && _targetState && !_thisState.IsDead && _status != FightStatus.GettingHit &&
+            return _isAIControlAllowed && !_thisState.IsDead && _status != FightStatus.GettingHit &&
                    _status != FightStatus.AvoidingHit && _status != FightStatus.CastsSpell && Game.Stage == Game.GameStage.Battle;
         }
 
@@ -265,8 +263,14 @@ namespace GolemEntity
 
         private void OnCanFight()
         {
-            if (CanFight())
+            if (!_thisState.IsDead && _isAIControlAllowed)
+            {
                 _status = FightStatus.Active;
+            }
+            else if (!_thisState.IsDead && !_isAIControlAllowed && _thisState == Player.PlayerCharacter)
+            {
+                _status = FightStatus.Neutral;
+            }
         }
 
         private void OnSpellCastStarted()
