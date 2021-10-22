@@ -2,9 +2,12 @@
 {
     public enum SpellType
     {
-        Heal,
+        HealHealth,
+        HealStamina,
+        HealMana,
         Buff,
         Debuff,
-        Damage
+        Damage,
+        Summon
     }
 }
