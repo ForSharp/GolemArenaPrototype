@@ -11,11 +11,15 @@ namespace Inventory
         [SerializeField] private string description; 
         [SerializeField] private int maxItemsInInventorySlot;
         [SerializeField] private Sprite spriteIcon;
-
+        [SerializeField] private ItemRarity itemRarity;
+        [SerializeField] private int price;
+        
         public string Id => id;
         public string Title => title;
         public string Description => description;
         public int MaxItemsInInventorySlot => maxItemsInInventorySlot;
         public Sprite SpriteIcon => spriteIcon;
+        public ItemRarity ItemRarity => itemRarity;
+        public int Price => price;
     }
 }

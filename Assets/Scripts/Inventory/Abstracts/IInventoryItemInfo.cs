@@ -9,5 +9,7 @@ namespace Inventory.Abstracts
         string Description { get; }
         int MaxItemsInInventorySlot { get; }
         Sprite SpriteIcon { get; }
+        ItemRarity ItemRarity { get; }
+        int Price { get; }
     }
 }
