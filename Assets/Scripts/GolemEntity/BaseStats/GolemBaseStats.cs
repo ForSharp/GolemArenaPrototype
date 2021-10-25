@@ -27,10 +27,14 @@
                 Intelligence = statsA.Intelligence * multiplier
             };
         }
+
         
+
         public override string ToString()
         {
             return $"Strength = {Strength}, Agility = {Agility}, Intelligence = {Intelligence}";
         }
+
+        
     }
 }

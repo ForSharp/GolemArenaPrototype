@@ -7,8 +7,6 @@ namespace GolemEntity.ExtraStats
     {
         private readonly Specialization _specialization;
 
-        private float[] _extraStatsParams;
-
         public SpecializationExtraStats(Specialization specialization, IExtraStatsProvider wrappedEntity, GolemBaseStats baseStats) : base(
              wrappedEntity, baseStats)
         {

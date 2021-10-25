@@ -1,5 +1,4 @@
 ﻿using GolemEntity.BaseStats;
-using Scripts;
 
 namespace GolemEntity.ExtraStats
 {
