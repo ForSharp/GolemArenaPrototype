@@ -1,7 +1,7 @@
 ﻿using GolemEntity.ExtraStats;
 using UnityEngine;
 
-namespace Inventory
+namespace Inventory.Info
 {
     [CreateAssetMenu(fileName = "ArtefactInfo", menuName = "Gameplay/Items/Create New ArtefactInfo")]
     public class ArtefactInfo : ScriptableObject

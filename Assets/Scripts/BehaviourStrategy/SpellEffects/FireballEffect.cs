@@ -3,6 +3,7 @@ using System.Linq;
 using BehaviourStrategy.Abstracts;
 using FightState;
 using GameLoop;
+using Inventory.Abstracts;
 using UnityEngine;
 
 namespace BehaviourStrategy.SpellEffects

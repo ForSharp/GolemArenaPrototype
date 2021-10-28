@@ -1,5 +1,6 @@
 ﻿using System;
 using Inventory;
+using Inventory.Info;
 using UnityEngine;
 
 namespace UI

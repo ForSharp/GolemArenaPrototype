@@ -1,7 +1,7 @@
 ﻿using Inventory.Abstracts;
 using UnityEngine;
 
-namespace Inventory
+namespace Inventory.Info
 {
     [CreateAssetMenu(fileName = "InventoryItemInfo", menuName = "Gameplay/Items/Create New ItemInfo")]
     public class InventoryItemInfo : ScriptableObject, IInventoryItemInfo

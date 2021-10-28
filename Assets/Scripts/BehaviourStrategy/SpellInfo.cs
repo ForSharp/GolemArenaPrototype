@@ -1,4 +1,5 @@
 ﻿using BehaviourStrategy.Abstracts;
+using Inventory.Abstracts;
 using UnityEngine;
 
 namespace BehaviourStrategy

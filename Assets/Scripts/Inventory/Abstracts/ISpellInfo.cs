@@ -1,4 +1,6 @@
-﻿namespace BehaviourStrategy.Abstracts
+﻿using BehaviourStrategy;
+
+namespace Inventory.Abstracts
 {
     public interface ISpellInfo
     {
@@ -8,7 +10,7 @@
         int SpellLvl { get; }
         float Damage { get; }
         float PeriodicDamage { get; }
-        int EffectDuration { get; }
+        int EffectDuration { get; } 
         float Hill { get; }
         
     }

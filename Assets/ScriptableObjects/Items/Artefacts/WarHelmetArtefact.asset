@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d8abb880484dc8ac2ec0eed89b3186, type: 3}
   m_Name: WarHelmet
   m_EditorClassIdentifier: 
-  affectsExtraStats: []
+  affectsExtraStats:
+  - ChangingValue: 1.1
+    StatsType: 4
+    IsFlat: 0
+  - ChangingValue: 50
+    StatsType: 1
+    IsFlat: 1

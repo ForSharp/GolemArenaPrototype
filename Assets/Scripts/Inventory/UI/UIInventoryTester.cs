@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Inventory;
 using Inventory.Abstracts;
+using Inventory.Info;
 using Inventory.Items;
 using Random = UnityEngine.Random;
 
