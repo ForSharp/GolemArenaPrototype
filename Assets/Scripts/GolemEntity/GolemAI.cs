@@ -6,6 +6,7 @@ using BehaviourStrategy.Abstracts;
 using Controller;
 using FightState;
 using GameLoop;
+using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using PlayMode = Controller.PlayMode;
@@ -15,9 +16,7 @@ namespace GolemEntity
 {
     public class GolemAI : MonoBehaviour
     {
-        [SerializeField] private SpellInfo spellInfo; //!!!
-        [SerializeField] private GameObject spellEffect; //!!!
-        //не должны быть тут
+        //компонент, который весит на герое 0
         private FireballSpell _fireballSpell; //вынести туда, где вся логика работы со спеллами
         
         private bool _isAIControlAllowed = true;
@@ -376,7 +375,7 @@ namespace GolemEntity
             //привести к нужному типу, эти данные могут храниться например в каррент стэйт
             
             SetSpellCast(_fireballSpell);
-            _fireballSpell.CustomConstructor(spellInfo, _targetState.transform, _animator, AnimationChanger.SetCastFireBall, spellEffect, _thisState);
+            _fireballSpell.CustomConstructor(ItemContainer.Instance.GetFireBallLvl1(), _targetState.transform, _animator, AnimationChanger.SetCastFireBall, _thisState);
             _spellCast.CastSpell();
         }
 

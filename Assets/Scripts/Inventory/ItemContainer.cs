@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Inventory.Abstracts;
 using Inventory.Info;
+using Inventory.Info.Spells;
 using Inventory.Items;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Inventory
         [SerializeField] private InventoryItemInfo beerItemInfo;
         [SerializeField] private InventoryItemInfo pepperItemInfo;
         [SerializeField] private InventoryItemInfo warHelmetItemInfo;
+        [SerializeField] private InventoryItemInfo fireBallItemInfo;
         [Header("ArtefactInfo")]
         [SerializeField] private ArtefactInfo warHelmetArtefactInfo;
         [Header("ConsumableInfo")]
@@ -21,7 +23,21 @@ namespace Inventory
         [Header("PotionInfo")]
         [SerializeField] private ArtefactInfo _potionInfo;
         [Header("SpellsInfo")]
-        [SerializeField] private ArtefactInfo _spellsInfo;
+        [SerializeField] private SpellInfo fireBallLvl1;
+        [Header("BuffSpellsInfo")] 
+        [SerializeField] private BuffSpellInfo _dsd;
+        [Header("DamageSpellsInfo")]
+        [SerializeField] private DamageSpellInfo fireBallDamageLvl1;
+        [Header("DebuffSpellsInfo")] 
+        [SerializeField] private DebuffSpellInfo _desi;
+        [Header("HealSpellsInfo")] 
+        [SerializeField] private HealSpellInfo _hsi;
+        [Header("PeriodicDamageSpellsInfo")] 
+        [SerializeField] private PeriodicDamageSpellInfo fireBallPeriodicDamageLvl1;
+        [Header("PolymorphSpells")] 
+        [SerializeField] private PolymorphSpellInfo _psi;
+        [Header("SummonSpellsInfo")]
+        [SerializeField] private SummonSpellInfo _ssi;
         
         public List<IInventoryItem> AllItems { get; private set; } = new List<IInventoryItem>();
         public static ItemContainer Instance { get; private set; }
@@ -42,6 +58,11 @@ namespace Inventory
             AllItems.Add(new Beer(beerItemInfo));
             AllItems.Add(new Pepper(pepperItemInfo));
             AllItems.Add(new WarHelmet(warHelmetItemInfo, warHelmetArtefactInfo));
+        }
+
+        public FireBallItem GetFireBallLvl1()
+        {
+            return new FireBallItem(fireBallItemInfo, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
         }
     }
 }

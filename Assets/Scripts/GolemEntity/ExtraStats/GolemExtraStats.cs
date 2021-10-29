@@ -1,5 +1,8 @@
-﻿namespace GolemEntity.ExtraStats
+﻿using System;
+
+namespace GolemEntity.ExtraStats
 {
+    [Serializable]
     public class GolemExtraStats 
     {
         public float AttackRange { get; set; }

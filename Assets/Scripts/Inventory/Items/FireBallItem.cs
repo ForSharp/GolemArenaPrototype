@@ -1,19 +1,34 @@
 ﻿using System;
 using Inventory.Abstracts;
-using Inventory.Info;
+using Inventory.Abstracts.Spells;
+using Inventory.Info.Spells;
 
 namespace Inventory.Items
 {
-    public class FireBallItem : IInventoryItem, ISpell
+    public class FireBallItem : IInventoryItem, ISpell, IDamagingSpell, IPeriodicDamageSpell
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
-        public Type Type { get; }
+        public Type Type => GetType();
+        public SpellInfo SpellInfo { get; }
+        public DamageSpellInfo DamageSpellInfo { get; }
+        public PeriodicDamageSpellInfo PeriodicDamageSpellInfo { get; }
+
+        public FireBallItem(IInventoryItemInfo info, SpellInfo spellInfo, DamageSpellInfo damageSpellInfo, 
+            PeriodicDamageSpellInfo periodicDamageSpellInfo)
+        {
+            Info = info;
+            State = new InventoryItemState();
+            SpellInfo = spellInfo;
+            DamageSpellInfo = damageSpellInfo;
+            PeriodicDamageSpellInfo = periodicDamageSpellInfo;
+        }
+        
         public IInventoryItem Clone()
         {
-            throw new NotImplementedException();
+            var clonedFireBallItem = new FireBallItem(Info, SpellInfo, DamageSpellInfo, PeriodicDamageSpellInfo);
+            clonedFireBallItem.State.Amount = State.Amount;
+            return clonedFireBallItem;
         }
-
-        public SpellInfo SpellInfo { get; }
     }
 }
