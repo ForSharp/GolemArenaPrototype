@@ -33,8 +33,8 @@ namespace BehaviourStrategy.SpellEffects
 
         public void CustomConstructor(GameCharacterState ownerState, FireBallItem info)
         {
-            _magicPower = ownerState.Stats.MagicPower;
-            _magicAccuracy = ownerState.Stats.MagicAccuracy;
+            _magicPower = ownerState.Stats.magicPower;
+            _magicAccuracy = ownerState.Stats.magicAccuracy;
             _state = ownerState;
             _ownerGroupNumber = ownerState.Group;
             _info = info;

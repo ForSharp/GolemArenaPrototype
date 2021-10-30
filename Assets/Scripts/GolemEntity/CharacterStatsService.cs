@@ -14,149 +14,149 @@ namespace GolemEntity
                 case GolemType.Cleopatra:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.14f,
-                        Agility = 0.54f,
-                        Intelligence = 0.82f
+                        strength = 0.14f,
+                        agility = 0.54f,
+                        intelligence = 0.82f
                     };
                 case GolemType.Ramzes:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.37f,
-                        Agility = 0.86f,
-                        Intelligence = 0.27f
+                        strength = 0.37f,
+                        agility = 0.86f,
+                        intelligence = 0.27f
                     };
                 case GolemType.Garruk:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.82f,
-                        Agility = 0.22f,
-                        Intelligence = 0.46f
+                        strength = 0.82f,
+                        agility = 0.22f,
+                        intelligence = 0.46f
                     };
                 case GolemType.Bagrak:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.84f,
-                        Agility = 0.21f,
-                        Intelligence = 0.45f
+                        strength = 0.84f,
+                        agility = 0.21f,
+                        intelligence = 0.45f
                     };
                 case GolemType.Gloin:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.54f,
-                        Agility = 0.86f,
-                        Intelligence = 0.1f
+                        strength = 0.54f,
+                        agility = 0.86f,
+                        intelligence = 0.1f
                     };
                 case GolemType.Rock:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.95f,
-                        Agility = 0.14f,
-                        Intelligence = 0.41f
+                        strength = 0.95f,
+                        agility = 0.14f,
+                        intelligence = 0.41f
                     };
                 case GolemType.Fort:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.92f,
-                        Agility = 0.11f,
-                        Intelligence = 0.47f
+                        strength = 0.92f,
+                        agility = 0.11f,
+                        intelligence = 0.47f
                     };
                 case GolemType.Mario:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.6f,
-                        Agility = 0.65f,
-                        Intelligence = 0.25f
+                        strength = 0.6f,
+                        agility = 0.65f,
+                        intelligence = 0.25f
                     };
                 case GolemType.Freak:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.57f,
-                        Agility = 0.39f,
-                        Intelligence = 0.54f
+                        strength = 0.57f,
+                        agility = 0.39f,
+                        intelligence = 0.54f
                     };
                 case GolemType.Peppa:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.83f,
-                        Agility = 0.14f,
-                        Intelligence = 0.53f
+                        strength = 0.83f,
+                        agility = 0.14f,
+                        intelligence = 0.53f
                     };
                 case GolemType.Satyr:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.29f,
-                        Agility = 0.56f,
-                        Intelligence = 0.65f
+                        strength = 0.29f,
+                        agility = 0.56f,
+                        intelligence = 0.65f
                     };
                 case GolemType.Maron:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.65f,
-                        Agility = 0.75f,
-                        Intelligence = 0.1f
+                        strength = 0.65f,
+                        agility = 0.75f,
+                        intelligence = 0.1f
                     };
                 case GolemType.Cudgel:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.67f,
-                        Agility = 0.27f,
-                        Intelligence = 0.56f
+                        strength = 0.67f,
+                        agility = 0.27f,
+                        intelligence = 0.56f
                     };
                 case GolemType.Belesar:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.56f,
-                        Agility = 0.61f,
-                        Intelligence = 0.33f
+                        strength = 0.56f,
+                        agility = 0.61f,
+                        intelligence = 0.33f
                     };
                 case GolemType.Yama:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.34f,
-                        Agility = 0.44f,
-                        Intelligence = 0.72f
+                        strength = 0.34f,
+                        agility = 0.44f,
+                        intelligence = 0.72f
                     };
                 case GolemType.Shanti:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.34f,
-                        Agility = 0.46f,
-                        Intelligence = 0.7f
+                        strength = 0.34f,
+                        agility = 0.46f,
+                        intelligence = 0.7f
                     };
                 case GolemType.Aine:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.43f,
-                        Agility = 0.5f,
-                        Intelligence = 0.57f
+                        strength = 0.43f,
+                        agility = 0.5f,
+                        intelligence = 0.57f
                     };
                 case GolemType.Medusa:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.22f,
-                        Agility = 0.38f,
-                        Intelligence = 0.9f
+                        strength = 0.22f,
+                        agility = 0.38f,
+                        intelligence = 0.9f
                     };
                 case GolemType.Sazum:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.37f,
-                        Agility = 0.5f,
-                        Intelligence = 0.63f
+                        strength = 0.37f,
+                        agility = 0.5f,
+                        intelligence = 0.63f
                     };
                 case GolemType.Nissa:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.54f,
-                        Agility = 0.65f,
-                        Intelligence = 0.31f
+                        strength = 0.54f,
+                        agility = 0.65f,
+                        intelligence = 0.31f
                     };
                 case GolemType.Raven:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.61f,
-                        Agility = 0.65f,
-                        Intelligence = 0.24f
+                        strength = 0.61f,
+                        agility = 0.65f,
+                        intelligence = 0.24f
                     };
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -170,149 +170,149 @@ namespace GolemEntity
                 case Specialization.Barbarian:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.82f,
-                        Agility = 0.4f,
-                        Intelligence = 0.28f
+                        strength = 0.82f,
+                        agility = 0.4f,
+                        intelligence = 0.28f
                     };
                 case Specialization.Bard:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.2f,
-                        Agility = 0.67f,
-                        Intelligence = 0.63f
+                        strength = 0.2f,
+                        agility = 0.67f,
+                        intelligence = 0.63f
                     };
                 case Specialization.BattleMage:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.56f,
-                        Agility = 0.17f,
-                        Intelligence = 0.77f
+                        strength = 0.56f,
+                        agility = 0.17f,
+                        intelligence = 0.77f
                     };
                 case Specialization.Cleric:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.61f,
-                        Agility = 0.55f,
-                        Intelligence = 0.34f
+                        strength = 0.61f,
+                        agility = 0.55f,
+                        intelligence = 0.34f
                     };
                 case Specialization.DeathKnight:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.70f,
-                        Agility = 0.50f,
-                        Intelligence = 0.30f
+                        strength = 0.70f,
+                        agility = 0.50f,
+                        intelligence = 0.30f
                     };
                 case Specialization.DemonHunter:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.33f,
-                        Agility = 0.68f,
-                        Intelligence = 0.49f
+                        strength = 0.33f,
+                        agility = 0.68f,
+                        intelligence = 0.49f
                     };
                 case Specialization.Druid:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.40f,
-                        Agility = 0.35f,
-                        Intelligence = 0.75f
+                        strength = 0.40f,
+                        agility = 0.35f,
+                        intelligence = 0.75f
                     };
                 case Specialization.Fighter:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.76f,
-                        Agility = 0.69f,
-                        Intelligence = 0.05f
+                        strength = 0.76f,
+                        agility = 0.69f,
+                        intelligence = 0.05f
                     };
                 case Specialization.Hunter:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.13f,
-                        Agility = 0.75f,
-                        Intelligence = 0.62f
+                        strength = 0.13f,
+                        agility = 0.75f,
+                        intelligence = 0.62f
                     };
                 case Specialization.Illusionist:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.14f,
-                        Agility = 0.89f,
-                        Intelligence = 0.47f
+                        strength = 0.14f,
+                        agility = 0.89f,
+                        intelligence = 0.47f
                     };
                 case Specialization.Monk:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.50f,
-                        Agility = 0.50f,
-                        Intelligence = 0.50f
+                        strength = 0.50f,
+                        agility = 0.50f,
+                        intelligence = 0.50f
                     };
                 case Specialization.Paladin:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.70f,
-                        Agility = 0.63f,
-                        Intelligence = 0.17f
+                        strength = 0.70f,
+                        agility = 0.63f,
+                        intelligence = 0.17f
                     };
                 case Specialization.Ranger:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.29f,
-                        Agility = 0.82f,
-                        Intelligence = 0.39f
+                        strength = 0.29f,
+                        agility = 0.82f,
+                        intelligence = 0.39f
                     };
                 case Specialization.Rogue:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.20f,
-                        Agility = 0.66f,
-                        Intelligence = 0.64f
+                        strength = 0.20f,
+                        agility = 0.66f,
+                        intelligence = 0.64f
                     };
                 case Specialization.Shaman:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.57f,
-                        Agility = 0.15f,
-                        Intelligence = 0.78f
+                        strength = 0.57f,
+                        agility = 0.15f,
+                        intelligence = 0.78f
                     };
                 case Specialization.Sorcerer:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.69f,
-                        Agility = 0.02f,
-                        Intelligence = 0.79f
+                        strength = 0.69f,
+                        agility = 0.02f,
+                        intelligence = 0.79f
                     };
                 case Specialization.Tank:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.83f,
-                        Agility = 0.57f,
-                        Intelligence = 0.1f
+                        strength = 0.83f,
+                        agility = 0.57f,
+                        intelligence = 0.1f
                     };
                 case Specialization.Thief:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.43f,
-                        Agility = 0.54f,
-                        Intelligence = 0.53f
+                        strength = 0.43f,
+                        agility = 0.54f,
+                        intelligence = 0.53f
                     };
                 case Specialization.Warlock:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.61f,
-                        Agility = 0.25f,
-                        Intelligence = 0.64f
+                        strength = 0.61f,
+                        agility = 0.25f,
+                        intelligence = 0.64f
                     };
                 case Specialization.Warrior:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.68f,
-                        Agility = 0.56f,
-                        Intelligence = 0.26f
+                        strength = 0.68f,
+                        agility = 0.56f,
+                        intelligence = 0.26f
                     };
                 case Specialization.Wizard:
                     return new GolemBaseStats()
                     {
-                        Strength = 0.62f,
-                        Agility = 0.06f,
-                        Intelligence = 0.82f
+                        strength = 0.62f,
+                        agility = 0.06f,
+                        intelligence = 0.82f
                     };
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spec), spec, null);
@@ -326,9 +326,9 @@ namespace GolemEntity
 
         public static GolemExtraStats GetExtraStats(GolemType golemType, GolemBaseStats baseStats)
         {
-            var strength = baseStats.Strength;
-            var agility = baseStats.Agility;
-            var intelligence = baseStats.Intelligence;
+            var strength = baseStats.strength;
+            var agility = baseStats.agility;
+            var intelligence = baseStats.intelligence;
 
             switch (golemType)
             {
@@ -465,9 +465,9 @@ namespace GolemEntity
 
         public static GolemExtraStats GetExtraStats(Specialization spec, GolemBaseStats baseStats)
         {
-            var strength = baseStats.Strength;
-            var agility = baseStats.Agility;
-            var intelligence = baseStats.Intelligence;
+            var strength = baseStats.strength;
+            var agility = baseStats.agility;
+            var intelligence = baseStats.intelligence;
 
             switch (spec)
             {
@@ -725,28 +725,28 @@ namespace GolemEntity
         {
             return new[]
             {
-                stats.AttackRange,
-                stats.AttackSpeed,
-                stats.AvoidChance,
-                stats.DamagePerHeat,
-                stats.Defence,
-                stats.DodgeChance,
-                stats.Health,
-                stats.HitAccuracy,
-                stats.MagicAccuracy,
-                stats.MagicPower,
-                stats.MagicResistance,
-                stats.ManaPool,
-                stats.MoveSpeed,
-                stats.RegenerationHealth,
-                stats.RegenerationMana,
-                stats.RegenerationStamina,
-                stats.Stamina
+                stats.attackRange,
+                stats.attackSpeed,
+                stats.avoidChance,
+                stats.damagePerHeat,
+                stats.defence,
+                stats.dodgeChance,
+                stats.health,
+                stats.hitAccuracy,
+                stats.magicAccuracy,
+                stats.magicPower,
+                stats.magicResistance,
+                stats.manaPool,
+                stats.moveSpeed,
+                stats.regenerationHealth,
+                stats.regenerationMana,
+                stats.regenerationStamina,
+                stats.stamina
             };
         }
 
         private static readonly GolemBaseStats BaseStats = new GolemBaseStats
-            {Strength = 150, Agility = 150, Intelligence = 150};
+            {strength = 150, agility = 150, intelligence = 150};
 
         private const int NonExistentEnumValue = 2222222;
 

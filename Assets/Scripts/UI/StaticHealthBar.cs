@@ -88,13 +88,13 @@ namespace UI
 
         private void SetMaxValues(GolemExtraStats stats)
         {
-            sliderHealth.maxValue = stats.Health;
+            sliderHealth.maxValue = stats.health;
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");
                 
-            sliderStamina.maxValue = stats.Stamina;
+            sliderStamina.maxValue = stats.stamina;
             maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
                 
-            sliderMana.maxValue = stats.ManaPool;
+            sliderMana.maxValue = stats.manaPool;
             maxManaText.text = sliderMana.maxValue.ToString("#.");
         }
 

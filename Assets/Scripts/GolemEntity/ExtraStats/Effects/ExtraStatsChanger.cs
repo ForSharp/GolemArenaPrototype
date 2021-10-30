@@ -35,55 +35,55 @@ namespace GolemEntity.ExtraStats.Effects
             switch (type)
             {
                 case ExtraStats.AttackRange:
-                    _wrappedEntity.GetExtraStats().AttackRange += changingValue;
+                    _wrappedEntity.GetExtraStats().attackRange += changingValue;
                     break;
                 case ExtraStats.AttackSpeed:
-                    _wrappedEntity.GetExtraStats().AttackSpeed += changingValue;
+                    _wrappedEntity.GetExtraStats().attackSpeed += changingValue;
                     break;
                 case ExtraStats.AvoidChance:
-                    _wrappedEntity.GetExtraStats().AvoidChance += changingValue;
+                    _wrappedEntity.GetExtraStats().avoidChance += changingValue;
                     break;
                 case ExtraStats.DamagePerHeat:
-                    _wrappedEntity.GetExtraStats().DamagePerHeat += changingValue;
+                    _wrappedEntity.GetExtraStats().damagePerHeat += changingValue;
                     break;
                 case ExtraStats.Defence:
-                    _wrappedEntity.GetExtraStats().Defence += changingValue;
+                    _wrappedEntity.GetExtraStats().defence += changingValue;
                     break;
                 case ExtraStats.DodgeChance:
-                    _wrappedEntity.GetExtraStats().DodgeChance += changingValue;
+                    _wrappedEntity.GetExtraStats().dodgeChance += changingValue;
                     break;
                 case ExtraStats.Health:
-                    _wrappedEntity.GetExtraStats().Health += changingValue;
+                    _wrappedEntity.GetExtraStats().health += changingValue;
                     break;
                 case ExtraStats.HitAccuracy:
-                    _wrappedEntity.GetExtraStats().HitAccuracy += changingValue;
+                    _wrappedEntity.GetExtraStats().hitAccuracy += changingValue;
                     break;
                 case ExtraStats.MagicAccuracy:
-                    _wrappedEntity.GetExtraStats().MagicAccuracy += changingValue;
+                    _wrappedEntity.GetExtraStats().magicAccuracy += changingValue;
                     break;
                 case ExtraStats.MagicPower:
-                    _wrappedEntity.GetExtraStats().MagicPower += changingValue;
+                    _wrappedEntity.GetExtraStats().magicPower += changingValue;
                     break;
                 case ExtraStats.MagicResistance:
-                    _wrappedEntity.GetExtraStats().MagicResistance += changingValue;
+                    _wrappedEntity.GetExtraStats().magicResistance += changingValue;
                     break;
                 case ExtraStats.ManaPool:
-                    _wrappedEntity.GetExtraStats().ManaPool += changingValue;
+                    _wrappedEntity.GetExtraStats().manaPool += changingValue;
                     break;
                 case ExtraStats.MoveSpeed:
-                    _wrappedEntity.GetExtraStats().MoveSpeed += changingValue;
+                    _wrappedEntity.GetExtraStats().moveSpeed += changingValue;
                     break;
                 case ExtraStats.RegenerationHealth:
-                    _wrappedEntity.GetExtraStats().RegenerationHealth += changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationHealth += changingValue;
                     break;
                 case ExtraStats.RegenerationMana:
-                    _wrappedEntity.GetExtraStats().RegenerationMana += changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationMana += changingValue;
                     break;
                 case ExtraStats.RegenerationStamina:
-                    _wrappedEntity.GetExtraStats().RegenerationStamina += changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationStamina += changingValue;
                     break;
                 case ExtraStats.Stamina:
-                    _wrappedEntity.GetExtraStats().Stamina += changingValue;
+                    _wrappedEntity.GetExtraStats().stamina += changingValue;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -95,55 +95,55 @@ namespace GolemEntity.ExtraStats.Effects
             switch (type)
             {
                 case ExtraStats.AttackRange:
-                    _wrappedEntity.GetExtraStats().AttackRange *= changingValue;
+                    _wrappedEntity.GetExtraStats().attackRange *= changingValue;
                     break;
                 case ExtraStats.AttackSpeed:
-                    _wrappedEntity.GetExtraStats().AttackSpeed *= changingValue;
+                    _wrappedEntity.GetExtraStats().attackSpeed *= changingValue;
                     break;
                 case ExtraStats.AvoidChance:
-                    _wrappedEntity.GetExtraStats().AvoidChance *= changingValue;
+                    _wrappedEntity.GetExtraStats().avoidChance *= changingValue;
                     break;
                 case ExtraStats.DamagePerHeat:
-                    _wrappedEntity.GetExtraStats().DamagePerHeat *= changingValue;
+                    _wrappedEntity.GetExtraStats().damagePerHeat *= changingValue;
                     break;
                 case ExtraStats.Defence:
-                    _wrappedEntity.GetExtraStats().Defence *= changingValue;
+                    _wrappedEntity.GetExtraStats().defence *= changingValue;
                     break;
                 case ExtraStats.DodgeChance:
-                    _wrappedEntity.GetExtraStats().DodgeChance *= changingValue;
+                    _wrappedEntity.GetExtraStats().dodgeChance *= changingValue;
                     break;
                 case ExtraStats.Health:
-                    _wrappedEntity.GetExtraStats().Health *= changingValue;
+                    _wrappedEntity.GetExtraStats().health *= changingValue;
                     break;
                 case ExtraStats.HitAccuracy:
-                    _wrappedEntity.GetExtraStats().HitAccuracy *= changingValue;
+                    _wrappedEntity.GetExtraStats().hitAccuracy *= changingValue;
                     break;
                 case ExtraStats.MagicAccuracy:
-                    _wrappedEntity.GetExtraStats().MagicAccuracy *= changingValue;
+                    _wrappedEntity.GetExtraStats().magicAccuracy *= changingValue;
                     break;
                 case ExtraStats.MagicPower:
-                    _wrappedEntity.GetExtraStats().MagicPower *= changingValue;
+                    _wrappedEntity.GetExtraStats().magicPower *= changingValue;
                     break;
                 case ExtraStats.MagicResistance:
-                    _wrappedEntity.GetExtraStats().MagicResistance *= changingValue;
+                    _wrappedEntity.GetExtraStats().magicResistance *= changingValue;
                     break;
                 case ExtraStats.ManaPool:
-                    _wrappedEntity.GetExtraStats().ManaPool *= changingValue;
+                    _wrappedEntity.GetExtraStats().manaPool *= changingValue;
                     break;
                 case ExtraStats.MoveSpeed:
-                    _wrappedEntity.GetExtraStats().MoveSpeed *= changingValue;
+                    _wrappedEntity.GetExtraStats().moveSpeed *= changingValue;
                     break;
                 case ExtraStats.RegenerationHealth:
-                    _wrappedEntity.GetExtraStats().RegenerationHealth *= changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationHealth *= changingValue;
                     break;
                 case ExtraStats.RegenerationMana:
-                    _wrappedEntity.GetExtraStats().RegenerationMana *= changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationMana *= changingValue;
                     break;
                 case ExtraStats.RegenerationStamina:
-                    _wrappedEntity.GetExtraStats().RegenerationStamina *= changingValue;
+                    _wrappedEntity.GetExtraStats().regenerationStamina *= changingValue;
                     break;
                 case ExtraStats.Stamina:
-                    _wrappedEntity.GetExtraStats().Stamina *= changingValue;
+                    _wrappedEntity.GetExtraStats().stamina *= changingValue;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

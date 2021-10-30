@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GolemEntity.BaseStats;
+using GolemEntity.BaseStats.Effects;
 using GolemEntity.ExtraStats;
 
 namespace GolemEntity
@@ -28,12 +29,17 @@ namespace GolemEntity
         
         public void ChangeBaseStatsProportionallyPermanent(float value)
         {
-            var changing = new BaseStatsEditor(value, ParseIStatsToGolemBaseStats(Rate), _provider);
+            var changing = new BaseStatsIdenticalMultiplierChanger(value, ParseIStatsToGolemBaseStats(Rate), _provider);
             _provider = changing;
             
             AddPermanentBaseStats(changing);
             
             RecalculateExtraStats();
+        }
+
+        public void ChangeBaseStatsProportionallyPermanent(GolemBaseStats stats)
+        {
+            
         }
 
         public GolemBaseStats GetBaseStats()
@@ -136,9 +142,9 @@ namespace GolemEntity
         {
             return new GolemBaseStats()
             {
-                Strength = provider.GetBaseStats().Strength,
-                Agility = provider.GetBaseStats().Agility,
-                Intelligence = provider.GetBaseStats().Intelligence
+                strength = provider.GetBaseStats().strength,
+                agility = provider.GetBaseStats().agility,
+                intelligence = provider.GetBaseStats().intelligence
             };
         }
 
@@ -146,23 +152,23 @@ namespace GolemEntity
         {
             return new GolemExtraStats()
             {
-                AttackRange = extra.GetExtraStats().AttackRange, 
-                AttackSpeed = extra.GetExtraStats().AttackSpeed,
-                AvoidChance = extra.GetExtraStats().AvoidChance,
-                DamagePerHeat = extra.GetExtraStats().DamagePerHeat,
-                Defence = extra.GetExtraStats().Defence,
-                DodgeChance = extra.GetExtraStats().DodgeChance,
-                Health = extra.GetExtraStats().Health,
-                HitAccuracy = extra.GetExtraStats().HitAccuracy,
-                MagicAccuracy = extra.GetExtraStats().MagicAccuracy,
-                MagicPower = extra.GetExtraStats().MagicPower,
-                MagicResistance = extra.GetExtraStats().MagicResistance,
-                ManaPool = extra.GetExtraStats().ManaPool,
-                MoveSpeed = extra.GetExtraStats().MoveSpeed,
-                RegenerationHealth = extra.GetExtraStats().RegenerationHealth,
-                RegenerationMana = extra.GetExtraStats().RegenerationMana,
-                RegenerationStamina = extra.GetExtraStats().RegenerationStamina,
-                Stamina = extra.GetExtraStats().Stamina
+                attackRange = extra.GetExtraStats().attackRange, 
+                attackSpeed = extra.GetExtraStats().attackSpeed,
+                avoidChance = extra.GetExtraStats().avoidChance,
+                damagePerHeat = extra.GetExtraStats().damagePerHeat,
+                defence = extra.GetExtraStats().defence,
+                dodgeChance = extra.GetExtraStats().dodgeChance,
+                health = extra.GetExtraStats().health,
+                hitAccuracy = extra.GetExtraStats().hitAccuracy,
+                magicAccuracy = extra.GetExtraStats().magicAccuracy,
+                magicPower = extra.GetExtraStats().magicPower,
+                magicResistance = extra.GetExtraStats().magicResistance,
+                manaPool = extra.GetExtraStats().manaPool,
+                moveSpeed = extra.GetExtraStats().moveSpeed,
+                regenerationHealth = extra.GetExtraStats().regenerationHealth,
+                regenerationMana = extra.GetExtraStats().regenerationMana,
+                regenerationStamina = extra.GetExtraStats().regenerationStamina,
+                stamina = extra.GetExtraStats().stamina
             };
         }
 
@@ -174,22 +180,6 @@ namespace GolemEntity
         public string GetGolemExtraStats()
         {
             return GetExtraStats().ToString();
-        }
-    }
-
-    public class BaseStatsEditor : StatsDecorator
-    {
-        private readonly float _value;
-        private readonly GolemBaseStats _multiplier;
-        public BaseStatsEditor(float value, GolemBaseStats multiplier, IStatsProvider wrappedEntity) : base(wrappedEntity)
-        {
-            _value = value;
-            _multiplier = multiplier;
-        }
-
-        protected override GolemBaseStats GetStatsInternal()
-        {
-            return WrappedEntity.GetBaseStats() + (_multiplier * _value);
         }
     }
 

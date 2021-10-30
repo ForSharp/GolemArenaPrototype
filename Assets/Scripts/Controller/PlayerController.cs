@@ -331,13 +331,13 @@ namespace Controller
 
         private void Walk()
         {
-            _moveSpeed = _state.Stats.MoveSpeed;
+            _moveSpeed = _state.Stats.moveSpeed;
             AnimationChanger.SetGolemWalk(_animator);
         }
 
         private void Run()
         {
-            _moveSpeed = _state.Stats.MoveSpeed * 1.5f;
+            _moveSpeed = _state.Stats.moveSpeed * 1.5f;
             AnimationChanger.SetGolemRun(_animator);
         }
 

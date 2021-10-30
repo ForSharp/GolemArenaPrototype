@@ -314,7 +314,7 @@ namespace GolemEntity
 
             bool InAttackDistance()
             {
-                return distanceToTarget <= _thisState.Stats.AttackRange * 1.5f;
+                return distanceToTarget <= _thisState.Stats.attackRange * 1.5f;
             }
 
             bool NearToTarget()
@@ -356,9 +356,9 @@ namespace GolemEntity
             _moveable.Move(default, default);
 
             SetAttackBehaviour(_attack);
-            _attack.CustomConstructor(HitHeight, _thisState.Stats.AttackRange, DestructionRadius,
-                _animator, _thisState.Group, _thisState.Stats.DamagePerHeat, GetDelayBetweenHits(),
-                _thisState.Stats.HitAccuracy,
+            _attack.CustomConstructor(HitHeight, _thisState.Stats.attackRange, DestructionRadius,
+                _animator, _thisState.Group, _thisState.Stats.damagePerHeat, GetDelayBetweenHits(),
+                _thisState.Stats.hitAccuracy,
                 _targetState.gameObject, _thisState.Type,
                 _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
@@ -384,7 +384,7 @@ namespace GolemEntity
         private float GetDelayBetweenHits()
         {
             const float seconds = 60;
-            return seconds / (_thisState.Stats.AttackSpeed / 10);
+            return seconds / (_thisState.Stats.attackSpeed / 10);
         }
 
         private void SetDeadBehaviour()
@@ -434,18 +434,18 @@ namespace GolemEntity
         private void WalkSlowlyWithFightPosture()
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.attackRange, _animator, _navMeshAgent,
                 AnimationChanger.SetWalkingFight));
-            _moveable.Move(_thisState.Stats.MoveSpeed / 2, _targetState.transform.position);
+            _moveable.Move(_thisState.Stats.moveSpeed / 2, _targetState.transform.position);
             _isIKAllowed = true;
         }
 
         private void WalkToTarget()
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.attackRange, _animator, _navMeshAgent,
                 AnimationChanger.SetGolemWalk));
-            _moveable.Move(_thisState.Stats.MoveSpeed, _targetState.transform.position);
+            _moveable.Move(_thisState.Stats.moveSpeed, _targetState.transform.position);
             _isIKAllowed = false;
         }
 
@@ -461,9 +461,9 @@ namespace GolemEntity
         private void RunToTarget(int direction = 1)
         {
             _animator.applyRootMotion = false;
-            SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.AttackRange, _animator, _navMeshAgent,
+            SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.attackRange, _animator, _navMeshAgent,
                 false, AnimationChanger.SetGolemRun));
-            _moveable.Move(_thisState.Stats.MoveSpeed * 2, _targetState.transform.position * direction);
+            _moveable.Move(_thisState.Stats.moveSpeed * 2, _targetState.transform.position * direction);
             _isIKAllowed = false;
 
             _inAttack = false;
@@ -474,10 +474,10 @@ namespace GolemEntity
             if (_thisState == Player.PlayerCharacter)
             {
                 _animator.applyRootMotion = false;
-                SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.AttackRange, _animator,
+                SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.attackRange, _animator,
                     _navMeshAgent,
                     false, AnimationChanger.SetGolemRun));
-                _moveable.Move(_thisState.Stats.MoveSpeed * 2, point);
+                _moveable.Move(_thisState.Stats.moveSpeed * 2, point);
                 _isIKAllowed = false;
                 _isAIControlAllowed = false;
 
@@ -526,7 +526,7 @@ namespace GolemEntity
                 return;
             }
             
-            var hitChance = GetHitChance(hitArgs.HitAccuracy, _thisState.Stats.AvoidChance);
+            var hitChance = GetHitChance(hitArgs.HitAccuracy, _thisState.Stats.avoidChance);
             var random = Random.Range(0, 1.0f);
             if (hitChance > random)
             {
@@ -727,7 +727,7 @@ namespace GolemEntity
                 Vector3 direction = _targetState.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotation,
-                    _thisState.Stats.MoveSpeed * Time.deltaTime);
+                    _thisState.Stats.moveSpeed * Time.deltaTime);
             }
         }
 

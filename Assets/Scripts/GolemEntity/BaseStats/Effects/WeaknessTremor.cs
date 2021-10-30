@@ -9,8 +9,8 @@
         protected override GolemBaseStats GetStatsInternal()
         {
             var stats = WrappedEntity.GetBaseStats();
-            stats.Strength *= 0.9f;
-            stats.Agility *= 0.9f;
+            stats.strength *= 0.9f;
+            stats.agility *= 0.9f;
             return stats;
         }
     }

@@ -1,20 +1,23 @@
-﻿namespace GolemEntity.BaseStats
+﻿using System;
+
+namespace GolemEntity.BaseStats
 {
-    public struct GolemBaseStats 
+    [Serializable]
+    public class GolemBaseStats
     {
-        public float Strength { get; set; }
+        public float strength;
         
-        public float Agility { get; set; }
+        public float agility;
         
-        public float Intelligence { get; set; }
+        public float intelligence;
 
         public static GolemBaseStats operator +(GolemBaseStats statsA, GolemBaseStats statsB)
         {
             return new GolemBaseStats()
             {
-                Strength = statsA.Strength + statsB.Strength,
-                Agility = statsA.Agility + statsB.Agility,
-                Intelligence = statsA.Intelligence + statsB.Intelligence
+                strength = statsA.strength + statsB.strength,
+                agility = statsA.agility + statsB.agility,
+                intelligence = statsA.intelligence + statsB.intelligence
             };
         }
 
@@ -22,19 +25,16 @@
         {
             return new GolemBaseStats()
             {
-                Strength = statsA.Strength * multiplier,
-                Agility = statsA.Agility * multiplier,
-                Intelligence = statsA.Intelligence * multiplier
+                strength = statsA.strength * multiplier,
+                agility = statsA.agility * multiplier,
+                intelligence = statsA.intelligence * multiplier
             };
         }
 
-        
-
         public override string ToString()
         {
-            return $"Strength = {Strength}, Agility = {Agility}, Intelligence = {Intelligence}";
+            return $"Strength = {strength}, Agility = {agility}, Intelligence = {intelligence}";
         }
-
         
     }
 }

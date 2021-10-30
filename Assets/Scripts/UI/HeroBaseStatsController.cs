@@ -18,18 +18,18 @@ namespace UI
         public void SetTypeStats(GolemType type)
         {
             GolemType = type;
-            strengthSlider.value = CharacterStatsService.GetBaseStats(type).Strength;
-            agilitySlider.value = CharacterStatsService.GetBaseStats(type).Agility;
-            intelligenceSlider.value = CharacterStatsService.GetBaseStats(type).Intelligence;
+            strengthSlider.value = CharacterStatsService.GetBaseStats(type).strength;
+            agilitySlider.value = CharacterStatsService.GetBaseStats(type).agility;
+            intelligenceSlider.value = CharacterStatsService.GetBaseStats(type).intelligence;
         }
 
         public void SetTypeSpecStats(GolemType type, Specialization spec)
         {
             GolemType = type;
             Specialization = spec;
-            strengthTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).Strength;
-            agilityTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).Agility;
-            intelligenceTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).Intelligence;
+            strengthTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).strength;
+            agilityTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).agility;
+            intelligenceTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).intelligence;
         }
 
         public void DeleteSpecBonus()

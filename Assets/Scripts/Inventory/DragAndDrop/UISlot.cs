@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace DragAndDrop
@@ -11,5 +13,7 @@ namespace DragAndDrop
             otherItemTransform.SetParent(transform);
             otherItemTransform.localPosition = Vector3.zero;
         }
+
+        
     }
 }

@@ -93,7 +93,7 @@ namespace UI
 
         private void SetMaxValues(GolemExtraStats stats)
         {
-            sliderHealth.maxValue = stats.Health;
+            sliderHealth.maxValue = stats.health;
             SetCurrentColor();
             
         }

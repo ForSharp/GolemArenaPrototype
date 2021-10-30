@@ -64,23 +64,23 @@ namespace GolemEntity
         {
             return new GolemExtraStats()
             {
-                AttackRange = ExtraStatsCalculator.GetAttackRange(),
-                AttackSpeed = ExtraStatsCalculator.GetAttackSpeed(typeExtraArgs.AttackSpeedArgAg),
-                AvoidChance = ExtraStatsCalculator.GetAvoidChance(typeExtraArgs.AvoidChanceArgSt, typeExtraArgs.AvoidChanceArgAg),
-                DamagePerHeat = ExtraStatsCalculator.GetDamagePerHeat(typeExtraArgs.DamagePerHeatArgSt, typeExtraArgs.DamagePerHeatArgAg, typeExtraArgs.DamagePerHeatArgIn),
-                Defence = ExtraStatsCalculator.GetDefence(typeExtraArgs.DefenceArgSt, typeExtraArgs.DefenceArgAg),
-                DodgeChance = ExtraStatsCalculator.GetDodgeChance(typeExtraArgs.DodgeChanceArgAg, typeExtraArgs.DodgeChanceArgIn),
-                Health = ExtraStatsCalculator.GetHealth(typeExtraArgs.HealthArgSt),
-                HitAccuracy = ExtraStatsCalculator.GetHitAccuracy(typeExtraArgs.HitAccuracyArgSt, typeExtraArgs.HitAccuracyArgAg),
-                MagicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(typeExtraArgs.MagicAccuracyArgSt, typeExtraArgs.MagicAccuracyArgIn),
-                MagicPower = ExtraStatsCalculator.GetMagicPower(typeExtraArgs.MagicPowerArgIn),
-                MagicResistance = ExtraStatsCalculator.GetMagicResistance(typeExtraArgs.MagicResistanceArgSt, typeExtraArgs.MagicResistanceArgIn),
-                ManaPool = ExtraStatsCalculator.GetManaPool(typeExtraArgs.ManaPoolArgIn),
-                MoveSpeed = ExtraStatsCalculator.GetMoveSpeed(typeExtraArgs.MoveSpeedArgSt, typeExtraArgs.MoveSpeedArgAg),
-                RegenerationHealth = ExtraStatsCalculator.GetRegenerationHealth(typeExtraArgs.RegenerationHealthArgSt, typeExtraArgs.RegenerationHealthArgAg),
-                RegenerationMana = ExtraStatsCalculator.GetRegenerationMana(typeExtraArgs.RegenerationManaIn),
-                RegenerationStamina = ExtraStatsCalculator.GetRegenerationStamina(typeExtraArgs.RegenerationStaminaAg),
-                Stamina = ExtraStatsCalculator.GetStamina(typeExtraArgs.StaminaArgSt, typeExtraArgs.StaminaArgAg)
+                attackRange = ExtraStatsCalculator.GetAttackRange(),
+                attackSpeed = ExtraStatsCalculator.GetAttackSpeed(typeExtraArgs.AttackSpeedArgAg),
+                avoidChance = ExtraStatsCalculator.GetAvoidChance(typeExtraArgs.AvoidChanceArgSt, typeExtraArgs.AvoidChanceArgAg),
+                damagePerHeat = ExtraStatsCalculator.GetDamagePerHeat(typeExtraArgs.DamagePerHeatArgSt, typeExtraArgs.DamagePerHeatArgAg, typeExtraArgs.DamagePerHeatArgIn),
+                defence = ExtraStatsCalculator.GetDefence(typeExtraArgs.DefenceArgSt, typeExtraArgs.DefenceArgAg),
+                dodgeChance = ExtraStatsCalculator.GetDodgeChance(typeExtraArgs.DodgeChanceArgAg, typeExtraArgs.DodgeChanceArgIn),
+                health = ExtraStatsCalculator.GetHealth(typeExtraArgs.HealthArgSt),
+                hitAccuracy = ExtraStatsCalculator.GetHitAccuracy(typeExtraArgs.HitAccuracyArgSt, typeExtraArgs.HitAccuracyArgAg),
+                magicAccuracy = ExtraStatsCalculator.GetMagicAccuracy(typeExtraArgs.MagicAccuracyArgSt, typeExtraArgs.MagicAccuracyArgIn),
+                magicPower = ExtraStatsCalculator.GetMagicPower(typeExtraArgs.MagicPowerArgIn),
+                magicResistance = ExtraStatsCalculator.GetMagicResistance(typeExtraArgs.MagicResistanceArgSt, typeExtraArgs.MagicResistanceArgIn),
+                manaPool = ExtraStatsCalculator.GetManaPool(typeExtraArgs.ManaPoolArgIn),
+                moveSpeed = ExtraStatsCalculator.GetMoveSpeed(typeExtraArgs.MoveSpeedArgSt, typeExtraArgs.MoveSpeedArgAg),
+                regenerationHealth = ExtraStatsCalculator.GetRegenerationHealth(typeExtraArgs.RegenerationHealthArgSt, typeExtraArgs.RegenerationHealthArgAg),
+                regenerationMana = ExtraStatsCalculator.GetRegenerationMana(typeExtraArgs.RegenerationManaIn),
+                regenerationStamina = ExtraStatsCalculator.GetRegenerationStamina(typeExtraArgs.RegenerationStaminaAg),
+                stamina = ExtraStatsCalculator.GetStamina(typeExtraArgs.StaminaArgSt, typeExtraArgs.StaminaArgAg)
             };
         }
     }

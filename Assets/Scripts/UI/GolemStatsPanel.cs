@@ -119,16 +119,16 @@ namespace UI
             mainInfo[0].text = _state.Type;
             mainInfo[1].text = _state.Spec;
             mainInfo[2].text = _state.Lvl.ToString();
-            mainInfo[3].text = _state.BaseStats.Strength.ToString("#.00");
-            mainInfo[4].text = _state.BaseStats.Agility.ToString("#.00");
-            mainInfo[5].text = _state.BaseStats.Intelligence.ToString("#.00");
+            mainInfo[3].text = _state.BaseStats.strength.ToString("#.00");
+            mainInfo[4].text = _state.BaseStats.agility.ToString("#.00");
+            mainInfo[5].text = _state.BaseStats.intelligence.ToString("#.00");
 
             mainInfoExtraPanel[0].text = _state.Type;
             mainInfoExtraPanel[1].text = _state.Spec;
             mainInfoExtraPanel[2].text = _state.Lvl.ToString();
-            mainInfoExtraPanel[3].text = _state.BaseStats.Strength.ToString("#.00");
-            mainInfoExtraPanel[4].text = _state.BaseStats.Agility.ToString("#.00");
-            mainInfoExtraPanel[5].text = _state.BaseStats.Intelligence.ToString("#.00");
+            mainInfoExtraPanel[3].text = _state.BaseStats.strength.ToString("#.00");
+            mainInfoExtraPanel[4].text = _state.BaseStats.agility.ToString("#.00");
+            mainInfoExtraPanel[5].text = _state.BaseStats.intelligence.ToString("#.00");
         }
 
         private void FillTexts()
@@ -147,11 +147,11 @@ namespace UI
             {
                 float[] extraStats =
                 {
-                    _stats.AttackRange, _stats.AttackSpeed, _stats.AvoidChance, _stats.DamagePerHeat, _stats.Defence,
-                    _stats.DodgeChance, _stats.Health, _stats.HitAccuracy,
-                    _stats.MagicAccuracy, _stats.MagicPower, _stats.MagicResistance, _stats.ManaPool, _stats.MoveSpeed,
-                    _stats.RegenerationHealth, _stats.RegenerationMana,
-                    _stats.RegenerationStamina, _stats.Stamina
+                    _stats.attackRange, _stats.attackSpeed, _stats.avoidChance, _stats.damagePerHeat, _stats.defence,
+                    _stats.dodgeChance, _stats.health, _stats.hitAccuracy,
+                    _stats.magicAccuracy, _stats.magicPower, _stats.magicResistance, _stats.manaPool, _stats.moveSpeed,
+                    _stats.regenerationHealth, _stats.regenerationMana,
+                    _stats.regenerationStamina, _stats.stamina
                 };
                 return extraStats;
             }
