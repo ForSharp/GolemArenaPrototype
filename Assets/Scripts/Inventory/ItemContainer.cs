@@ -18,7 +18,6 @@ namespace Inventory
         [SerializeField] private InventoryItemInfo fireBallItemInfo;
         [Header("ArtefactInfo")]
         [SerializeField] private ArtefactInfo warHelmetArtefactInfo;
-        public ArtefactInfo WarHelmetArtefactIn0 => warHelmetArtefactInfo;
         [Header("ConsumableInfo")]
         [SerializeField] private ArtefactInfo _consumableInfo;
         [Header("PotionInfo")]
