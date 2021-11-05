@@ -1,22 +1,27 @@
 ﻿using System;
 using Inventory.Abstracts;
+using Inventory.Info;
 
 namespace Inventory.Items
 {
-    public class Apple : IInventoryItem
+    public class Apple : IInventoryItem, IConsumableHealingItem
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
+        public ConsumableHealingInfo ConsumableHealingInfo { get; }
         public Type Type => GetType();
 
-        public Apple(IInventoryItemInfo info)
+
+        public Apple(IInventoryItemInfo info, ConsumableHealingInfo consumableHealingInfo)
         {
             Info = info;
             State = new InventoryItemState();
+            ConsumableHealingInfo = consumableHealingInfo;
         }
+
         public IInventoryItem Clone()
         {
-            var clonedApple = new Apple(Info);
+            var clonedApple = new Apple(Info, ConsumableHealingInfo);
             clonedApple.State.Amount = State.Amount;
             return clonedApple;
         }

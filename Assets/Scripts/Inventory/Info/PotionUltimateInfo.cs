@@ -1,4 +1,5 @@
 ﻿using GolemEntity;
+using GolemEntity.BaseStats;
 using UnityEngine;
 
 namespace Inventory.Info
@@ -9,5 +10,7 @@ namespace Inventory.Info
         [SerializeField] private MainCharacterParameter mainCharacterParameter;
 
         public MainCharacterParameter MainCharacterParameter => mainCharacterParameter;
+        
+        public GolemBaseStats GolemBaseStats { get; set; }
     }
 }

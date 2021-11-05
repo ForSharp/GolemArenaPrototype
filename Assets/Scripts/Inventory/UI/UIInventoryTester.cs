@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
-using Inventory;
 using Inventory.Abstracts;
 using Inventory.Info;
 using Inventory.Items;
 using Random = UnityEngine.Random;
 
-namespace UI
+namespace Inventory.UI
 {
     public class UIInventoryTester 
     {
-        private InventoryItemInfo _appleInfo;
+        
         private InventoryItemInfo _pepperInfo;
         private InventoryItemInfo _beerInfo;
         private UIInventorySlot[] _uiSlots;
         
         public InventoryWithSlots Inventory { get; }
 
-        public UIInventoryTester(InventoryItemInfo appleInfo, InventoryItemInfo pepperInfo, InventoryItemInfo beerInfo, UIInventorySlot[] uiSlots)
+        public UIInventoryTester(InventoryItemInfo pepperInfo, InventoryItemInfo beerInfo, UIInventorySlot[] uiSlots)
         {
-            _appleInfo = appleInfo;
+            
             _pepperInfo = pepperInfo;
             _beerInfo = beerInfo;
             _uiSlots = uiSlots;
@@ -35,10 +34,7 @@ namespace UI
             var filledSlots = 4;
             for (int i = 0; i < filledSlots; i++)
             {
-                var filledSlot = AddRandomItemsIntoRandomSlots(new Apple(_appleInfo), availableSlots);
-                availableSlots.Remove(filledSlot);
-                
-                filledSlot = AddRandomItemsIntoRandomSlots(new Pepper(_pepperInfo), availableSlots);
+                var filledSlot = AddRandomItemsIntoRandomSlots(new Pepper(_pepperInfo), availableSlots);
                 availableSlots.Remove(filledSlot);
                 
                 filledSlot = AddRandomItemsIntoRandomSlots(new Beer(_beerInfo), availableSlots);

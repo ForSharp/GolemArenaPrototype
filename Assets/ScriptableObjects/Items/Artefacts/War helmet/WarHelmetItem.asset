@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c079fe490044c8f899b4ffaf9dcc121, type: 3}
   m_Name: WarHelmetItem
   m_EditorClassIdentifier: 
-  id: 
-  title: 
-  description: 
-  maxItemsInInventorySlot: 0
-  spriteIcon: {fileID: 0}
+  id: war_helmet
+  title: War helmet
+  description: Old common war helmet. +10 defense
+  maxItemsInInventorySlot: 1
+  spriteIcon: {fileID: 21300000, guid: 6d91d533c905b47459cf4c3f1a3f618e, type: 3}
   itemRarity: 0
-  price: 0
+  price: 50

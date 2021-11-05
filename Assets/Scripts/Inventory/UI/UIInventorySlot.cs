@@ -1,10 +1,10 @@
-﻿using System;
-using DragAndDrop;
+﻿using DragAndDrop;
 using Inventory.Abstracts;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace Inventory.UI
 {
     public class UIInventorySlot : UISlot
     {
