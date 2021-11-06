@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WarHelmetArtefact
   m_EditorClassIdentifier: 
   affectsExtraStats:
-  - ChangingValue: 10
+  - ChangingValue: 100
     StatsType: 4
     IsFlat: 1

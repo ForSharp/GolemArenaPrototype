@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: war_helmet
   title: War helmet
-  description: Old common war helmet. +10 defense
+  description: Old common war helmet. +100 defense
   maxItemsInInventorySlot: 1
   spriteIcon: {fileID: 21300000, guid: 6d91d533c905b47459cf4c3f1a3f618e, type: 3}
   itemRarity: 0
