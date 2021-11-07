@@ -687,6 +687,7 @@ namespace GolemEntity
                     _isWin = true;
                     EventContainer.OnWinBattle(_thisState);
                     _thisState.RoundStatistics.Wins++;
+                    _thisState.RoundStatistics.WinLastRound = true;
                 }
 
                 yield return new WaitForSeconds(1);

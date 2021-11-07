@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using Inventory.Abstracts;
 using UI;
 using UnityEngine;
 
@@ -34,7 +36,9 @@ namespace FightState
 
         private bool _isReady;
         private RoundStatistics _lastEnemyAttacked;
-        public readonly RoundStatistics RoundStatistics = new RoundStatistics();
+        public RoundStatistics RoundStatistics;
+        public List<IInventoryItem> Items = new List<IInventoryItem>();
+
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -49,6 +53,7 @@ namespace FightState
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
+            RoundStatistics = new RoundStatistics(this);
         }
 
         private void OnEnable()
@@ -209,6 +214,8 @@ namespace FightState
         {
             RoundStatistics.RoundDamage = 0;
             RoundStatistics.RoundKills = 0;
+            RoundStatistics.WinLastRound = false;
+            RoundStatistics.RoundRate = 0;
         }
 
         private void HealAllParameters()
