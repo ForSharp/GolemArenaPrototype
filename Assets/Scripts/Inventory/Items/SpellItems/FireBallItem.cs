@@ -5,7 +5,7 @@ using Inventory.Info.Spells;
 
 namespace Inventory.Items
 {
-    public class FireBallItem : IInventoryItem, ISpell, IDamagingSpell, IPeriodicDamageSpell
+    public class FireBallItem : IInventoryItem, ISpellItem, IDamagingSpell, IPeriodicDamageSpell
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }

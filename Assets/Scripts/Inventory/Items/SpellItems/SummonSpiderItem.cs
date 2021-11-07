@@ -5,7 +5,7 @@ using Inventory.Info.Spells;
 
 namespace Inventory.Items
 {
-    public class SummonSpiderItem : IInventoryItem, ISpell, ISummonSpell
+    public class SummonSpiderItem : IInventoryItem, ISpellItem, ISummonSpell
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Inventory.Abstracts;
+using Inventory.Abstracts.Spells;
 using Inventory.Info;
 using Inventory.Info.Spells;
 using Inventory.Items;
@@ -127,6 +129,60 @@ namespace Inventory
         {
             AllItems.Add(new Apple(appleItemInfo, appleConsumableHealingInfo));
             AllItems.Add(new WarHelmet(warHelmetItemInfo, warHelmetArtefactInfo));
+        }
+
+        public List<IInventoryItem> GetAllItems()
+        {
+            return new List<IInventoryItem>()
+            {
+                Apple,
+                WarHelmet,
+                Chocolate
+            };
+        }
+        
+        public List<IInventoryItem> GetAllConsumables()
+        {
+            var allItems = GetAllItems();
+
+            return allItems.Where(item => item is IConsumableBuffItem || item is IConsumableHealingItem).ToList();
+        }
+        
+        public List<IInventoryItem> GetAllArtefacts()
+        {
+            var allItems = GetAllItems();
+
+            return allItems.Where(item => item is IArtefactItem).ToList();
+        }
+        
+        public List<IInventoryItem> GetAllPotions()
+        {
+            var allItems = GetAllItems();
+
+            return allItems.Where(item => item is IPotionFlatItem || item is IPotionMultiplyItem || item is IPotionUltimateItem).ToList();
+        }
+        
+        public List<IInventoryItem> GetAllSpellsLvl1()
+        {
+            var allItems = GetAllItems();
+            var allSpells = new List<IInventoryItem>();
+
+            foreach (var item in allItems)
+            {
+                if (!(item is ISpellItem spell)) continue;
+                if (spell.SpellInfo.SpellLvl == 1)
+                {
+                    allSpells.Add(item);
+                }
+            }
+
+            return allSpells;
+        }
+
+        public List<IInventoryItem> GetAllSpells()
+        {
+            var allItems = GetAllItems();
+            return allItems.Where(item => item is ISpellItem).ToList();
         }
 
         public FireBallItem GetFireBallLvl1()

@@ -6,7 +6,7 @@ using Inventory.Info.Spells;
 
 namespace Inventory.Items.SpellItems
 {
-    public class FreezingItem : IInventoryItem, ISpell, IPolymorphSpell
+    public class FreezingItem : IInventoryItem, ISpellItem, IPolymorphSpell
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }

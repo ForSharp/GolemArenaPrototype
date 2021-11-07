@@ -2,7 +2,7 @@
 
 namespace Inventory.Abstracts.Spells
 {
-    public interface ISpell
+    public interface ISpellItem
     {
         SpellInfo SpellInfo { get; }
     }

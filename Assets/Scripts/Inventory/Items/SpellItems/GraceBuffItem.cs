@@ -5,7 +5,7 @@ using Inventory.Info.Spells;
 
 namespace Inventory.Items
 {
-    public class GraceBuffItem : IInventoryItem, ISpell, IHealingSpell, IBuffSpell
+    public class GraceBuffItem : IInventoryItem, ISpellItem, IHealingSpell, IBuffSpell
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
