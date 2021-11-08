@@ -48,12 +48,12 @@ namespace GameLoop
             if (_group < groupColors.Length)
             {
                 state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
-                Game.AddToAllGolems(state);
+                Game.AddCharacterToAllCharactersList(state);
             }
             else if (_group >= groupColors.Length)
             {
                 state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
-                Game.AddToAllGolems(state);
+                Game.AddCharacterToAllCharactersList(state);
             }
 
             return state;

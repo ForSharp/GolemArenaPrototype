@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FightState;
 using GolemEntity;
+using Inventory;
 using Optimization;
 using Random = UnityEngine.Random;
 
@@ -28,7 +29,9 @@ namespace GameLoop
         public static event Action StartBattle;
         public static event Action OpenMainMenu;
         public static event Action EndGame;
-        
+
+        private const int MAXRoundNumber = 4;
+
         static Game()
         {
             AllGolems = new List<GameCharacterState>();
@@ -38,7 +41,7 @@ namespace GameLoop
             Stage = GameStage.MainMenu;
             
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
-            EventContainer.WinBattle += CheckEndOfRound;
+            EventContainer.WinBattle += SetEndOfRound;
             EventContainer.NewRound += PrepareNewRound;
 
             Round = 1;
@@ -56,7 +59,7 @@ namespace GameLoop
             OpenMainMenu?.Invoke();
         }
         
-        public static void AddToAllGolems(GameCharacterState golem)
+        public static void AddCharacterToAllCharactersList(GameCharacterState golem)
         {
             AllGolems.Add(golem);
             FreeTypes.Remove(golem.Type);
@@ -65,7 +68,7 @@ namespace GameLoop
 
         private static void CreateBotCharacters()
         {
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization());
             }
@@ -73,9 +76,9 @@ namespace GameLoop
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
         }
 
-        public static void PrepareNewRound()
+        private static void PrepareNewRound()
         {
-            if (Round > 4)
+            if (Round > MAXRoundNumber)
             {
                 OnEndGame();
                 Stage = GameStage.MainMenu;
@@ -85,21 +88,46 @@ namespace GameLoop
             foreach (var character in AllGolems)
             {
                 character.gameObject.SetActive(true);
+            }
+            
+            SetRoundRates();
+            ItemDispenser.DispenseItems();
+            
+            foreach (var character in AllGolems)
+            {
+                
                 character.PrepareAfterNewRound();
             }
             
             OnStartBattle();
             
         }
-        
-        
-        public static void CheckEndOfRound(GameCharacterState winner)
+
+        private static void SetEndOfRound(GameCharacterState winner)
         {
             RoundEnded = true;
-            Game.Stage = GameStage.BetweenBattles;
+            Stage = GameStage.BetweenBattles;
             Round++;
         }
-        
+
+        public static void SetRoundRates()
+        {
+            var statistics = Game.AllGolems.Select(character => character.RoundStatistics).ToList();
+
+            var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
+
+            for (var i = 0; i < sortedStatistics.Count; i++)
+            {
+                sortedStatistics[i].RoundRate += 5;
+                sortedStatistics[i].RoundRate += i;
+                sortedStatistics[i].RoundRate += sortedStatistics[i].RoundKills;
+
+                if (sortedStatistics[i].WinLastRound)
+                {
+                    sortedStatistics[i].RoundRate += 3;
+                }
+            }
+        }
 
         public static GolemType GetRandomCharacter()
         {
@@ -117,7 +145,7 @@ namespace GameLoop
             return (Enum) Enum.Parse(enumType, value, true);
         }
 
-        public static void OnEndGame()
+        private static void OnEndGame()
         {
             EndGame?.Invoke();
         }

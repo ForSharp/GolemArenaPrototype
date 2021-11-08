@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
@@ -112,32 +111,30 @@ namespace Inventory
         [Header("Summon Spells Info")]
         [SerializeField] private SummonSpellInfo summonSpiderSummonInfoLvl1;
         
-        public List<IInventoryItem> AllItems { get; private set; } = new List<IInventoryItem>();
         public static ItemContainer Instance { get; private set; }
 
         private void Awake()
         {
             Instance = this;
         }
-
-        private void Start()
-        {
-            FillItemsList();
-        }
-
-        private void FillItemsList()
-        {
-            AllItems.Add(new Apple(appleItemInfo, appleConsumableHealingInfo));
-            AllItems.Add(new WarHelmet(warHelmetItemInfo, warHelmetArtefactInfo));
-        }
-
-        public List<IInventoryItem> GetAllItems()
+        
+        private List<IInventoryItem> GetAllItems()
         {
             return new List<IInventoryItem>()
             {
                 Apple,
                 WarHelmet,
-                Chocolate
+                Chocolate,
+                FireBallLvl1,
+                PotionFlatSmall,
+                PotionFlatMedium, 
+                PotionFlatLarge,
+                PotionMultiplySmall,
+                PotionMultiplyMedium,
+                PotionMultiplyLarge,
+                PotionUltimateAgility,
+                PotionUltimateIntelligence,
+                PotionUltimateStrength
             };
         }
         

@@ -5,6 +5,7 @@ using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using Inventory;
 using Inventory.Abstracts;
 using UI;
 using UnityEngine;

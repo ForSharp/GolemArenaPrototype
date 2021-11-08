@@ -6,52 +6,36 @@ using UnityEngine;
 
 namespace Inventory
 {
-    public class ItemDispenser
+    public static class ItemDispenser
     {
-        private void SetRoundRates()
-        {
-            var statistics = Game.AllGolems.Select(character => character.RoundStatistics).ToList();
-
-            var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
-
-            for (var i = 0; i < sortedStatistics.Count; i++)
-            {
-                sortedStatistics[i].RoundRate += 5;
-                sortedStatistics[i].RoundRate += i;
-                sortedStatistics[i].RoundRate += sortedStatistics[i].RoundKills;
-
-                if (sortedStatistics[i].WinLastRound)
-                {
-                    sortedStatistics[i].RoundRate += 3;
-                }
-            }
-        }
-
-        private void DispenseItems()
+        public static void DispenseItems()
         {
             foreach (var character in Game.AllGolems)
             {
-                var money = character.RoundStatistics.RoundRate * 100;
-                
-                var moneyForArtefacts = money / 4;
-                money -= moneyForArtefacts;
-                DispenseArtefacts(moneyForArtefacts, character, out var artefactBalance);
-                money += artefactBalance;
-                
-                var moneyForSpells = money / 3;
-                money -= moneyForSpells;
-                DispenseSpells(moneyForSpells, character, out var spellsBalance);
-                money += spellsBalance;
-
-                var moneyForConsumables = money / 2;
-                money -= moneyForConsumables;
-                DispenseConsumables(moneyForConsumables, character, out var consumablesBalance);
-                money += consumablesBalance;
-                
-                DispensePotions(money, character, out var potionsBalance);
-                //можно баланс вернуть в раундрейт, поделив на 100, а можно ничего с ним не делать.
-                //на зелья нет лимита по предметам, так что их насыпет сполна
+                DispenseAllTypesOfItemsToCurrentCharacter(character);
             }
+        }
+
+        private static void DispenseAllTypesOfItemsToCurrentCharacter(GameCharacterState character)
+        {
+            var money = character.RoundStatistics.RoundRate * 100 * Game.Round;
+
+            var moneyForArtefacts = money / 4;
+            money -= moneyForArtefacts;
+            DispenseArtefacts(moneyForArtefacts, character, out var artefactBalance);
+            money += artefactBalance;
+
+            var moneyForSpells = money / 3;
+            money -= moneyForSpells;
+            DispenseSpells(moneyForSpells, character, out var spellsBalance);
+            money += spellsBalance;
+
+            var moneyForConsumables = money / 2;
+            money -= moneyForConsumables;
+            DispenseConsumables(moneyForConsumables, character, out var consumablesBalance);
+            money += consumablesBalance;
+
+            DispensePotions(money, character, out var potionsBalance);
         }
 
         private static void DispenseArtefacts(int moneyForArtefacts, GameCharacterState character, out int artefactBalance)
@@ -63,9 +47,12 @@ namespace Inventory
             {
                 var artefactsThatCanGet = ItemContainer.Instance.GetAllArtefacts().Where(item =>
                     item.Info.Price <= moneyForArtefacts).ToList();
-                var item = artefactsThatCanGet[Random.Range(0, artefactsThatCanGet.Count)];
-                moneyForArtefacts -= item.Info.Price;
-                character.Items.Add(item);
+                if (artefactsThatCanGet.Count > 0)
+                {
+                    var artefactItem = artefactsThatCanGet[Random.Range(0, artefactsThatCanGet.Count)];
+                    moneyForArtefacts -= artefactItem.Info.Price;
+                    character.Items.Add(artefactItem);
+                }
                 index++;
             }
 
@@ -75,15 +62,18 @@ namespace Inventory
         private static void DispenseSpells(int moneyForSpells, GameCharacterState character, out int spellsBalance)
         {
             const int maxSpellsCountThatCanGet = 3;
-            const int lowestSpellPrice = 50;
+            const int lowestSpellPrice = 500;
             var index = 0;
             while (index < maxSpellsCountThatCanGet && moneyForSpells >= lowestSpellPrice)
             {
                 var spellsThatCanGet = ItemContainer.Instance.GetAllSpellsLvl1().Where(item =>
                     item.Info.Price <= moneyForSpells).ToList();
-                var item = spellsThatCanGet[Random.Range(0, spellsThatCanGet.Count)];
-                moneyForSpells -= item.Info.Price;
-                character.Items.Add(item);
+                if (spellsThatCanGet.Count > 0)
+                {
+                    var spellItem = spellsThatCanGet[Random.Range(0, spellsThatCanGet.Count)];
+                    moneyForSpells -= spellItem.Info.Price;
+                    character.Items.Add(spellItem);
+                }
                 index++;
             }
 
@@ -93,15 +83,18 @@ namespace Inventory
         private static void DispenseConsumables(int moneyForConsumables, GameCharacterState character, out int consumablesBalance)
         {
             const int maxConsumablesCountThatCanGet = 10;
-            const int lowestConsumablePrice = 50;
+            const int lowestConsumablePrice = 10;
             var index = 0;
             while (index < maxConsumablesCountThatCanGet && moneyForConsumables >= lowestConsumablePrice)
             {
                 var consumablesThatCanGet = ItemContainer.Instance.GetAllConsumables().Where(item =>
                     item.Info.Price <= moneyForConsumables).ToList();
-                var item = consumablesThatCanGet[Random.Range(0, consumablesThatCanGet.Count)];
-                moneyForConsumables -= item.Info.Price;
-                character.Items.Add(item);
+                if (consumablesThatCanGet.Count > 0)
+                {
+                    var consumableItem = consumablesThatCanGet[Random.Range(0, consumablesThatCanGet.Count)];
+                    moneyForConsumables -= consumableItem.Info.Price;
+                    character.Items.Add(consumableItem);
+                }
                 index++;
             }
 
@@ -110,14 +103,17 @@ namespace Inventory
         
         private static void DispensePotions(int moneyForPotions, GameCharacterState character, out int potionsBalance)
         {
-            const int lowestSpellPrice = 50;
-            while (moneyForPotions >= lowestSpellPrice)
+            const int lowestPotionPrice = 100;
+            while (moneyForPotions >= lowestPotionPrice)
             {
                 var potionsThatCanGet = ItemContainer.Instance.GetAllPotions().Where(item =>
                     item.Info.Price <= moneyForPotions).ToList();
-                var item = potionsThatCanGet[Random.Range(0, potionsThatCanGet.Count)];
-                moneyForPotions -= item.Info.Price;
-                character.Items.Add(item);
+                if (potionsThatCanGet.Count > 0)
+                {
+                    var potionItem = potionsThatCanGet[Random.Range(0, potionsThatCanGet.Count)];
+                    moneyForPotions -= potionItem.Info.Price;
+                    character.Items.Add(potionItem);
+                }
             }
 
             potionsBalance = moneyForPotions;
