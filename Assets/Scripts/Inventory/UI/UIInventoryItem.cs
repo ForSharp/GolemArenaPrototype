@@ -1,5 +1,5 @@
-﻿using DragAndDrop;
-using Inventory.Abstracts;
+﻿using Inventory.Abstracts;
+using Inventory.DragAndDrop;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -28,7 +28,7 @@ namespace Inventory.UI
 
         public void FillSlots()
         {
-            var allSlots = Inventory.GetAllSlots();
+            var allSlots = Inventory.GetAllNonEquippingSlots();
             var availableSlots = new List<IInventorySlot>(allSlots);
 
             var filledSlots = 4;
@@ -56,7 +56,7 @@ namespace Inventory.UI
 
         private void SetupInventoryUI(InventoryWithSlots inventory)
         {
-            var allSlots = inventory.GetAllSlots();
+            var allSlots = inventory.GetAllNonEquippingSlots();
             var allSlotsCount = allSlots.Length;
             for (int i = 0; i < allSlotsCount; i++)
             {

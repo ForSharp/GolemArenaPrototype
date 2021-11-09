@@ -1,5 +1,5 @@
-﻿using DragAndDrop;
-using Inventory.Abstracts;
+﻿using Inventory.Abstracts;
+using Inventory.DragAndDrop;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +9,8 @@ namespace Inventory.UI
     public class UIInventorySlot : UISlot
     {
         [SerializeField] private UIInventoryItem uiInventoryItem;
+        [SerializeField] private bool isEquippingSlot;
+        public bool IsEquippingSlot => isEquippingSlot;
         public IInventorySlot Slot { get; private set; }
 
         private UIInventory _uiInventory;
@@ -21,6 +23,7 @@ namespace Inventory.UI
         public void SetSlot(IInventorySlot newSlot)
         {
             Slot = newSlot;
+            Slot.IsEquippingSlot = isEquippingSlot;
         }
 
         public override void OnDrop(PointerEventData eventData)

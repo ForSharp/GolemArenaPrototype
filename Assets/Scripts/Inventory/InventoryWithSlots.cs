@@ -68,10 +68,7 @@ namespace Inventory
             var slotOfType = _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType);
             foreach (var slot in slotOfType)
             {
-                // if (!slot.IsEmpty)
-                // {
-                    allItemsOfType.Add(slot.Item);
-                //}
+                allItemsOfType.Add(slot.Item);
             }
 
             return allItemsOfType.ToArray();
@@ -124,8 +121,6 @@ namespace Inventory
             var fits = slot.Amount + item.State.Amount <= item.Info.MaxItemsInInventorySlot;
             var amountToAdd = fits ? item.State.Amount : item.Info.MaxItemsInInventorySlot - slot.Amount;
             var amountLeft = item.State.Amount - amountToAdd;
-            // var clonedItem = item.Clone();
-            // clonedItem.State.Amount = amountToAdd;
         
             if (slot.IsEmpty)
             {
@@ -136,8 +131,6 @@ namespace Inventory
             else
             {
                 slot.Item.State.Amount += amountToAdd;
-                // OnInventoryItemAdded(sender, item, amountToAdd);
-                // OnInventoryStateChanged(sender);
             }
             
             OnInventoryItemAdded(sender, item, amountToAdd);
@@ -154,7 +147,7 @@ namespace Inventory
 
         public bool TryToRemove(object sender, Type itemType, int amount = 1)
         {
-            var slotsWithItem = GetAllSlots(itemType);
+            var slotsWithItem = GetAllNonEquippingSlots(itemType);
             if (slotsWithItem.Length == 0)
                 return false;
 
@@ -208,12 +201,10 @@ namespace Inventory
             if (fits)
             {
                 fromSlot.Clear();
-                //OnInventoryStateChanged(sender);
             }
             else
             {
                 fromSlot.Item.State.Amount = amountLeft;
-                // OnInventoryStateChanged(sender);
             }
             
             OnInventoryStateChanged(sender);
@@ -224,6 +215,16 @@ namespace Inventory
             }
         }
 
+        public IInventorySlot[] GetAllNonEquippingSlots(Type itemType)
+        {
+            return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType).Where(slot => !slot.IsEquippingSlot).ToArray();
+        }
+
+        public IInventorySlot[] GetAllNonEquippingSlots()
+        {
+            return _slots.Where(slot => !slot.IsEquippingSlot).ToArray();
+        }
+        
         public IInventorySlot[] GetAllSlots(Type itemType)
         {
             return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType).ToArray();

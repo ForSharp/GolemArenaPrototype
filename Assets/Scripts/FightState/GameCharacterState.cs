@@ -39,7 +39,7 @@ namespace FightState
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
         public List<IInventoryItem> Items = new List<IInventoryItem>();
-
+        public List<IInventoryItem> EquippedItems = new List<IInventoryItem>();
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -67,14 +67,6 @@ namespace FightState
         private void OnDestroy()
         {
             EventContainer.GolemStatsChanged -= UpdateStats;
-        }
-
-        private void Update()
-        {
-            if (!_isReady)
-            {
-                return;
-            }
         }
 
         private void UpdateStats(GameCharacterState state)
