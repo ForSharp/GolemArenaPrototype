@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: -1792038676895493939}
   - component: {fileID: 8953662570176463774}
   - component: {fileID: -8248257628423300562}
+  - component: {fileID: 7219245981731901761}
   m_Layer: 0
   m_Name: 0_Cleopatra
   m_TagString: Untagged
@@ -402,9 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81769e25b3a9a346a0c44ff7830e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellInfo: {fileID: 11400000, guid: df3d5c97082779545bbf467a898ec8e2, type: 2}
-  spellEffect: {fileID: 8467573664059588740, guid: 8f6aedfd0bbdbac448c4f53931b72e57,
-    type: 3}
 --- !u!114 &-4110208759372699088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,6 +800,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ca050f3c2142898ee3167e1e4ac890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7219245981731901761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028151268503272600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a5b12a22814a7aa134c26869fddb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
+    type: 3}
 --- !u!1 &7028171771273956768
 GameObject:
   m_ObjectHideFlags: 0

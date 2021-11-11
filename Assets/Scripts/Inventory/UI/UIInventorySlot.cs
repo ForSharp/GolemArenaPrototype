@@ -13,11 +13,11 @@ namespace Inventory.UI
         public bool IsEquippingSlot => isEquippingSlot;
         public IInventorySlot Slot { get; private set; }
 
-        private UIInventory _uiInventory;
+        private InventoryOrganization _uiInventory;
 
         private void Awake()
         {
-            _uiInventory = GetComponentInParent<UIInventory>();
+            _uiInventory = GetComponentInParent<InventoryOrganization>();
         }
 
         public void SetSlot(IInventorySlot newSlot)

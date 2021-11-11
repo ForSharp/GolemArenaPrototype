@@ -1,4 +1,5 @@
 ﻿using System;
+using Inventory.Abstracts;
 using Inventory.UI;
 using UnityEngine;
 
@@ -18,11 +19,12 @@ namespace Inventory
 
         private void CreateNewInventory()
         {
-            _inventoryObject = Instantiate(inventoryPrefab);
+            _inventoryObject = Instantiate(inventoryPrefab, new Vector3(0, 225, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
             _inventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
-            
+
             _uiSlots = _inventoryObject.GetComponentsInChildren<UIInventorySlot>();
             _inventory = new InventoryWithSlots(_uiSlots.Length);
+            _inventoryOrganization.Inventory = _inventory;
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
             
             SetupInventoryUI(_inventory);
@@ -39,6 +41,11 @@ namespace Inventory
                 uiSlot.SetSlot(slot);
                 uiSlot.Refresh();
             }
+        }
+
+        public void AddItem(IInventoryItem item)
+        {
+            _inventory.TryToAddToSlot(this, _inventory.GetAllNonEquippingSlots()[0], item);
         }
         
         private void OnInventoryStateChanged(object sender)

@@ -9,10 +9,12 @@ namespace Inventory
     {
         public static void DispenseItems()
         {
-            foreach (var character in Game.AllGolems)
-            {
-                DispenseAllTypesOfItemsToCurrentCharacter(character);
-            }
+            // foreach (var character in Game.AllGolems)
+            // {
+            //     DispenseAllTypesOfItemsToCurrentCharacter(character);
+            // }
+            
+            DispenseAllTypesOfItemsToCurrentCharacter(Player.PlayerCharacter);
         }
 
         private static void DispenseAllTypesOfItemsToCurrentCharacter(GameCharacterState character)
@@ -50,7 +52,7 @@ namespace Inventory
                 {
                     var artefactItem = artefactsThatCanGet[Random.Range(0, artefactsThatCanGet.Count)];
                     moneyForArtefacts -= artefactItem.Info.Price;
-                    character.Items.Add(artefactItem);
+                    character.InventoryHelper.AddItem(artefactItem);
                 }
                 index++;
             }
@@ -71,7 +73,7 @@ namespace Inventory
                 {
                     var spellItem = spellsThatCanGet[Random.Range(0, spellsThatCanGet.Count)];
                     moneyForSpells -= spellItem.Info.Price;
-                    character.Items.Add(spellItem);
+                    character.InventoryHelper.AddItem(spellItem);
                 }
                 index++;
             }
@@ -92,7 +94,7 @@ namespace Inventory
                 {
                     var consumableItem = consumablesThatCanGet[Random.Range(0, consumablesThatCanGet.Count)];
                     moneyForConsumables -= consumableItem.Info.Price;
-                    character.Items.Add(consumableItem);
+                    character.InventoryHelper.AddItem(consumableItem);
                 }
                 index++;
             }
@@ -111,7 +113,7 @@ namespace Inventory
                 {
                     var potionItem = potionsThatCanGet[Random.Range(0, potionsThatCanGet.Count)];
                     moneyForPotions -= potionItem.Info.Price;
-                    character.Items.Add(potionItem);
+                    character.InventoryHelper.AddItem(potionItem);
                 }
             }
 

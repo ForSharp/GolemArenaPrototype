@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Inventory
@@ -11,8 +12,16 @@ namespace Inventory
         [SerializeField] private GameObject inventoryBackGround;
         [SerializeField] private Button switchButton;
 
-        private bool _isHide = false;
+        [HideInInspector] public InventoryWithSlots Inventory;
         
+        private bool _isHide = false;
+
+        private void Start()
+        {
+            var rectTransform = GetComponent<RectTransform>();
+            rectTransform.position = new Vector3(0, 225, 0);
+        }
+
         public void OnSwitchButtonClicked()
         {
             if (_isHide)

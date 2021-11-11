@@ -34,6 +34,8 @@ namespace FightState
         public string Spec { get; private set; }
         public Golem Golem { get; private set; }
         public SoundsController SoundsController { get; private set; }
+        
+        public InventoryHelper InventoryHelper { get; private set; }
 
         private bool _isReady;
         private RoundStatistics _lastEnemyAttacked;
@@ -55,6 +57,7 @@ namespace FightState
         {
             SoundsController = GetComponent<SoundsController>();
             RoundStatistics = new RoundStatistics(this);
+            InventoryHelper = GetComponent<InventoryHelper>();
         }
 
         private void OnEnable()
