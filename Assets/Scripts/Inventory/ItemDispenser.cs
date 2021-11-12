@@ -52,6 +52,7 @@ namespace Inventory
                 {
                     var artefactItem = artefactsThatCanGet[Random.Range(0, artefactsThatCanGet.Count)];
                     moneyForArtefacts -= artefactItem.Info.Price;
+                    artefactItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(artefactItem);
                 }
                 index++;
@@ -73,6 +74,7 @@ namespace Inventory
                 {
                     var spellItem = spellsThatCanGet[Random.Range(0, spellsThatCanGet.Count)];
                     moneyForSpells -= spellItem.Info.Price;
+                    spellItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(spellItem);
                 }
                 index++;
@@ -94,6 +96,7 @@ namespace Inventory
                 {
                     var consumableItem = consumablesThatCanGet[Random.Range(0, consumablesThatCanGet.Count)];
                     moneyForConsumables -= consumableItem.Info.Price;
+                    consumableItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(consumableItem);
                 }
                 index++;
@@ -113,6 +116,7 @@ namespace Inventory
                 {
                     var potionItem = potionsThatCanGet[Random.Range(0, potionsThatCanGet.Count)];
                     moneyForPotions -= potionItem.Info.Price;
+                    potionItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(potionItem);
                 }
             }

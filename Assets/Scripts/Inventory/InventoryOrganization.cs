@@ -16,12 +16,6 @@ namespace Inventory
         
         private bool _isHide = false;
 
-        private void Start()
-        {
-            var rectTransform = GetComponent<RectTransform>();
-            rectTransform.position = new Vector3(0, 225, 0);
-        }
-
         public void OnSwitchButtonClicked()
         {
             if (_isHide)

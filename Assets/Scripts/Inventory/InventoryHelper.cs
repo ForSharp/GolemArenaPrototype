@@ -19,13 +19,14 @@ namespace Inventory
 
         private void CreateNewInventory()
         {
-            _inventoryObject = Instantiate(inventoryPrefab, new Vector3(0, 225, 0), Quaternion.identity, GameObject.Find("Canvas").transform);
+            _inventoryObject = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("InventoryContainer").transform);
             _inventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
 
             _uiSlots = _inventoryObject.GetComponentsInChildren<UIInventorySlot>();
             _inventory = new InventoryWithSlots(_uiSlots.Length);
             _inventoryOrganization.Inventory = _inventory;
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
+            _inventoryOrganization.transform.localPosition = Vector3.zero;
             
             SetupInventoryUI(_inventory);
         }
