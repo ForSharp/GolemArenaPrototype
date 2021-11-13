@@ -10,7 +10,7 @@ namespace Inventory
         private InventoryWithSlots _inventory;
         [SerializeField] private GameObject inventoryPrefab;
         private GameObject _inventoryObject;
-        private InventoryOrganization _inventoryOrganization;
+        [HideInInspector]public InventoryOrganization inventoryOrganization;
         private UIInventorySlot[] _uiSlots;
         private void Start()
         {
@@ -20,15 +20,28 @@ namespace Inventory
         private void CreateNewInventory()
         {
             _inventoryObject = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("InventoryContainer").transform);
-            _inventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
+            inventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
 
             _uiSlots = _inventoryObject.GetComponentsInChildren<UIInventorySlot>();
             _inventory = new InventoryWithSlots(_uiSlots.Length);
-            _inventoryOrganization.Inventory = _inventory;
+            
+            inventoryOrganization.Inventory = _inventory;
+            inventoryOrganization.InventoryHelper = this;
+            
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
-            _inventoryOrganization.transform.localPosition = Vector3.zero;
+            inventoryOrganization.transform.localPosition = Vector3.zero;
             
             SetupInventoryUI(_inventory);
+            
+            inventoryOrganization.HideAllInventory();
+        }
+
+        public void Refresh()
+        {
+            foreach (var slot in _uiSlots)
+            {
+                slot.Refresh();
+            }
         }
 
         private void SetupInventoryUI(InventoryWithSlots inventory)
@@ -46,7 +59,7 @@ namespace Inventory
 
         public void AddItem(IInventoryItem item)
         {
-            _inventory.TryToAddToSlot(this, _inventory.GetAllNonEquippingSlots()[0], item);
+            _inventory.TryToAdd(this, item);
         }
         
         private void OnInventoryStateChanged(object sender)

@@ -24,7 +24,6 @@ namespace UI
         
         private void Start()
         {
-            transform.SetParent(GameObject.Find("Canvas").transform);
             _mainCamera = Camera.main;
         }
 

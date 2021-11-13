@@ -107,7 +107,7 @@ namespace Inventory
                 return TryToAddToSlot(sender, slotWithSameItemButNotEmpty, item);
             }
 
-            var emptySlot = _slots.Find(slot => slot.IsEmpty);
+            var emptySlot = _slots.Find(slot => slot.IsEmpty && !slot.IsEquippingSlot);
             if (emptySlot != null)
             {
                 return TryToAddToSlot(sender, emptySlot, item);
@@ -116,7 +116,7 @@ namespace Inventory
             return false;
         }
 
-        public bool TryToAddToSlot(object sender, IInventorySlot slot, IInventoryItem item)
+        private bool TryToAddToSlot(object sender, IInventorySlot slot, IInventoryItem item)
         {
             var fits = slot.Amount + item.State.Amount <= item.Info.MaxItemsInInventorySlot;
             var amountToAdd = fits ? item.State.Amount : item.Info.MaxItemsInInventorySlot - slot.Amount;

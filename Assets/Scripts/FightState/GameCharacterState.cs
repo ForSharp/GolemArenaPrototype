@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
 using Inventory;
-using Inventory.Abstracts;
 using UI;
 using UnityEngine;
 
@@ -36,12 +34,9 @@ namespace FightState
         public SoundsController SoundsController { get; private set; }
         
         public InventoryHelper InventoryHelper { get; private set; }
-
-        private bool _isReady;
+        
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
-        public List<IInventoryItem> Items = new List<IInventoryItem>();
-        public List<IInventoryItem> EquippedItems = new List<IInventoryItem>();
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -146,13 +141,12 @@ namespace FightState
             CurrentMana = MaxMana;
 
             CreateHealthBar();
-            _isReady = true;
         }
 
         private void CreateHealthBar()
         {
             if (!isDynamicHealthBarCreate) return;
-            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
             _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
 

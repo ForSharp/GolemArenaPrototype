@@ -21,7 +21,7 @@ namespace UI
         [SerializeField] private GameObject closedPanel;
         [SerializeField] private StaticHealthBar healthBar;
 
-        [HideInInspector] public bool inPanel;
+        public bool InPanel { get; private set; }
 
         private GameCharacterState _state;
         private GolemExtraStats _stats;
@@ -74,6 +74,17 @@ namespace UI
             _state.SoundsController.PlayClickAndVictorySound();
             
             healthBar.SetCharacterState(state);
+            
+            HideAllInventoryPanels();
+            state.InventoryHelper.inventoryOrganization.ShowInventory();
+        }
+
+        private void HideAllInventoryPanels()
+        {
+            foreach (var character in Game.AllGolems)
+            {
+                character.InventoryHelper.inventoryOrganization.HideAllInventory();
+            }
         }
 
         private void UpdateStats()
@@ -161,12 +172,12 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            inPanel = false;
+            InPanel = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            inPanel = true;
+            InPanel = true;
         }
     }
 }

@@ -9,12 +9,11 @@ namespace Inventory
     {
         public static void DispenseItems()
         {
-            // foreach (var character in Game.AllGolems)
-            // {
-            //     DispenseAllTypesOfItemsToCurrentCharacter(character);
-            // }
+            foreach (var character in Game.AllGolems)
+            {
+                DispenseAllTypesOfItemsToCurrentCharacter(character);
+            }
             
-            DispenseAllTypesOfItemsToCurrentCharacter(Player.PlayerCharacter);
         }
 
         private static void DispenseAllTypesOfItemsToCurrentCharacter(GameCharacterState character)
