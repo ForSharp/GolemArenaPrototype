@@ -16,6 +16,6 @@ MonoBehaviour:
   title: 3232
   description: 3232
   maxItemsInInventorySlot: 1
-  spriteIcon: {fileID: 0}
+  spriteIcon: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3, type: 3}
   itemRarity: 1
   price: 500

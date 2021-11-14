@@ -26,7 +26,6 @@ namespace Inventory
             _inventory = new InventoryWithSlots(_uiSlots.Length);
             
             inventoryOrganization.Inventory = _inventory;
-            inventoryOrganization.InventoryHelper = this;
             
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
             inventoryOrganization.transform.localPosition = Vector3.zero;

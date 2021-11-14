@@ -27,7 +27,7 @@ namespace Inventory
             InventoryItemRemoved?.Invoke(sender, itemType, amount);
         }
         
-        private void OnInventoryStateChanged(object sender)
+        public void OnInventoryStateChanged(object sender)
         {
             InventoryStateChanged?.Invoke(sender);
         }

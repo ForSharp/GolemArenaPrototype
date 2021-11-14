@@ -47,6 +47,7 @@ namespace Controller
                      break;
                  case PlayMode.Rts:
                      SetRtsMovement();
+                     _cameraPathFollower.MoveType = PathFollower.MovementType.None;
                      break;
                  case PlayMode.Cinematic:
                      if (Game.Stage == Game.GameStage.MainMenu)

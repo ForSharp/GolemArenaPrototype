@@ -362,6 +362,7 @@ namespace Controller
             
             standardPanel.gameObject.SetActive(true);
             Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
+            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
             foreach (var character in Game.AllGolems)
             {
                 if (character != Player.PlayerCharacter)

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
 using Controller;
 using FightState;
 using GameLoop;
@@ -63,7 +63,7 @@ namespace UI
         {
             if (Game.Stage == Game.GameStage.MainMenu)
                 return;
-                
+
             _state = state;
             _stats = _state.Stats;
             FillMainInfo();
@@ -72,9 +72,9 @@ namespace UI
             panel.SetActive(true);
             CameraMovement.Instance.SetTarget(state);
             _state.SoundsController.PlayClickAndVictorySound();
-            
+
             healthBar.SetCharacterState(state);
-            
+
             HideAllInventoryPanels();
             state.InventoryHelper.inventoryOrganization.ShowInventory();
         }
@@ -130,25 +130,38 @@ namespace UI
             mainInfo[0].text = _state.Type;
             mainInfo[1].text = _state.Spec;
             mainInfo[2].text = _state.Lvl.ToString();
-            mainInfo[3].text = _state.BaseStats.strength.ToString("#.00");
-            mainInfo[4].text = _state.BaseStats.agility.ToString("#.00");
-            mainInfo[5].text = _state.BaseStats.intelligence.ToString("#.00");
+            mainInfo[3].text = _state.BaseStats.strength >= 100
+                ? _state.BaseStats.strength.ToString("#.")
+                : " " + _state.BaseStats.strength.ToString("#.");
+            mainInfo[4].text = _state.BaseStats.agility >= 100
+                ? _state.BaseStats.agility.ToString("#.")
+                : " " + _state.BaseStats.agility.ToString("#.");
+            mainInfo[5].text = _state.BaseStats.intelligence >= 100
+                ? _state.BaseStats.intelligence.ToString("#.")
+                : " " + _state.BaseStats.intelligence.ToString("#.");
 
             mainInfoExtraPanel[0].text = _state.Type;
             mainInfoExtraPanel[1].text = _state.Spec;
             mainInfoExtraPanel[2].text = _state.Lvl.ToString();
-            mainInfoExtraPanel[3].text = _state.BaseStats.strength.ToString("#.00");
-            mainInfoExtraPanel[4].text = _state.BaseStats.agility.ToString("#.00");
-            mainInfoExtraPanel[5].text = _state.BaseStats.intelligence.ToString("#.00");
+            mainInfoExtraPanel[3].text = mainInfo[3].text;
+            mainInfoExtraPanel[4].text = mainInfo[4].text;
+            mainInfoExtraPanel[5].text = mainInfo[5].text;
         }
 
         private void FillTexts()
         {
             var currentStats = GetExtraStatsArray();
-
+            var needToDemoWithSinglePrecision = new List<int> { 0, 12, 13, 14, 15 };
             for (var i = 0; i < extraStatsUI.Length; i++)
             {
-                extraStatsUI[i].text = currentStats[i].ToString("#.00");
+                if (needToDemoWithSinglePrecision.Contains(i))
+                {
+                    extraStatsUI[i].text = currentStats[i].ToString("#.00");
+                }
+                else
+                {
+                    extraStatsUI[i].text = currentStats[i].ToString("#.");
+                }
             }
         }
 

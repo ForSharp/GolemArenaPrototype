@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,8 +11,7 @@ namespace Inventory
         [SerializeField] private GameObject[] equippingSlots;
         [SerializeField] private GameObject inventoryBackGround;
         [SerializeField] private Button switchButton;
-
-        public InventoryHelper InventoryHelper;
+        
         public InventoryWithSlots Inventory;
         public bool InPanel { get; private set; }
         private bool _isHide = false;
@@ -22,29 +20,39 @@ namespace Inventory
         {
             if (_isHide)
             {
-                _isHide = false;
-                switchButtonText.text = "Hide";
-
-                foreach (var slot in inventorySlots)
-                {
-                    slot.SetActive(true);
-                    inventoryBackGround.SetActive(true);
-                }
+                ShowNonEquippingSlots();
             }
             else
             {
-                foreach (var slot in inventorySlots)
-                {
-                    slot.SetActive(false);
-                    inventoryBackGround.SetActive(false);
-                }
-                
-                _isHide = true;
-                switchButtonText.text = "Show";
+                HideNonEquippingSlots();
             }
-            InventoryHelper.Refresh();
+        }
+
+        private void ShowNonEquippingSlots()
+        {
+            _isHide = false;
+            switchButtonText.text = "Hide";
+
+            foreach (var slot in inventorySlots)
+            {
+                slot.SetActive(true);
+            }
+
+            inventoryBackGround.SetActive(true);
         }
         
+        public void HideNonEquippingSlots()
+        {
+            foreach (var slot in inventorySlots)
+            {
+                slot.SetActive(false);
+                    
+            }
+            inventoryBackGround.SetActive(false);
+            _isHide = true;
+            switchButtonText.text = "Show";
+        }
+
         public void HideAllInventory()
         {
             _isHide = true;
@@ -85,5 +93,6 @@ namespace Inventory
         {
             InPanel = true;
         }
+        
     }
 }
