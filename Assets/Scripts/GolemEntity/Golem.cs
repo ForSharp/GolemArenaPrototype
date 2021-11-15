@@ -2,6 +2,7 @@
 using GolemEntity.BaseStats;
 using GolemEntity.BaseStats.Effects;
 using GolemEntity.ExtraStats;
+using GolemEntity.ExtraStats.Effects;
 
 namespace GolemEntity
 {
@@ -82,9 +83,11 @@ namespace GolemEntity
         
         private List<IExtraStatsProvider> _extraStatsByItems = new List<IExtraStatsProvider>();
 
-        public void AddExtraStatsByItems(IExtraStatsProvider provider)
+        public void AddExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
-            _extraStatsByItems.Add(provider);
+            ExtraStatsChanger changer = new ExtraStatsChanger(_extra, GetBaseStats(), parameters);
+
+            _extraStatsByItems.Add(changer);
         }
         
         public void RemoveExtraStatsByItems(IExtraStatsProvider provider)
