@@ -37,6 +37,7 @@ namespace FightState
         
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
+        private ExtraStatsEditorWithItems _editorWithItems;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -53,6 +54,7 @@ namespace FightState
             SoundsController = GetComponent<SoundsController>();
             RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
+            _editorWithItems = new ExtraStatsEditorWithItems(this);
         }
 
         private void OnEnable()

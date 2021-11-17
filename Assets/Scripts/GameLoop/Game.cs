@@ -92,6 +92,11 @@ namespace GameLoop
             
             SetRoundRates();
             ItemDispenser.DispenseItems();
+
+            foreach (var character in AllGolems)
+            {
+                ItemOutfitter.EquipItems(character);
+            }
             
             foreach (var character in AllGolems)
             {

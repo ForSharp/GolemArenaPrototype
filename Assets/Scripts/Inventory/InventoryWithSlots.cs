@@ -243,9 +243,27 @@ namespace Inventory
             }
         }
 
+        public IInventorySlot GetSlotByItem(IInventoryItem item)
+        {
+            foreach (var slot in _slots)
+            {
+                if (slot.Item == item)
+                {
+                    return slot;
+                }
+            }
+
+            throw new Exception();
+        }
+
         public IInventorySlot[] GetAllEquippingSlotsWithItems()
         {
             return _slots.FindAll(slot => !slot.IsEmpty && slot.IsEquippingSlot).ToArray();
+        }
+
+        public IInventorySlot[] GetAllEquippingSlots()
+        {
+            return _slots.Where(slot => slot.IsEquippingSlot).ToArray();
         }
         
         public IInventorySlot[] GetAllNonEquippingSlots(Type itemType)

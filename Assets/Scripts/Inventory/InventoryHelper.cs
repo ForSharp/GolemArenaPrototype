@@ -12,7 +12,7 @@ namespace Inventory
         private GameObject _inventoryObject;
         [HideInInspector]public InventoryOrganization inventoryOrganization;
         private UIInventorySlot[] _uiSlots;
-        private void Start()
+        private void Awake()
         {
             CreateNewInventory();
         }

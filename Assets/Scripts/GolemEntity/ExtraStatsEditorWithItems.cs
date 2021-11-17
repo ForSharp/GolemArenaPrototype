@@ -19,6 +19,8 @@ namespace GolemEntity
             _character = character;
             _inventory = character.InventoryHelper.inventoryOrganization.Inventory;
 
+            _activeItemEffects = new Dictionary<IInventorySlot, IExtraStatsProvider>();
+
             _inventory.InventoryItemEquipped += HandleItemEquipping;
             _inventory.InventoryItemUnEquipped += HandleItemUnEquipping;
             Game.EndGame += RemoveAllListeners;
@@ -26,15 +28,21 @@ namespace GolemEntity
 
         private void HandleItemEquipping(IInventorySlot slot, IInventoryItem item)
         {
-            if (item is IArtefactItem)
+            if (item is IArtefactItem artefact)
             {
-                
+                var effect = _character.Golem.AddExtraStatsByItems(artefact.ArtefactInfo.AffectsExtraStats);
+                _activeItemEffects.Add(slot, effect);
+                EventContainer.OnGolemStatsChanged(_character);
             }
         }
         
         private void HandleItemUnEquipping(IInventorySlot slot, IInventoryItem item)
         {
-            
+            if (item is IArtefactItem artefact)
+            {
+                _character.Golem.RemoveExtraStatsByItems(_activeItemEffects[slot]);
+                EventContainer.OnGolemStatsChanged(_character);
+            }
         }
 
         private void RemoveAllListeners()

@@ -83,11 +83,15 @@ namespace GolemEntity
         
         private List<IExtraStatsProvider> _extraStatsByItems = new List<IExtraStatsProvider>();
 
-        public void AddExtraStatsByItems(ExtraStatsParameter[] parameters)
+        public IExtraStatsProvider AddExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
             ExtraStatsChanger changer = new ExtraStatsChanger(_extra, GetBaseStats(), parameters);
 
             _extraStatsByItems.Add(changer);
+
+            RecalculateExtraStats();
+            
+            return changer;
         }
         
         public void RemoveExtraStatsByItems(IExtraStatsProvider provider)

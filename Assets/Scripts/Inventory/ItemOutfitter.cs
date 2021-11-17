@@ -12,10 +12,17 @@ namespace Inventory
         {
             UnEquipAllItems(character);
             var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            // var allCorrectItems = inventory.GetAllItems().Where(item =>
+            //         item is IArtefactItem || item is IConsumableBuffItem || item is IConsumableHealingItem)
+            //     .OrderByDescending(item => item.Info.Price);
             var allCorrectItems = inventory.GetAllItems().Where(item =>
-                    item is IArtefactItem || item is IConsumableBuffItem || item is IConsumableHealingItem)
-                .OrderByDescending(item => item.Info.Price);
-            //character.Golem.AddExtraStatsByItems();
+                    item is IArtefactItem).OrderByDescending(item => item.Info.Price);
+
+            foreach (var item in allCorrectItems)
+            {
+                inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(item), inventory.GetAllEquippingSlots()[0]);
+            }
+            
         }
 
         private static void UnEquipAllItems(GameCharacterState character)
