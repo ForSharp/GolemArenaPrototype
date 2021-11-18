@@ -16,6 +16,6 @@ MonoBehaviour:
   - ChangingValue: 100
     StatsType: 4
     IsFlat: 1
-  - ChangingValue: 10000
-    StatsType: 3
+  - ChangingValue: 1000
+    StatsType: 2
     IsFlat: 1

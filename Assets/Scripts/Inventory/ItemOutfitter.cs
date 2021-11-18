@@ -25,6 +25,9 @@ namespace Inventory
                 if (i >= allCorrectItems.Length)
                     return;
                 
+                if (inventory.GetAllEmptyEquippingSlots().Length == 0)
+                    return;
+                
                 inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(allCorrectItems[i]), inventory.GetAllEmptyEquippingSlots()[0]);
             }
             
