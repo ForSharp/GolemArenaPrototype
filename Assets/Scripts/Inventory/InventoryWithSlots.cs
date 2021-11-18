@@ -266,6 +266,11 @@ namespace Inventory
             return _slots.Where(slot => slot.IsEquippingSlot).ToArray();
         }
         
+        public IInventorySlot[] GetAllEmptyEquippingSlots()
+        {
+            return _slots.Where(slot => slot.IsEquippingSlot && slot.IsEmpty).ToArray();
+        }
+        
         public IInventorySlot[] GetAllNonEquippingSlots(Type itemType)
         {
             return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType).Where(slot => !slot.IsEquippingSlot).ToArray();

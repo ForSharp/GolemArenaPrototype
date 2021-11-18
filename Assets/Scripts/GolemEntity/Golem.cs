@@ -33,7 +33,7 @@ namespace GolemEntity
             var changing = new BaseStatsIdenticalMultiplierChanger(value, ParseIStatsToGolemBaseStats(Rate), _provider);
             _provider = changing;
             
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
             
             RecalculateExtraStats();
         }
@@ -53,23 +53,25 @@ namespace GolemEntity
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
 
-        private List<IStatsProvider> _permanentBaseStats = new List<IStatsProvider>();
+        //private List<IStatsProvider> _permanentBaseStats = new List<IStatsProvider>();
 
-        public void AddPermanentBaseStats(IStatsProvider provider)
-        {
-            _permanentBaseStats.Add(provider);
-        }
+        // public void AddPermanentBaseStats(IStatsProvider provider)
+        // {
+        //     _permanentBaseStats.Add(provider);
+        // }
 
-        private List<IExtraStatsProvider> _tempExtraStats = new List<IExtraStatsProvider>();
+        private List<ExtraStatsParameter[]> _tempExtraStats = new List<ExtraStatsParameter[]>();
         
-        public void AddTempExtraStats(IExtraStatsProvider provider)
+        public void AddTempExtraStats(ExtraStatsParameter[] parameters)
         {
-            _tempExtraStats.Add(provider);
+            _tempExtraStats.Add(parameters);
+            
+            RecalculateExtraStats();
         }
         
-        public void RemoveTempExtraStats(IExtraStatsProvider provider)
+        public void RemoveTempExtraStats(ExtraStatsParameter[] parameters)
         {
-            _tempExtraStats.Remove(provider);
+            _tempExtraStats.Remove(parameters);
             
             RecalculateExtraStats();
         }
@@ -81,22 +83,21 @@ namespace GolemEntity
             RecalculateExtraStats();
         }
         
-        private List<IExtraStatsProvider> _extraStatsByItems = new List<IExtraStatsProvider>();
+        private List<ExtraStatsParameter[]> _extraStatsByItems = new List<ExtraStatsParameter[]>();
 
-        public IExtraStatsProvider AddExtraStatsByItems(ExtraStatsParameter[] parameters)
+        public void AddExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
             ExtraStatsChanger changer = new ExtraStatsChanger(_extra, GetBaseStats(), parameters);
 
-            _extraStatsByItems.Add(changer);
+            _extraStatsByItems.Add(parameters);
 
             RecalculateExtraStats();
             
-            return changer;
         }
         
-        public void RemoveExtraStatsByItems(IExtraStatsProvider provider)
+        public void RemoveExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
-            _extraStatsByItems.Remove(provider);
+            _extraStatsByItems.Remove(parameters);
             
             RecalculateExtraStats();
         }
@@ -106,14 +107,15 @@ namespace GolemEntity
             _extra = new TypeExtraStats(_golemType, GetBaseStats());
             _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats());
 
-            foreach (var t in _tempExtraStats)
-            {
-                _extra = t;
-            }
-
             foreach (var t in _extraStatsByItems)
             {
-                _extra = t;
+                _extra = new ExtraStatsChanger(_extra, GetBaseStats(), t);
+            }
+
+            foreach (var t in _tempExtraStats)
+            {
+                
+                _extra = new ExtraStatsChanger(_extra, GetBaseStats(), t);
             }
         }
 
@@ -121,10 +123,10 @@ namespace GolemEntity
         {
             IStatsProvider changing = new GolemTypeStats(_golemType);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
             changing = new SpecializationStats(_provider, _specialization);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
         }
 
         private void SetRate()
@@ -136,7 +138,7 @@ namespace GolemEntity
         {
             var changing = new DefaultStats(MINBaseStats, Rate);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
         }
 
         private void InitExtraProvider()

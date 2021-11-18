@@ -15,139 +15,205 @@ namespace GolemEntity.ExtraStats.Effects
 
         protected override GolemExtraStats GetExtraStatsInternal(GolemBaseStats baseStats)
         {
+            var stats = _wrappedEntity.GetExtraStats();
+            
             foreach (var t in _extraStatsParameters)
             {
                 if (t.IsFlat)
                 {
-                    SwitchExtraStatsFlat(t.StatsType, t.ChangingValue);
+                    stats += GetExtraStatsFlat(t.StatsType, t.ChangingValue);
                 }
                 else
                 {
-                    SwitchExtraStatsMultiplier(t.StatsType, t.ChangingValue);
+                    stats = GetExtraStatsMultiplier(stats, t.StatsType, t.ChangingValue);
                 }
             }
 
-            return _wrappedEntity.GetExtraStats();
+            return stats;
         }
 
-        private void SwitchExtraStatsFlat(ExtraStats type, float changingValue)
+        private GolemExtraStats GetExtraStatsFlat(ExtraStats type, float changingValue)
         {
+            var tempStats = new GolemExtraStats();
+            
             switch (type)
             {
                 case ExtraStats.AttackRange:
-                    _wrappedEntity.GetExtraStats().attackRange += changingValue;
+                    tempStats.attackRange = changingValue;
                     break;
                 case ExtraStats.AttackSpeed:
-                    _wrappedEntity.GetExtraStats().attackSpeed += changingValue;
+                    tempStats.attackSpeed = changingValue;
                     break;
                 case ExtraStats.AvoidChance:
-                    _wrappedEntity.GetExtraStats().avoidChance += changingValue;
+                    tempStats.avoidChance = changingValue;
                     break;
                 case ExtraStats.DamagePerHeat:
-                    _wrappedEntity.GetExtraStats().damagePerHeat += changingValue;
+                    tempStats.damagePerHeat = changingValue;
                     break;
                 case ExtraStats.Defence:
-                    _wrappedEntity.GetExtraStats().defence += changingValue;
+                    tempStats.defence = changingValue;
                     break;
                 case ExtraStats.DodgeChance:
-                    _wrappedEntity.GetExtraStats().dodgeChance += changingValue;
+                    tempStats.dodgeChance = changingValue;
                     break;
                 case ExtraStats.Health:
-                    _wrappedEntity.GetExtraStats().health += changingValue;
+                    tempStats.health = changingValue;
                     break;
                 case ExtraStats.HitAccuracy:
-                    _wrappedEntity.GetExtraStats().hitAccuracy += changingValue;
+                    tempStats.hitAccuracy = changingValue;
                     break;
                 case ExtraStats.MagicAccuracy:
-                    _wrappedEntity.GetExtraStats().magicAccuracy += changingValue;
+                    tempStats.magicAccuracy = changingValue;
                     break;
                 case ExtraStats.MagicPower:
-                    _wrappedEntity.GetExtraStats().magicPower += changingValue;
+                    tempStats.magicPower = changingValue;
                     break;
                 case ExtraStats.MagicResistance:
-                    _wrappedEntity.GetExtraStats().magicResistance += changingValue;
+                    tempStats.magicResistance = changingValue;
                     break;
                 case ExtraStats.ManaPool:
-                    _wrappedEntity.GetExtraStats().manaPool += changingValue;
+                    tempStats.manaPool = changingValue;
                     break;
                 case ExtraStats.MoveSpeed:
-                    _wrappedEntity.GetExtraStats().moveSpeed += changingValue;
+                    tempStats.moveSpeed = changingValue;
                     break;
                 case ExtraStats.RegenerationHealth:
-                    _wrappedEntity.GetExtraStats().regenerationHealth += changingValue;
+                    tempStats.regenerationHealth = changingValue;
                     break;
                 case ExtraStats.RegenerationMana:
-                    _wrappedEntity.GetExtraStats().regenerationMana += changingValue;
+                    tempStats.regenerationMana = changingValue;
                     break;
                 case ExtraStats.RegenerationStamina:
-                    _wrappedEntity.GetExtraStats().regenerationStamina += changingValue;
+                    tempStats.regenerationStamina = changingValue;
                     break;
                 case ExtraStats.Stamina:
-                    _wrappedEntity.GetExtraStats().stamina += changingValue;
+                    tempStats.stamina = changingValue;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+
+            return tempStats;
+
+            // switch (type)
+            // {
+            //     case ExtraStats.AttackRange:
+            //         _wrappedEntity.GetExtraStats().attackRange += changingValue;
+            //         break;
+            //     case ExtraStats.AttackSpeed:
+            //         _wrappedEntity.GetExtraStats().attackSpeed += changingValue;
+            //         break;
+            //     case ExtraStats.AvoidChance:
+            //         _wrappedEntity.GetExtraStats().avoidChance += changingValue;
+            //         break;
+            //     case ExtraStats.DamagePerHeat:
+            //         _wrappedEntity.GetExtraStats().damagePerHeat += changingValue;
+            //         break;
+            //     case ExtraStats.Defence:
+            //         _wrappedEntity.GetExtraStats().defence += changingValue;
+            //         break;
+            //     case ExtraStats.DodgeChance:
+            //         _wrappedEntity.GetExtraStats().dodgeChance += changingValue;
+            //         break;
+            //     case ExtraStats.Health:
+            //         _wrappedEntity.GetExtraStats().health += changingValue;
+            //         break;
+            //     case ExtraStats.HitAccuracy:
+            //         _wrappedEntity.GetExtraStats().hitAccuracy += changingValue;
+            //         break;
+            //     case ExtraStats.MagicAccuracy:
+            //         _wrappedEntity.GetExtraStats().magicAccuracy += changingValue;
+            //         break;
+            //     case ExtraStats.MagicPower:
+            //         _wrappedEntity.GetExtraStats().magicPower += changingValue;
+            //         break;
+            //     case ExtraStats.MagicResistance:
+            //         _wrappedEntity.GetExtraStats().magicResistance += changingValue;
+            //         break;
+            //     case ExtraStats.ManaPool:
+            //         _wrappedEntity.GetExtraStats().manaPool += changingValue;
+            //         break;
+            //     case ExtraStats.MoveSpeed:
+            //         _wrappedEntity.GetExtraStats().moveSpeed += changingValue;
+            //         break;
+            //     case ExtraStats.RegenerationHealth:
+            //         _wrappedEntity.GetExtraStats().regenerationHealth += changingValue;
+            //         break;
+            //     case ExtraStats.RegenerationMana:
+            //         _wrappedEntity.GetExtraStats().regenerationMana += changingValue;
+            //         break;
+            //     case ExtraStats.RegenerationStamina:
+            //         _wrappedEntity.GetExtraStats().regenerationStamina += changingValue;
+            //         break;
+            //     case ExtraStats.Stamina:
+            //         _wrappedEntity.GetExtraStats().stamina += changingValue;
+            //         break;
+            //     default:
+            //         throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            // }
         }
         
-        private void SwitchExtraStatsMultiplier(ExtraStats type, float changingValue)
+        private GolemExtraStats GetExtraStatsMultiplier(GolemExtraStats golemExtraStats, ExtraStats type,
+            float changingValue)
         {
             switch (type)
             {
                 case ExtraStats.AttackRange:
-                    _wrappedEntity.GetExtraStats().attackRange *= changingValue;
+                    golemExtraStats.attackRange *= changingValue;
                     break;
                 case ExtraStats.AttackSpeed:
-                    _wrappedEntity.GetExtraStats().attackSpeed *= changingValue;
+                    golemExtraStats.attackSpeed *= changingValue;
                     break;
                 case ExtraStats.AvoidChance:
-                    _wrappedEntity.GetExtraStats().avoidChance *= changingValue;
+                    golemExtraStats.avoidChance *= changingValue;
                     break;
                 case ExtraStats.DamagePerHeat:
-                    _wrappedEntity.GetExtraStats().damagePerHeat *= changingValue;
+                    golemExtraStats.damagePerHeat *= changingValue;
                     break;
                 case ExtraStats.Defence:
-                    _wrappedEntity.GetExtraStats().defence *= changingValue;
+                    golemExtraStats.defence *= changingValue;
                     break;
                 case ExtraStats.DodgeChance:
-                    _wrappedEntity.GetExtraStats().dodgeChance *= changingValue;
+                    golemExtraStats.dodgeChance *= changingValue;
                     break;
                 case ExtraStats.Health:
-                    _wrappedEntity.GetExtraStats().health *= changingValue;
+                    golemExtraStats.health *= changingValue;
                     break;
                 case ExtraStats.HitAccuracy:
-                    _wrappedEntity.GetExtraStats().hitAccuracy *= changingValue;
+                    golemExtraStats.hitAccuracy *= changingValue;
                     break;
                 case ExtraStats.MagicAccuracy:
-                    _wrappedEntity.GetExtraStats().magicAccuracy *= changingValue;
+                    golemExtraStats.magicAccuracy *= changingValue;
                     break;
                 case ExtraStats.MagicPower:
-                    _wrappedEntity.GetExtraStats().magicPower *= changingValue;
+                    golemExtraStats.magicPower *= changingValue;
                     break;
                 case ExtraStats.MagicResistance:
-                    _wrappedEntity.GetExtraStats().magicResistance *= changingValue;
+                    golemExtraStats.magicResistance *= changingValue;
                     break;
                 case ExtraStats.ManaPool:
-                    _wrappedEntity.GetExtraStats().manaPool *= changingValue;
+                    golemExtraStats.manaPool *= changingValue;
                     break;
                 case ExtraStats.MoveSpeed:
-                    _wrappedEntity.GetExtraStats().moveSpeed *= changingValue;
+                    golemExtraStats.moveSpeed *= changingValue;
                     break;
                 case ExtraStats.RegenerationHealth:
-                    _wrappedEntity.GetExtraStats().regenerationHealth *= changingValue;
+                    golemExtraStats.regenerationHealth *= changingValue;
                     break;
                 case ExtraStats.RegenerationMana:
-                    _wrappedEntity.GetExtraStats().regenerationMana *= changingValue;
+                    golemExtraStats.regenerationMana *= changingValue;
                     break;
                 case ExtraStats.RegenerationStamina:
-                    _wrappedEntity.GetExtraStats().regenerationStamina *= changingValue;
+                    golemExtraStats.regenerationStamina *= changingValue;
                     break;
                 case ExtraStats.Stamina:
-                    _wrappedEntity.GetExtraStats().stamina *= changingValue;
+                    golemExtraStats.stamina *= changingValue;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+
+            return golemExtraStats;
         }
     }
 }

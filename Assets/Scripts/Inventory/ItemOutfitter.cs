@@ -16,12 +16,18 @@ namespace Inventory
             //         item is IArtefactItem || item is IConsumableBuffItem || item is IConsumableHealingItem)
             //     .OrderByDescending(item => item.Info.Price);
             var allCorrectItems = inventory.GetAllItems().Where(item =>
-                    item is IArtefactItem).OrderByDescending(item => item.Info.Price);
+                    item is IArtefactItem).OrderByDescending(item => item.Info.Price).ToArray();
 
-            foreach (var item in allCorrectItems)
+            const int equippingSlotsCount = 6;
+            
+            for (var i = 0; i < equippingSlotsCount; i++)
             {
-                inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(item), inventory.GetAllEquippingSlots()[0]);
+                if (i >= allCorrectItems.Length)
+                    return;
+                
+                inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(allCorrectItems[i]), inventory.GetAllEmptyEquippingSlots()[0]);
             }
+            
             
         }
 
