@@ -4,6 +4,7 @@ using GameLoop;
 using GolemEntity;
 using GolemEntity.BaseStats;
 using GolemEntity.ExtraStats;
+using Inventory;
 using UI;
 using UnityEngine;
 
@@ -31,10 +32,12 @@ namespace FightState
         public string Spec { get; private set; }
         public Golem Golem { get; private set; }
         public SoundsController SoundsController { get; private set; }
-
-        private bool _isReady;
+        
+        public InventoryHelper InventoryHelper { get; private set; }
+        
         private RoundStatistics _lastEnemyAttacked;
-        public readonly RoundStatistics RoundStatistics = new RoundStatistics();
+        public RoundStatistics RoundStatistics;
+        private ExtraStatsEditorWithItems _editorWithItems;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -49,6 +52,9 @@ namespace FightState
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
+            RoundStatistics = new RoundStatistics(this);
+            InventoryHelper = GetComponent<InventoryHelper>();
+            _editorWithItems = new ExtraStatsEditorWithItems(this);
         }
 
         private void OnEnable()
@@ -63,25 +69,17 @@ namespace FightState
             EventContainer.GolemStatsChanged -= UpdateStats;
         }
 
-        private void Update()
-        {
-            if (!_isReady)
-            {
-                return;
-            }
-        }
-
         private void UpdateStats(GameCharacterState state)
         {
             if (state != this) return;
             BaseStats = Golem.GetBaseStats();
             Stats = Golem.GetExtraStats();
-            SetProportionallyCurrentHealth(Golem.GetExtraStats().Health);
-            SetProportionallyCurrentStamina(Golem.GetExtraStats().Stamina);
-            SetProportionallyCurrentMana(Golem.GetExtraStats().ManaPool);
-            MaxHealth = Stats.Health;
-            MaxStamina = Stats.Stamina;
-            MaxMana = Stats.ManaPool;
+            SetProportionallyCurrentHealth(Golem.GetExtraStats().health);
+            SetProportionallyCurrentStamina(Golem.GetExtraStats().stamina);
+            SetProportionallyCurrentMana(Golem.GetExtraStats().manaPool);
+            MaxHealth = Stats.health;
+            MaxStamina = Stats.stamina;
+            MaxMana = Stats.manaPool;
             OnStatsChanged(Stats);
         }
 
@@ -137,21 +135,20 @@ namespace FightState
             Lvl = 1;
             Stats = Golem.GetExtraStats();
             BaseStats = Golem.GetBaseStats();
-            MaxHealth = Stats.Health;
+            MaxHealth = Stats.health;
             CurrentHealth = MaxHealth;
-            MaxStamina = Stats.Stamina;
+            MaxStamina = Stats.stamina;
             CurrentStamina = MaxStamina;
-            MaxMana = Stats.ManaPool;
+            MaxMana = Stats.manaPool;
             CurrentMana = MaxMana;
 
             CreateHealthBar();
-            _isReady = true;
         }
 
         private void CreateHealthBar()
         {
             if (!isDynamicHealthBarCreate) return;
-            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
             _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
 
@@ -209,6 +206,8 @@ namespace FightState
         {
             RoundStatistics.RoundDamage = 0;
             RoundStatistics.RoundKills = 0;
+            RoundStatistics.WinLastRound = false;
+            RoundStatistics.RoundRate = 0;
         }
 
         private void HealAllParameters()
@@ -239,7 +238,7 @@ namespace FightState
             {
                 if (CurrentHealth < MaxHealth)
                 {
-                    CurrentHealth += Stats.RegenerationHealth;
+                    CurrentHealth += Stats.regenerationHealth;
                     if (CurrentHealth > MaxHealth)
                     {
                         CurrentHealth = MaxHealth;
@@ -249,7 +248,7 @@ namespace FightState
 
                 if (CurrentStamina < MaxStamina)
                 {
-                    CurrentStamina += Stats.RegenerationStamina;
+                    CurrentStamina += Stats.regenerationStamina;
                     if (CurrentStamina > MaxStamina)
                     {
                         CurrentStamina = MaxStamina;
@@ -259,7 +258,7 @@ namespace FightState
 
                 if (CurrentMana < MaxMana)
                 {
-                    CurrentMana += Stats.RegenerationMana;
+                    CurrentMana += Stats.regenerationMana;
                     if (CurrentMana > MaxMana)
                     {
                         CurrentMana = MaxMana;

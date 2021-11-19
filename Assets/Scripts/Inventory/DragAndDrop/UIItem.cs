@@ -1,20 +1,22 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DragAndDrop
+namespace Inventory.DragAndDrop
 {
     public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         private Canvas _mainCanvas;
         private RectTransform _rectTransform;
         private CanvasGroup _canvasGroup;
+        private int _parentIndex;
+        private Transform _parentSlotTransform;
 
         private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
             _mainCanvas = GetComponentInParent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
+            _parentSlotTransform = _rectTransform.parent;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -24,8 +26,9 @@ namespace DragAndDrop
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            var slotTransform = _rectTransform.parent;
-            slotTransform.SetAsLastSibling();
+            _parentIndex = _parentSlotTransform.GetSiblingIndex();
+            _parentSlotTransform.SetAsLastSibling();
+            
             _canvasGroup.blocksRaycasts = false;
         }
 
@@ -33,6 +36,8 @@ namespace DragAndDrop
         {
             transform.localPosition = Vector3.zero;
             _canvasGroup.blocksRaycasts = true;
+            
+            _parentSlotTransform.SetSiblingIndex(_parentIndex);
         }
     }
 }

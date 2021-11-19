@@ -24,7 +24,6 @@ namespace UI
         
         private void Start()
         {
-            transform.SetParent(GameObject.Find("Canvas").transform);
             _mainCamera = Camera.main;
         }
 
@@ -93,7 +92,7 @@ namespace UI
 
         private void SetMaxValues(GolemExtraStats stats)
         {
-            sliderHealth.maxValue = stats.Health;
+            sliderHealth.maxValue = stats.health;
             SetCurrentColor();
             
         }

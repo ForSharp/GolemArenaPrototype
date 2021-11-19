@@ -3,6 +3,9 @@ using System.Linq;
 using BehaviourStrategy.Abstracts;
 using FightState;
 using GameLoop;
+using Inventory.Abstracts;
+using Inventory.Abstracts.Spells;
+using Inventory.Items;
 using UnityEngine;
 
 namespace BehaviourStrategy.SpellEffects
@@ -18,7 +21,7 @@ namespace BehaviourStrategy.SpellEffects
         private float _magicAccuracy;
         private int _ownerGroupNumber;
         private bool _isExplosionStarted;
-        private ISpellInfo _info;
+        private FireBallItem _info;
         
         private void Start()
         {
@@ -28,10 +31,10 @@ namespace BehaviourStrategy.SpellEffects
             Destroy(gameObject, 10);
         }
 
-        public void CustomConstructor(GameCharacterState ownerState, ISpellInfo info)
+        public void CustomConstructor(GameCharacterState ownerState, FireBallItem info)
         {
-            _magicPower = ownerState.Stats.MagicPower;
-            _magicAccuracy = ownerState.Stats.MagicAccuracy;
+            _magicPower = ownerState.Stats.magicPower;
+            _magicAccuracy = ownerState.Stats.magicAccuracy;
             _state = ownerState;
             _ownerGroupNumber = ownerState.Group;
             _info = info;
@@ -69,7 +72,7 @@ namespace BehaviourStrategy.SpellEffects
                                 
                                 var flameObj = Instantiate(flame, state.gameObject.transform);
                                 var flameEffect = flameObj.GetComponent<FlameEffect>();
-                                flameEffect.BurnTarget(_state, state, _info.PeriodicDamage, _info.EffectDuration);
+                                flameEffect.BurnTarget(_state, state, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration);
                                 //при поджоге наносить переодический урон
                                 //при поджоге добавить эффект горения
                                 //урон увеличивается от магической мощи нападающего, уменьшается от магического сопротивления жертвы
@@ -89,8 +92,8 @@ namespace BehaviourStrategy.SpellEffects
                 if (state.Group != _ownerGroupNumber)
                 {
                     //takedamage
-                    state.TakeDamage(_info.Damage, _state.RoundStatistics);
-                    EventContainer.OnMagicDamageReceived(_state, state, _info.Damage, false);
+                    state.TakeDamage(_info.DamageSpellInfo.DamagingValue, _state.RoundStatistics);
+                    EventContainer.OnMagicDamageReceived(_state, state, _info.DamageSpellInfo.DamagingValue, false);
                 }
             }
         }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using GolemEntity.BaseStats;
+using GolemEntity.BaseStats.Effects;
 using GolemEntity.ExtraStats;
+using GolemEntity.ExtraStats.Effects;
 
 namespace GolemEntity
 {
@@ -28,12 +30,17 @@ namespace GolemEntity
         
         public void ChangeBaseStatsProportionallyPermanent(float value)
         {
-            var changing = new BaseStatsEditor(value, ParseIStatsToGolemBaseStats(Rate), _provider);
+            var changing = new BaseStatsIdenticalMultiplierChanger(value, ParseIStatsToGolemBaseStats(Rate), _provider);
             _provider = changing;
             
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
             
             RecalculateExtraStats();
+        }
+
+        public void ChangeBaseStatsProportionallyPermanent(GolemBaseStats stats)
+        {
+            
         }
 
         public GolemBaseStats GetBaseStats()
@@ -46,23 +53,25 @@ namespace GolemEntity
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
 
-        private List<IStatsProvider> _permanentBaseStats = new List<IStatsProvider>();
+        //private List<IStatsProvider> _permanentBaseStats = new List<IStatsProvider>();
 
-        public void AddPermanentBaseStats(IStatsProvider provider)
-        {
-            _permanentBaseStats.Add(provider);
-        }
+        // public void AddPermanentBaseStats(IStatsProvider provider)
+        // {
+        //     _permanentBaseStats.Add(provider);
+        // }
 
-        private List<IExtraStatsProvider> _tempExtraStats = new List<IExtraStatsProvider>();
+        private List<ExtraStatsParameter[]> _tempExtraStats = new List<ExtraStatsParameter[]>();
         
-        public void AddTempExtraStats(IExtraStatsProvider provider)
+        public void AddTempExtraStats(ExtraStatsParameter[] parameters)
         {
-            _tempExtraStats.Add(provider);
+            _tempExtraStats.Add(parameters);
+            
+            RecalculateExtraStats();
         }
         
-        public void RemoveTempExtraStats(IExtraStatsProvider provider)
+        public void RemoveTempExtraStats(ExtraStatsParameter[] parameters)
         {
-            _tempExtraStats.Remove(provider);
+            _tempExtraStats.Remove(parameters);
             
             RecalculateExtraStats();
         }
@@ -74,16 +83,21 @@ namespace GolemEntity
             RecalculateExtraStats();
         }
         
-        private List<IExtraStatsProvider> _extraStatsByItems = new List<IExtraStatsProvider>();
+        private List<ExtraStatsParameter[]> _extraStatsByItems = new List<ExtraStatsParameter[]>();
 
-        public void AddExtraStatsByItems(IExtraStatsProvider provider)
+        public void AddExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
-            _extraStatsByItems.Add(provider);
+            ExtraStatsChanger changer = new ExtraStatsChanger(_extra, GetBaseStats(), parameters);
+
+            _extraStatsByItems.Add(parameters);
+
+            RecalculateExtraStats();
+            
         }
         
-        public void RemoveExtraStatsByItems(IExtraStatsProvider provider)
+        public void RemoveExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
-            _extraStatsByItems.Remove(provider);
+            _extraStatsByItems.Remove(parameters);
             
             RecalculateExtraStats();
         }
@@ -93,14 +107,15 @@ namespace GolemEntity
             _extra = new TypeExtraStats(_golemType, GetBaseStats());
             _extra = new SpecializationExtraStats( _specialization, _extra, GetBaseStats());
 
-            foreach (var t in _tempExtraStats)
-            {
-                _extra = t;
-            }
-
             foreach (var t in _extraStatsByItems)
             {
-                _extra = t;
+                _extra = new ExtraStatsChanger(_extra, GetBaseStats(), t);
+            }
+
+            foreach (var t in _tempExtraStats)
+            {
+                
+                _extra = new ExtraStatsChanger(_extra, GetBaseStats(), t);
             }
         }
 
@@ -108,10 +123,10 @@ namespace GolemEntity
         {
             IStatsProvider changing = new GolemTypeStats(_golemType);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
             changing = new SpecializationStats(_provider, _specialization);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
         }
 
         private void SetRate()
@@ -123,7 +138,7 @@ namespace GolemEntity
         {
             var changing = new DefaultStats(MINBaseStats, Rate);
             _provider = changing;
-            AddPermanentBaseStats(changing);
+            //AddPermanentBaseStats(changing);
         }
 
         private void InitExtraProvider()
@@ -136,9 +151,9 @@ namespace GolemEntity
         {
             return new GolemBaseStats()
             {
-                Strength = provider.GetBaseStats().Strength,
-                Agility = provider.GetBaseStats().Agility,
-                Intelligence = provider.GetBaseStats().Intelligence
+                strength = provider.GetBaseStats().strength,
+                agility = provider.GetBaseStats().agility,
+                intelligence = provider.GetBaseStats().intelligence
             };
         }
 
@@ -146,23 +161,23 @@ namespace GolemEntity
         {
             return new GolemExtraStats()
             {
-                AttackRange = extra.GetExtraStats().AttackRange, 
-                AttackSpeed = extra.GetExtraStats().AttackSpeed,
-                AvoidChance = extra.GetExtraStats().AvoidChance,
-                DamagePerHeat = extra.GetExtraStats().DamagePerHeat,
-                Defence = extra.GetExtraStats().Defence,
-                DodgeChance = extra.GetExtraStats().DodgeChance,
-                Health = extra.GetExtraStats().Health,
-                HitAccuracy = extra.GetExtraStats().HitAccuracy,
-                MagicAccuracy = extra.GetExtraStats().MagicAccuracy,
-                MagicPower = extra.GetExtraStats().MagicPower,
-                MagicResistance = extra.GetExtraStats().MagicResistance,
-                ManaPool = extra.GetExtraStats().ManaPool,
-                MoveSpeed = extra.GetExtraStats().MoveSpeed,
-                RegenerationHealth = extra.GetExtraStats().RegenerationHealth,
-                RegenerationMana = extra.GetExtraStats().RegenerationMana,
-                RegenerationStamina = extra.GetExtraStats().RegenerationStamina,
-                Stamina = extra.GetExtraStats().Stamina
+                attackRange = extra.GetExtraStats().attackRange, 
+                attackSpeed = extra.GetExtraStats().attackSpeed,
+                avoidChance = extra.GetExtraStats().avoidChance,
+                damagePerHeat = extra.GetExtraStats().damagePerHeat,
+                defence = extra.GetExtraStats().defence,
+                dodgeChance = extra.GetExtraStats().dodgeChance,
+                health = extra.GetExtraStats().health,
+                hitAccuracy = extra.GetExtraStats().hitAccuracy,
+                magicAccuracy = extra.GetExtraStats().magicAccuracy,
+                magicPower = extra.GetExtraStats().magicPower,
+                magicResistance = extra.GetExtraStats().magicResistance,
+                manaPool = extra.GetExtraStats().manaPool,
+                moveSpeed = extra.GetExtraStats().moveSpeed,
+                regenerationHealth = extra.GetExtraStats().regenerationHealth,
+                regenerationMana = extra.GetExtraStats().regenerationMana,
+                regenerationStamina = extra.GetExtraStats().regenerationStamina,
+                stamina = extra.GetExtraStats().stamina
             };
         }
 
@@ -174,22 +189,6 @@ namespace GolemEntity
         public string GetGolemExtraStats()
         {
             return GetExtraStats().ToString();
-        }
-    }
-
-    public class BaseStatsEditor : StatsDecorator
-    {
-        private readonly float _value;
-        private readonly GolemBaseStats _multiplier;
-        public BaseStatsEditor(float value, GolemBaseStats multiplier, IStatsProvider wrappedEntity) : base(wrappedEntity)
-        {
-            _value = value;
-            _multiplier = multiplier;
-        }
-
-        protected override GolemBaseStats GetStatsInternal()
-        {
-            return WrappedEntity.GetBaseStats() + (_multiplier * _value);
         }
     }
 

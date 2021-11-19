@@ -1,16 +1,40 @@
-﻿using BehaviourStrategy.SpellEffects;
+﻿using System;
+using BehaviourStrategy.Abstracts;
+using BehaviourStrategy.SpellEffects;
+using FightState;
+using Inventory.Abstracts;
+using Inventory.Abstracts.Spells;
+using Inventory.Items;
 using UnityEngine;
 
 namespace BehaviourStrategy
 {
-    public class FireballSpell : AbstractSpell
+    public class FireballSpell : MonoBehaviour, ICastable
     {
-        public override void CastSpell()
+        private FireBallItem _info;
+        private Transform _target;
+        private Animator _animator;
+        private Action<Animator> _castAnimation;
+        private GameObject _spellEffect;
+        private GameCharacterState _state;
+        
+        public void CustomConstructor(FireBallItem info, Transform target, Animator animator, 
+            Action<Animator> castAnimation, GameCharacterState state)
         {
-            if (State.TrySpendMana(Info.ManaCost))
+            _info = info;
+            _target = target;
+            _animator = animator;
+            _castAnimation = castAnimation;
+            _spellEffect = _info.SpellInfo.SpellEffect;
+            _state = state;
+        }
+        
+        public void CastSpell()
+        {
+            if (_state.TrySpendMana(_info.SpellInfo.ManaCost))
             {
-                transform.LookAt(Target);
-                CastAnimation.Invoke(Animator);
+                transform.LookAt(_target);
+                _castAnimation.Invoke(_animator);
             }
         }
 
@@ -18,11 +42,11 @@ namespace BehaviourStrategy
         
         private void OnSpellCasted()
         {
-            transform.LookAt(Target);
-            var fireBall = Instantiate(SpellEffect, transform.position + Vector3.forward + Vector3.up, transform.rotation);
+            transform.LookAt(_target);
+            var fireBall = Instantiate(_spellEffect, transform.position + Vector3.forward + Vector3.up, transform.rotation);
             
             var fireballEffect = fireBall.GetComponent<FireballEffect>();
-            fireballEffect.CustomConstructor(State, Info);
+            fireballEffect.CustomConstructor(_state, _info);
         }
 
         #endregion

@@ -35,7 +35,7 @@ namespace UI
             if (target == State)
             {
                 animatorAttack[_attackInfoQueueNumber].SetTrigger(HitReceived);
-                attack[_attackInfoQueueNumber].text = $"-{damage:#.00}";
+                attack[_attackInfoQueueNumber].text = $"-{damage:#.}";
             
                 _attackInfoQueueNumber++;
                 if (_attackInfoQueueNumber >= 3)
@@ -59,12 +59,12 @@ namespace UI
                 else if (fightArgs.IsAttackFromBehind)
                 {
                     animatorAttack[_attackInfoQueueNumber].SetTrigger(CriticalHitReceived);
-                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}!";
+                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.}!";
                 }
                 else
                 {
                     animatorAttack[_attackInfoQueueNumber].SetTrigger(HitReceived);
-                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}";
+                    attack[_attackInfoQueueNumber].text = $"-{fightArgs.AttackHitEventArgs.DamagePerHit:#.}";
                 }
 
                 _attackInfoQueueNumber++;

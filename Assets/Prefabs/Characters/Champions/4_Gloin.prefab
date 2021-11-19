@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: -4916684549376049721}
   - component: {fileID: 974656738895392085}
   - component: {fileID: 924865886368240733}
+  - component: {fileID: 5052149775876265825}
   m_Layer: 0
   m_Name: 4_Gloin
   m_TagString: Untagged
@@ -796,6 +797,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5052149775876265825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625021491795756817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a5b12a22814a7aa134c26869fddb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
+    type: 3}
+  inventoryOrganization: {fileID: 0}
 --- !u!1 &1625045130830643537
 GameObject:
   m_ObjectHideFlags: 0

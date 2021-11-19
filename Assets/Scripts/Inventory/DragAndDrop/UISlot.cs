@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DragAndDrop
+namespace Inventory.DragAndDrop
 {
     public class UISlot : MonoBehaviour, IDropHandler
     {
@@ -11,5 +11,7 @@ namespace DragAndDrop
             otherItemTransform.SetParent(transform);
             otherItemTransform.localPosition = Vector3.zero;
         }
+
+        
     }
 }

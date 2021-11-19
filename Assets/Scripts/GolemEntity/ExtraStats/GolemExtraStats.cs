@@ -1,46 +1,49 @@
-﻿namespace GolemEntity.ExtraStats
+﻿using System;
+
+namespace GolemEntity.ExtraStats
 {
-    public class GolemExtraStats 
+    [Serializable]
+    public class GolemExtraStats
     {
-        public float AttackRange { get; set; }
-        public float AttackSpeed { get; set; } 
-        public float AvoidChance { get; set; }
-        public float DamagePerHeat { get; set; }
-        public float Defence { get; set; }
-        public float DodgeChance { get; set; }
-        public float Health { get; set; }
-        public float HitAccuracy { get; set; }
-        public float MagicAccuracy { get; set; }
-        public float MagicPower { get; set; }
-        public float MagicResistance { get; set; }
-        public float ManaPool { get; set; }
-        public float MoveSpeed { get; set; }
-        public float RegenerationHealth { get; set; }
-        public float RegenerationMana { get; set; }
-        public float RegenerationStamina { get; set; }
-        public float Stamina { get; set; }
+        public float attackRange;
+        public float attackSpeed;
+        public float avoidChance;
+        public float damagePerHeat;
+        public float defence;
+        public float dodgeChance;
+        public float health;
+        public float hitAccuracy;
+        public float magicAccuracy;
+        public float magicPower;
+        public float magicResistance;
+        public float manaPool;
+        public float moveSpeed;
+        public float regenerationHealth;
+        public float regenerationMana;
+        public float regenerationStamina;
+        public float stamina;
 
         public static GolemExtraStats operator +(GolemExtraStats statsA, GolemExtraStats statsB)
         {
             return new GolemExtraStats ()
             {
-                AttackRange = statsA.AttackRange + statsB.AttackRange,
-                AttackSpeed = statsA.AttackSpeed + statsB.AttackSpeed,
-                AvoidChance = statsA.AvoidChance + statsB.AvoidChance,
-                DamagePerHeat = statsA.DamagePerHeat + statsB.DamagePerHeat,
-                Defence = statsA.Defence + statsB.Defence,
-                DodgeChance = statsA.DodgeChance + statsB.DodgeChance,
-                Health = statsA.Health + statsB.Health,
-                HitAccuracy = statsA.HitAccuracy + statsB.HitAccuracy,
-                MagicAccuracy = statsA.MagicAccuracy + statsB.MagicAccuracy,
-                MagicPower = statsA.MagicPower + statsB.MagicPower,
-                MagicResistance = statsA.MagicResistance + statsB.MagicResistance,
-                ManaPool = statsA.ManaPool + statsB.ManaPool,
-                MoveSpeed = statsA.MoveSpeed + statsB.MoveSpeed,
-                RegenerationHealth = statsA.RegenerationHealth + statsB.RegenerationHealth,
-                RegenerationMana = statsA.RegenerationMana + statsB.RegenerationMana,
-                RegenerationStamina = statsA.RegenerationStamina + statsB.RegenerationStamina,
-                Stamina = statsA.Stamina + statsB.Stamina
+                attackRange = statsA.attackRange + statsB.attackRange,
+                attackSpeed = statsA.attackSpeed + statsB.attackSpeed,
+                avoidChance = statsA.avoidChance + statsB.avoidChance,
+                damagePerHeat = statsA.damagePerHeat + statsB.damagePerHeat,
+                defence = statsA.defence + statsB.defence,
+                dodgeChance = statsA.dodgeChance + statsB.dodgeChance,
+                health = statsA.health + statsB.health,
+                hitAccuracy = statsA.hitAccuracy + statsB.hitAccuracy,
+                magicAccuracy = statsA.magicAccuracy + statsB.magicAccuracy,
+                magicPower = statsA.magicPower + statsB.magicPower,
+                magicResistance = statsA.magicResistance + statsB.magicResistance,
+                manaPool = statsA.manaPool + statsB.manaPool,
+                moveSpeed = statsA.moveSpeed + statsB.moveSpeed,
+                regenerationHealth = statsA.regenerationHealth + statsB.regenerationHealth,
+                regenerationMana = statsA.regenerationMana + statsB.regenerationMana,
+                regenerationStamina = statsA.regenerationStamina + statsB.regenerationStamina,
+                stamina = statsA.stamina + statsB.stamina
             };
         }
 
@@ -48,44 +51,44 @@
         {
             return new GolemExtraStats()
             {
-                AttackSpeed = stats.AttackSpeed * multiplier,
-                AvoidChance = stats.AvoidChance * multiplier,
-                DamagePerHeat = stats.DamagePerHeat * multiplier,
-                Defence = stats.Defence * multiplier,
-                DodgeChance = stats.DodgeChance * multiplier,
-                Health = stats.Health * multiplier,
-                HitAccuracy = stats.HitAccuracy * multiplier,
-                MagicAccuracy = stats.MagicAccuracy * multiplier,
-                MagicPower = stats.MagicPower * multiplier,
-                MagicResistance = stats.MagicResistance * multiplier,
-                ManaPool = stats.ManaPool * multiplier,
-                MoveSpeed = stats.MoveSpeed * multiplier,
-                RegenerationHealth = stats.RegenerationHealth * multiplier,
-                RegenerationMana = stats.RegenerationMana * multiplier,
-                RegenerationStamina = stats.RegenerationStamina * multiplier,
-                Stamina = stats.Stamina * multiplier
+                attackSpeed = stats.attackSpeed * multiplier,
+                avoidChance = stats.avoidChance * multiplier,
+                damagePerHeat = stats.damagePerHeat * multiplier,
+                defence = stats.defence * multiplier,
+                dodgeChance = stats.dodgeChance * multiplier,
+                health = stats.health * multiplier,
+                hitAccuracy = stats.hitAccuracy * multiplier,
+                magicAccuracy = stats.magicAccuracy * multiplier,
+                magicPower = stats.magicPower * multiplier,
+                magicResistance = stats.magicResistance * multiplier,
+                manaPool = stats.manaPool * multiplier,
+                moveSpeed = stats.moveSpeed * multiplier,
+                regenerationHealth = stats.regenerationHealth * multiplier,
+                regenerationMana = stats.regenerationMana * multiplier,
+                regenerationStamina = stats.regenerationStamina * multiplier,
+                stamina = stats.stamina * multiplier
             };
         }
 
         public override string ToString()
         {
-            return $"AttackRange = {AttackRange}," +
-                   $"AttackSpeed = {AttackSpeed}," +
-                   $"AvoidChance = {AvoidChance}," +
-                   $"DamagePerHeat = {DamagePerHeat}," +
-                   $"Defence = {Defence}," +
-                   $"DodgeChance = {DodgeChance}," +
-                   $"Health = {Health}," +
-                   $"HitAccuracy = {HitAccuracy}," +
-                   $"MagicAccuracy = {MagicAccuracy}," +
-                   $"MagicDamage = {MagicPower}," +
-                   $"MagicResistance = {MagicResistance}," +
-                   $"ManaPool = {ManaPool}," +
-                   $"MoveSpeed = {MoveSpeed}," +
-                   $"RegenerationHealth = {RegenerationHealth}," +
-                   $"RegenerationMana = {RegenerationMana}," +
-                   $"RegenerationStamina = {RegenerationStamina}," +
-                   $"Stamina = {Stamina}";
+            return $"AttackRange = {attackRange}," +
+                   $"AttackSpeed = {attackSpeed}," +
+                   $"AvoidChance = {avoidChance}," +
+                   $"DamagePerHeat = {damagePerHeat}," +
+                   $"Defence = {defence}," +
+                   $"DodgeChance = {dodgeChance}," +
+                   $"Health = {health}," +
+                   $"HitAccuracy = {hitAccuracy}," +
+                   $"MagicAccuracy = {magicAccuracy}," +
+                   $"MagicDamage = {magicPower}," +
+                   $"MagicResistance = {magicResistance}," +
+                   $"ManaPool = {manaPool}," +
+                   $"MoveSpeed = {moveSpeed}," +
+                   $"RegenerationHealth = {regenerationHealth}," +
+                   $"RegenerationMana = {regenerationMana}," +
+                   $"RegenerationStamina = {regenerationStamina}," +
+                   $"Stamina = {stamina}";
         }
     }
 }

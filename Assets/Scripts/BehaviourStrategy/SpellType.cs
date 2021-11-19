@@ -2,12 +2,11 @@
 {
     public enum SpellType
     {
-        HealHealth,
-        HealStamina,
-        HealMana,
+        Heal,
         Buff,
         Debuff,
         Damage,
-        Summon
+        Summon,
+        Polymorph //turning an enemy into a harmless creature or freezing
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GolemEntity.ExtraStats;
+using Inventory.Info;
 
 namespace Inventory.Abstracts
 {

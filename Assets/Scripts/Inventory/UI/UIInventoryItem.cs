@@ -1,9 +1,9 @@
-﻿using DragAndDrop;
-using Inventory.Abstracts;
+﻿using Inventory.Abstracts;
+using Inventory.DragAndDrop;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace Inventory.UI
 {
     public class UIInventoryItem : UIItem
     {
@@ -23,14 +23,7 @@ namespace UI
             Item = slot.Item;
             imageIcon.sprite = Item.Info.SpriteIcon;
             imageIcon.gameObject.SetActive(true);
-
-            // var textAmountEnabled = slot.Amount > 1;
-            // textAmount.gameObject.SetActive(textAmountEnabled);
-            //
-            // if (textAmountEnabled)
-            // {
-            //     textAmount.text = $"x{slot.Amount.ToString()}";
-            // }
+            
             textAmount.gameObject.SetActive(true);
             textAmount.text = $"x{slot.Amount.ToString()}";
         }

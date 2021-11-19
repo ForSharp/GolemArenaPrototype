@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
 using Controller;
 using FightState;
 using GameLoop;
@@ -21,7 +21,7 @@ namespace UI
         [SerializeField] private GameObject closedPanel;
         [SerializeField] private StaticHealthBar healthBar;
 
-        [HideInInspector] public bool inPanel;
+        public bool InPanel { get; private set; }
 
         private GameCharacterState _state;
         private GolemExtraStats _stats;
@@ -63,7 +63,7 @@ namespace UI
         {
             if (Game.Stage == Game.GameStage.MainMenu)
                 return;
-                
+
             _state = state;
             _stats = _state.Stats;
             FillMainInfo();
@@ -72,8 +72,19 @@ namespace UI
             panel.SetActive(true);
             CameraMovement.Instance.SetTarget(state);
             _state.SoundsController.PlayClickAndVictorySound();
-            
+
             healthBar.SetCharacterState(state);
+
+            HideAllInventoryPanels();
+            state.InventoryHelper.inventoryOrganization.ShowInventory();
+        }
+
+        private void HideAllInventoryPanels()
+        {
+            foreach (var character in Game.AllGolems)
+            {
+                character.InventoryHelper.inventoryOrganization.HideAllInventory();
+            }
         }
 
         private void UpdateStats()
@@ -119,25 +130,38 @@ namespace UI
             mainInfo[0].text = _state.Type;
             mainInfo[1].text = _state.Spec;
             mainInfo[2].text = _state.Lvl.ToString();
-            mainInfo[3].text = _state.BaseStats.Strength.ToString("#.00");
-            mainInfo[4].text = _state.BaseStats.Agility.ToString("#.00");
-            mainInfo[5].text = _state.BaseStats.Intelligence.ToString("#.00");
+            mainInfo[3].text = _state.BaseStats.strength >= 100
+                ? _state.BaseStats.strength.ToString("#.")
+                : " " + _state.BaseStats.strength.ToString("#.");
+            mainInfo[4].text = _state.BaseStats.agility >= 100
+                ? _state.BaseStats.agility.ToString("#.")
+                : " " + _state.BaseStats.agility.ToString("#.");
+            mainInfo[5].text = _state.BaseStats.intelligence >= 100
+                ? _state.BaseStats.intelligence.ToString("#.")
+                : " " + _state.BaseStats.intelligence.ToString("#.");
 
             mainInfoExtraPanel[0].text = _state.Type;
             mainInfoExtraPanel[1].text = _state.Spec;
             mainInfoExtraPanel[2].text = _state.Lvl.ToString();
-            mainInfoExtraPanel[3].text = _state.BaseStats.Strength.ToString("#.00");
-            mainInfoExtraPanel[4].text = _state.BaseStats.Agility.ToString("#.00");
-            mainInfoExtraPanel[5].text = _state.BaseStats.Intelligence.ToString("#.00");
+            mainInfoExtraPanel[3].text = mainInfo[3].text;
+            mainInfoExtraPanel[4].text = mainInfo[4].text;
+            mainInfoExtraPanel[5].text = mainInfo[5].text;
         }
 
         private void FillTexts()
         {
             var currentStats = GetExtraStatsArray();
-
+            var needToDemoWithSinglePrecision = new List<int> { 0, 12, 13, 14, 15 };
             for (var i = 0; i < extraStatsUI.Length; i++)
             {
-                extraStatsUI[i].text = currentStats[i].ToString("#.00");
+                if (needToDemoWithSinglePrecision.Contains(i))
+                {
+                    extraStatsUI[i].text = currentStats[i].ToString("#.00");
+                }
+                else
+                {
+                    extraStatsUI[i].text = currentStats[i].ToString("#.");
+                }
             }
         }
 
@@ -147,11 +171,11 @@ namespace UI
             {
                 float[] extraStats =
                 {
-                    _stats.AttackRange, _stats.AttackSpeed, _stats.AvoidChance, _stats.DamagePerHeat, _stats.Defence,
-                    _stats.DodgeChance, _stats.Health, _stats.HitAccuracy,
-                    _stats.MagicAccuracy, _stats.MagicPower, _stats.MagicResistance, _stats.ManaPool, _stats.MoveSpeed,
-                    _stats.RegenerationHealth, _stats.RegenerationMana,
-                    _stats.RegenerationStamina, _stats.Stamina
+                    _stats.attackRange, _stats.attackSpeed, _stats.avoidChance, _stats.damagePerHeat, _stats.defence,
+                    _stats.dodgeChance, _stats.health, _stats.hitAccuracy,
+                    _stats.magicAccuracy, _stats.magicPower, _stats.magicResistance, _stats.manaPool, _stats.moveSpeed,
+                    _stats.regenerationHealth, _stats.regenerationMana,
+                    _stats.regenerationStamina, _stats.stamina
                 };
                 return extraStats;
             }
@@ -161,12 +185,12 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            inPanel = false;
+            InPanel = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            inPanel = true;
+            InPanel = true;
         }
     }
 }

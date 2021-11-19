@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 4237705765293912646}
   - component: {fileID: -2218501065018909469}
   - component: {fileID: 8985747771721043183}
+  - component: {fileID: -6685742160181146493}
   m_Layer: 0
   m_Name: 17_Medusa
   m_TagString: Untagged
@@ -1119,6 +1120,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-6685742160181146493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212688883902487369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a5b12a22814a7aa134c26869fddb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
+    type: 3}
+  inventoryOrganization: {fileID: 0}
 --- !u!1 &1212694659741204037
 GameObject:
   m_ObjectHideFlags: 0

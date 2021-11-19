@@ -108,7 +108,7 @@ namespace UI
         {
             var obj = text.GetComponent<Text>();
             
-            obj.GetComponent<Text>().text = $"<color=yellow><b>{target.Type}</b> takes <b>{damage:#.00}</b> magic damage from <b>{sender.Type}</b></color>";
+            obj.GetComponent<Text>().text = $"<color=yellow><b>{target.Type}</b> takes <b>{damage:#.}</b> magic damage from <b>{sender.Type}</b></color>";
             
             return obj.text;
         }
@@ -124,11 +124,11 @@ namespace UI
             else if (fightArgs.IsAttackFromBehind)
             {
                 obj.GetComponent<Text>().text =
-                    $"<color=red><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}</b> critical damage from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
+                    $"<color=red><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit:#.}</b> critical damage from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
             }
             else
             {
-                obj.GetComponent<Text>().text = $"<color=gray><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit:#.00}</b> damage from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
+                obj.GetComponent<Text>().text = $"<color=gray><b>{fightArgs.Target}</b> takes <b>{fightArgs.AttackHitEventArgs.DamagePerHit:#.}</b> damage from <b>{fightArgs.AttackHitEventArgs.AttackerName}</b></color>";
             }
 
             return obj.text;

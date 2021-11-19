@@ -982,6 +982,7 @@ GameObject:
   - component: {fileID: 4851289292439712942}
   - component: {fileID: -3654087567149564490}
   - component: {fileID: 3198774863234627030}
+  - component: {fileID: -4838825293993777441}
   m_Layer: 0
   m_Name: 2_Garruk
   m_TagString: Untagged
@@ -1543,6 +1544,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-4838825293993777441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071977361841678309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a5b12a22814a7aa134c26869fddb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
+    type: 3}
+  inventoryOrganization: {fileID: 0}
 --- !u!1 &9072013964762720815
 GameObject:
   m_ObjectHideFlags: 0

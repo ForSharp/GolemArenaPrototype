@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using FightState;
 using GameLoop;
 using GolemEntity;
@@ -143,7 +144,10 @@ namespace Controller
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
                     {
-                        TryShowHeroStates();
+                        if (Game.Stage != Game.GameStage.MainMenu)
+                        {
+                            TryShowHeroStates();
+                        }
                     }
                     break;
                 default:
@@ -199,9 +203,13 @@ namespace Controller
                 rtsPanel.gameObject.SetActive(true);
                 rtsPanel.HandleClick(state);
             }
-            else if (!rtsPanel.inPanel)
+            else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.inventoryOrganization.InPanel))
             {
                 rtsPanel.gameObject.SetActive(false);
+                foreach (var character in Game.AllGolems)
+                {
+                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                }
             }
         }
         
@@ -331,13 +339,13 @@ namespace Controller
 
         private void Walk()
         {
-            _moveSpeed = _state.Stats.MoveSpeed;
+            _moveSpeed = _state.Stats.moveSpeed;
             AnimationChanger.SetGolemWalk(_animator);
         }
 
         private void Run()
         {
-            _moveSpeed = _state.Stats.MoveSpeed * 1.5f;
+            _moveSpeed = _state.Stats.moveSpeed * 1.5f;
             AnimationChanger.SetGolemRun(_animator);
         }
 
@@ -345,7 +353,23 @@ namespace Controller
 
         private void SetStandardPanel()
         {
+            StartCoroutine(SetStandardPanelAfterDelay());
+        }
+
+        private IEnumerator SetStandardPanelAfterDelay()
+        {
+            yield return new WaitForSeconds(0.1f);
+            
             standardPanel.gameObject.SetActive(true);
+            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
+            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
+            foreach (var character in Game.AllGolems)
+            {
+                if (character != Player.PlayerCharacter)
+                {
+                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                }
+            }
             rtsPanel.gameObject.SetActive(false);
         }
 
@@ -353,6 +377,7 @@ namespace Controller
         {
             standardPanel.gameObject.SetActive(false);
             rtsPanel.gameObject.SetActive(true);
+            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
             rtsPanel.HandleClick(Player.PlayerCharacter);
         }
 

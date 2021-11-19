@@ -6,6 +6,7 @@ namespace Inventory.Abstracts
     {
         bool IsFull { get; }
         bool IsEmpty { get; }
+        bool IsEquippingSlot { get; set; }
         IInventoryItem Item { get; }
         Type ItemType { get; }
         int Amount { get; }
