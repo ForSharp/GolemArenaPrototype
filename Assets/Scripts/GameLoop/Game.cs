@@ -95,7 +95,11 @@ namespace GameLoop
 
             foreach (var character in AllGolems)
             {
-                ItemOutfitter.EquipItems(character);
+                if (character != Player.PlayerCharacter)
+                {
+                    ItemOutfitter.EquipItems(character);
+                }
+                PotionDrinker.DrinkAllPotions(character);
             }
             
             foreach (var character in AllGolems)

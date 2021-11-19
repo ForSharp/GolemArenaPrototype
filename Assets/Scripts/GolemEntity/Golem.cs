@@ -32,15 +32,32 @@ namespace GolemEntity
         {
             var changing = new BaseStatsIdenticalMultiplierChanger(value, ParseIStatsToGolemBaseStats(Rate), _provider);
             _provider = changing;
-            
-            //AddPermanentBaseStats(changing);
-            
+
             RecalculateExtraStats();
         }
 
         public void ChangeBaseStatsProportionallyPermanent(GolemBaseStats stats)
         {
+            var changing = new BaseStatsMultiplierChanger(stats, ParseIStatsToGolemBaseStats(Rate), _provider);
+            _provider = changing;
             
+            RecalculateExtraStats();
+        }
+
+        public void ChangeBaseStatsFlatPermanent(GolemBaseStats stats)
+        {
+            var changing = new BaseStatsFlatChanger(stats, _provider);
+            _provider = changing;
+            
+            RecalculateExtraStats();
+        }
+        
+        public void ChangeBaseStatsUltimatePermanent(GolemBaseStats stats)
+        {
+            var changing = new BaseStatsUltimateChanger(stats, _provider);
+            _provider = changing;
+            
+            RecalculateExtraStats();
         }
 
         public GolemBaseStats GetBaseStats()
