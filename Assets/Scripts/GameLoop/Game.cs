@@ -97,8 +97,10 @@ namespace GameLoop
             {
                 if (character != Player.PlayerCharacter)
                 {
-                    ItemOutfitter.EquipItems(character);
+                    //ItemOutfitter.EquipItems(character);
+                    //PotionDrinker.DrinkAllPotions(character);
                 }
+                ItemOutfitter.EquipItems(character);
                 PotionDrinker.DrinkAllPotions(character);
             }
             
