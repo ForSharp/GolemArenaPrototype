@@ -14,13 +14,17 @@ namespace Inventory
             var allCorrectItems = inventory.GetAllItems().Where(item =>
                     item is IPotionFlatItem || item is IPotionMultiplyItem || item is IPotionUltimateItem).ToArray();
 
-            foreach (var item in allCorrectItems)
+            if (allCorrectItems.Length > 0)
             {
-                DrinkPotionOfType(character, item);
+                foreach (var item in allCorrectItems)
+                {
+                    DrinkPotionOfType(character, item, inventory);
+                }
+                inventory.OnInventoryStateChanged(character);
             }
         }
 
-        private static void DrinkPotionOfType(GameCharacterState character, IInventoryItem potion)
+        private static void DrinkPotionOfType(GameCharacterState character, IInventoryItem potion, InventoryWithSlots inventory)
         {
             switch (potion)
             {
@@ -59,6 +63,11 @@ namespace Inventory
                 }
                 default:
                     throw new Exception();
+            }
+            
+            if (potion.State.Amount == 0)
+            {
+                inventory.GetSlotByItem(potion).Clear();
             }
         }
     }

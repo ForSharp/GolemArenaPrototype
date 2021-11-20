@@ -23,9 +23,12 @@ namespace Inventory.UI
             Item = slot.Item;
             imageIcon.sprite = Item.Info.SpriteIcon;
             imageIcon.gameObject.SetActive(true);
-            
-            textAmount.gameObject.SetActive(true);
-            textAmount.text = $"x{slot.Amount.ToString()}";
+
+            if (Item.State.Amount > 1)
+            {
+                textAmount.gameObject.SetActive(true);
+                textAmount.text = $"x{slot.Amount.ToString()}";
+            }
         }
 
         private void Cleanup()
