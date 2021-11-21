@@ -7,6 +7,7 @@ using GolemEntity.ExtraStats;
 using Inventory;
 using Inventory.Abstracts;
 using Inventory.Info;
+using Optimization;
 using UnityEngine;
 
 namespace GolemEntity
@@ -15,14 +16,12 @@ namespace GolemEntity
     {
         private GameCharacterState _character;
         private InventoryWithSlots _inventory;
-        private Dictionary<IInventorySlot, ExtraStatsParameter[]> _activeConsumablesEffects;
         
         public ConsumablesEater(GameCharacterState character)
         {
             _character = character;
             _inventory = character.InventoryHelper.inventoryOrganization.Inventory;
 
-            _activeConsumablesEffects = new Dictionary<IInventorySlot, ExtraStatsParameter[]>();
             _inventory.ConsumableItemUsed += InventoryOnConsumableItemUsed;
             EventContainer.NewRound += RemoveAllTemporaryEffects;
             Game.EndGame += RemoveAllListeners;
@@ -35,7 +34,7 @@ namespace GolemEntity
                 case IConsumableBuffItem buffItem:
                     var effect = buffItem.ConsumableBuffInfo.AffectsExtraStats;
                     _character.Golem.AddTempExtraStats(effect);
-                    RemoveEffectAfterDelay(effect, buffItem.ConsumableBuffInfo.BuffDuration);
+                    CoroutineStarter.StartRoutine(RemoveEffectAfterDelay(effect, buffItem.ConsumableBuffInfo.BuffDuration));
                     item.State.Amount--;
                     EventContainer.OnGolemStatsChanged(_character);
                     break;
@@ -64,11 +63,13 @@ namespace GolemEntity
         {
             yield return new WaitForSeconds(duration);
             _character.Golem.RemoveTempExtraStats(effect);
+            EventContainer.OnGolemStatsChanged(_character);
         }
         
         private void RemoveAllTemporaryEffects()
         {
             _character.Golem.RemoveAllTempExtraStats();
+            EventContainer.OnGolemStatsChanged(_character);
         }
 
         private void RemoveAllListeners()
