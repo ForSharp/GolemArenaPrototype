@@ -393,7 +393,7 @@ namespace GolemEntity
             {
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
-                StartCoroutine(WaitForSecondsToDisable(6));
+                StartCoroutine(WaitForSecondsToDisable(4));
             }
 
             _navMeshAgent.enabled = false;
@@ -425,7 +425,7 @@ namespace GolemEntity
         {
             yield return new WaitForSeconds(sec);
             gameObject.SetActive(false);
-            DeathEffect.Instatnce.CreateDeathEffect(new Vector3(transform.position.x, transform.position.y + 1,
+            DeathEffect.Instatnce.CreateDeathEffect(new Vector3(transform.position.x, transform.position.y + 2.5f,
                 transform.position.z));
             if (Game.RoundEnded)
             {

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Timers;
 using Inventory.Abstracts;
 using Inventory.DragAndDrop;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,36 +10,30 @@ namespace Inventory.UI
     {
         [SerializeField] private UIInventoryItem uiInventoryItem;
         [SerializeField] private bool isEquippingSlot;
-        public bool IsEquippingSlot => isEquippingSlot;
-        public IInventorySlot Slot { get; private set; }
+        private IInventorySlot Slot { get; set; }
 
         private InventoryOrganization _uiInventory;
-        private float _stopwatchValue;
-        private bool _isStopwatchEnabled;
-        private const float SecondDoubleClick = 1.1f;
 
         private void Awake()
         {
             _uiInventory = GetComponentInParent<InventoryOrganization>();
+            
         }
 
-        private void Update()
+        private void Start()
         {
-            if (_isStopwatchEnabled && !Slot.IsEmpty)
-            {
-                _stopwatchValue = 0;
-                _stopwatchValue += Time.deltaTime;
-                if (_stopwatchValue > 2)
-                {
-                    _isStopwatchEnabled = false;
-                }
-            }
+            _uiInventory.Inventory.InventoryStateChanged += InventoryOnInventoryStateChanged;
         }
 
+        private void OnDestroy()
+        {
+            _uiInventory.Inventory.InventoryStateChanged -= InventoryOnInventoryStateChanged;
+        }
+        
         public void SetSlot(IInventorySlot newSlot)
         {
             Slot = newSlot;
-            Slot.IsEquippingSlot = IsEquippingSlot;
+            Slot.IsEquippingSlot = isEquippingSlot;
         }
 
         public override void OnDrop(PointerEventData eventData)
@@ -65,6 +56,11 @@ namespace Inventory.UI
             }
         }
 
+        private void InventoryOnInventoryStateChanged(object obj)
+        {
+            Refresh();
+        }
+
         public void Refresh()
         {
             if (Slot != null)
@@ -78,33 +74,18 @@ namespace Inventory.UI
             if (Slot.IsEmpty)
                 return;
 
-            if (!_isStopwatchEnabled)
-            {
-                _isStopwatchEnabled = true;
-            }
-            else
-            {
-                if (_stopwatchValue < SecondDoubleClick)
-                {
-                    //double click
-                    //HandleDoubleClick();
-                }
-                else
-                {
-                    _stopwatchValue = 0;
-                }
-            }
+            HandleClick();
         }
 
-        private void HandleDoubleClick()
+        private void HandleClick()
         {
             switch (uiInventoryItem.Item)
             {
                 case IConsumableBuffItem item:
-                    //
+                    _uiInventory.Inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
                     break;
                 case IConsumableHealingItem item:
-                    //
+                    _uiInventory.Inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
                     break;
                 case IPotionFlatItem item:
                     PotionDrinker.DrinkPotion(_uiInventory.Inventory, item);
@@ -117,5 +98,6 @@ namespace Inventory.UI
                     break;
             }
         }
+        
     }
 }

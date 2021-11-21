@@ -69,15 +69,9 @@ namespace GolemEntity
         {
             return ParseIExtraStatsToGolemExtraStats(_extra);
         }
+        
 
-        //private List<IStatsProvider> _permanentBaseStats = new List<IStatsProvider>();
-
-        // public void AddPermanentBaseStats(IStatsProvider provider)
-        // {
-        //     _permanentBaseStats.Add(provider);
-        // }
-
-        private List<ExtraStatsParameter[]> _tempExtraStats = new List<ExtraStatsParameter[]>();
+        private readonly List<ExtraStatsParameter[]> _tempExtraStats = new List<ExtraStatsParameter[]>();
         
         public void AddTempExtraStats(ExtraStatsParameter[] parameters)
         {
@@ -100,16 +94,13 @@ namespace GolemEntity
             RecalculateExtraStats();
         }
         
-        private List<ExtraStatsParameter[]> _extraStatsByItems = new List<ExtraStatsParameter[]>();
+        private readonly List<ExtraStatsParameter[]> _extraStatsByItems = new List<ExtraStatsParameter[]>();
 
         public void AddExtraStatsByItems(ExtraStatsParameter[] parameters)
         {
-            ExtraStatsChanger changer = new ExtraStatsChanger(_extra, GetBaseStats(), parameters);
-
             _extraStatsByItems.Add(parameters);
 
             RecalculateExtraStats();
-            
         }
         
         public void RemoveExtraStatsByItems(ExtraStatsParameter[] parameters)
@@ -140,10 +131,8 @@ namespace GolemEntity
         {
             IStatsProvider changing = new GolemTypeStats(_golemType);
             _provider = changing;
-            //AddPermanentBaseStats(changing);
             changing = new SpecializationStats(_provider, _specialization);
             _provider = changing;
-            //AddPermanentBaseStats(changing);
         }
 
         private void SetRate()
@@ -155,7 +144,6 @@ namespace GolemEntity
         {
             var changing = new DefaultStats(MINBaseStats, Rate);
             _provider = changing;
-            //AddPermanentBaseStats(changing);
         }
 
         private void InitExtraProvider()

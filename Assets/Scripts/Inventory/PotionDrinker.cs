@@ -14,6 +14,7 @@ namespace Inventory
             var stats = potion.PotionFlatInfo.GolemBaseStats;
             character.Golem.ChangeBaseStatsFlatPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
+            EventContainer.OnGolemStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionMultiplyItem potion)
         {
@@ -21,6 +22,7 @@ namespace Inventory
             var stats = potion.PotionMultiplyInfo.GolemBaseStats;
             character.Golem.ChangeBaseStatsProportionallyPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
+            EventContainer.OnGolemStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionUltimateItem potion)
         {
@@ -28,6 +30,7 @@ namespace Inventory
             var stats = potion.PotionUltimateInfo.GolemBaseStats;
             character.Golem.ChangeBaseStatsUltimatePermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
+            EventContainer.OnGolemStatsChanged(character);
         }
 
         public static void DrinkAllPotions(GameCharacterState character)
@@ -45,6 +48,7 @@ namespace Inventory
                 }
                 inventory.OnInventoryStateChanged(character);
             }
+            EventContainer.OnGolemStatsChanged(character);
         }
 
         private static void DrinkPotionOfType(GameCharacterState character, IInventoryItem potion, InventoryWithSlots inventory)
@@ -97,7 +101,15 @@ namespace Inventory
         private static void ChangeInventoryState(IInventoryItem item, GameCharacterState character)
         {
             item.State.Amount--;
-            character.InventoryHelper.inventoryOrganization.Inventory.OnInventoryStateChanged(character);
+            var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+
+            if (item.State.Amount == 0)
+            {
+                var slot = inventory.GetSlotByItem(item);
+                slot.Clear();
+            }
+
+            inventory.OnInventoryStateChanged(character);
         }
 
         private static GameCharacterState GetCharacterByInventory(IInventory inventory)

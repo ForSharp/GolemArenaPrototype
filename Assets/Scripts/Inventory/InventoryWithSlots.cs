@@ -116,10 +116,17 @@ namespace Inventory
             return false;
         }
 
+        public event Action<IInventorySlot, IInventoryItem> ConsumableItemUsed;
+        
+        public void OnConsumableItemUsed(IInventorySlot slot, IInventoryItem item)
+        {
+            ConsumableItemUsed?.Invoke(slot, item);
+        }
+        
         public event Action<IInventorySlot, IInventoryItem> InventoryItemEquipped;
         
         public event Action<IInventorySlot, IInventoryItem> InventoryItemUnEquipped;
-        
+
         private bool TryToAddToSlot(object sender, IInventorySlot slot, IInventoryItem item)
         {
             var fits = slot.Amount + item.State.Amount <= item.Info.MaxItemsInInventorySlot;
@@ -297,6 +304,5 @@ namespace Inventory
             return item != null;
         }
 
-        
     }
 }

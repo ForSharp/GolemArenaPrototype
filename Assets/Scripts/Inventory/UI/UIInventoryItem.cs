@@ -29,6 +29,11 @@ namespace Inventory.UI
                 textAmount.gameObject.SetActive(true);
                 textAmount.text = $"x{slot.Amount.ToString()}";
             }
+            else
+            {
+                textAmount.text = $"x{slot.Amount.ToString()}";
+                textAmount.gameObject.SetActive(false);
+            }
         }
 
         private void Cleanup()
