@@ -15,5 +15,17 @@ namespace GolemEntity.ExtraStats
             StatsType = statsType;
             IsFlat = isFlat;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ExtraStatsParameter other)) return false;
+            return Math.Abs(ChangingValue - other.ChangingValue) < 0.01f && StatsType == other.StatsType &&
+                   IsFlat == other.IsFlat;
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)ChangingValue * 1000 + (int)StatsType * 10 + (IsFlat ? 1 : 0);
+        }
     }
 }

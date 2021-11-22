@@ -16,4 +16,4 @@ MonoBehaviour:
   - ChangingValue: 25
     StatsType: 9
     IsFlat: 1
-  buffDuration: 30
+  buffDuration: 3
