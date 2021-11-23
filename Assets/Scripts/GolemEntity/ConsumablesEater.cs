@@ -14,7 +14,7 @@ namespace GolemEntity
     {
         private readonly GameCharacterState _character;
         private readonly InventoryWithSlots _inventory;
-        private readonly List<ExtraStatsParameter[]> _effects = new List<ExtraStatsParameter[]>();
+        private readonly Dictionary<ExtraStatsParameter[], Coroutine> _effects = new Dictionary<ExtraStatsParameter[], Coroutine>();
 
         public ConsumablesEater(GameCharacterState character)
         {
@@ -32,15 +32,17 @@ namespace GolemEntity
             {
                 case IConsumableBuffItem buffItem:
                     var effect = buffItem.ConsumableBuffInfo.AffectsExtraStats;
-                    if (_effects.Contains(effect))
+                    if (_effects.ContainsKey(effect))
                     {
+                        CoroutineStarter.StopRoutine(_effects[effect]);
+                        _effects.Remove(effect);
                         _character.Golem.RemoveTempExtraStats(effect);
                     }
                     _character.Golem.AddTempExtraStats(effect);
-                    CoroutineStarter.StartRoutine(RemoveEffectAfterDelay(effect, buffItem.ConsumableBuffInfo.BuffDuration));
                     item.State.Amount--;
                     EventContainer.OnGolemStatsChanged(_character);
-                    _effects.Add(effect);
+                    var coroutine = CoroutineStarter.StartRoutine(RemoveEffectAfterDelay(effect, buffItem.ConsumableBuffInfo.BuffDuration));
+                    _effects.Add(effect, coroutine);
                     break;
                 case IConsumableHealingItem healingItem:
                     if (healingItem.ConsumableHealingInfo.HealIsFlat)
@@ -66,6 +68,7 @@ namespace GolemEntity
         private IEnumerator RemoveEffectAfterDelay(ExtraStatsParameter[] effect, float duration)
         {
             yield return new WaitForSeconds(duration);
+            
             _character.Golem.RemoveTempExtraStats(effect);
             EventContainer.OnGolemStatsChanged(_character);
             _effects.Remove(effect);

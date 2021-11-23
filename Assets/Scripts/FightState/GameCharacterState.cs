@@ -92,8 +92,8 @@ namespace FightState
             if (CurrentHealth > newMaxHealth)
             {
                 CurrentHealth = newMaxHealth;
-                OnCurrentHealthChanged(CurrentHealth);
             }
+            OnCurrentHealthChanged(CurrentHealth);
         }
 
         private void SetProportionallyCurrentStamina(float newMaxStamina)
@@ -103,8 +103,8 @@ namespace FightState
             if (CurrentStamina > newMaxStamina)
             {
                 CurrentStamina = newMaxStamina;
-                OnCurrentStaminaChanged(CurrentStamina);
             }
+            OnCurrentStaminaChanged(CurrentStamina);
         }
 
         private void SetProportionallyCurrentMana(float newMaxMana)
@@ -114,8 +114,8 @@ namespace FightState
             if (CurrentMana > newMaxMana)
             {
                 CurrentMana = newMaxMana;
-                OnCurrentManaChanged(CurrentMana);
             }
+            OnCurrentManaChanged(CurrentMana);
         }
 
         public void InitializeState(Golem golem, int group, Color colorGroup, string type, string spec)

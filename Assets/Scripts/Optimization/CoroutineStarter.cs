@@ -22,9 +22,9 @@ namespace Optimization
 
         private static CoroutineStarter m_instance;
 
-        public static void StartRoutine(IEnumerator coroutine)
+        public static Coroutine StartRoutine(IEnumerator coroutine)
         {
-            _instance.StartCoroutine(coroutine);
+            return _instance.StartCoroutine(coroutine);
         }
 
         public static void StopRoutine(Coroutine coroutine)
