@@ -110,12 +110,12 @@ namespace UI
             {
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    UpgradeSystem.LvlUp(_state);
+                    LvlUpper.LvlUp(_state);
                 }
 
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    UpgradeSystem.LvlDown(_state);
+                    LvlUpper.LvlDown(_state);
                 }
             }
         }

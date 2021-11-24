@@ -38,6 +38,7 @@ namespace FightState
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
         private ExtraStatsEditorWithItems _editorWithItems;
+        private ConsumablesEater _consumablesEater;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -55,6 +56,7 @@ namespace FightState
             RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
             _editorWithItems = new ExtraStatsEditorWithItems(this);
+            _consumablesEater = new ConsumablesEater(this);
         }
 
         private void OnEnable()
@@ -90,8 +92,8 @@ namespace FightState
             if (CurrentHealth > newMaxHealth)
             {
                 CurrentHealth = newMaxHealth;
-                OnCurrentHealthChanged(CurrentHealth);
             }
+            OnCurrentHealthChanged(CurrentHealth);
         }
 
         private void SetProportionallyCurrentStamina(float newMaxStamina)
@@ -101,8 +103,8 @@ namespace FightState
             if (CurrentStamina > newMaxStamina)
             {
                 CurrentStamina = newMaxStamina;
-                OnCurrentStaminaChanged(CurrentStamina);
             }
+            OnCurrentStaminaChanged(CurrentStamina);
         }
 
         private void SetProportionallyCurrentMana(float newMaxMana)
@@ -112,8 +114,8 @@ namespace FightState
             if (CurrentMana > newMaxMana)
             {
                 CurrentMana = newMaxMana;
-                OnCurrentManaChanged(CurrentMana);
             }
+            OnCurrentManaChanged(CurrentMana);
         }
 
         public void InitializeState(Golem golem, int group, Color colorGroup, string type, string spec)
@@ -148,7 +150,7 @@ namespace FightState
         private void CreateHealthBar()
         {
             if (!isDynamicHealthBarCreate) return;
-            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("Canvas").transform);
+            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("HealthBarContainer").transform);
             _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
 
@@ -196,7 +198,7 @@ namespace FightState
         public void PrepareAfterNewRound()
         {
             IsDead = false;
-            UpgradeSystem.LvlUp(this, 7);
+            LvlUpper.LvlUp(this, 7);
             HealAllParameters();
             ShowHealthBar();
             NullRoundStatistics();
@@ -230,6 +232,72 @@ namespace FightState
         {
         }
 
+        public void HealCurrentsFlat(MainCharacterParameter parameter, float healingValue)
+        {
+            switch (parameter)
+            {
+                case MainCharacterParameter.Strength:
+                    CurrentHealth += healingValue;
+                    if (CurrentHealth > MaxHealth)
+                    {
+                        CurrentHealth = MaxHealth;
+                    }
+                    OnCurrentHealthChanged(CurrentHealth);
+                    break;
+                case MainCharacterParameter.Agility:
+                    CurrentStamina += healingValue;
+                    if (CurrentStamina > MaxStamina)
+                    {
+                        CurrentStamina = MaxStamina;
+                    }
+                    OnCurrentStaminaChanged(CurrentStamina);
+                    break;
+                case MainCharacterParameter.Intelligence:
+                    CurrentMana += healingValue;
+                    if (CurrentMana > MaxMana)
+                    {
+                        CurrentMana = MaxMana;
+                    }
+                    OnCurrentManaChanged(CurrentMana);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
+            }
+        }
+        
+        public void HealCurrentsMultiply(MainCharacterParameter parameter, float healingValue)
+        {
+            switch (parameter)
+            {
+                case MainCharacterParameter.Strength:
+                    CurrentHealth *= healingValue;
+                    if (CurrentHealth > MaxHealth)
+                    {
+                        CurrentHealth = MaxHealth;
+                    }
+                    OnCurrentHealthChanged(CurrentHealth);
+                    break;
+                case MainCharacterParameter.Agility:
+                    CurrentStamina *= healingValue;
+                    if (CurrentStamina > MaxStamina)
+                    {
+                        CurrentStamina = MaxStamina;
+                    }
+                    OnCurrentStaminaChanged(CurrentStamina);
+                    break;
+                case MainCharacterParameter.Intelligence:
+                    CurrentMana *= healingValue;
+                    if (CurrentMana > MaxMana)
+                    {
+                        CurrentMana = MaxMana;
+                    }
+                    OnCurrentManaChanged(CurrentMana);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
+            }
+        }
+        
         private IEnumerator RegenerateCurrents()
         {
             yield return new WaitForSeconds(1);

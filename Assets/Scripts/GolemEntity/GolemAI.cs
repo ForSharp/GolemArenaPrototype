@@ -4,6 +4,7 @@ using System.Linq;
 using BehaviourStrategy;
 using BehaviourStrategy.Abstracts;
 using Controller;
+using Environment;
 using FightState;
 using GameLoop;
 using Inventory;
@@ -18,7 +19,7 @@ namespace GolemEntity
     {
         //компонент, который весит на герое 0
         private FireballSpell _fireballSpell; //вынести туда, где вся логика работы со спеллами
-        
+
         private bool _isAIControlAllowed = true;
         private bool _playerAI = true;
         private bool _isIKAllowed;
@@ -54,7 +55,7 @@ namespace GolemEntity
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _attack = GetComponent<CommonMeleeAttackBehaviour>();
-            
+
             _status = FightStatus.Neutral;
             AnimationChanger.SetFightIdle(_animator, true);
             StartCoroutine(FindEnemies());
@@ -124,7 +125,7 @@ namespace GolemEntity
                 PlayerController.SetMovementPointByController -= RunToTargetByController;
                 PlayerController.SetTargetByController -= SetTarget;
                 PlayerController.PlayModeChanged -= ChangeMode;
-                
+
                 PlayerController.SpellCastByController -= CastSpell;
             }
             else if (_thisState != Player.PlayerCharacter)
@@ -203,7 +204,8 @@ namespace GolemEntity
         private bool CanFight()
         {
             return _isAIControlAllowed && !_thisState.IsDead && _status != FightStatus.GettingHit &&
-                   _status != FightStatus.AvoidingHit && _status != FightStatus.CastsSpell && Game.Stage == Game.GameStage.Battle;
+                   _status != FightStatus.AvoidingHit && _status != FightStatus.CastsSpell &&
+                   Game.Stage == Game.GameStage.Battle;
         }
 
         private void SetDefaultBehaviour()
@@ -281,7 +283,7 @@ namespace GolemEntity
         {
             _status = FightStatus.Neutral;
         }
-        
+
         #endregion
 
         private void SetFightBehaviour()
@@ -370,16 +372,14 @@ namespace GolemEntity
 
         public void CastSpell()
         {
-            
-            
             //привести к нужному типу, эти данные могут храниться например в каррент стэйт
-            
+
             SetSpellCast(_fireballSpell);
-            _fireballSpell.CustomConstructor(ItemContainer.Instance.GetFireBallLvl1(), _targetState.transform, _animator, AnimationChanger.SetCastFireBall, _thisState);
+            _fireballSpell.CustomConstructor(ItemContainer.Instance.GetFireBallLvl1(), _targetState.transform,
+                _animator, AnimationChanger.SetCastFireBall, _thisState);
             _spellCast.CastSpell();
         }
 
-        
 
         private float GetDelayBetweenHits()
         {
@@ -393,7 +393,7 @@ namespace GolemEntity
             {
                 AnimationChanger.SetGolemDie(_animator);
                 _isDies = true;
-                StartCoroutine(WaitForSecondsToDisable(6));
+                StartCoroutine(WaitForSecondsToDisable(4));
             }
 
             _navMeshAgent.enabled = false;
@@ -425,6 +425,8 @@ namespace GolemEntity
         {
             yield return new WaitForSeconds(sec);
             gameObject.SetActive(false);
+            DeathEffect.Instatnce.CreateDeathEffect(new Vector3(transform.position.x, transform.position.y + 2.5f,
+                transform.position.z));
             if (Game.RoundEnded)
             {
                 EventContainer.OnNewRound();
@@ -506,7 +508,8 @@ namespace GolemEntity
             {
                 hitArgs.DamagePerHit *= 1.5f;
                 GetHit(hitArgs);
-                EventContainer.OnFightEvent(_thisState, new FightEventArgs((AttackHitEventArgs)args, _thisState.Type, true));
+                EventContainer.OnFightEvent(_thisState,
+                    new FightEventArgs((AttackHitEventArgs)args, _thisState.Type, true));
                 return;
             }
 
@@ -525,7 +528,7 @@ namespace GolemEntity
                 GetHit(hitArgs);
                 return;
             }
-            
+
             var hitChance = GetHitChance(hitArgs.HitAccuracy, _thisState.Stats.avoidChance);
             var random = Random.Range(0, 1.0f);
             if (hitChance > random)
@@ -536,10 +539,10 @@ namespace GolemEntity
             else
             {
                 _isAvoidsHit = false;
-                
+
                 _status = FightStatus.AvoidingHit;
-                
-                
+
+
                 EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }
@@ -554,6 +557,7 @@ namespace GolemEntity
                     _isGetsHit = false;
                     _status = FightStatus.GettingHit;
                 }
+
                 _soundsController.PlayHittingEnemySound();
             }
         }

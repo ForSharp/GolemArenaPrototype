@@ -90,33 +90,34 @@ namespace UI
         {
             sliderHealth.maxValue = stats.health;
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");
-                
+
             sliderStamina.maxValue = stats.stamina;
             maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
                 
             sliderMana.maxValue = stats.manaPool;
             maxManaText.text = sliderMana.maxValue.ToString("#.");
+            
         }
 
         private void SetCurrentHealth(float health)
         {
             var roundedValue = health;
-            currentHealthText.text = roundedValue.ToString("#.");
             sliderHealth.value = roundedValue;
+            currentHealthText.text = roundedValue.ToString("#.");
         }
         
         private void SetCurrentStamina(float stamina)
         {
             var roundedValue = stamina;
-            currentStaminaText.text = roundedValue.ToString("#.");
             sliderStamina.value = roundedValue;
+            currentStaminaText.text = roundedValue.ToString("#.");
         }
         
         private void SetCurrentMana(float mana)
         {
             var roundedValue = mana;
-            currentManaText.text = roundedValue.ToString("#.");
             sliderMana.value = roundedValue;
+            currentManaText.text = roundedValue.ToString("#.");
         }
         
         private void DisableOnDeath(RoundStatistics statistics)

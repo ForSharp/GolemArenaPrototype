@@ -814,7 +814,7 @@ namespace GolemEntity
                 "Health",
                 "HitAccuracy",
                 "MagicAccuracy",
-                "MagicDamage",
+                "MagicPower",
                 "MagicResistance",
                 "ManaPool",
                 "MoveSpeed",
