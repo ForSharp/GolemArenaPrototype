@@ -123,7 +123,7 @@ namespace GameLoop
 
         public static void SetRoundRates()
         {
-            var statistics = Game.AllGolems.Select(character => character.RoundStatistics).ToList();
+            var statistics = Game.AllGolems.Select(character => character.roundStatistics).ToList();
 
             var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
 

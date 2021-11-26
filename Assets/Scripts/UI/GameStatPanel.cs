@@ -87,8 +87,8 @@ namespace UI
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
                 _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllGolems[i].Type,
-                    Game.AllGolems[i].Spec, Game.AllGolems[i].RoundStatistics.RoundDamage,
-                    Game.AllGolems[i].RoundStatistics.RoundKills, Game.AllGolems[i].RoundStatistics.Wins,
+                    Game.AllGolems[i].Spec, Game.AllGolems[i].roundStatistics.RoundDamage,
+                    Game.AllGolems[i].roundStatistics.RoundKills, Game.AllGolems[i].roundStatistics.Wins,
                     Game.AllGolems[i].ColorGroup);
             }
         }
@@ -99,8 +99,8 @@ namespace UI
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
                 _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllGolems[i].Type,
-                    Game.AllGolems[i].Spec, Game.AllGolems[i].RoundStatistics.Damage,
-                    Game.AllGolems[i].RoundStatistics.Kills, Game.AllGolems[i].RoundStatistics.Wins,
+                    Game.AllGolems[i].Spec, Game.AllGolems[i].roundStatistics.Damage,
+                    Game.AllGolems[i].roundStatistics.Kills, Game.AllGolems[i].roundStatistics.Wins,
                     Game.AllGolems[i].ColorGroup);
             }
             
