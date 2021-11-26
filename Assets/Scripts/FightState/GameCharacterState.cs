@@ -36,9 +36,7 @@ namespace FightState
         public InventoryHelper InventoryHelper { get; private set; }
         
         private RoundStatistics _lastEnemyAttacked;
-        public RoundStatistics RoundStatistics;
-        private ExtraStatsEditorWithItems _editorWithItems;
-        private ConsumablesEater _consumablesEater;
+        public RoundStatistics roundStatistics;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -53,10 +51,10 @@ namespace FightState
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            RoundStatistics = new RoundStatistics(this);
+            roundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
-            _editorWithItems = new ExtraStatsEditorWithItems(this);
-            _consumablesEater = new ConsumablesEater(this);
+            var unused = new ExtraStatsEditorWithItems(this);
+            var dummy = new ConsumablesEater(this);
         }
 
         private void OnEnable()
@@ -206,10 +204,10 @@ namespace FightState
 
         private void NullRoundStatistics()
         {
-            RoundStatistics.RoundDamage = 0;
-            RoundStatistics.RoundKills = 0;
-            RoundStatistics.WinLastRound = false;
-            RoundStatistics.RoundRate = 0;
+            roundStatistics.RoundDamage = 0;
+            roundStatistics.RoundKills = 0;
+            roundStatistics.WinLastRound = false;
+            roundStatistics.RoundRate = 0;
         }
 
         private void HealAllParameters()
