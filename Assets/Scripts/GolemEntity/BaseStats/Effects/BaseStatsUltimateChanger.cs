@@ -10,11 +10,12 @@
 
         protected override GolemBaseStats GetStatsInternal()
         {
-            WrappedEntity.GetBaseStats().strength *= _changingStats.strength;
-            WrappedEntity.GetBaseStats().agility *= _changingStats.agility;
-            WrappedEntity.GetBaseStats().intelligence *= _changingStats.intelligence;
+            var baseStats = WrappedEntity.GetBaseStats();
+            baseStats.strength *= _changingStats.strength;
+            baseStats.agility *= _changingStats.agility;
+            baseStats.intelligence *= _changingStats.intelligence;
 
-            return WrappedEntity.GetBaseStats();
+            return baseStats;
         }
     }
 }
