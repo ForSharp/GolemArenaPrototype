@@ -8,10 +8,10 @@ namespace BehaviourStrategy
 {
     public class WalkNavMeshBehaviour : IMoveable
     {
-        private Animator _animator;
-        private NavMeshAgent _agent;
-        private Action<Animator>[] _walkAnimationSetters;
-        private float _stopDistance;
+        private readonly Animator _animator;
+        private readonly NavMeshAgent _agent;
+        private readonly Action<Animator>[] _walkAnimationSetters;
+        private readonly float _stopDistance;
 
         public WalkNavMeshBehaviour(float stopDistance, Animator animator, NavMeshAgent agent, params Action<Animator>[] walkAnimationSetters)
         {
