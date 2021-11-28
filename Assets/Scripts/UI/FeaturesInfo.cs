@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using CharacterEntity;
 using GameLoop;
-using GolemEntity;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using FightState;
+using CharacterEntity.CharacterState;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +15,7 @@ namespace UI
         
         private static readonly int HitReceived = Animator.StringToHash("HitReceived");
         private static readonly int CriticalHitReceived = Animator.StringToHash("CriticalHitReceived");
-        public GameCharacterState State { get; set; }
+        public CharacterState State { get; set; }
 
         private void OnEnable()
         {
@@ -29,7 +29,7 @@ namespace UI
             EventContainer.MagicDamageReceived -= HandleMagicDamageReceiving;
         }
 
-        private void HandleMagicDamageReceiving(GameCharacterState sender, GameCharacterState target, float damage,
+        private void HandleMagicDamageReceiving(CharacterState sender, CharacterState target, float damage,
             bool isPeriodic)
         {
             if (target == State)
@@ -48,7 +48,7 @@ namespace UI
         
         private void HandleFightEvent(object sender, EventArgs args)
         {
-            if ((GameCharacterState)sender == State)
+            if ((CharacterState)sender == State)
             {
                 var fightArgs = (FightEventArgs)args;
                 if (fightArgs.IsAvoiding)

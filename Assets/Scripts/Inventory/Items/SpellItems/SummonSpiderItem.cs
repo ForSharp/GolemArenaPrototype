@@ -3,7 +3,7 @@ using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using Inventory.Info.Spells;
 
-namespace Inventory.Items
+namespace Inventory.Items.SpellItems
 {
     public class SummonSpiderItem : IInventoryItem, ISpellItem, ISummonSpell
     {

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FightState;
-using GolemEntity.ExtraStats.Effects;
+using CharacterEntity.CharacterState;
 using Inventory.Abstracts;
 
 namespace Inventory
 {
     public static class ItemOutfitter
     {
-        public static void EquipItems(GameCharacterState character)
+        public static void EquipItems(CharacterState character)
         {
             UnEquipAllItems(character);
             var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
@@ -34,7 +33,7 @@ namespace Inventory
             
         }
 
-        private static void UnEquipAllItems(GameCharacterState character)
+        private static void UnEquipAllItems(CharacterState character)
         {
             var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
             foreach (var slot in inventory.GetAllEquippingSlotsWithItems())

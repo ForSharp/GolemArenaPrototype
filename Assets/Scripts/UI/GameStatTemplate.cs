@@ -1,12 +1,12 @@
-﻿using System.Globalization;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class GameStatTemplate : MonoBehaviour
     {
-        [SerializeField] private Text golemTypeText;
+        [FormerlySerializedAs("golemTypeText")] [SerializeField] private Text characterTypeText;
         [SerializeField] private Text specializationText;
         [SerializeField] private Text damageText;
         [SerializeField] private Text killsText;
@@ -18,7 +18,7 @@ namespace UI
         {
             if (_isReadyToUpd)
             {
-                golemTypeText.text = golemTypeText.text;
+                characterTypeText.text = characterTypeText.text;
                 specializationText.text = specializationText.text;
                 damageText.text = damageText.text;
                 killsText.text = killsText.text;
@@ -31,7 +31,7 @@ namespace UI
 
         public void FillValues(string golemType, string specialization, float damage, int kills, int wins, Color color)
         {
-            golemTypeText.text = golemType;
+            characterTypeText.text = golemType;
             specializationText.text = specialization;
             damageText.text = damage.ToString("#.00");
             killsText.text = kills.ToString();

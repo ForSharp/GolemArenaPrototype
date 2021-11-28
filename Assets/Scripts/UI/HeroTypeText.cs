@@ -1,4 +1,4 @@
-﻿using GolemEntity;
+﻿using CharacterEntity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +8,7 @@ namespace UI
     {
         [SerializeField] private Text heroText;
 
-        public void SetTypeText(GolemType type)
+        public void SetTypeText(CharacterType type)
         {
             heroText.text = type.ToString();
         }

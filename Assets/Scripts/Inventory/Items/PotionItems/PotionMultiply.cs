@@ -2,7 +2,7 @@
 using Inventory.Abstracts;
 using Inventory.Info;
 
-namespace Inventory.Items
+namespace Inventory.Items.PotionItems
 {
     public class PotionMultiply : IInventoryItem, IPotionMultiplyItem
     {

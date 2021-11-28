@@ -7,10 +7,10 @@ namespace Inventory
 {
     public class InventoryHelper : MonoBehaviour
     {
-        private InventoryWithSlots _inventory;
         [SerializeField] private GameObject inventoryPrefab;
-        private GameObject _inventoryObject;
         [HideInInspector]public InventoryOrganization inventoryOrganization;
+        private InventoryWithSlots _inventory;
+        private GameObject _inventoryObject;
         private UIInventorySlot[] _uiSlots;
         private void Awake()
         {

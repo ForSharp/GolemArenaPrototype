@@ -1,4 +1,4 @@
-﻿using BehaviourStrategy;
+﻿using Behaviour;
 using UnityEngine;
 
 namespace Inventory.Info.Spells

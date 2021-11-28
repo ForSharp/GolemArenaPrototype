@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using FightState;
+using CharacterEntity.CharacterState;
 using GameLoop;
 using UnityEngine;
 
@@ -197,7 +197,7 @@ namespace Controller
              trackingTarget = battleTrackingTarget;
          }
 
-         public void SetTarget(GameCharacterState state)
+         public void SetTarget(CharacterState state)
          {
              if (_cameraPathFollower.MoveType != PathFollower.MovementType.None)
              {
@@ -208,9 +208,9 @@ namespace Controller
              }
          }
          
-         private GameCharacterState[] GetTargets()
+         private CharacterState[] GetTargets()
          {
-             return Game.AllGolems.Where(p => p.IsDead == false).ToArray();
+             return Game.AllCharactersInSession.Where(p => p.IsDead == false).ToArray();
          }
 
          private void TurnSmoothlyToTarget(Transform target, float speed)

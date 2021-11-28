@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using FightState;
+using CharacterEntity;
+using CharacterEntity.CharacterState;
 using GameLoop;
-using GolemEntity;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,7 +19,7 @@ namespace Controller
     public sealed class PlayerController : MonoBehaviour
     {
         [SerializeField] private HeroControllerPanel standardPanel;
-        [SerializeField] private GolemStatsPanel rtsPanel;
+        [SerializeField] private CharacterStatsPanel rtsPanel;
         [SerializeField] private GameObject autoButtonFalse;
         [SerializeField] private GameObject autoButtonTrue;
         
@@ -29,7 +29,7 @@ namespace Controller
 
         private bool _aiControl = true;
         private PlayMode _playMode = PlayMode.Cinematic;
-        private GameCharacterState _state;
+        private CharacterState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
         private CharacterController _controller;
@@ -44,7 +44,7 @@ namespace Controller
         public static event Action AttackByController;
         
         public static event Action SpellCastByController;
-        public static event Action<GameCharacterState> SetTargetByController;
+        public static event Action<CharacterState> SetTargetByController;
         public static event Action<Vector3> SetMovementPointByController;
         public static event Action<PlayMode> PlayModeChanged;
         
@@ -174,7 +174,7 @@ namespace Controller
                 var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
                 if (!Physics.Raycast(ray, out var hit)) return;
                 var coll = hit.collider;
-                if (coll.TryGetComponent(out GameCharacterState state))
+                if (coll.TryGetComponent(out CharacterState state))
                 {
                     if (state == _state)
                     {
@@ -198,7 +198,7 @@ namespace Controller
             var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit)) return;
             var coll = hit.collider;
-            if (coll.TryGetComponent(out GameCharacterState state))
+            if (coll.TryGetComponent(out CharacterState state))
             {
                 rtsPanel.gameObject.SetActive(true);
                 rtsPanel.HandleClick(state);
@@ -206,7 +206,7 @@ namespace Controller
             else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.inventoryOrganization.InPanel))
             {
                 rtsPanel.gameObject.SetActive(false);
-                foreach (var character in Game.AllGolems)
+                foreach (var character in Game.AllCharactersInSession)
                 {
                     character.InventoryHelper.inventoryOrganization.HideAllInventory();
                 }
@@ -363,7 +363,7 @@ namespace Controller
             standardPanel.gameObject.SetActive(true);
             Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
             Player.PlayerCharacter.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
-            foreach (var character in Game.AllGolems)
+            foreach (var character in Game.AllCharactersInSession)
             {
                 if (character != Player.PlayerCharacter)
                 {

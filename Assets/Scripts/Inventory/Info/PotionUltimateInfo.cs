@@ -1,5 +1,5 @@
-﻿using GolemEntity;
-using GolemEntity.BaseStats;
+﻿using CharacterEntity;
+using CharacterEntity.BaseStats;
 using UnityEngine;
 
 namespace Inventory.Info
@@ -11,6 +11,6 @@ namespace Inventory.Info
 
         public MainCharacterParameter MainCharacterParameter => mainCharacterParameter;
         
-        public GolemBaseStats GolemBaseStats { get; set; }
+        public CharacterBaseStats CharacterBaseStats { get; set; }
     }
 }

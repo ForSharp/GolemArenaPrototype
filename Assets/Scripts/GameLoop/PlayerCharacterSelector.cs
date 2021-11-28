@@ -1,5 +1,5 @@
 ﻿using System;
-using GolemEntity;
+using CharacterEntity;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +17,7 @@ namespace GameLoop
         private MainCharacterParameter _selectedHero;
         private MainCharacterParameter _selectedSpec;
         private bool _isSpecSelected;
-        public GolemType[] Characters { get; private set; }
+        public CharacterType[] Characters { get; private set; }
         public Specialization[] Specializations { get; private set; }
 
         public static PlayerCharacterSelector Instance;
@@ -181,7 +181,7 @@ namespace GameLoop
             confirmButtonText.text = $"Choose {GetSelectedType()} {GetSelectedSpec()}";
         }
 
-        private void SetHeroSpecStats(GolemType type)
+        private void SetHeroSpecStats(CharacterType type)
         {
             switch (_selectedSpec)
             {
@@ -280,18 +280,18 @@ namespace GameLoop
             }
         }
         
-        private static GolemType[] GetThreeCharacters()
+        private static CharacterType[] GetThreeCharacters()
         {
             return new[]
             {
                 GetCharacterWithRightMainParameter(MainCharacterParameter.Strength),
                 GetCharacterWithRightMainParameter(MainCharacterParameter.Agility),
                 //GetCharacterWithRightMainParameter(MainCharacterParameter.Intelligence)
-                GolemType.Cleopatra
+                CharacterType.Cleopatra
             };
         }
 
-        private static GolemType GetCharacterWithRightMainParameter(MainCharacterParameter parameter)
+        private static CharacterType GetCharacterWithRightMainParameter(MainCharacterParameter parameter)
         {
             while (true)
             {
@@ -321,7 +321,7 @@ namespace GameLoop
             }
         }
         
-        public GolemType GetSelectedType()
+        public CharacterType GetSelectedType()
         {
             switch (_selectedHero)
             {

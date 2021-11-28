@@ -1,5 +1,5 @@
 ﻿using System;
-using FightState;
+using CharacterEntity.CharacterState;
 
 namespace GameLoop
 {
@@ -12,9 +12,9 @@ namespace GameLoop
             FightEvent?.Invoke(sender, args);
         }
 
-        public static event Action<GameCharacterState, GameCharacterState, float, bool> MagicDamageReceived;
+        public static event Action<CharacterState, CharacterState, float, bool> MagicDamageReceived;
 
-        public static void OnMagicDamageReceived(GameCharacterState sender, GameCharacterState target, float damage,
+        public static void OnMagicDamageReceived(CharacterState sender, CharacterState target, float damage,
             bool isPeriodic)
         {
             MagicDamageReceived?.Invoke(sender, target, damage, isPeriodic);
@@ -27,9 +27,9 @@ namespace GameLoop
             PlayerCharacterCreated?.Invoke();
         }
 
-        public static event Action<GameCharacterState> GolemStatsChanged;
+        public static event Action<CharacterState> GolemStatsChanged;
 
-        public static void OnGolemStatsChanged(GameCharacterState state)
+        public static void OnGolemStatsChanged(CharacterState state)
         {
             GolemStatsChanged?.Invoke(state);
         }
@@ -41,9 +41,9 @@ namespace GameLoop
             GolemDied?.Invoke(killer);
         }
 
-        public static event Action<GameCharacterState> WinBattle;
+        public static event Action<CharacterState> WinBattle;
 
-        public static void OnWinBattle(GameCharacterState obj)
+        public static void OnWinBattle(CharacterState obj)
         {
             WinBattle?.Invoke(obj);
         }

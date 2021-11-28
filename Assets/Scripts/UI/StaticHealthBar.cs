@@ -1,7 +1,7 @@
 ﻿using System;
-using FightState;
+using CharacterEntity.CharacterState;
+using CharacterEntity.ExtraStats;
 using GameLoop;
-using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +19,7 @@ namespace UI
         [SerializeField] private Slider sliderStamina;
         [SerializeField] private Slider sliderMana;
         
-        private GameCharacterState _characterState;
+        private CharacterState _characterState;
         private bool _isDead;
         
         private void OnEnable()
@@ -42,7 +42,7 @@ namespace UI
             }
         }
 
-        public void SetCharacterState(GameCharacterState state)
+        public void SetCharacterState(CharacterState state)
         {
             _characterState = state;
             SetStartValues();
@@ -86,7 +86,7 @@ namespace UI
             EventContainer.GolemDied -= DisableOnDeath;
         }
 
-        private void SetMaxValues(GolemExtraStats stats)
+        private void SetMaxValues(CharacterExtraStats stats)
         {
             sliderHealth.maxValue = stats.health;
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");

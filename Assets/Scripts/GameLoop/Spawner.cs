@@ -1,13 +1,14 @@
-﻿using FightState;
-using GolemEntity;
+﻿using CharacterEntity;
+using CharacterEntity.CharacterState;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
     public class Spawner : MonoBehaviour
     {
-        [SerializeField] private GameObject[] golemPrefabs;
+        [FormerlySerializedAs("golemPrefabs")] [SerializeField] private GameObject[] characterPrefabs;
         [SerializeField] private Vector3 spawnPoint;
         [SerializeField] private float spawnAreaRadius = 50;
         [SerializeField] private Color[] groupColors;
@@ -20,11 +21,11 @@ namespace GameLoop
             Instance = this;
         }
 
-        public void SpawnGolem(GolemType golemType, Specialization specialization, bool isPlayerCharacter = false)
+        public void SpawnGolem(CharacterType characterType, Specialization specialization, bool isPlayerCharacter = false)
         {
-            var golem = new Golem(golemType, specialization);
-            var newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-            var state = ConnectGolemWithState(newGolem, golem, golemType, specialization);
+            var character = new Character(characterType, specialization);
+            var newCharacter = Instantiate(GetRelevantPrefab(characterType), GetRandomSpawnPoint(), Quaternion.identity);
+            var state = ConnectGolemWithState(newCharacter, character, characterType, specialization);
 
             _group++;
 
@@ -42,27 +43,27 @@ namespace GameLoop
             return randomPoint;
         }
 
-        private GameCharacterState ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
+        private CharacterState ConnectGolemWithState(GameObject newGolem, Character character, CharacterType characterType, Specialization specialization)
         {
-            var state = newGolem.GetComponent<GameCharacterState>();
+            var state = newGolem.GetComponent<CharacterState>();
             if (_group < groupColors.Length)
             {
-                state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
+                state.InitializeState(character, _group, groupColors[_group], characterType.ToString(), specialization.ToString());
                 Game.AddCharacterToAllCharactersList(state);
             }
             else if (_group >= groupColors.Length)
             {
-                state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
+                state.InitializeState(character, _group, Color.black, characterType.ToString(),specialization.ToString());
                 Game.AddCharacterToAllCharactersList(state);
             }
 
             return state;
         }
 
-        private GameObject GetRelevantPrefab(GolemType golemType)
+        private GameObject GetRelevantPrefab(CharacterType characterType)
         {
-            var index = (int) golemType;
-            return golemPrefabs[index];
+            var index = (int) characterType;
+            return characterPrefabs[index];
         }
     }
 }

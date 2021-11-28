@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using FightState;
+using CharacterEntity.CharacterState;
+using CharacterEntity.ExtraStats;
 using GameLoop;
-using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +17,7 @@ namespace UI
         [SerializeField] private Color lowHpColor;
         [SerializeField] private Image currentColor;
         
-        private GameCharacterState _characterState;
+        private CharacterState _characterState;
         private const int TimeToDestroy = 1;
         private Camera _mainCamera;
         private bool _isDead;
@@ -47,7 +47,7 @@ namespace UI
             
         }
 
-        public void SetCharacterState(GameCharacterState state)
+        public void SetCharacterState(CharacterState state)
         {
             _characterState = state;
             SetStartValues();
@@ -90,7 +90,7 @@ namespace UI
             return difference / sliderHealth.maxValue;
         }
 
-        private void SetMaxValues(GolemExtraStats stats)
+        private void SetMaxValues(CharacterExtraStats stats)
         {
             sliderHealth.maxValue = stats.health;
             SetCurrentColor();

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CharacterEntity;
 using GameLoop;
-using GolemEntity;
 using UnityEngine;
 
 namespace Optimization
@@ -17,12 +17,12 @@ namespace Optimization
             Instance = this;
         }
 
-        public RenderTexture GetHeroPortrait(GolemType type)
+        public RenderTexture GetHeroPortrait(CharacterType type)
         {
             return portraitTextures[(int) type];
         }
 
-        public void ActivateBox(GolemType type)
+        public void ActivateBox(CharacterType type)
         {
             heroBoxes[(int) type].SetActive(true);
         }
@@ -37,7 +37,7 @@ namespace Optimization
             }
         }
 
-        private void DeactivateConcreteBox(IEnumerable<GolemType> types, int i)
+        private void DeactivateConcreteBox(IEnumerable<CharacterType> types, int i)
         {
             foreach (var unused in types.Where(type => (int) type == i))
             {
@@ -45,9 +45,9 @@ namespace Optimization
             }
         }
 
-        private static List<GolemType> GetFreeTypes()
+        private static List<CharacterType> GetFreeTypes()
         {
-            return Game.FreeTypes.Select(type => (GolemType) Game.ToEnum(type, typeof(GolemType))).ToList();
+            return Game.FreeTypes.Select(type => (CharacterType) Game.ToEnum(type, typeof(CharacterType))).ToList();
         }
     }
 }

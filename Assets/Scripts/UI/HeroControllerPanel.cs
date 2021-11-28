@@ -1,6 +1,6 @@
-﻿using FightState;
+﻿using CharacterEntity;
+using CharacterEntity.CharacterState;
 using GameLoop;
-using GolemEntity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ namespace UI
         [SerializeField] private Text heroLvl;
         [SerializeField] private StaticHealthBar healthBar;
         
-        private GameCharacterState _state;
+        private CharacterState _state;
 
         private void OnEnable()
         {
@@ -39,7 +39,7 @@ namespace UI
             healthBar.SetCharacterState(_state);
         }
 
-        private void UpdateLvl(GameCharacterState state)
+        private void UpdateLvl(CharacterState state)
         {
             if (_state == state)
                 heroLvl.text = _state.Lvl.ToString();
@@ -47,7 +47,7 @@ namespace UI
 
         private void SetPortrait()
         {
-            portrait.SetTexture((GolemType)Game.ToEnum(_state.Type, typeof(GolemType)));
+            portrait.SetTexture((CharacterType)Game.ToEnum(_state.Type, typeof(CharacterType)));
         }
     }
 }

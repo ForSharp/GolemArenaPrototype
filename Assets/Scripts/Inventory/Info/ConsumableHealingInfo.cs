@@ -1,4 +1,4 @@
-﻿using GolemEntity;
+﻿using CharacterEntity;
 using UnityEngine;
 
 namespace Inventory.Info

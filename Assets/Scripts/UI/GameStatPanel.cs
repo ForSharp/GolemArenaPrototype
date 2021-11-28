@@ -46,7 +46,7 @@ namespace UI
                 }
             }
             
-            if (_gameStatTemplates.Count < Game.AllGolems.Count)
+            if (_gameStatTemplates.Count < Game.AllCharactersInSession.Count)
             {
                 CreateTemplates();
             }
@@ -75,7 +75,7 @@ namespace UI
 
         private void CreateTemplates()
         {
-            for (int i = _gameStatTemplates.Count; i < Game.AllGolems.Count; i++)
+            for (int i = _gameStatTemplates.Count; i < Game.AllCharactersInSession.Count; i++)
             {
                 var gameStatTemplate = Instantiate(gameStatTemplatePrefab, content);
                 _gameStatTemplates.Add(gameStatTemplate);
@@ -86,10 +86,10 @@ namespace UI
         {
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
-                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllGolems[i].Type,
-                    Game.AllGolems[i].Spec, Game.AllGolems[i].roundStatistics.RoundDamage,
-                    Game.AllGolems[i].roundStatistics.RoundKills, Game.AllGolems[i].roundStatistics.Wins,
-                    Game.AllGolems[i].ColorGroup);
+                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllCharactersInSession[i].Type,
+                    Game.AllCharactersInSession[i].Spec, Game.AllCharactersInSession[i].roundStatistics.RoundDamage,
+                    Game.AllCharactersInSession[i].roundStatistics.RoundKills, Game.AllCharactersInSession[i].roundStatistics.Wins,
+                    Game.AllCharactersInSession[i].ColorGroup);
             }
         }
         
@@ -98,10 +98,10 @@ namespace UI
             _isEndGame = true;
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
-                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllGolems[i].Type,
-                    Game.AllGolems[i].Spec, Game.AllGolems[i].roundStatistics.Damage,
-                    Game.AllGolems[i].roundStatistics.Kills, Game.AllGolems[i].roundStatistics.Wins,
-                    Game.AllGolems[i].ColorGroup);
+                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllCharactersInSession[i].Type,
+                    Game.AllCharactersInSession[i].Spec, Game.AllCharactersInSession[i].roundStatistics.Damage,
+                    Game.AllCharactersInSession[i].roundStatistics.Kills, Game.AllCharactersInSession[i].roundStatistics.Wins,
+                    Game.AllCharactersInSession[i].ColorGroup);
             }
             
             ShowPanel();

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FightState;
-using GolemEntity;
+using CharacterEntity;
+using CharacterEntity.CharacterState;
 using Inventory;
 using Optimization;
 using Random = UnityEngine.Random;
@@ -19,7 +19,7 @@ namespace GameLoop
         }
         
         public static GameStage Stage { get; set; }
-        public static List<GameCharacterState> AllGolems { get; }
+        public static List<CharacterState> AllCharactersInSession { get; }
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
         
@@ -34,8 +34,8 @@ namespace GameLoop
 
         static Game()
         {
-            AllGolems = new List<GameCharacterState>();
-            FreeTypes = Enum.GetNames(typeof(GolemType)).ToList();
+            AllCharactersInSession = new List<CharacterState>();
+            FreeTypes = Enum.GetNames(typeof(CharacterType)).ToList();
             FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
 
             Stage = GameStage.MainMenu;
@@ -59,9 +59,9 @@ namespace GameLoop
             OpenMainMenu?.Invoke();
         }
         
-        public static void AddCharacterToAllCharactersList(GameCharacterState golem)
+        public static void AddCharacterToAllCharactersList(CharacterState golem)
         {
-            AllGolems.Add(golem);
+            AllCharactersInSession.Add(golem);
             FreeTypes.Remove(golem.Type);
             FreeSpecs.Remove(golem.Spec);
         }
@@ -85,7 +85,7 @@ namespace GameLoop
                 return;
             }
 
-            foreach (var character in AllGolems)
+            foreach (var character in AllCharactersInSession)
             {
                 character.gameObject.SetActive(true);
             }
@@ -93,7 +93,7 @@ namespace GameLoop
             SetRoundRates();
             ItemDispenser.DispenseItems();
 
-            foreach (var character in AllGolems)
+            foreach (var character in AllCharactersInSession)
             {
                 if (character != Player.PlayerCharacter)
                 {
@@ -104,7 +104,7 @@ namespace GameLoop
                 //PotionDrinker.DrinkAllPotions(character);
             }
             
-            foreach (var character in AllGolems)
+            foreach (var character in AllCharactersInSession)
             {
                 
                 character.PrepareAfterNewRound();
@@ -114,7 +114,7 @@ namespace GameLoop
             
         }
 
-        private static void SetEndOfRound(GameCharacterState winner)
+        private static void SetEndOfRound(CharacterState winner)
         {
             RoundEnded = true;
             Stage = GameStage.BetweenBattles;
@@ -123,7 +123,7 @@ namespace GameLoop
 
         public static void SetRoundRates()
         {
-            var statistics = Game.AllGolems.Select(character => character.roundStatistics).ToList();
+            var statistics = Game.AllCharactersInSession.Select(character => character.roundStatistics).ToList();
 
             var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
 
@@ -140,9 +140,9 @@ namespace GameLoop
             }
         }
 
-        public static GolemType GetRandomCharacter()
+        public static CharacterType GetRandomCharacter()
         {
-            return (GolemType) ToEnum(FreeTypes[Random.Range(0, FreeTypes.Count)], typeof(GolemType));
+            return (CharacterType) ToEnum(FreeTypes[Random.Range(0, FreeTypes.Count)], typeof(CharacterType));
         }
 
         public static Specialization GetRandomSpecialization()

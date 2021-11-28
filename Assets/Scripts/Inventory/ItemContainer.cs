@@ -5,6 +5,8 @@ using Inventory.Abstracts.Spells;
 using Inventory.Info;
 using Inventory.Info.Spells;
 using Inventory.Items;
+using Inventory.Items.ConsumableItems;
+using Inventory.Items.PotionItems;
 using Inventory.Items.SpellItems;
 using UnityEngine;
 

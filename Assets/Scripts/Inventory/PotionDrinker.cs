@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using FightState;
+using CharacterEntity.CharacterState;
 using GameLoop;
 using Inventory.Abstracts;
 
@@ -11,29 +11,29 @@ namespace Inventory
         public static void DrinkPotion(IInventory inventory, IPotionFlatItem potion)
         {
             var character = GetCharacterByInventory(inventory);
-            var stats = potion.PotionFlatInfo.GolemBaseStats;
-            character.Golem.ChangeBaseStatsFlatPermanent(stats);
+            var stats = potion.PotionFlatInfo.CharacterBaseStats;
+            character.Character.ChangeBaseStatsFlatPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
             EventContainer.OnGolemStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionMultiplyItem potion)
         {
             var character = GetCharacterByInventory(inventory);
-            var stats = potion.PotionMultiplyInfo.GolemBaseStats;
-            character.Golem.ChangeBaseStatsProportionallyPermanent(stats);
+            var stats = potion.PotionMultiplyInfo.CharacterBaseStats;
+            character.Character.ChangeBaseStatsProportionallyPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
             EventContainer.OnGolemStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionUltimateItem potion)
         {
             var character = GetCharacterByInventory(inventory);
-            var stats = potion.PotionUltimateInfo.GolemBaseStats;
-            character.Golem.ChangeBaseStatsUltimatePermanent(stats);
+            var stats = potion.PotionUltimateInfo.CharacterBaseStats;
+            character.Character.ChangeBaseStatsUltimatePermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
             EventContainer.OnGolemStatsChanged(character);
         }
 
-        public static void DrinkAllPotions(GameCharacterState character)
+        public static void DrinkAllPotions(CharacterState character)
         {
             var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
 
@@ -51,16 +51,16 @@ namespace Inventory
             EventContainer.OnGolemStatsChanged(character);
         }
 
-        private static void DrinkPotionOfType(GameCharacterState character, IInventoryItem potion, InventoryWithSlots inventory)
+        private static void DrinkPotionOfType(CharacterState character, IInventoryItem potion, InventoryWithSlots inventory)
         {
             switch (potion)
             {
                 case IPotionFlatItem potionFlatItem:
                 {
-                    var stats = potionFlatItem.PotionFlatInfo.GolemBaseStats;
+                    var stats = potionFlatItem.PotionFlatInfo.CharacterBaseStats;
                     while (potion.State.Amount > 0)
                     {
-                        character.Golem.ChangeBaseStatsFlatPermanent(stats);
+                        character.Character.ChangeBaseStatsFlatPermanent(stats);
                         potion.State.Amount--;
                     }
 
@@ -68,10 +68,10 @@ namespace Inventory
                 }
                 case IPotionMultiplyItem potionMultiplyItem:
                 {
-                    var stats = potionMultiplyItem.PotionMultiplyInfo.GolemBaseStats;
+                    var stats = potionMultiplyItem.PotionMultiplyInfo.CharacterBaseStats;
                     while (potion.State.Amount > 0)
                     {
-                        character.Golem.ChangeBaseStatsProportionallyPermanent(stats);
+                        character.Character.ChangeBaseStatsProportionallyPermanent(stats);
                         potion.State.Amount--;
                     }
 
@@ -81,8 +81,8 @@ namespace Inventory
                 {
                     while (potion.State.Amount > 0)
                     {
-                        var stats = potionUltimateItem.PotionUltimateInfo.GolemBaseStats;
-                        character.Golem.ChangeBaseStatsUltimatePermanent(stats);
+                        var stats = potionUltimateItem.PotionUltimateInfo.CharacterBaseStats;
+                        character.Character.ChangeBaseStatsUltimatePermanent(stats);
                         potion.State.Amount--;
                     }
 
@@ -98,7 +98,7 @@ namespace Inventory
             }
         }
 
-        private static void ChangeInventoryState(IInventoryItem item, GameCharacterState character)
+        private static void ChangeInventoryState(IInventoryItem item, CharacterState character)
         {
             item.State.Amount--;
             var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
@@ -112,9 +112,9 @@ namespace Inventory
             inventory.OnInventoryStateChanged(character);
         }
 
-        private static GameCharacterState GetCharacterByInventory(IInventory inventory)
+        private static CharacterState GetCharacterByInventory(IInventory inventory)
         {
-            return Game.AllGolems.Find(character =>
+            return Game.AllCharactersInSession.Find(character =>
                 character.InventoryHelper.inventoryOrganization.Inventory == inventory);
         }
     }

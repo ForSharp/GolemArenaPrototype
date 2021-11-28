@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using FightState;
+using CharacterEntity.CharacterState;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +32,7 @@ namespace UI
             EventContainer.MagicDamageReceived -= PrintFightInfo;
         }
 
-        private void PrintFightInfo(GameCharacterState sender, GameCharacterState target, float damage,
+        private void PrintFightInfo(CharacterState sender, CharacterState target, float damage,
             bool isPeriodic)
         {
             if (isPeriodic)
@@ -63,7 +63,7 @@ namespace UI
             }
         }
 
-        private void AddNewInfo(GameCharacterState sender, GameCharacterState target, float damage)
+        private void AddNewInfo(CharacterState sender, CharacterState target, float damage)
         {
             _textsPool[_activeTexts] = HandleInfo(sender, target, damage, loggerTexts[_activeTexts]);
             _activeTexts++;
@@ -104,7 +104,7 @@ namespace UI
             }
         }
 
-        private static string HandleInfo(GameCharacterState sender, GameCharacterState target, float damage, GameObject text)
+        private static string HandleInfo(CharacterState sender, CharacterState target, float damage, GameObject text)
         {
             var obj = text.GetComponent<Text>();
             
