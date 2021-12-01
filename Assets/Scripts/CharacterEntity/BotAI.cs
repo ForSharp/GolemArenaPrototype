@@ -379,7 +379,11 @@ namespace CharacterEntity
                 _animator, AnimationChanger.SetCastFireBall, _thisState);
             _spellCast.CastSpell();
         }
-
+        
+        private void SetSpellCast(ICastable castable)
+        {
+            _spellCast = castable;
+        }
 
         private float GetDelayBetweenHits()
         {
@@ -669,10 +673,7 @@ namespace CharacterEntity
             _attackable = attackable;
         }
 
-        private void SetSpellCast(ICastable castable)
-        {
-            _spellCast = castable;
-        }
+        
 
         private CharacterState.CharacterState[] GetEnemies()
         {
