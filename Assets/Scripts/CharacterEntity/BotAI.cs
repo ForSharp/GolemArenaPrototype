@@ -375,9 +375,9 @@ namespace CharacterEntity
             //привести к нужному типу, эти данные могут храниться например в каррент стэйт
 
             SetSpellCast(_fireballSpell);
-            _fireballSpell.CustomConstructor(ItemContainer.Instance.GetFireBallLvl1(), _targetState.transform,
-                _animator, AnimationChanger.SetCastFireBall, _thisState);
-            _spellCast.CastSpell();
+            _fireballSpell.SpellConstructor(ItemContainer.Instance.GetFireBallLvl1(), _thisState, 
+                _animator);
+            _spellCast.CastSpell(_targetState);
         }
         
         private void SetSpellCast(ICastable castable)
