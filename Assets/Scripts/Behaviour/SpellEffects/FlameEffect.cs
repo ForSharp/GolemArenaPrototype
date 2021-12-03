@@ -27,7 +27,7 @@ namespace Behaviour.SpellEffects
         {
             yield return new WaitForSeconds(1);
             
-            target.TakeDamage(periodicDamage, attacker.roundStatistics);
+            target.TakeDamage(periodicDamage, attacker.RoundStatistics);
             EventContainer.OnMagicDamageReceived(attacker, target, periodicDamage, true);
 
             StartCoroutine(SetPeriodicDamage(attacker, target, periodicDamage));

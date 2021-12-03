@@ -4,6 +4,7 @@ using System.Linq;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
 using Inventory;
+using Inventory.Abstracts;
 using Optimization;
 using Random = UnityEngine.Random;
 
@@ -123,7 +124,7 @@ namespace GameLoop
 
         public static void SetRoundRates()
         {
-            var statistics = Game.AllCharactersInSession.Select(character => character.roundStatistics).ToList();
+            var statistics = Game.AllCharactersInSession.Select(character => character.RoundStatistics).ToList();
 
             var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
 
@@ -151,6 +152,12 @@ namespace GameLoop
                 typeof(Specialization));
         }
 
+        public static CharacterState GetCharacterByInventory(IInventory inventory)
+        {
+            return AllCharactersInSession.Find(character =>
+                character.InventoryHelper.inventoryOrganization.Inventory == inventory);
+        }
+        
         public static Enum ToEnum(string value, Type enumType)
         {
             return (Enum) Enum.Parse(enumType, value, true);

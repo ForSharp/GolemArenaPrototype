@@ -1051,6 +1051,8 @@ GameObject:
   - component: {fileID: 335622318916393775}
   - component: {fileID: 7656140713863035857}
   - component: {fileID: 347479196758759557}
+  - component: {fileID: 7818686483928135446}
+  - component: {fileID: -1357255597687732441}
   m_Layer: 0
   m_Name: 6_Fort
   m_TagString: Untagged
@@ -1570,6 +1572,31 @@ MonoBehaviour:
   inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
     type: 3}
   inventoryOrganization: {fileID: 0}
+--- !u!114 &7818686483928135446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2716287087704530673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ca050f3c2142898ee3167e1e4ac890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1357255597687732441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2716287087704530673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438402fe68474791a41c79a1882f6b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballSpell: {fileID: 0}
 --- !u!1 &2716292260030179369
 GameObject:
   m_ObjectHideFlags: 0

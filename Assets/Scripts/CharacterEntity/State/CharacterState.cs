@@ -31,11 +31,11 @@ namespace CharacterEntity.CharacterState
         public string Spec { get; private set; }
         public Character Character { get; private set; }
         public SoundsController SoundsController { get; private set; }
-        
+        public SpellManager SpellManager { get; private set; }
         public InventoryHelper InventoryHelper { get; private set; }
         
         private RoundStatistics _lastEnemyAttacked;
-        public RoundStatistics roundStatistics;
+        public RoundStatistics RoundStatistics;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -50,8 +50,9 @@ namespace CharacterEntity.CharacterState
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            roundStatistics = new RoundStatistics(this);
+            RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
+            SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
             var unused = new ExtraStatsEditorWithItems(this);
             var dummy = new ConsumablesEater(this);
         }
@@ -203,10 +204,10 @@ namespace CharacterEntity.CharacterState
 
         private void NullRoundStatistics()
         {
-            roundStatistics.RoundDamage = 0;
-            roundStatistics.RoundKills = 0;
-            roundStatistics.WinLastRound = false;
-            roundStatistics.RoundRate = 0;
+            RoundStatistics.RoundDamage = 0;
+            RoundStatistics.RoundKills = 0;
+            RoundStatistics.WinLastRound = false;
+            RoundStatistics.RoundRate = 0;
         }
 
         private void HealAllParameters()

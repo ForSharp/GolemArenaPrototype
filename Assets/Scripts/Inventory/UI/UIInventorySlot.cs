@@ -1,5 +1,7 @@
 ﻿using System;
+using GameLoop;
 using Inventory.Abstracts;
+using Inventory.Abstracts.Spells;
 using Inventory.DragAndDrop;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -95,6 +97,9 @@ namespace Inventory.UI
                     break;
                 case IPotionUltimateItem item:
                     PotionDrinker.DrinkPotion(_uiInventory.Inventory, item);
+                    break;
+                case ISpellItem item:
+                    Game.GetCharacterByInventory(_uiInventory.Inventory).SpellManager.LearnSpell(item);
                     break;
             }
         }

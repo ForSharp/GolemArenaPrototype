@@ -639,6 +639,8 @@ GameObject:
   - component: {fileID: -8799995530836182606}
   - component: {fileID: 426182083312846617}
   - component: {fileID: -1727731616965939564}
+  - component: {fileID: 529906107103129908}
+  - component: {fileID: 6823921927968813410}
   m_Layer: 0
   m_Name: 3_Bagrak
   m_TagString: Untagged
@@ -1215,6 +1217,31 @@ MonoBehaviour:
   inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
     type: 3}
   inventoryOrganization: {fileID: 0}
+--- !u!114 &529906107103129908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965680858140807453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ca050f3c2142898ee3167e1e4ac890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6823921927968813410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965680858140807453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438402fe68474791a41c79a1882f6b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballSpell: {fileID: 0}
 --- !u!1 &4965699765868651749
 GameObject:
   m_ObjectHideFlags: 0

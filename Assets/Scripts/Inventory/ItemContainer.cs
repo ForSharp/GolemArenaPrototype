@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
@@ -187,6 +188,35 @@ namespace Inventory
         public FireBallItem GetFireBallLvl1()
         {
             return new FireBallItem(fireBallItemInfoLvl1, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
+        }
+
+        public static ISpellItem GetUpgradedSpell(ISpellItem learnedSpell, int previousSpellLvl)
+        {
+            switch (learnedSpell)
+            {
+                case FireBallItem fireBallItem:
+                    if (previousSpellLvl == 1)
+                    {
+                        //lvl2
+                    }
+                    else
+                    {
+                        //lvl3
+                    }
+                    break;
+                case FreezingItem freezingItem:
+                    break;
+                case GraceBuffItem graceBuffItem:
+                    break;
+                case SnowstormItem snowstormItem:
+                    break;
+                case SummonSpiderItem summonSpiderItem:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(learnedSpell));
+            }
+
+            throw new Exception();
         }
     }
 }

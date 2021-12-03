@@ -362,7 +362,7 @@ namespace CharacterEntity
                 _animator, _thisState.Group, _thisState.Stats.damagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.hitAccuracy,
                 _targetState.gameObject, _thisState.Type,
-                _thisState.roundStatistics,
+                _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
@@ -691,8 +691,8 @@ namespace CharacterEntity
                 {
                     _isWin = true;
                     EventContainer.OnWinBattle(_thisState);
-                    _thisState.roundStatistics.Wins++;
-                    _thisState.roundStatistics.WinLastRound = true;
+                    _thisState.RoundStatistics.Wins++;
+                    _thisState.RoundStatistics.WinLastRound = true;
                 }
 
                 yield return new WaitForSeconds(1);

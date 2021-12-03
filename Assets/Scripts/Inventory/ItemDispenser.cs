@@ -18,7 +18,7 @@ namespace Inventory
 
         private static void DispenseAllTypesOfItemsToCurrentCharacter(CharacterState character)
         {
-            var money = character.roundStatistics.RoundRate * 100 * Game.Round;
+            var money = character.RoundStatistics.RoundRate * 100 * Game.Round;
 
             var moneyForArtefacts = money / 4;
             money -= moneyForArtefacts;

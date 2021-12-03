@@ -10,7 +10,7 @@ namespace Inventory
     {
         public static void DrinkPotion(IInventory inventory, IPotionFlatItem potion)
         {
-            var character = GetCharacterByInventory(inventory);
+            var character = Game.GetCharacterByInventory(inventory);
             var stats = potion.PotionFlatInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsFlatPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
@@ -18,7 +18,7 @@ namespace Inventory
         }
         public static void DrinkPotion(IInventory inventory, IPotionMultiplyItem potion)
         {
-            var character = GetCharacterByInventory(inventory);
+            var character = Game.GetCharacterByInventory(inventory);
             var stats = potion.PotionMultiplyInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsProportionallyPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
@@ -26,7 +26,7 @@ namespace Inventory
         }
         public static void DrinkPotion(IInventory inventory, IPotionUltimateItem potion)
         {
-            var character = GetCharacterByInventory(inventory);
+            var character = Game.GetCharacterByInventory(inventory);
             var stats = potion.PotionUltimateInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsUltimatePermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
@@ -110,12 +110,6 @@ namespace Inventory
             }
 
             inventory.OnInventoryStateChanged(character);
-        }
-
-        private static CharacterState GetCharacterByInventory(IInventory inventory)
-        {
-            return Game.AllCharactersInSession.Find(character =>
-                character.InventoryHelper.inventoryOrganization.Inventory == inventory);
         }
     }
 }
