@@ -2,6 +2,7 @@
 using System.Linq;
 using Behaviour.Abstracts;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;

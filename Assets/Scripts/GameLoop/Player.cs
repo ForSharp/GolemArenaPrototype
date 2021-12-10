@@ -1,4 +1,5 @@
 ﻿using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 
 namespace GameLoop
 {

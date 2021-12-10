@@ -1,5 +1,6 @@
 ﻿using CharacterEntity;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;

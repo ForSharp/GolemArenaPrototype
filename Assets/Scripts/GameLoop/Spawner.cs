@@ -1,5 +1,6 @@
 ﻿using CharacterEntity;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;

@@ -33,8 +33,8 @@ namespace CharacterEntity
         private IAttackable _attackable;
         private ICastable _spellCast;
 
-        private CharacterState.CharacterState _thisState;
-        private CharacterState.CharacterState _targetState;
+        private State.CharacterState _thisState;
+        private State.CharacterState _targetState;
         private CommonMeleeAttackBehaviour _attack;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
@@ -51,7 +51,7 @@ namespace CharacterEntity
 
         private void Start()
         {
-            _thisState = GetComponent<CharacterState.CharacterState>();
+            _thisState = GetComponent<State.CharacterState>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _attack = GetComponent<CommonMeleeAttackBehaviour>();
@@ -495,7 +495,7 @@ namespace CharacterEntity
             }
         }
 
-        private void SetTarget(CharacterState.CharacterState target)
+        private void SetTarget(State.CharacterState target)
         {
             if (_thisState == Player.PlayerCharacter)
             {
@@ -675,7 +675,7 @@ namespace CharacterEntity
 
         
 
-        private CharacterState.CharacterState[] GetEnemies()
+        private State.CharacterState[] GetEnemies()
         {
             return Game.AllCharactersInSession.Where(p => p.IsDead == false)
                 .Where(p => p.Group != _thisState.Group).ToArray();

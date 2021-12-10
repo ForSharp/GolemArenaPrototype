@@ -3,6 +3,7 @@ using Behaviour.Abstracts;
 using Behaviour.SpellEffects;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using Inventory.Abstracts.Spells;
 using Inventory.Items.SpellItems;
 using UnityEngine;

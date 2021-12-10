@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using Inventory;
 using Inventory.Abstracts;
 using Optimization;

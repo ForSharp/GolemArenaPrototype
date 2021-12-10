@@ -1,6 +1,7 @@
 ﻿using System;
 using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
+using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;

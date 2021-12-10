@@ -186,15 +186,6 @@ namespace CharacterEntity
             };
         }
 
-        public string GetGolemBaseStats()
-        {
-            return GetBaseStats().ToString();
-        }
-        
-        public string GetGolemExtraStats()
-        {
-            return GetExtraStats().ToString();
-        }
     }
 
     public class DefaultStats : StatsDecorator

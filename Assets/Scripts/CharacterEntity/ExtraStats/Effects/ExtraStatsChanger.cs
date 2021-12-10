@@ -5,7 +5,7 @@ namespace CharacterEntity.ExtraStats.Effects
 {
     public class ExtraStatsChanger : ExtraStatsDecorator
     {
-        private ExtraStatsParameter[] _extraStatsParameters;
+        private readonly ExtraStatsParameter[] _extraStatsParameters;
 
         public ExtraStatsChanger(IExtraStatsProvider wrappedEntity, CharacterBaseStats baseStats, 
             params ExtraStatsParameter[] extraStatsParameters) : base(wrappedEntity, baseStats)

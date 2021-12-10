@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;

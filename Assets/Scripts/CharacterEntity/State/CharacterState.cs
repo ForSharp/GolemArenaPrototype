@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using CharacterEntity.BaseStats;
+using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
 using GameLoop;
 using Inventory;
 using UI;
 using UnityEngine;
 
-namespace CharacterEntity.CharacterState
+namespace CharacterEntity.State
 {
     public sealed class CharacterState : MonoBehaviour, IDestructible
     {
@@ -31,8 +32,9 @@ namespace CharacterEntity.CharacterState
         public string Spec { get; private set; }
         public Character Character { get; private set; }
         public SoundsController SoundsController { get; private set; }
-        public SpellManager SpellManager { get; private set; }
         public InventoryHelper InventoryHelper { get; private set; }
+        public SpellManager SpellManager { get; private set; }
+        //public SpellsPanel SpellsPanel { get; private set; }
         
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
@@ -53,6 +55,7 @@ namespace CharacterEntity.CharacterState
             RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
             SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
+            //SpellPanel
             var unused = new ExtraStatsEditorWithItems(this);
             var dummy = new ConsumablesEater(this);
         }

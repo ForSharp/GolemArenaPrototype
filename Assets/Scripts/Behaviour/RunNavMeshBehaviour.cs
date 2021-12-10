@@ -1,5 +1,6 @@
 ﻿using System;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using UnityEngine;
 using UnityEngine.AI;
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using GameLoop;
 using UI;
 using UnityEngine;

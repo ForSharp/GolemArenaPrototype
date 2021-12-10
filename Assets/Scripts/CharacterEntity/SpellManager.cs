@@ -15,14 +15,14 @@ namespace CharacterEntity
     {
         private readonly List<ISpellItem> _learnedSpells = new List<ISpellItem>();
         private readonly Animator _animator;
-        private readonly CharacterState.CharacterState _character;
+        private readonly State.CharacterState _character;
         private readonly SpellContainer _spellContainer;
 
         private ICastable _spellFirst;
         private ICastable _spellSecond;
         private ICastable _spellThird;
 
-        public void LearnSpell(ISpellItem spell)//должен сработать при клике на предмет спелл
+        public void LearnSpell(ISpellItem spell)
         {
             var inventoryItem = (IInventoryItem)spell;
             
@@ -62,14 +62,14 @@ namespace CharacterEntity
             inventory.OnInventoryStateChanged(_character);
         }
 
-        public SpellManager(Animator animator, CharacterState.CharacterState characterState, SpellContainer spellContainer)
+        public SpellManager(Animator animator, State.CharacterState characterState, SpellContainer spellContainer)
         {
             _animator = animator;
             _character = characterState;
             _spellContainer = spellContainer;
         }
         
-        public void CastSpellFirst(CharacterState.CharacterState targetState)
+        public void CastSpellFirst(State.CharacterState targetState)
         {
             _spellFirst.CastSpell(targetState);
         }
@@ -109,12 +109,12 @@ namespace CharacterEntity
 
         
         
-        private int GetLearnedSpellLvl(string title)
+        private int GetLearnedSpellLvl(string spellId)
         {
             foreach (var spell in _learnedSpells)
             {
                 var spellItem = (IInventoryItem)spell;
-                if (title == spellItem.Info.Title)
+                if (spellId == spellItem.Info.Id)
                 {
                     return spell.SpellInfo.SpellLvl;
                 }

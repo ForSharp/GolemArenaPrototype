@@ -11,11 +11,11 @@ namespace CharacterEntity
 {
     public class ConsumablesEater
     {
-        private readonly CharacterState.CharacterState _character;
+        private readonly State.CharacterState _character;
         private readonly InventoryWithSlots _inventory;
         private readonly Dictionary<ExtraStatsParameter[], Coroutine> _effects = new Dictionary<ExtraStatsParameter[], Coroutine>();
 
-        public ConsumablesEater(CharacterState.CharacterState character)
+        public ConsumablesEater(State.CharacterState character)
         {
             _character = character;
             _inventory = character.InventoryHelper.inventoryOrganization.Inventory;

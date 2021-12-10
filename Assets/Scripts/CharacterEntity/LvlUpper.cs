@@ -4,14 +4,14 @@ namespace CharacterEntity
 {
     public static class LvlUpper
     {
-        public static void LvlUp(CharacterState.CharacterState state)
+        public static void LvlUp(State.CharacterState state)
         {
             state.Character.ChangeBaseStatsProportionallyPermanent(10);
             EventContainer.OnGolemStatsChanged(state);
             state.Lvl++;
         }
 
-        public static void LvlUp(CharacterState.CharacterState state, int amount)
+        public static void LvlUp(State.CharacterState state, int amount)
         {
             for (int i = 0; i < amount; i++)
             {
@@ -21,7 +21,7 @@ namespace CharacterEntity
             }
         }
         
-        public static void LvlDown(CharacterState.CharacterState state)
+        public static void LvlDown(State.CharacterState state)
         {
             if (state.Lvl <= 1) return;
             state.Character.ChangeBaseStatsProportionallyPermanent(-10);

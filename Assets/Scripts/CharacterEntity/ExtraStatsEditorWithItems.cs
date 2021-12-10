@@ -8,11 +8,11 @@ namespace CharacterEntity
 {
     public class ExtraStatsEditorWithItems
     {
-        private CharacterState.CharacterState _character;
+        private State.CharacterState _character;
         private InventoryWithSlots _inventory;
         private Dictionary<IInventorySlot, ExtraStatsParameter[]> _activeItemEffects;
 
-        public ExtraStatsEditorWithItems(CharacterState.CharacterState character)
+        public ExtraStatsEditorWithItems(State.CharacterState character)
         {
             _character = character;
             _inventory = character.InventoryHelper.inventoryOrganization.Inventory;

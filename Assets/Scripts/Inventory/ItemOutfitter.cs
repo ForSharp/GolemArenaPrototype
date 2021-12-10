@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using Inventory.Abstracts;
 
 namespace Inventory
