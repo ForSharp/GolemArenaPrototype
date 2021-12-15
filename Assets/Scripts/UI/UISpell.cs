@@ -57,6 +57,16 @@ namespace UI
             manaCost.gameObject.SetActive(state);
             spellLvl.gameObject.SetActive(state);
             spellIcon.gameObject.SetActive(state);
+
+            if (state == false)
+            {
+                activeSpellIdentifier.gameObject.SetActive(false);
+            }
+
+            if (state && IsLearned)
+            {
+                activeSpellIdentifier.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -8,10 +8,12 @@ namespace Inventory
     public class InventoryHelper : MonoBehaviour
     {
         [SerializeField] private GameObject inventoryPrefab;
-        [HideInInspector]public InventoryOrganization inventoryOrganization;
         private InventoryWithSlots _inventory;
         private GameObject _inventoryObject;
         private UIInventorySlot[] _uiSlots;
+
+        public InventoryOrganization InventoryOrganization { get; private set; }
+
         private void Awake()
         {
             CreateNewInventory();
@@ -20,19 +22,19 @@ namespace Inventory
         private void CreateNewInventory()
         {
             _inventoryObject = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("InventoryContainer").transform);
-            inventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
+            InventoryOrganization = _inventoryObject.GetComponent<InventoryOrganization>();
 
             _uiSlots = _inventoryObject.GetComponentsInChildren<UIInventorySlot>();
             _inventory = new InventoryWithSlots(_uiSlots.Length);
             
-            inventoryOrganization.Inventory = _inventory;
+            InventoryOrganization.Inventory = _inventory;
             
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
-            inventoryOrganization.transform.localPosition = Vector3.zero;
+            InventoryOrganization.transform.localPosition = Vector3.zero;
             
             SetupInventoryUI(_inventory);
             
-            inventoryOrganization.HideAllInventory();
+            InventoryOrganization.HideAllInventory();
         }
 
         public void Refresh()

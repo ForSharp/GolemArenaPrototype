@@ -204,12 +204,12 @@ namespace Controller
                 rtsPanel.gameObject.SetActive(true);
                 rtsPanel.HandleClick(state);
             }
-            else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.inventoryOrganization.InPanel))
+            else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.InventoryOrganization.InPanel))
             {
                 rtsPanel.gameObject.SetActive(false);
                 foreach (var character in Game.AllCharactersInSession)
                 {
-                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
                 }
             }
         }
@@ -362,13 +362,13 @@ namespace Controller
             yield return new WaitForSeconds(0.1f);
             
             standardPanel.gameObject.SetActive(true);
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
+            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.ShowInventory();
+            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
             foreach (var character in Game.AllCharactersInSession)
             {
                 if (character != Player.PlayerCharacter)
                 {
-                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
                 }
             }
             rtsPanel.gameObject.SetActive(false);
@@ -378,7 +378,7 @@ namespace Controller
         {
             standardPanel.gameObject.SetActive(false);
             rtsPanel.gameObject.SetActive(true);
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
+            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.ShowInventory();
             rtsPanel.HandleClick(Player.PlayerCharacter);
         }
 

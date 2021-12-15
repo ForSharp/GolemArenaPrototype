@@ -18,7 +18,7 @@ namespace CharacterEntity
         public ConsumablesEater(State.CharacterState character)
         {
             _character = character;
-            _inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            _inventory = character.InventoryHelper.InventoryOrganization.Inventory;
 
             _inventory.ConsumableItemUsed += InventoryOnConsumableItemUsed;
             EventContainer.NewRound += RemoveAllTemporaryEffects;

@@ -22,25 +22,25 @@ namespace Inventory
         [SerializeField] private InventoryItemInfo warHelmetItemInfo;
         public WarHelmet WarHelmet => new WarHelmet(warHelmetItemInfo, warHelmetArtefactInfo);
         
-        [SerializeField] private InventoryItemInfo fireBallItemInfoLvl1;
-        public FireBallItem FireBallLvl1 => new FireBallItem(fireBallItemInfoLvl1, fireBallLvl1, fireBallDamageLvl1,
+        [SerializeField] private InventoryItemInfo fireBallItemInfo;
+        public FireBallItem FireBallItemLvl1 => new FireBallItem(fireBallItemInfo, fireBallLvl1, fireBallDamageLvl1,
             fireBallPeriodicDamageLvl1);
 
-        [SerializeField] private InventoryItemInfo graceBuffItemInfoLvl1;
-        public GraceBuffItem GraceBuffItemLvl1 => new GraceBuffItem(graceBuffItemInfoLvl1, graceBuffLvl1, 
-            graceBuffHealLvl1, graceBuffBuffLvl1);
+        [SerializeField] private InventoryItemInfo graceBuffItemInfo;
+        public GraceItem GraceItemLvl1 => new GraceItem(graceBuffItemInfo, graceLvl1, 
+            graceBuffHealLvl1, graceBuffLvl1);
 
-        [SerializeField] private InventoryItemInfo snowstormItemInfoLvl1;
-        public SnowstormItem SnowstormItemLvl1 => new SnowstormItem(snowstormItemInfoLvl1, snowstormLvl1, 
+        [SerializeField] private InventoryItemInfo snowstormItemInfo;
+        public SnowstormItem SnowstormItemLvl1 => new SnowstormItem(snowstormItemInfo, snowstormLvl1, 
             snowstormPeriodicDamageLvl1, snowstormDebuffLvl1);
 
-        [SerializeField] private InventoryItemInfo summonSpiderInfoLvl1;
+        [SerializeField] private InventoryItemInfo summonSpiderInfo;
         public SummonSpiderItem SummonSpiderItemLvl1 =>
-            new SummonSpiderItem(summonSpiderInfoLvl1, summonSpiderLvl1, summonSpiderSummonInfoLvl1);
+            new SummonSpiderItem(summonSpiderInfo, summonSpiderLvl1, summonSpiderSummonInfoLvl1);
 
-        [SerializeField] private InventoryItemInfo freezingItemInfoLvl1;
+        [SerializeField] private InventoryItemInfo freezingItemInfo;
         public FreezingItem FreezingItemLvl1 =>
-            new FreezingItem(freezingItemInfoLvl1, freezingLvl1, freezingPolymorphInfoLvl1);
+            new FreezingItem(freezingItemInfo, freezingLvl1, freezingPolymorphInfoLvl1);
         
         [SerializeField] private InventoryItemInfo potionFlatSmallItemInfo;
         public PotionFlat PotionFlatSmall => new PotionFlat(potionFlatSmallItemInfo, potionFlatSmallInfo);
@@ -94,12 +94,12 @@ namespace Inventory
         [SerializeField] private PotionUltimateInfo potionUltimateIntelligenceInfo;
         [Header("Spells Info")]
         [SerializeField] private SpellInfo fireBallLvl1;
-        [SerializeField] private SpellInfo graceBuffLvl1;
+        [SerializeField] private SpellInfo graceLvl1;
         [SerializeField] private SpellInfo snowstormLvl1;
         [SerializeField] private SpellInfo summonSpiderLvl1;
         [SerializeField] private SpellInfo freezingLvl1;
         [Header("Buff Spells Info")] 
-        [SerializeField] private BuffSpellInfo graceBuffBuffLvl1;
+        [SerializeField] private BuffSpellInfo graceBuffLvl1;
         [Header("Damage Spells Info")]
         [SerializeField] private DamageSpellInfo fireBallDamageLvl1;
         [Header("Debuff Spells Info")] 
@@ -128,7 +128,11 @@ namespace Inventory
                 Apple,
                 WarHelmet,
                 Chocolate,
-                FireBallLvl1,
+                FireBallItemLvl1,
+                FreezingItemLvl1,
+                GraceItemLvl1,
+                SnowstormItemLvl1,
+                SummonSpiderItemLvl1,
                 PotionFlatSmall,
                 PotionFlatMedium, 
                 PotionFlatLarge,
@@ -187,7 +191,7 @@ namespace Inventory
 
         public FireBallItem GetFireBallLvl1()
         {
-            return new FireBallItem(fireBallItemInfoLvl1, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
+            return new FireBallItem(fireBallItemInfo, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
         }
 
         public static ISpellItem GetUpgradedSpell(ISpellItem learnedSpell, int previousSpellLvl)
@@ -206,7 +210,7 @@ namespace Inventory
                     break;
                 case FreezingItem freezingItem:
                     break;
-                case GraceBuffItem graceBuffItem:
+                case GraceItem graceBuffItem:
                     break;
                 case SnowstormItem snowstormItem:
                     break;

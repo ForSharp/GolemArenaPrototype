@@ -11,7 +11,7 @@ namespace Inventory
         public static void EquipItems(CharacterState character)
         {
             UnEquipAllItems(character);
-            var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            var inventory = character.InventoryHelper.InventoryOrganization.Inventory;
             // var allCorrectItems = inventory.GetAllItems().Where(item =>
             //         item is IArtefactItem || item is IConsumableBuffItem || item is IConsumableHealingItem)
             //     .OrderByDescending(item => item.Info.Price);
@@ -36,7 +36,7 @@ namespace Inventory
 
         private static void UnEquipAllItems(CharacterState character)
         {
-            var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            var inventory = character.InventoryHelper.InventoryOrganization.Inventory;
             foreach (var slot in inventory.GetAllEquippingSlotsWithItems())
             {
                 inventory.TransitFromSlotToSlot(character, slot, inventory.GetAllNonEquippingSlots()[0]);

@@ -51,7 +51,7 @@ namespace CharacterEntity
         private void DeleteSpellItemAfterLearning(IInventoryItem inventoryItem)
         {
             inventoryItem.State.Amount--;
-            var inventory = _character.InventoryHelper.inventoryOrganization.Inventory;
+            var inventory = _character.InventoryHelper.InventoryOrganization.Inventory;
 
             if (inventoryItem.State.Amount == 0)
             {
@@ -133,7 +133,7 @@ namespace CharacterEntity
                     break;
                 case FreezingItem freezingItem:
                     break;
-                case GraceBuffItem graceBuffItem:
+                case GraceItem graceBuffItem:
                     break;
                 case SnowstormItem snowstormItem:
                     break;

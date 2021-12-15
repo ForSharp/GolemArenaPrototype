@@ -36,7 +36,7 @@ namespace Inventory
 
         public static void DrinkAllPotions(CharacterState character)
         {
-            var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            var inventory = character.InventoryHelper.InventoryOrganization.Inventory;
 
             var allCorrectItems = inventory.GetAllItems().Where(item =>
                     item is IPotionFlatItem || item is IPotionMultiplyItem || item is IPotionUltimateItem).ToArray();
@@ -102,7 +102,7 @@ namespace Inventory
         private static void ChangeInventoryState(IInventoryItem item, CharacterState character)
         {
             item.State.Amount--;
-            var inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            var inventory = character.InventoryHelper.InventoryOrganization.Inventory;
 
             if (item.State.Amount == 0)
             {

@@ -30,7 +30,7 @@ namespace UI
         public void ShowLearnedSpellsPanel()
         {
             learnedSpellsPanel.gameObject.SetActive(true);
-            character.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
+            character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
         }
 
         public void ShowActiveSpells()

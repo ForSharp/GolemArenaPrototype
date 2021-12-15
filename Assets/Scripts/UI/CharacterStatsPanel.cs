@@ -77,14 +77,14 @@ namespace UI
             healthBar.SetCharacterState(state);
 
             HideAllInventoryPanels();
-            state.InventoryHelper.inventoryOrganization.ShowInventory();
+            state.InventoryHelper.InventoryOrganization.ShowInventory();
         }
 
         private void HideAllInventoryPanels()
         {
             foreach (var character in Game.AllCharactersInSession)
             {
-                character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                character.InventoryHelper.InventoryOrganization.HideAllInventory();
             }
         }
 

@@ -15,7 +15,7 @@ namespace CharacterEntity
         public ExtraStatsEditorWithItems(State.CharacterState character)
         {
             _character = character;
-            _inventory = character.InventoryHelper.inventoryOrganization.Inventory;
+            _inventory = character.InventoryHelper.InventoryOrganization.Inventory;
 
             _activeItemEffects = new Dictionary<IInventorySlot, ExtraStatsParameter[]>();
 
