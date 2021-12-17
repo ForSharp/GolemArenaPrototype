@@ -128,8 +128,8 @@ namespace CharacterEntity
             switch (spellItem)
             {
                 case FireBallItem fireBallItem:
-                    spellSlot = _spellContainer.fireballSpell;
-                    _spellContainer.fireballSpell.SpellConstructor(spellItem, _character, _animator);
+                    spellSlot = _spellContainer.FireballSpell;
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem, _character, _animator);
                     break;
                 case FreezingItem freezingItem:
                     break;

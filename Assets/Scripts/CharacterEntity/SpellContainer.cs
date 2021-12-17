@@ -5,12 +5,12 @@ namespace CharacterEntity
 {
     public class SpellContainer : MonoBehaviour
     {
-        [HideInInspector] public FireballSpell fireballSpell;
+        public FireballSpell FireballSpell { get; private set; }
         
 
         private void Start()
         {
-            fireballSpell = GetComponent<FireballSpell>();
+            FireballSpell = GetComponent<FireballSpell>();
         }
 
         

@@ -34,7 +34,7 @@ namespace CharacterEntity.State
         public SoundsController SoundsController { get; private set; }
         public InventoryHelper InventoryHelper { get; private set; }
         public SpellManager SpellManager { get; private set; }
-        //public SpellsPanel SpellsPanel { get; private set; }
+        public SpellPanelHelper SpellPanelHelper { get; private set; }
         
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics RoundStatistics;
@@ -55,7 +55,7 @@ namespace CharacterEntity.State
             RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
             SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
-            //SpellPanel
+            SpellPanelHelper = GetComponent<SpellPanelHelper>();
             var unused = new ExtraStatsEditorWithItems(this);
             var dummy = new ConsumablesEater(this);
         }

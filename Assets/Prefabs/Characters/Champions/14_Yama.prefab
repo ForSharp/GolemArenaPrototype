@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: -7148086723075140134}
   - component: {fileID: -4706436613988285631}
   - component: {fileID: 5420743851093754430}
+  - component: {fileID: 7662535175778872992}
   m_Layer: 0
   m_Name: 14_Yama
   m_TagString: Untagged
@@ -662,7 +663,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryPrefab: {fileID: 8030666380328379808, guid: 9424d7dac37039840b35f8f8fa7fb94f,
     type: 3}
-  inventoryOrganization: {fileID: 0}
 --- !u!114 &-4706436613988285631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +687,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438402fe68474791a41c79a1882f6b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballSpell: {fileID: 0}
+--- !u!114 &7662535175778872992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701594228384270095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4505f0385e04d4f8c16697a49e9596a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
+    type: 3}
 --- !u!1 &7701644445810978747
 GameObject:
   m_ObjectHideFlags: 0

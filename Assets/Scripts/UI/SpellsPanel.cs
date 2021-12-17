@@ -1,5 +1,4 @@
-﻿using CharacterEntity.CharacterState;
-using CharacterEntity.State;
+﻿using CharacterEntity.State;
 using UnityEngine;
 
 namespace UI
@@ -9,7 +8,11 @@ namespace UI
         [SerializeField] private GameObject spellButtonFirst;
         [SerializeField] private GameObject spellButtonSecond;
         [SerializeField] private GameObject spellButtonThird;
+
         [SerializeField] private LearnedSpellsPanel learnedSpellsPanel;
+
+        private int _spellNumberToChange;
+        
         public CharacterState character;
 
         public void HideLearnedSpellsPanel()
@@ -19,14 +22,32 @@ namespace UI
 
         public void HideAll()
         {
-            //gameObject.SetActive(false);
-            
             spellButtonFirst.gameObject.SetActive(false);
             spellButtonSecond.gameObject.SetActive(false);
             spellButtonThird.gameObject.SetActive(false);
             learnedSpellsPanel.gameObject.SetActive(false);
         }
 
+        public void ActivateSpell()
+        {
+            
+        }
+
+        public void RefreshActiveSpell(int spellNumb)
+        {
+            _spellNumberToChange = spellNumb;
+            
+            switch (spellNumb)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+        }
+        
         public void ShowLearnedSpellsPanel()
         {
             learnedSpellsPanel.gameObject.SetActive(true);

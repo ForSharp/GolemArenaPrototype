@@ -37,14 +37,6 @@ namespace Inventory
             InventoryOrganization.HideAllInventory();
         }
 
-        public void Refresh()
-        {
-            foreach (var slot in _uiSlots)
-            {
-                slot.Refresh();
-            }
-        }
-
         private void SetupInventoryUI(InventoryWithSlots inventory)
         {
             var allSlots = inventory.GetAllNonEquippingSlots();
