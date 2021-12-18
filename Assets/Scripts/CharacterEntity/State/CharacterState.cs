@@ -5,6 +5,7 @@ using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
 using GameLoop;
 using Inventory;
+using SpellSystem;
 using UI;
 using UnityEngine;
 
