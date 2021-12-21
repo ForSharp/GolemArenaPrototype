@@ -203,7 +203,7 @@ namespace Inventory
                     {
                         //lvl2
                     }
-                    else
+                    else if (previousSpellLvl == 2)
                     {
                         //lvl3
                     }

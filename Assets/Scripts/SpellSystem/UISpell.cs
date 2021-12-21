@@ -1,15 +1,13 @@
 ﻿using System.Globalization;
-using CharacterEntity.State;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
-using Inventory.Info.Spells;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SpellSystem
 {
-    public class UISpell : MonoBehaviour, IPointerClickHandler
+    public class UISpell : MonoBehaviour
     {
         [SerializeField] private Text spellTitle;
         [SerializeField] private Text manaCost;
@@ -20,7 +18,7 @@ namespace SpellSystem
         private SpellsPanel _mainSpellPanel;
         private ISpellItem _spellItem;
         private IInventoryItem _item;
-        
+        private bool _isActive;
         public string SpellId { get; private set; }
         public bool IsLearned { get; private set; }
         
@@ -54,11 +52,13 @@ namespace SpellSystem
         public void ActivateSpell()
         {
             activeSpellIdentifier.gameObject.SetActive(true);
+            _isActive = true;
         }
 
         public void DeactivateSpell()
         {
             activeSpellIdentifier.gameObject.SetActive(false);
+            _isActive = false;
         }
 
         private void SetComponentsVisibility(bool state)
@@ -79,11 +79,12 @@ namespace SpellSystem
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnLearnedSpellClick()
         {
-            if (_spellItem != null)
+            if (_spellItem != null && !_isActive)
             {
                 _mainSpellPanel.SetupActiveSpell(_spellItem);
+                
             }
         }
     }

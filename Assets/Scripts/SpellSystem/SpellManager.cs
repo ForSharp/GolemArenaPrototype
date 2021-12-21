@@ -34,7 +34,7 @@ namespace SpellSystem
                     if (_learnedSpells[i].SpellInfo.SpellLvl < 3)
                     {
                         _learnedSpells[i] = ItemContainer.GetUpgradedSpell(_learnedSpells[i], _learnedSpells[i].SpellInfo.SpellLvl);
-                        _character.SpellPanelHelper.SpellsPanel.AddLearnedSpell(_learnedSpells[i]);
+                        _character.SpellPanelHelper.SpellsPanel.UpdateLearnedSpells();
                         DeleteSpellItemAfterLearning(inventoryItem);
 
                         return;
@@ -45,6 +45,7 @@ namespace SpellSystem
             }
             
             _learnedSpells.Add(spell);
+            _character.SpellPanelHelper.SpellsPanel.AddLearnedSpell(spell);
             DeleteSpellItemAfterLearning(inventoryItem);
         }
 
@@ -74,15 +75,20 @@ namespace SpellSystem
             _spellFirst.CastSpell(targetState);
         }
 
-        public void SetupSpellFirst(ISpellItem spellItem) //экипировать спелл
+        public void ActivateSpell(ISpellItem spellItem, int numb) //экипировать спелл
         {
-            SetupSpell(out _spellFirst, spellItem);
-        }
-
-        public Image GetImageSpellFirst()
-        {   
-            //var image = (ISpellItem)
-            return null;
+            switch (numb)
+            {
+                case 1:
+                    SetupSpell(out _spellFirst, spellItem);
+                    break;
+                case 2:
+                    SetupSpell(out _spellSecond, spellItem);
+                    break;
+                case 3:
+                    SetupSpell(out _spellThird, spellItem);
+                    break;
+            }
         }
 
         private ISpellItem GetSpellItem(ICastable spell)
@@ -107,8 +113,6 @@ namespace SpellSystem
             throw new Exception();
         }
 
-        
-        
         private int GetLearnedSpellLvl(string spellId)
         {
             foreach (var spell in _learnedSpells)

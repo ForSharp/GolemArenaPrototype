@@ -364,6 +364,7 @@ namespace Controller
             standardPanel.gameObject.SetActive(true);
             Player.PlayerCharacter.InventoryHelper.InventoryOrganization.ShowInventory();
             Player.PlayerCharacter.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+            Player.PlayerCharacter.SpellPanelHelper.SpellsPanel.ShowActiveSpells();
             foreach (var character in Game.AllCharactersInSession)
             {
                 if (character != Player.PlayerCharacter)

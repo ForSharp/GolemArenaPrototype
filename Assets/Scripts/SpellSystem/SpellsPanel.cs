@@ -1,4 +1,5 @@
 ﻿using CharacterEntity.State;
+using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using UnityEngine;
 
@@ -29,32 +30,51 @@ namespace SpellSystem
             learnedSpellsPanel.gameObject.SetActive(false);
         }
 
-        public void ActivateSpell()
-        {
-            
-        }
-
         public void RefreshActiveSpell(int spellNumb)
         {
             _spellNumberToChange = spellNumb;
             
-            switch (spellNumb)
-            {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
+            ShowLearnedSpellsPanel();
         }
 
         public void SetupActiveSpell(ISpellItem spellItem)
         {
-            learnedSpellsPanel.LearnSpell(spellItem);
+            var item = (IInventoryItem)spellItem;
+            learnedSpellsPanel.ActivateSpell(item.Info.Id);
+
+            switch (_spellNumberToChange)
+            {
+                case 1:
+                    if (spellButtonFirst.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
+                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                    }
+                    spellButtonFirst.ActivateSpell(spellItem);
+                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    break;
+                case 2:
+                    if (spellButtonSecond.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
+                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                    }
+                    spellButtonSecond.ActivateSpell(spellItem);
+                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    break;
+                case 3:
+                    if (spellButtonThird.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
+                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                    }
+                    spellButtonThird.ActivateSpell(spellItem);
+                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    break;
+            }
         }
-        
-        public void ShowLearnedSpellsPanel()
+
+        private void ShowLearnedSpellsPanel()
         {
             learnedSpellsPanel.gameObject.SetActive(true);
             character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
@@ -69,7 +89,7 @@ namespace SpellSystem
 
         public void AddLearnedSpell(ISpellItem learnedSpell)
         {
-            
+            learnedSpellsPanel.LearnSpell(learnedSpell);
         }
         
         public void UpdateLearnedSpells()

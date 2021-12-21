@@ -380,7 +380,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8048582547476958467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1763084147704167095}
+        m_MethodName: RefreshActiveSpell
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8048582547476958465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reminder: {fileID: 8048582549057027449}
   spellChanger: {fileID: 3899311420982099166}
+  spellIcon: {fileID: 8048582547476958467}
 --- !u!1 &8048582547840238160
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +542,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8048582547840238173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1763084147704167095}
+        m_MethodName: RefreshActiveSpell
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8048582547840238171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reminder: {fileID: 8048582549135312284}
   spellChanger: {fileID: 8048582549091065736}
+  spellIcon: {fileID: 8048582547840238173}
 --- !u!1 &8048582548153557694
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +855,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8048582548697747459}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1763084147704167095}
+        m_MethodName: RefreshActiveSpell
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8048582548697747457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,6 +894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reminder: {fileID: 8048582549178080054}
   spellChanger: {fileID: 7939385637957039637}
+  spellIcon: {fileID: 8048582548697747459}
 --- !u!1 &8048582548977210714
 GameObject:
   m_ObjectHideFlags: 0
