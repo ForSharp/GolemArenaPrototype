@@ -91,7 +91,7 @@ namespace Behaviour.SpellEffects
                 if (state.Group != _ownerGroupNumber)
                 {
                     //takedamage
-                    state.TakeDamage(_info.DamageSpellInfo.DamagingValue, _state.RoundStatistics);
+                    state.TakeDamage(_info.DamageSpellInfo.DamagingValue, _state.roundStatistics);
                     EventContainer.OnMagicDamageReceived(_state, state, _info.DamageSpellInfo.DamagingValue, false);
                 }
             }

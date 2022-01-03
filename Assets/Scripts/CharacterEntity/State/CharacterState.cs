@@ -38,7 +38,7 @@ namespace CharacterEntity.State
         public SpellPanelHelper SpellPanelHelper { get; private set; }
         
         private RoundStatistics _lastEnemyAttacked;
-        public RoundStatistics RoundStatistics;
+        public RoundStatistics roundStatistics;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentStaminaChanged;
@@ -53,7 +53,7 @@ namespace CharacterEntity.State
         private void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            RoundStatistics = new RoundStatistics(this);
+            roundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
             SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
             SpellPanelHelper = GetComponent<SpellPanelHelper>();
@@ -63,14 +63,14 @@ namespace CharacterEntity.State
 
         private void OnEnable()
         {
-            EventContainer.GolemStatsChanged += UpdateStats;
+            EventContainer.CharacterStatsChanged += UpdateStats;
 
             StartCoroutine(RegenerateCurrents());
         }
 
         private void OnDestroy()
         {
-            EventContainer.GolemStatsChanged -= UpdateStats;
+            EventContainer.CharacterStatsChanged -= UpdateStats;
         }
 
         private void UpdateStats(CharacterState state)
@@ -193,7 +193,7 @@ namespace CharacterEntity.State
                 _lastEnemyAttacked.Kills += 1;
                 _lastEnemyAttacked.RoundKills += 1;
                 IsDead = true;
-                EventContainer.OnGolemDied(_lastEnemyAttacked);
+                EventContainer.OnCharacterDied(_lastEnemyAttacked);
             }
         }
 
@@ -208,10 +208,10 @@ namespace CharacterEntity.State
 
         private void NullRoundStatistics()
         {
-            RoundStatistics.RoundDamage = 0;
-            RoundStatistics.RoundKills = 0;
-            RoundStatistics.WinLastRound = false;
-            RoundStatistics.RoundRate = 0;
+            roundStatistics.RoundDamage = 0;
+            roundStatistics.RoundKills = 0;
+            roundStatistics.WinLastRound = false;
+            roundStatistics.RoundRate = 0;
         }
 
         private void HealAllParameters()

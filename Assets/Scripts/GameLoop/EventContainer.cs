@@ -28,18 +28,18 @@ namespace GameLoop
             PlayerCharacterCreated?.Invoke();
         }
 
-        public static event Action<CharacterState> GolemStatsChanged;
+        public static event Action<CharacterState> CharacterStatsChanged;
 
-        public static void OnGolemStatsChanged(CharacterState state)
+        public static void OnCharacterStatsChanged(CharacterState state)
         {
-            GolemStatsChanged?.Invoke(state);
+            CharacterStatsChanged?.Invoke(state);
         }
 
-        public static event Action<RoundStatistics> GolemDied;
+        public static event Action<RoundStatistics> CharacterDied;
     
-        public static void OnGolemDied(RoundStatistics killer)
+        public static void OnCharacterDied(RoundStatistics killer)
         {
-            GolemDied?.Invoke(killer);
+            CharacterDied?.Invoke(killer);
         }
 
         public static event Action<CharacterState> WinBattle;

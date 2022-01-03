@@ -22,7 +22,7 @@ namespace SpellSystem
         public string SpellId { get; private set; }
         public bool IsLearned { get; private set; }
         
-        private void Start()
+        private void Awake()
         {
             SetComponentsVisibility(false);
             activeSpellIdentifier.gameObject.SetActive(false);

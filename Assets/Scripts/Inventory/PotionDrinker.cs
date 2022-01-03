@@ -15,7 +15,7 @@ namespace Inventory
             var stats = potion.PotionFlatInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsFlatPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
-            EventContainer.OnGolemStatsChanged(character);
+            EventContainer.OnCharacterStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionMultiplyItem potion)
         {
@@ -23,7 +23,7 @@ namespace Inventory
             var stats = potion.PotionMultiplyInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsProportionallyPermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
-            EventContainer.OnGolemStatsChanged(character);
+            EventContainer.OnCharacterStatsChanged(character);
         }
         public static void DrinkPotion(IInventory inventory, IPotionUltimateItem potion)
         {
@@ -31,7 +31,7 @@ namespace Inventory
             var stats = potion.PotionUltimateInfo.CharacterBaseStats;
             character.Character.ChangeBaseStatsUltimatePermanent(stats);
             ChangeInventoryState((IInventoryItem)potion, character);
-            EventContainer.OnGolemStatsChanged(character);
+            EventContainer.OnCharacterStatsChanged(character);
         }
 
         public static void DrinkAllPotions(CharacterState character)
@@ -49,7 +49,7 @@ namespace Inventory
                 }
                 inventory.OnInventoryStateChanged(character);
             }
-            EventContainer.OnGolemStatsChanged(character);
+            EventContainer.OnCharacterStatsChanged(character);
         }
 
         private static void DrinkPotionOfType(CharacterState character, IInventoryItem potion, InventoryWithSlots inventory)

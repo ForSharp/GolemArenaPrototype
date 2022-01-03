@@ -20,12 +20,12 @@ namespace UI
         private void OnEnable()
         {
             SetCharacter();
-            EventContainer.GolemStatsChanged += UpdateLvl;
+            EventContainer.CharacterStatsChanged += UpdateLvl;
         }
 
         private void OnDisable()
         {
-            EventContainer.GolemStatsChanged -= UpdateLvl;
+            EventContainer.CharacterStatsChanged -= UpdateLvl;
         }
 
         private void SetCharacter()

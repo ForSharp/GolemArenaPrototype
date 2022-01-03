@@ -75,7 +75,7 @@ namespace UI
             _characterState.CurrentHealthChanged += SetCurrentHealth;
             _characterState.CurrentStaminaChanged += SetCurrentStamina;
             _characterState.CurrentManaChanged += SetCurrentMana;
-            EventContainer.GolemDied += DisableOnDeath;
+            EventContainer.CharacterDied += DisableOnDeath;
         }
 
         private void RemoveListeners()
@@ -84,7 +84,7 @@ namespace UI
             _characterState.CurrentHealthChanged -= SetCurrentHealth;
             _characterState.CurrentStaminaChanged -= SetCurrentStamina;
             _characterState.CurrentManaChanged -= SetCurrentMana;
-            EventContainer.GolemDied -= DisableOnDeath;
+            EventContainer.CharacterDied -= DisableOnDeath;
         }
 
         private void SetMaxValues(CharacterExtraStats stats)

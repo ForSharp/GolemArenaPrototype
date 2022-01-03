@@ -7,7 +7,7 @@ namespace CharacterEntity
         public static void LvlUp(State.CharacterState state)
         {
             state.Character.ChangeBaseStatsProportionallyPermanent(10);
-            EventContainer.OnGolemStatsChanged(state);
+            EventContainer.OnCharacterStatsChanged(state);
             state.Lvl++;
         }
 
@@ -16,7 +16,7 @@ namespace CharacterEntity
             for (int i = 0; i < amount; i++)
             {
                 state.Character.ChangeBaseStatsProportionallyPermanent(10);
-                EventContainer.OnGolemStatsChanged(state);
+                EventContainer.OnCharacterStatsChanged(state);
                 state.Lvl++;
             }
         }
@@ -25,7 +25,7 @@ namespace CharacterEntity
         {
             if (state.Lvl <= 1) return;
             state.Character.ChangeBaseStatsProportionallyPermanent(-10);
-            EventContainer.OnGolemStatsChanged(state);
+            EventContainer.OnCharacterStatsChanged(state);
             state.Lvl--;
         }
     }

@@ -39,7 +39,7 @@ namespace CharacterEntity
                     }
                     _character.Character.AddTempExtraStats(effect);
                     item.State.Amount--;
-                    EventContainer.OnGolemStatsChanged(_character);
+                    EventContainer.OnCharacterStatsChanged(_character);
                     var coroutine = CoroutineManager.StartRoutine(RemoveEffectAfterDelay(effect, buffItem.ConsumableBuffInfo.BuffDuration));
                     _effects.Add(effect, coroutine);
                     break;
@@ -69,14 +69,14 @@ namespace CharacterEntity
             yield return new WaitForSeconds(duration);
             
             _character.Character.RemoveTempExtraStats(effect);
-            EventContainer.OnGolemStatsChanged(_character);
+            EventContainer.OnCharacterStatsChanged(_character);
             _effects.Remove(effect);
         }
         
         private void RemoveAllTemporaryEffects()
         {
             _character.Character.RemoveAllTempExtraStats();
-            EventContainer.OnGolemStatsChanged(_character);
+            EventContainer.OnCharacterStatsChanged(_character);
             _effects.Clear();
         }
 

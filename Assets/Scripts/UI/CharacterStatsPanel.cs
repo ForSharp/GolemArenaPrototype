@@ -30,12 +30,12 @@ namespace UI
 
         private void OnEnable()
         {
-            EventContainer.GolemStatsChanged += AllowUpdateStatsValues;
+            EventContainer.CharacterStatsChanged += AllowUpdateStatsValues;
         }
 
         private void OnDisable()
         {
-            EventContainer.GolemStatsChanged -= AllowUpdateStatsValues;
+            EventContainer.CharacterStatsChanged -= AllowUpdateStatsValues;
         }
 
         private void Update()

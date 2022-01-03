@@ -52,13 +52,13 @@ namespace Controller
         private void OnEnable()
         {
             Game.StartBattle += SetStandard;
-            EventContainer.GolemDied += CheckDeath;
+            EventContainer.CharacterDied += CheckDeath;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= SetStandard;
-            EventContainer.GolemDied -= CheckDeath;
+            EventContainer.CharacterDied -= CheckDeath;
         }
 
         private void CheckDeath(RoundStatistics killer)

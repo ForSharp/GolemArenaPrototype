@@ -30,7 +30,7 @@ namespace CharacterEntity
             {
                 _character.Character.AddExtraStatsByItems(artefact.ArtefactInfo.AffectsExtraStats);
                 _activeItemEffects.Add(slot, artefact.ArtefactInfo.AffectsExtraStats);
-                EventContainer.OnGolemStatsChanged(_character);
+                EventContainer.OnCharacterStatsChanged(_character);
             }
         }
         
@@ -40,7 +40,7 @@ namespace CharacterEntity
             {
                 _character.Character.RemoveExtraStatsByItems(_activeItemEffects[slot]);
                 _activeItemEffects.Remove(slot);
-                EventContainer.OnGolemStatsChanged(_character);
+                EventContainer.OnCharacterStatsChanged(_character);
             }
         }
 

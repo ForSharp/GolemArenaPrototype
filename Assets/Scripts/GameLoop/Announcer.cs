@@ -15,14 +15,14 @@ namespace GameLoop
 
         private void OnEnable()
         {
-            EventContainer.GolemDied += AnnounceKilling;
+            EventContainer.CharacterDied += AnnounceKilling;
             Game.StartBattle += StartFight;
             Game.EndGame += EndGame;
         }
 
         private void OnDisable()
         {
-            EventContainer.GolemDied -= AnnounceKilling;
+            EventContainer.CharacterDied -= AnnounceKilling;
             Game.StartBattle -= StartFight;
             Game.EndGame -= EndGame;
         }

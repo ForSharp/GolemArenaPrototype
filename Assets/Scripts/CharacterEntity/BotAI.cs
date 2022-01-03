@@ -86,7 +86,7 @@ namespace CharacterEntity
         private void OnEnable()
         {
             Game.StartBattle += AllowFight;
-            EventContainer.GolemDied += HandleGolemDeath;
+            EventContainer.CharacterDied += HandleCharacterDeath;
             _isDies = false;
 
             StartCoroutine(AddListenerAfterDelay());
@@ -116,7 +116,7 @@ namespace CharacterEntity
         private void OnDisable()
         {
             Game.StartBattle -= AllowFight;
-            EventContainer.GolemDied -= HandleGolemDeath;
+            EventContainer.CharacterDied -= HandleCharacterDeath;
             _thisState.AttackReceived -= HandleHitReceiving;
             if (_thisState == Player.PlayerCharacter)
             {
@@ -362,7 +362,7 @@ namespace CharacterEntity
                 _animator, _thisState.Group, _thisState.Stats.damagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.hitAccuracy,
                 _targetState.gameObject, _thisState.Type,
-                _thisState.RoundStatistics,
+                _thisState.roundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
@@ -403,7 +403,7 @@ namespace CharacterEntity
             _navMeshAgent.enabled = false;
         }
 
-        private void HandleGolemDeath(RoundStatistics killer)
+        private void HandleCharacterDeath(RoundStatistics killer)
         {
             if (_thisState.IsDead)
             {
@@ -691,8 +691,8 @@ namespace CharacterEntity
                 {
                     _isWin = true;
                     EventContainer.OnWinBattle(_thisState);
-                    _thisState.RoundStatistics.Wins++;
-                    _thisState.RoundStatistics.WinLastRound = true;
+                    _thisState.roundStatistics.Wins++;
+                    _thisState.roundStatistics.WinLastRound = true;
                 }
 
                 yield return new WaitForSeconds(1);

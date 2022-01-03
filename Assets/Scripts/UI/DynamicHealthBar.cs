@@ -70,14 +70,14 @@ namespace UI
         {
             _characterState.StatsChanged += SetMaxValues;
             _characterState.CurrentHealthChanged += SetCurrentHealth;
-            EventContainer.GolemDied += DisableOnDeath;
+            EventContainer.CharacterDied += DisableOnDeath;
         }
 
         private void RemoveListeners()
         {
             _characterState.StatsChanged -= SetMaxValues;
             _characterState.CurrentHealthChanged -= SetCurrentHealth;
-            EventContainer.GolemDied -= DisableOnDeath;
+            EventContainer.CharacterDied -= DisableOnDeath;
         }
 
         private void SetCurrentColor()
