@@ -33,7 +33,7 @@ namespace SpellSystem
                 {
                     if (_learnedSpells[i].SpellInfo.SpellLvl < 3)
                     {
-                        _learnedSpells[i] = ItemContainer.GetUpgradedSpell(_learnedSpells[i], _learnedSpells[i].SpellInfo.SpellLvl);
+                        _learnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(_learnedSpells[i], _learnedSpells[i].SpellInfo.SpellLvl);
                         _character.SpellPanelHelper.SpellsPanel.UpdateLearnedSpells();
                         DeleteSpellItemAfterLearning(inventoryItem);
 
