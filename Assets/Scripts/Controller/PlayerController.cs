@@ -7,20 +7,20 @@ using GameLoop;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Controller
 {
     public enum PlayMode
     {
         Standard,
-        Rts,
         Cinematic
     }
 
     public sealed class PlayerController : MonoBehaviour
     {
-        [SerializeField] private HeroControllerPanel standardPanel;
-        [SerializeField] private CharacterStatsPanel rtsPanel;
+        [SerializeField] private ControllerPanel controllerPanel;
+        [SerializeField] private CharacterStatsPanel standardPanel;
         [SerializeField] private GameObject autoButtonFalse;
         [SerializeField] private GameObject autoButtonTrue;
         
@@ -34,6 +34,7 @@ namespace Controller
         private Animator _animator;
         private NavMeshAgent _agent;
         private CharacterController _controller;
+        private CharacterState _currentCharacter;
         private Vector3 _velocity;
         private Vector3 _moveDirection;
         private bool _isGrounded;
@@ -43,10 +44,7 @@ namespace Controller
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
-        
         public static event Action SpellCastByController;
-        public static event Action<CharacterState> SetTargetByController;
-        public static event Action<Vector3> SetMovementPointByController;
         public static event Action<PlayMode> PlayModeChanged;
         
         private void OnEnable()
@@ -129,18 +127,11 @@ namespace Controller
             {
                 SpellCastByController?.Invoke();
             }
-            
-            
+
             switch (_playMode)
             {
                 case PlayMode.Standard:
                     HandleJoystickInput();
-                    break;
-                case PlayMode.Rts:
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        TrySetCharacterAsTargetOrMove();
-                    }
                     break;
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
@@ -167,32 +158,6 @@ namespace Controller
             }
         }
 
-        private void TrySetCharacterAsTargetOrMove()
-        {
-            if (!_aiControl && !_isDead)
-            {
-                if (Camera.main is null) return;
-                var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                if (!Physics.Raycast(ray, out var hit)) return;
-                var coll = hit.collider;
-                if (coll.TryGetComponent(out CharacterState state))
-                {
-                    if (state == _state)
-                    {
-                        state.SoundsController.PlayClickAndVictorySound();
-                    }
-                    else
-                    {
-                        SetTargetByController?.Invoke(state);
-                    }
-                }
-                else
-                {
-                    SetMovementPointByController?.Invoke(hit.point);
-                }
-            }
-        }
-        
         private void TryShowHeroStates()
         {
             if (Camera.main is null) return;
@@ -201,15 +166,18 @@ namespace Controller
             var coll = hit.collider;
             if (coll.TryGetComponent(out CharacterState state))
             {
-                rtsPanel.gameObject.SetActive(true);
-                rtsPanel.HandleClick(state);
+                standardPanel.gameObject.SetActive(true);
+                standardPanel.HandleClick(state);
+                _currentCharacter = state;
             }
-            else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.InventoryOrganization.InPanel))
+            else if ((!standardPanel.InPanel && !_currentCharacter) || (!standardPanel.InPanel && _currentCharacter) 
+                     && !_currentCharacter.InventoryHelper.InventoryOrganization.InPanel && !_currentCharacter.SpellPanelHelper.SpellsPanel.InPanel)
             {
-                rtsPanel.gameObject.SetActive(false);
+                standardPanel.gameObject.SetActive(false);
                 foreach (var character in Game.AllCharactersInSession)
                 {
                     character.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    character.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
         }
@@ -225,6 +193,8 @@ namespace Controller
             
             autoButtonFalse.SetActive(true);
             autoButtonTrue.SetActive(false);
+            
+            controllerPanel.gameObject.SetActive(true);
         }
         
         public void AutoButtonFalseClicked()
@@ -238,6 +208,8 @@ namespace Controller
 
             autoButtonTrue.SetActive(true);
             autoButtonFalse.SetActive(false);
+            
+            controllerPanel.gameObject.SetActive(false);
         }
 
         private void SetNavMeshOrController()
@@ -370,19 +342,13 @@ namespace Controller
                 if (character != Player.PlayerCharacter)
                 {
                     character.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    character.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
-            rtsPanel.gameObject.SetActive(false);
+            standardPanel.SetPlayerCharacter();
+            _currentCharacter = Player.PlayerCharacter;
         }
-
-        private void SetRtsPanel()
-        {
-            standardPanel.gameObject.SetActive(false);
-            rtsPanel.gameObject.SetActive(true);
-            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.ShowInventory();
-            rtsPanel.HandleClick(Player.PlayerCharacter);
-        }
-
+        
         public void StartButtonClick()
         {
             Game.OnStartBattle();
@@ -414,35 +380,17 @@ namespace Controller
                         _agent.enabled = false;
                         _controller.enabled = true;
                         _isCanMove = true;
+                        
+                        controllerPanel.gameObject.SetActive(true);
                     }
                     SetStandardPanel();
                     OnStandardCamera();
                     PlayModeChanged?.Invoke(PlayMode.Standard);
                     break;
-                case "Rts":
-                    _playMode = PlayMode.Rts;
-                    if (_aiControl)
-                    {
-                        autoButtonFalse.SetActive(false);
-                        autoButtonTrue.SetActive(true);
-                    }
-                    else
-                    {
-                        autoButtonFalse.SetActive(true);
-                        autoButtonTrue.SetActive(false);
-                    }
-                    SetRtsPanel();
-                    OnRtsCamera();
-                    PlayModeChanged?.Invoke(PlayMode.Rts);
-                    _agent.enabled = true;
-                    _controller.enabled = false;
-                    _isCanMove = false;
-                    break;
                 case "Cinematic":
                     _playMode = PlayMode.Cinematic;
                     autoButtonFalse.SetActive(false);
                     autoButtonTrue.SetActive(false);
-                    SetRtsPanel();
                     OnCinematicCamera();
                     PlayModeChanged?.Invoke(PlayMode.Cinematic);
                     _agent.enabled = true;
@@ -450,22 +398,19 @@ namespace Controller
                     _isCanMove = false;
                     _aiControl = true;
                     AllowAI?.Invoke(_aiControl);
+                    
+                    controllerPanel.gameObject.SetActive(false);
                     break;
             }
         }
 
         public static event Action StandardCamera;
-        public static event Action RtsCamera;
+        
         public static event Action CinematicCamera;
 
         private static void OnStandardCamera()
         {
             StandardCamera?.Invoke();
-        }
-
-        private static void OnRtsCamera()
-        {
-            RtsCamera?.Invoke();
         }
 
         private static void OnCinematicCamera()

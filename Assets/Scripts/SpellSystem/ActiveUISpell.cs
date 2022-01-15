@@ -8,7 +8,6 @@ namespace SpellSystem
 {
     public class ActiveUISpell: MonoBehaviour
     {
-        [SerializeField] private Image reminder;
         [SerializeField] private Button spellChanger;
         [SerializeField] private Image spellIcon;
         public bool IsActive { get; private set; }
@@ -23,7 +22,6 @@ namespace SpellSystem
         {
             SpellItem = spellItem;
             IsActive = true;
-            reminder.gameObject.SetActive(false);
             var item = (IInventoryItem)spellItem;
             spellIcon.sprite = item.Info.SpriteIcon;
             spellChanger.gameObject.SetActive(true);
@@ -32,7 +30,6 @@ namespace SpellSystem
         public void DeactivateSpell()
         {
             IsActive = false;
-            reminder.gameObject.SetActive(true);
             spellChanger.gameObject.SetActive(false);
             SpellItem = null;
         }

@@ -15,7 +15,6 @@ namespace Controller
          [SerializeField] private Transform battleTrackingTarget;
          [SerializeField] private Transform trackingTarget;
          [SerializeField] private CameraMoveAroundSettings cameraMoveAroundSettings = new CameraMoveAroundSettings();
-         [SerializeField] private CameraRtsSettings cameraRtsSettings = new CameraRtsSettings();
          
          private PathFollower _cameraPathFollower;
          private float _x, _y;
@@ -46,10 +45,6 @@ namespace Controller
                  case PlayMode.Standard:
                      SetStandardMovement();
                      break;
-                 case PlayMode.Rts:
-                     SetRtsMovement();
-                     _cameraPathFollower.MoveType = PathFollower.MovementType.None;
-                     break;
                  case PlayMode.Cinematic:
                      if (Game.Stage == Game.GameStage.MainMenu)
                      {
@@ -68,7 +63,6 @@ namespace Controller
          private void OnEnable()
          {
              PlayerController.StandardCamera += SetStandardMovementValues;
-             PlayerController.RtsCamera += SetRtsMovementValues;
              PlayerController.CinematicCamera += SetCinematicMovement;
              Game.OpenMainMenu += SetMainMenuMovement;
          }
@@ -76,7 +70,6 @@ namespace Controller
          private void OnDisable()
          {
              PlayerController.StandardCamera -= SetStandardMovementValues;
-             PlayerController.RtsCamera -= SetRtsMovementValues;
              PlayerController.CinematicCamera -= SetCinematicMovement;
              Game.OpenMainMenu -= SetMainMenuMovement;
          }
@@ -123,49 +116,6 @@ namespace Controller
              
              transform.position = transform.localRotation * cameraMoveAroundSettings.offset + Player.PlayerCharacter.transform.position;
          }
-         
-         private void SetRtsMovementValues()
-         {
-             _playMode = PlayMode.Rts;
-         }
-
-         private void SetRtsMovement()
-         {
-             //MoveCameraAroundHero(true,2);
-             
-             Vector3 pos = transform.position;
-            
-             if (Input.mousePosition.y >= Screen.height - cameraRtsSettings.borderThickness)
-             {
-                 pos.z += cameraRtsSettings.moveSpeed * Time.deltaTime;
-             }
-
-             if (Input.mousePosition.y <= cameraRtsSettings.borderThickness)
-             {
-                 pos.z -= cameraRtsSettings.moveSpeed * Time.deltaTime;
-             }
-            
-             if (Input.mousePosition.x >= Screen.width - cameraRtsSettings.borderThickness)
-             {
-                 pos.x += cameraRtsSettings.moveSpeed * Time.deltaTime;
-             }
-            
-             if (Input.mousePosition.x <= cameraRtsSettings.borderThickness)
-             {
-                 pos.x -= cameraRtsSettings.moveSpeed * Time.deltaTime;
-             }
-
-             float scroll = Input.GetAxis("Mouse ScrollWheel");
-             pos.y -= scroll * cameraRtsSettings.scrollSpeed * Time.deltaTime;
-            
-             pos.x = Mathf.Clamp(pos.x, cameraRtsSettings.limitX.x, cameraRtsSettings.limitX.y);
-             pos.y = Mathf.Clamp(pos.y, cameraRtsSettings.limitY.x, cameraRtsSettings.limitY.y);
-             pos.z = Mathf.Clamp(pos.z, cameraRtsSettings.limitZ.x, cameraRtsSettings.limitZ.y);
-            
-             transform.position = pos;
-             
-             transform.LookAt(Player.PlayerCharacter.transform);
-         }
 
          private void SetCinematicMovement()
          {
@@ -196,6 +146,8 @@ namespace Controller
              _cameraPathFollower.Speed = 1f;
              _cameraPathFollower.MaxDistance = 0.005f;
              trackingTarget = battleTrackingTarget;
+             
+             SetTarget(Player.PlayerCharacter);
          }
 
          public void SetTarget(CharacterState state)

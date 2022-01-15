@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
@@ -15,49 +16,74 @@ namespace UI
     {
         [SerializeField] private GameObject panel;
         [SerializeField] private HeroPortraitController portrait;
-        [SerializeField] private Text[] mainInfo;
-        [SerializeField] private Text[] mainInfoExtraPanel;
-        [SerializeField] private Text[] extraStatsUI;
-        [SerializeField] private GameObject openedPanel;
-        [SerializeField] private GameObject closedPanel;
-        [SerializeField] private StaticHealthBar healthBar;
 
+        [SerializeField] private GameObject extraPanel;
+
+        [SerializeField] private Text characterType;
+        [SerializeField] private Text characterSpec;
+        [SerializeField] private Text strength;
+        [SerializeField] private Text agility;
+        [SerializeField] private Text intelligence;
+        [SerializeField] private Text characterLvl;
+
+        [SerializeField] private Text attack;
+        [SerializeField] private Text moveSpeed;
+        [SerializeField] private Text defence;
+        [SerializeField] private Text hpRegen;
+        [SerializeField] private Text manaRegen;
+
+        [SerializeField] private Text attackRange;
+        [SerializeField] private Text attackSpeed;
+        [SerializeField] private Text avoidChance;
+        [SerializeField] private Text dodgeChance;
+        [SerializeField] private Text hitAccuracy;
+        [SerializeField] private Text magicAccuracy;
+        [SerializeField] private Text magicPower;
+        [SerializeField] private Text magicResistance;
+
+        [SerializeField] private StaticHealthBar healthBar;
         public bool InPanel { get; private set; }
 
         private CharacterState _state;
+
         private CharacterExtraStats _stats;
-        private bool _allowUpd;
 
         private void OnEnable()
         {
-            EventContainer.CharacterStatsChanged += AllowUpdateStatsValues;
+            SetPlayerCharacter();
+            EventContainer.CharacterStatsChanged += SetStatsValues;
         }
 
         private void OnDisable()
         {
-            EventContainer.CharacterStatsChanged -= AllowUpdateStatsValues;
+            EventContainer.CharacterStatsChanged -= SetStatsValues;
         }
 
-        private void Update()
-        {
-            SetLvl();
 
-            if (_allowUpd && _state)
+        public void SetPlayerCharacter()
+        {
+            _state = Player.PlayerCharacter;
+            _stats = Player.PlayerCharacter.Stats;
+            SetStatsValues(Player.PlayerCharacter);
+            healthBar.SetCharacterState(_state);
+        }
+        
+        public void ChangeExtraStatsPanelState()
+        {
+            if (extraPanel.activeSelf)
+                extraPanel.SetActive(false);
+            else
             {
-                UpdateStats();
+                extraPanel.SetActive(true);
+                FillExtraInfo();
+                CloseNonEquippingInventory();
+                CloseLearnedSpells();
             }
-        }
-
-        public void OpenExtraStatsPanel()
-        {
-            openedPanel.SetActive(true);
-            closedPanel.SetActive(false);
         }
 
         public void CloseExtraStatsPanel()
         {
-            openedPanel.SetActive(false);
-            closedPanel.SetActive(true);
+            extraPanel.SetActive(false);
         }
 
         public void HandleClick(CharacterState state)
@@ -69,7 +95,7 @@ namespace UI
             _stats = _state.Stats;
             FillMainInfo();
             SetPortrait();
-            FillTexts();
+            FillExtraInfo();
             panel.SetActive(true);
             CameraMovement.Instance.SetTarget(state);
             _state.SoundsController.PlayClickAndVictorySound();
@@ -77,7 +103,34 @@ namespace UI
             healthBar.SetCharacterState(state);
 
             HideAllInventoryPanels();
+            CloseSpellPanels();
+            CloseExtraStatsPanel();
             state.InventoryHelper.InventoryOrganization.ShowInventory();
+            state.SpellPanelHelper.SpellsPanel.ShowActiveSpells();
+        }
+
+        private void CloseLearnedSpells()
+        {
+            foreach (var character in Game.AllCharactersInSession)
+            {
+                character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
+            }
+        }
+
+        private void CloseSpellPanels()
+        {
+            foreach (var character in Game.AllCharactersInSession)
+            {
+                character.SpellPanelHelper.SpellsPanel.HideAll();
+            }
+        }
+
+        private void CloseNonEquippingInventory()
+        {
+            foreach (var character in Game.AllCharactersInSession)
+            {
+                character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+            }
         }
 
         private void HideAllInventoryPanels()
@@ -88,36 +141,15 @@ namespace UI
             }
         }
 
-        private void UpdateStats()
+        public void SetStatsValues(CharacterState state)
         {
+            
             if (_state.Stats != null)
             {
                 _stats = _state.Stats;
                 FillMainInfo();
                 SetPortrait();
-                FillTexts();
-                _allowUpd = false;
-            }
-        }
-
-        private void AllowUpdateStatsValues(CharacterState state)
-        {
-            _allowUpd = true;
-        }
-
-        private void SetLvl()
-        {
-            if (_state)
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    LvlUpper.LvlUp(_state);
-                }
-
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    LvlUpper.LvlDown(_state);
-                }
+                FillExtraInfo();
             }
         }
 
@@ -128,60 +160,40 @@ namespace UI
 
         private void FillMainInfo()
         {
-            mainInfo[0].text = _state.Type;
-            mainInfo[1].text = _state.Spec;
-            mainInfo[2].text = _state.Lvl.ToString();
-            mainInfo[3].text = _state.BaseStats.strength >= 100
+            characterType.text = _state.Type;
+            characterSpec.text = _state.Spec;
+            characterLvl.text = _state.Lvl.ToString();
+            strength.text = _state.BaseStats.strength >= 100
                 ? _state.BaseStats.strength.ToString("#.")
                 : " " + _state.BaseStats.strength.ToString("#.");
-            mainInfo[4].text = _state.BaseStats.agility >= 100
+            agility.text = _state.BaseStats.agility >= 100
                 ? _state.BaseStats.agility.ToString("#.")
                 : " " + _state.BaseStats.agility.ToString("#.");
-            mainInfo[5].text = _state.BaseStats.intelligence >= 100
+            intelligence.text = _state.BaseStats.intelligence >= 100
                 ? _state.BaseStats.intelligence.ToString("#.")
                 : " " + _state.BaseStats.intelligence.ToString("#.");
 
-            mainInfoExtraPanel[0].text = _state.Type;
-            mainInfoExtraPanel[1].text = _state.Spec;
-            mainInfoExtraPanel[2].text = _state.Lvl.ToString();
-            mainInfoExtraPanel[3].text = mainInfo[3].text;
-            mainInfoExtraPanel[4].text = mainInfo[4].text;
-            mainInfoExtraPanel[5].text = mainInfo[5].text;
+            attack.text = _stats.damagePerHeat.ToString("#.0");
+            moveSpeed.text = _stats.moveSpeed.ToString("#.00");
+            defence.text = _stats.defence.ToString("#.0");
+
+            hpRegen.text = "+" + _stats.regenerationHealth.ToString("#.00");
+            manaRegen.text = "+" + _stats.regenerationMana.ToString("#.00");
         }
 
-        private void FillTexts()
+        private void FillExtraInfo()
         {
-            var currentStats = GetExtraStatsArray();
-            var needToDemoWithSinglePrecision = new List<int> { 0, 12, 13, 14, 15 };
-            for (var i = 0; i < extraStatsUI.Length; i++)
+            if (extraPanel.activeSelf)
             {
-                if (needToDemoWithSinglePrecision.Contains(i))
-                {
-                    extraStatsUI[i].text = currentStats[i].ToString("#.00");
-                }
-                else
-                {
-                    extraStatsUI[i].text = currentStats[i].ToString("#.");
-                }
+                attackRange.text = _stats.attackRange.ToString("#.0");
+                attackSpeed.text = _stats.attackSpeed.ToString("#.0");
+                avoidChance.text = _stats.avoidChance.ToString("#.0");
+                dodgeChance.text = _stats.dodgeChance.ToString("#.0");
+                hitAccuracy.text = _stats.hitAccuracy.ToString("#.0");
+                magicAccuracy.text = _stats.magicAccuracy.ToString("#.0");
+                magicPower.text = _stats.magicPower.ToString("#.0");
+                magicResistance.text = _stats.magicResistance.ToString("#.0");
             }
-        }
-
-        private float[] GetExtraStatsArray()
-        {
-            if (_state)
-            {
-                float[] extraStats =
-                {
-                    _stats.attackRange, _stats.attackSpeed, _stats.avoidChance, _stats.damagePerHeat, _stats.defence,
-                    _stats.dodgeChance, _stats.health, _stats.hitAccuracy,
-                    _stats.magicAccuracy, _stats.magicPower, _stats.magicResistance, _stats.manaPool, _stats.moveSpeed,
-                    _stats.regenerationHealth, _stats.regenerationMana,
-                    _stats.regenerationStamina, _stats.stamina
-                };
-                return extraStats;
-            }
-
-            return default;
         }
 
         public void OnPointerExit(PointerEventData eventData)

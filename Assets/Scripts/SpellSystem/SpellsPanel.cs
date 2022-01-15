@@ -2,10 +2,11 @@
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SpellSystem
 {
-    public class SpellsPanel : MonoBehaviour
+    public class SpellsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
         [SerializeField] private ActiveUISpell spellButtonFirst;
         [SerializeField] private ActiveUISpell spellButtonSecond;
@@ -16,7 +17,8 @@ namespace SpellSystem
         private int _spellNumberToChange;
         
         [HideInInspector] public CharacterState character;
-
+        
+        public bool InPanel { get; private set; }
         public void HideLearnedSpellsPanel()
         {
             learnedSpellsPanel.gameObject.SetActive(false);
@@ -95,6 +97,16 @@ namespace SpellSystem
         public void UpdateLearnedSpells()
         {
             
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            InPanel = false;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            InPanel = true;
         }
     }
 }

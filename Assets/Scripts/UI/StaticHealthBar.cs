@@ -12,12 +12,9 @@ namespace UI
     {
         [SerializeField] private Text maxHealthText;
         [SerializeField] private Text currentHealthText;
-        [SerializeField] private Text maxStaminaText;
-        [SerializeField] private Text currentStaminaText;
         [SerializeField] private Text maxManaText;
         [SerializeField] private Text currentManaText;
         [SerializeField] private Slider sliderHealth;
-        [SerializeField] private Slider sliderStamina;
         [SerializeField] private Slider sliderMana;
         
         private CharacterState _characterState;
@@ -45,9 +42,13 @@ namespace UI
 
         public void SetCharacterState(CharacterState state)
         {
+            if (_characterState)
+            {
+                RemoveListeners();
+            }
+            
             _characterState = state;
             SetStartValues();
-            RemoveListeners();
             AddListeners();
         }
 
@@ -57,12 +58,7 @@ namespace UI
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");
             sliderHealth.value = _characterState.CurrentHealth;
             currentHealthText.text = sliderHealth.value.ToString("#.");
-                
-            sliderStamina.maxValue = _characterState.MaxStamina;
-            maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
-            sliderStamina.value = _characterState.CurrentStamina;
-            currentStaminaText.text = sliderStamina.value.ToString("#.");
-                
+
             sliderMana.maxValue = _characterState.MaxMana;
             maxManaText.text = sliderMana.maxValue.ToString("#.");
             sliderMana.value = _characterState.CurrentMana;
@@ -73,7 +69,6 @@ namespace UI
         {
             _characterState.StatsChanged += SetMaxValues;
             _characterState.CurrentHealthChanged += SetCurrentHealth;
-            _characterState.CurrentStaminaChanged += SetCurrentStamina;
             _characterState.CurrentManaChanged += SetCurrentMana;
             EventContainer.CharacterDied += DisableOnDeath;
         }
@@ -82,7 +77,6 @@ namespace UI
         {
             _characterState.StatsChanged -= SetMaxValues;
             _characterState.CurrentHealthChanged -= SetCurrentHealth;
-            _characterState.CurrentStaminaChanged -= SetCurrentStamina;
             _characterState.CurrentManaChanged -= SetCurrentMana;
             EventContainer.CharacterDied -= DisableOnDeath;
         }
@@ -92,9 +86,6 @@ namespace UI
             sliderHealth.maxValue = stats.health;
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");
 
-            sliderStamina.maxValue = stats.stamina;
-            maxStaminaText.text = sliderStamina.maxValue.ToString("#.");
-                
             sliderMana.maxValue = stats.manaPool;
             maxManaText.text = sliderMana.maxValue.ToString("#.");
             
@@ -106,14 +97,7 @@ namespace UI
             sliderHealth.value = roundedValue;
             currentHealthText.text = roundedValue.ToString("#.");
         }
-        
-        private void SetCurrentStamina(float stamina)
-        {
-            var roundedValue = stamina;
-            sliderStamina.value = roundedValue;
-            currentStaminaText.text = roundedValue.ToString("#.");
-        }
-        
+
         private void SetCurrentMana(float mana)
         {
             var roundedValue = mana;

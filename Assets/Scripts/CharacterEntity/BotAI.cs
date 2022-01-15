@@ -4,6 +4,7 @@ using System.Linq;
 using Behaviour;
 using Behaviour.Abstracts;
 using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using Controller;
 using Environment;
 using GameLoop;
@@ -41,7 +42,6 @@ namespace CharacterEntity
         private FightStatus _status;
         private float _timeToResetAttack;
         private SoundsController _soundsController;
-        private Vector3 _targetPoint;
         private PlayMode _playMode = PlayMode.Cinematic;
 
         private const float CloseDistance = 20;
@@ -101,8 +101,6 @@ namespace CharacterEntity
             {
                 PlayerController.AllowAI += SetAIBehaviour;
                 PlayerController.AttackByController += AttackTarget;
-                PlayerController.SetMovementPointByController += RunToTargetByController;
-                PlayerController.SetTargetByController += SetTarget;
                 PlayerController.PlayModeChanged += ChangeMode;
 
                 PlayerController.SpellCastByController += CastSpell;
@@ -122,8 +120,6 @@ namespace CharacterEntity
             {
                 PlayerController.AllowAI -= SetAIBehaviour;
                 PlayerController.AttackByController -= AttackTarget;
-                PlayerController.SetMovementPointByController -= RunToTargetByController;
-                PlayerController.SetTargetByController -= SetTarget;
                 PlayerController.PlayModeChanged -= ChangeMode;
 
                 PlayerController.SpellCastByController -= CastSpell;
@@ -192,9 +188,6 @@ namespace CharacterEntity
                     break;
                 case FightStatus.AvoidingHit:
                     SetAvoidingHitBehaviour();
-                    break;
-                case FightStatus.RunningToTarget:
-                    RunToTarget(_targetPoint);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -453,15 +446,6 @@ namespace CharacterEntity
                 AnimationChanger.SetGolemWalk));
             _moveable.Move(_thisState.Stats.moveSpeed, _targetState.transform.position);
             _isIKAllowed = false;
-        }
-
-        private void RunToTargetByController(Vector3 point)
-        {
-            if (_thisState == Player.PlayerCharacter)
-            {
-                _targetPoint = point;
-                _status = FightStatus.RunningToTarget;
-            }
         }
 
         private void RunToTarget(int direction = 1)

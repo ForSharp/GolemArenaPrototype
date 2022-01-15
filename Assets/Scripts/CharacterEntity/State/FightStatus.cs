@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.CharacterState
+﻿namespace CharacterEntity.State
 {
     public enum FightStatus 
     {
@@ -10,7 +10,6 @@
         Dead,
         Scared,
         GettingHit,
-        AvoidingHit,
-        RunningToTarget
+        AvoidingHit
     }
 }
