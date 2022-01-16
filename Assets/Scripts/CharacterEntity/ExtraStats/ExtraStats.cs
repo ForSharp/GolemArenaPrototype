@@ -16,8 +16,6 @@
         ManaPool,
         MoveSpeed,
         RegenerationHealth,
-        RegenerationMana,
-        RegenerationStamina,
-        Stamina
+        RegenerationMana
     }
 }

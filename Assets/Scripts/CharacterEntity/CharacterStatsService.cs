@@ -360,7 +360,7 @@ namespace CharacterEntity
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
                         DamagePerHeatArgSt = strength * 1.1f,
-                        StaminaArgSt = strength * 1.1f
+                        DefenceArgSt = strength * 1.1f
                     });
                 case CharacterType.Rock:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
@@ -431,7 +431,7 @@ namespace CharacterEntity
                 case CharacterType.Aine:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        StaminaArgSt = strength * 1.15f,
+                        MagicAccuracyArgSt = strength * 1.15f,
                         MagicResistanceArgIn = intelligence * 1.1f
                     });
                 case CharacterType.Medusa:
@@ -449,7 +449,7 @@ namespace CharacterEntity
                 case CharacterType.Nissa:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        StaminaArgAg = agility * 1.05f,
+                        DamagePerHeatArgAg = agility * 1.05f,
                         HitAccuracyArgAg = agility * 1.05f
                     });
                 case CharacterType.Raven:
@@ -488,7 +488,7 @@ namespace CharacterEntity
                 case Specialization.BattleMage:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        RegenerationStaminaAg = agility * 1.15f,
+                        AvoidChanceArgAg = agility * 1.15f,
                         HitAccuracyArgAg = agility * 1.15f,
                         DamagePerHeatArgAg = agility * 0.85f
                     });
@@ -530,7 +530,7 @@ namespace CharacterEntity
                 case Specialization.Hunter:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence)
                     {
-                        StaminaArgAg = agility * 1.05f,
+                        MoveSpeedArgAg = agility * 1.05f,
                         DamagePerHeatArgSt = strength * 1.15f,
                         MagicResistanceArgSt = strength * 0.85f
                     });
@@ -739,9 +739,7 @@ namespace CharacterEntity
                 stats.manaPool,
                 stats.moveSpeed,
                 stats.regenerationHealth,
-                stats.regenerationMana,
-                stats.regenerationStamina,
-                stats.stamina
+                stats.regenerationMana
             };
         }
 
@@ -819,9 +817,7 @@ namespace CharacterEntity
                 "ManaPool",
                 "MoveSpeed",
                 "RegenerationHealth",
-                "RegenerationMana",
-                "RegenerationStamina",
-                "Stamina"
+                "RegenerationMana"
             };
         }
     }

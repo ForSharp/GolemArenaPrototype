@@ -83,12 +83,6 @@ namespace CharacterEntity.ExtraStats.Effects
                 case ExtraStats.RegenerationMana:
                     tempStats.regenerationMana = changingValue;
                     break;
-                case ExtraStats.RegenerationStamina:
-                    tempStats.regenerationStamina = changingValue;
-                    break;
-                case ExtraStats.Stamina:
-                    tempStats.stamina = changingValue;
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -145,12 +139,6 @@ namespace CharacterEntity.ExtraStats.Effects
                     break;
                 case ExtraStats.RegenerationMana:
                     characterExtraStats.regenerationMana *= changingValue;
-                    break;
-                case ExtraStats.RegenerationStamina:
-                    characterExtraStats.regenerationStamina *= changingValue;
-                    break;
-                case ExtraStats.Stamina:
-                    characterExtraStats.stamina *= changingValue;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

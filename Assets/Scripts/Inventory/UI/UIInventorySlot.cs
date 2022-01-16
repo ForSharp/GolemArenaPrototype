@@ -24,12 +24,12 @@ namespace Inventory.UI
 
         private void Start()
         {
-            _uiInventory.Inventory.InventoryStateChanged += InventoryOnInventoryStateChanged;
+            _uiInventory.inventory.InventoryStateChanged += InventoryOnInventoryStateChanged;
         }
 
         private void OnDestroy()
         {
-            _uiInventory.Inventory.InventoryStateChanged -= InventoryOnInventoryStateChanged;
+            _uiInventory.inventory.InventoryStateChanged -= InventoryOnInventoryStateChanged;
         }
         
         public void SetSlot(IInventorySlot newSlot)
@@ -45,7 +45,7 @@ namespace Inventory.UI
                 var otherItemUI = eventData.pointerDrag.GetComponent<UIInventoryItem>();
                 var otherSlotUI = otherItemUI.GetComponentInParent<UIInventorySlot>();
                 var otherSlot = otherSlotUI.Slot;
-                var inventory = _uiInventory.Inventory;
+                var inventory = _uiInventory.inventory;
 
                 inventory.TransitFromSlotToSlot(this, otherSlot, Slot);
 
@@ -84,22 +84,22 @@ namespace Inventory.UI
             switch (uiInventoryItem.Item)
             {
                 case IConsumableBuffItem item:
-                    _uiInventory.Inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
+                    _uiInventory.inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
                     break;
                 case IConsumableHealingItem item:
-                    _uiInventory.Inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
+                    _uiInventory.inventory.OnConsumableItemUsed(Slot, (IInventoryItem)item);
                     break;
                 case IPotionFlatItem item:
-                    PotionDrinker.DrinkPotion(_uiInventory.Inventory, item);
+                    PotionDrinker.DrinkPotion(_uiInventory.inventory, item);
                     break;
                 case IPotionMultiplyItem item:
-                    PotionDrinker.DrinkPotion(_uiInventory.Inventory, item);
+                    PotionDrinker.DrinkPotion(_uiInventory.inventory, item);
                     break;
                 case IPotionUltimateItem item:
-                    PotionDrinker.DrinkPotion(_uiInventory.Inventory, item);
+                    PotionDrinker.DrinkPotion(_uiInventory.inventory, item);
                     break;
                 case ISpellItem item:
-                    Game.GetCharacterByInventory(_uiInventory.Inventory).SpellManager.LearnSpell(item);
+                    Game.GetCharacterByInventory(_uiInventory.inventory).SpellManager.LearnSpell(item);
                     break;
             }
         }

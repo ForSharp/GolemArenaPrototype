@@ -27,7 +27,7 @@ namespace Inventory
             _uiSlots = _inventoryObject.GetComponentsInChildren<UIInventorySlot>();
             _inventory = new InventoryWithSlots(_uiSlots.Length);
             
-            InventoryOrganization.Inventory = _inventory;
+            InventoryOrganization.inventory = _inventory;
             
             _inventory.InventoryStateChanged += OnInventoryStateChanged;
             InventoryOrganization.transform.localPosition = Vector3.zero;

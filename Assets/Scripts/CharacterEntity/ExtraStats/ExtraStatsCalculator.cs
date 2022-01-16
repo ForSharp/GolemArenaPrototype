@@ -96,15 +96,5 @@ namespace CharacterEntity.ExtraStats
         {
             return intelligence * 0.012f;
         }
-
-        public static float GetRegenerationStamina(float agility)
-        {
-            return agility * 0.012f;
-        }
-
-        public static float GetStamina(float strength, float agility)
-        {
-            return (agility * 0.8f + strength * 0.2f) * 10;
-        }
     }
 }

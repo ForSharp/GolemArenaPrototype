@@ -32,13 +32,42 @@ namespace SpellSystem
             learnedSpellsPanel.gameObject.SetActive(false);
         }
 
-        public void RefreshActiveSpell(int spellNumb)
+        public void UseActiveSpell(int spellNumb)
+        {
+            if (SpellIsNull(spellNumb))
+            {
+                _spellNumberToChange = spellNumb;
+            
+                ShowLearnedSpellsPanel();
+            }
+            else
+            {
+                //cast spell
+            }
+        }
+
+        public void ChangeActiveSpell(int spellNumb)
         {
             _spellNumberToChange = spellNumb;
             
             ShowLearnedSpellsPanel();
         }
 
+        private bool SpellIsNull(int spellNumb)
+        {
+            switch (spellNumb)
+            {
+                case 1:
+                    return spellButtonFirst.SpellItem == null;
+                case 2:
+                    return spellButtonSecond.SpellItem == null;
+                case 3:
+                    return spellButtonThird.SpellItem == null;
+                default:
+                    return false;
+            }
+        }
+        
         public void SetupActiveSpell(ISpellItem spellItem)
         {
             var item = (IInventoryItem)spellItem;

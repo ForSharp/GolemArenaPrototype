@@ -48,11 +48,6 @@ namespace CharacterEntity
 
         public float RegenerationManaIn = Intelligence;
 
-        public float RegenerationStaminaAg = Agility;
-
-        public float StaminaArgSt = Strength;
-        public float StaminaArgAg = Agility;
-
         public ExtraStatsRate(float strength, float agility, float intelligence)
         {
             Strength = strength;
@@ -78,9 +73,7 @@ namespace CharacterEntity
                 manaPool = ExtraStatsCalculator.GetManaPool(typeExtraArgs.ManaPoolArgIn),
                 moveSpeed = ExtraStatsCalculator.GetMoveSpeed(typeExtraArgs.MoveSpeedArgSt, typeExtraArgs.MoveSpeedArgAg),
                 regenerationHealth = ExtraStatsCalculator.GetRegenerationHealth(typeExtraArgs.RegenerationHealthArgSt, typeExtraArgs.RegenerationHealthArgAg),
-                regenerationMana = ExtraStatsCalculator.GetRegenerationMana(typeExtraArgs.RegenerationManaIn),
-                regenerationStamina = ExtraStatsCalculator.GetRegenerationStamina(typeExtraArgs.RegenerationStaminaAg),
-                stamina = ExtraStatsCalculator.GetStamina(typeExtraArgs.StaminaArgSt, typeExtraArgs.StaminaArgAg)
+                regenerationMana = ExtraStatsCalculator.GetRegenerationMana(typeExtraArgs.RegenerationManaIn)
             };
         }
     }

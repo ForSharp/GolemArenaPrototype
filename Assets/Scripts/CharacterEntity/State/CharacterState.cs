@@ -19,8 +19,6 @@ namespace CharacterEntity.State
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
-        public float MaxStamina { get; private set; }
-        public float CurrentStamina { get; private set; }
         public float MaxMana { get; private set; }
         public float CurrentMana { get; private set; }
         public int Group { get; private set; }
@@ -41,7 +39,6 @@ namespace CharacterEntity.State
         public RoundStatistics roundStatistics;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
-        public event Action<float> CurrentStaminaChanged;
         public event Action<float> CurrentManaChanged;
         public event Action<CharacterExtraStats> StatsChanged;
 
@@ -79,10 +76,8 @@ namespace CharacterEntity.State
             BaseStats = Character.GetBaseStats();
             Stats = Character.GetExtraStats();
             SetProportionallyCurrentHealth(Character.GetExtraStats().health);
-            SetProportionallyCurrentStamina(Character.GetExtraStats().stamina);
             SetProportionallyCurrentMana(Character.GetExtraStats().manaPool);
             MaxHealth = Stats.health;
-            MaxStamina = Stats.stamina;
             MaxMana = Stats.manaPool;
             OnStatsChanged(Stats);
         }
@@ -96,17 +91,6 @@ namespace CharacterEntity.State
                 CurrentHealth = newMaxHealth;
             }
             OnCurrentHealthChanged(CurrentHealth);
-        }
-
-        private void SetProportionallyCurrentStamina(float newMaxStamina)
-        {
-            var difference = MaxStamina - newMaxStamina;
-            CurrentStamina -= difference;
-            if (CurrentStamina > newMaxStamina)
-            {
-                CurrentStamina = newMaxStamina;
-            }
-            OnCurrentStaminaChanged(CurrentStamina);
         }
 
         private void SetProportionallyCurrentMana(float newMaxMana)
@@ -141,8 +125,6 @@ namespace CharacterEntity.State
             BaseStats = Character.GetBaseStats();
             MaxHealth = Stats.health;
             CurrentHealth = MaxHealth;
-            MaxStamina = Stats.stamina;
-            CurrentStamina = MaxStamina;
             MaxMana = Stats.manaPool;
             CurrentMana = MaxMana;
 
@@ -217,21 +199,15 @@ namespace CharacterEntity.State
         private void HealAllParameters()
         {
             CurrentHealth = MaxHealth;
-            CurrentStamina = MaxStamina;
             CurrentMana = MaxMana;
 
             OnCurrentHealthChanged(CurrentHealth);
-            OnCurrentStaminaChanged(CurrentStamina);
             OnCurrentManaChanged(CurrentMana);
         }
 
         private void ShowHealthBar()
         {
             _healthBar.gameObject.SetActive(true);
-        }
-
-        public void SpendStamina(float energy)
-        {
         }
 
         public void HealCurrentsFlat(MainCharacterParameter parameter, float healingValue)
@@ -245,14 +221,6 @@ namespace CharacterEntity.State
                         CurrentHealth = MaxHealth;
                     }
                     OnCurrentHealthChanged(CurrentHealth);
-                    break;
-                case MainCharacterParameter.Agility:
-                    CurrentStamina += healingValue;
-                    if (CurrentStamina > MaxStamina)
-                    {
-                        CurrentStamina = MaxStamina;
-                    }
-                    OnCurrentStaminaChanged(CurrentStamina);
                     break;
                 case MainCharacterParameter.Intelligence:
                     CurrentMana += healingValue;
@@ -278,14 +246,6 @@ namespace CharacterEntity.State
                         CurrentHealth = MaxHealth;
                     }
                     OnCurrentHealthChanged(CurrentHealth);
-                    break;
-                case MainCharacterParameter.Agility:
-                    CurrentStamina *= healingValue;
-                    if (CurrentStamina > MaxStamina)
-                    {
-                        CurrentStamina = MaxStamina;
-                    }
-                    OnCurrentStaminaChanged(CurrentStamina);
                     break;
                 case MainCharacterParameter.Intelligence:
                     CurrentMana *= healingValue;
@@ -316,16 +276,6 @@ namespace CharacterEntity.State
                     OnCurrentHealthChanged(CurrentHealth);
                 }
 
-                if (CurrentStamina < MaxStamina)
-                {
-                    CurrentStamina += Stats.regenerationStamina;
-                    if (CurrentStamina > MaxStamina)
-                    {
-                        CurrentStamina = MaxStamina;
-                    }
-                    OnCurrentStaminaChanged(CurrentStamina);
-                }
-
                 if (CurrentMana < MaxMana)
                 {
                     CurrentMana += Stats.regenerationMana;
@@ -345,11 +295,6 @@ namespace CharacterEntity.State
         private void OnCurrentHealthChanged(float health)
         {
             CurrentHealthChanged?.Invoke(health);
-        }
-
-        private void OnCurrentStaminaChanged(float stamina)
-        {
-            CurrentStaminaChanged?.Invoke(stamina);
         }
 
         private void OnCurrentManaChanged(float mana)

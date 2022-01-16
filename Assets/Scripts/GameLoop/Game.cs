@@ -156,7 +156,7 @@ namespace GameLoop
         public static CharacterState GetCharacterByInventory(IInventory inventory)
         {
             return AllCharactersInSession.Find(character =>
-                character.InventoryHelper.InventoryOrganization.Inventory == inventory);
+                character.InventoryHelper.InventoryOrganization.inventory == inventory);
         }
         
         public static Enum ToEnum(string value, Type enumType)

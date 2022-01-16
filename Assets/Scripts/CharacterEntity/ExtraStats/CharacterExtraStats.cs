@@ -20,8 +20,6 @@ namespace CharacterEntity.ExtraStats
         public float moveSpeed;
         public float regenerationHealth;
         public float regenerationMana;
-        public float regenerationStamina;
-        public float stamina;
 
         public static CharacterExtraStats operator +(CharacterExtraStats statsA, CharacterExtraStats statsB)
         {
@@ -41,9 +39,7 @@ namespace CharacterEntity.ExtraStats
                 manaPool = statsA.manaPool + statsB.manaPool,
                 moveSpeed = statsA.moveSpeed + statsB.moveSpeed,
                 regenerationHealth = statsA.regenerationHealth + statsB.regenerationHealth,
-                regenerationMana = statsA.regenerationMana + statsB.regenerationMana,
-                regenerationStamina = statsA.regenerationStamina + statsB.regenerationStamina,
-                stamina = statsA.stamina + statsB.stamina
+                regenerationMana = statsA.regenerationMana + statsB.regenerationMana
             };
         }
 
@@ -64,9 +60,7 @@ namespace CharacterEntity.ExtraStats
                 manaPool = stats.manaPool * multiplier,
                 moveSpeed = stats.moveSpeed * multiplier,
                 regenerationHealth = stats.regenerationHealth * multiplier,
-                regenerationMana = stats.regenerationMana * multiplier,
-                regenerationStamina = stats.regenerationStamina * multiplier,
-                stamina = stats.stamina * multiplier
+                regenerationMana = stats.regenerationMana * multiplier
             };
         }
 
@@ -86,9 +80,7 @@ namespace CharacterEntity.ExtraStats
                    $"ManaPool = {manaPool}," +
                    $"MoveSpeed = {moveSpeed}," +
                    $"RegenerationHealth = {regenerationHealth}," +
-                   $"RegenerationMana = {regenerationMana}," +
-                   $"RegenerationStamina = {regenerationStamina}," +
-                   $"Stamina = {stamina}";
+                   $"RegenerationMana = {regenerationMana},";
         }
     }
 }

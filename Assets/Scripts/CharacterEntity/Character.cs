@@ -180,9 +180,7 @@ namespace CharacterEntity
                 manaPool = extra.GetExtraStats().manaPool,
                 moveSpeed = extra.GetExtraStats().moveSpeed,
                 regenerationHealth = extra.GetExtraStats().regenerationHealth,
-                regenerationMana = extra.GetExtraStats().regenerationMana,
-                regenerationStamina = extra.GetExtraStats().regenerationStamina,
-                stamina = extra.GetExtraStats().stamina
+                regenerationMana = extra.GetExtraStats().regenerationMana
             };
         }
 

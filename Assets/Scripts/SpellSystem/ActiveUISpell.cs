@@ -10,6 +10,7 @@ namespace SpellSystem
     {
         [SerializeField] private Button spellChanger;
         [SerializeField] private Image spellIcon;
+        [SerializeField] private Text spellLvl;
         public bool IsActive { get; private set; }
         public ISpellItem SpellItem { get; private set; }
         
@@ -25,6 +26,22 @@ namespace SpellSystem
             var item = (IInventoryItem)spellItem;
             spellIcon.sprite = item.Info.SpriteIcon;
             spellChanger.gameObject.SetActive(true);
+            spellLvl.text = GetStringSpellLvl(spellItem);
+        }
+
+        private string GetStringSpellLvl(ISpellItem spellItem)
+        {
+            switch (spellItem.SpellInfo.SpellLvl)
+            {
+                case 1:
+                    return "<color=white>★</color><color=black>★★</color>";
+                case 2:
+                    return "<color=white>★★</color><color=black>★</color>";
+                case 3:
+                    return "<color=white>★★★</color>";
+                default:
+                    return "";
+            }
         }
 
         public void DeactivateSpell()

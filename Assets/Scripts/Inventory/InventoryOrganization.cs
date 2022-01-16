@@ -12,7 +12,7 @@ namespace Inventory
         [SerializeField] private GameObject inventoryBackGround;
         [SerializeField] private Button switchButton;
         
-        public InventoryWithSlots Inventory;
+        public InventoryWithSlots inventory;
         public bool InPanel { get; private set; }
         private bool _isHide = false;
 

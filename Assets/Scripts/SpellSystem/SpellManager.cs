@@ -52,7 +52,7 @@ namespace SpellSystem
         private void DeleteSpellItemAfterLearning(IInventoryItem inventoryItem)
         {
             inventoryItem.State.Amount--;
-            var inventory = _character.InventoryHelper.InventoryOrganization.Inventory;
+            var inventory = _character.InventoryHelper.InventoryOrganization.inventory;
 
             if (inventoryItem.State.Amount == 0)
             {

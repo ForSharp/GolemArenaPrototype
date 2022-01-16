@@ -452,7 +452,7 @@ namespace CharacterEntity
         {
             _animator.applyRootMotion = false;
             SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.attackRange, _animator, _navMeshAgent,
-                false, AnimationChanger.SetGolemRun));
+                AnimationChanger.SetGolemRun));
             _moveable.Move(_thisState.Stats.moveSpeed * 2, _targetState.transform.position * direction);
             _isIKAllowed = false;
 
@@ -465,8 +465,7 @@ namespace CharacterEntity
             {
                 _animator.applyRootMotion = false;
                 SetMoveBehaviour(new RunNavMeshBehaviour(_thisState, _thisState.Stats.attackRange, _animator,
-                    _navMeshAgent,
-                    false, AnimationChanger.SetGolemRun));
+                    _navMeshAgent, AnimationChanger.SetGolemRun));
                 _moveable.Move(_thisState.Stats.moveSpeed * 2, point);
                 _isIKAllowed = false;
                 _isAIControlAllowed = false;
