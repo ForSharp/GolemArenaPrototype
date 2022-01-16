@@ -346,6 +346,9 @@ namespace CharacterEntity
 
         private void AttackTarget()
         {
+            if (!_targetState)
+                return;
+            
             _animator.applyRootMotion = true;
             SetMoveBehaviour(new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle));
             _moveable.Move(default, default);

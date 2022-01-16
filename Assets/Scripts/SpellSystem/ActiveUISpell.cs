@@ -13,6 +13,7 @@ namespace SpellSystem
         [SerializeField] private Text spellLvl;
         public bool IsActive { get; private set; }
         public ISpellItem SpellItem { get; private set; }
+        public string SpellId { get; private set; }
         
         private void Start()
         {
@@ -27,6 +28,7 @@ namespace SpellSystem
             spellIcon.sprite = item.Info.SpriteIcon;
             spellChanger.gameObject.SetActive(true);
             spellLvl.text = GetStringSpellLvl(spellItem);
+            SpellId = item.Info.Id;
         }
 
         private string GetStringSpellLvl(ISpellItem spellItem)

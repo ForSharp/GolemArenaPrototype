@@ -21,6 +21,11 @@ namespace Inventory
         {
             var money = character.roundStatistics.RoundRate * 100 * Game.Round;
 
+            if (character == Player.PlayerCharacter)
+            {
+                money *= 10;
+            }
+
             var moneyForArtefacts = money / 4;
             money -= moneyForArtefacts;
             DispenseArtefacts(moneyForArtefacts, character, out var artefactBalance);
@@ -63,7 +68,7 @@ namespace Inventory
 
         private static void DispenseSpells(int moneyForSpells, CharacterState character, out int spellsBalance)
         {
-            const int maxSpellsCountThatCanGet = 3;
+            const int maxSpellsCountThatCanGet = 10; //3
             const int lowestSpellPrice = 500;
             var index = 0;
             while (index < maxSpellsCountThatCanGet && moneyForSpells >= lowestSpellPrice)

@@ -13,15 +13,15 @@ namespace SpellSystem
         [SerializeField] private ActiveUISpell spellButtonThird;
 
         [SerializeField] private LearnedSpellsPanel learnedSpellsPanel;
-
         private int _spellNumberToChange;
-        
+        private bool _learnedSpellPanelEnabled;
         [HideInInspector] public CharacterState character;
         
         public bool InPanel { get; private set; }
         public void HideLearnedSpellsPanel()
         {
-            learnedSpellsPanel.gameObject.SetActive(false);
+            learnedSpellsPanel.HideLearnedSpells();
+            _learnedSpellPanelEnabled = false;
         }
 
         public void HideAll()
@@ -29,16 +29,15 @@ namespace SpellSystem
             spellButtonFirst.gameObject.SetActive(false);
             spellButtonSecond.gameObject.SetActive(false);
             spellButtonThird.gameObject.SetActive(false);
-            learnedSpellsPanel.gameObject.SetActive(false);
+            learnedSpellsPanel.HideLearnedSpells();
+            _learnedSpellPanelEnabled = false;
         }
 
         public void UseActiveSpell(int spellNumb)
         {
             if (SpellIsNull(spellNumb))
             {
-                _spellNumberToChange = spellNumb;
-            
-                ShowLearnedSpellsPanel();
+                ChangeActiveSpell(spellNumb);
             }
             else
             {
@@ -48,6 +47,9 @@ namespace SpellSystem
 
         public void ChangeActiveSpell(int spellNumb)
         {
+            if (_learnedSpellPanelEnabled)
+                return;
+            
             _spellNumberToChange = spellNumb;
             
             ShowLearnedSpellsPanel();
@@ -71,44 +73,63 @@ namespace SpellSystem
         public void SetupActiveSpell(ISpellItem spellItem)
         {
             var item = (IInventoryItem)spellItem;
-            learnedSpellsPanel.ActivateSpell(item.Info.Id);
-
+            var id = item.Info.Id;
             switch (_spellNumberToChange)
             {
                 case 1:
                     if (spellButtonFirst.SpellItem != null)
                     {
                         var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
-                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
                     }
                     spellButtonFirst.ActivateSpell(spellItem);
                     character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    learnedSpellsPanel.ActivateSpell(id);
                     break;
                 case 2:
                     if (spellButtonSecond.SpellItem != null)
                     {
-                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
-                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                        var spellToDeactivate = (IInventoryItem)spellButtonSecond.SpellItem;
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
                     }
                     spellButtonSecond.ActivateSpell(spellItem);
                     character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    learnedSpellsPanel.ActivateSpell(id);
                     break;
                 case 3:
                     if (spellButtonThird.SpellItem != null)
                     {
-                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
-                        learnedSpellsPanel.DeactivateSpell(spellToDeactivate.Info.Id);
+                        var spellToDeactivate = (IInventoryItem)spellButtonThird.SpellItem;
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
                     }
                     spellButtonThird.ActivateSpell(spellItem);
                     character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    learnedSpellsPanel.ActivateSpell(id);
                     break;
             }
+            
         }
 
         private void ShowLearnedSpellsPanel()
         {
-            learnedSpellsPanel.gameObject.SetActive(true);
+            learnedSpellsPanel.ShowLearnedSpells();
             character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+            _learnedSpellPanelEnabled = true;
         }
 
         public void ShowActiveSpells()
@@ -123,9 +144,40 @@ namespace SpellSystem
             learnedSpellsPanel.LearnSpell(learnedSpell);
         }
         
-        public void UpdateLearnedSpells()
+        public void UpdateLearnedSpells(ISpellItem learnedSpell)
         {
-            
+            var item = (IInventoryItem)learnedSpell;
+            var id = item.Info.Id;
+            learnedSpellsPanel.UpgradeSpell(learnedSpell);
+            if (SpellIsActive(id, out var spellNumb))
+            {
+                _spellNumberToChange = spellNumb;
+                SetupActiveSpell(learnedSpell);
+            }
+        }
+
+        private bool SpellIsActive(string spellId, out int spellNumb)
+        {
+            if (spellButtonFirst.SpellId == spellId)
+            {
+                spellNumb = 1;
+                return true;
+            }
+
+            if (spellButtonSecond.SpellId == spellId)
+            {
+                spellNumb = 2;
+                return true;
+            }
+
+            if (spellButtonThird.SpellId == spellId)
+            {
+                spellNumb = 3;
+                return true;
+            }
+
+            spellNumb = 0;
+            return false;
         }
 
         public void OnPointerExit(PointerEventData eventData)

@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Inventory;
+using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using Inventory.Info.Spells;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpellSystem
 {
@@ -11,9 +14,8 @@ namespace SpellSystem
     {
         [SerializeField] private UISpell uiSpellPrefab;
         [SerializeField] private GameObject uiSpellsContainer;
-
+        [SerializeField] private GameObject closeButton;
         private readonly List<UISpell> _learnedSpells = new List<UISpell>();
-        private readonly List<ISpellItem> _learnedSpellAfterEnabling = new List<ISpellItem>();
 
         private void Start()
         {
@@ -23,35 +25,25 @@ namespace SpellSystem
             }
         }
 
-        private void OnEnable()
-        {
-            if (_learnedSpellAfterEnabling.Any())
-            {
-                foreach (var spell in _learnedSpellAfterEnabling)
-                {
-                    LearnSpell(spell);
-                }
-                
-                _learnedSpellAfterEnabling.Clear();
-            }
-        }
-
         private void CreateUISpell()
         {
-            var spellObj = Instantiate(uiSpellPrefab, uiSpellsContainer.transform);
-            _learnedSpells.Add(spellObj);
+            if (uiSpellsContainer.activeSelf)
+            {
+                var spellObj = Instantiate(uiSpellPrefab, uiSpellsContainer.transform);
+                _learnedSpells.Add(spellObj);
+            }
+            else
+            {
+                uiSpellsContainer.SetActive(true);
+                var spellObj = Instantiate(uiSpellPrefab, uiSpellsContainer.transform);
+                _learnedSpells.Add(spellObj);
+                uiSpellsContainer.SetActive(false);
+            }
         }
 
         public void LearnSpell(ISpellItem spellItem)
         {
-            if (gameObject.activeSelf)
-            {
-                AddLearnedSpell(spellItem);
-            }
-            else
-            {
-                _learnedSpellAfterEnabling.Add(spellItem);
-            }
+            AddLearnedSpell(spellItem);
         }
 
         private void AddLearnedSpell(ISpellItem spellItem)
@@ -67,14 +59,16 @@ namespace SpellSystem
             }
         }
 
-        public void UpgradeSpell(SpellInfo spellInfo, string spellId)
+
+        public void UpgradeSpell(ISpellItem spellItem)
         {
+            var item = (IInventoryItem)spellItem;
+            var id = item.Info.Id;
             foreach (var spell in _learnedSpells)
             {
-                if (spell.SpellId == spellId)
+                if (spell.SpellId == id)
                 {
-                    spell.UpgradeSpell(spellInfo.SpellLvl.ToString(),
-                        spellInfo.ManaCost.ToString(CultureInfo.InvariantCulture));
+                    spell.UpgradeSpell(spellItem);
                     return;
                 }
             }
@@ -102,6 +96,18 @@ namespace SpellSystem
                     return;
                 }
             }
+        }
+
+        public void HideLearnedSpells()
+        {
+            uiSpellsContainer.SetActive(false);
+            closeButton.SetActive(false);
+        }
+
+        public void ShowLearnedSpells()
+        {
+            uiSpellsContainer.SetActive(true);
+            closeButton.SetActive(true);
         }
     }
 }

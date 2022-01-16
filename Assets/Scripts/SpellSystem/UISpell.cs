@@ -43,10 +43,9 @@ namespace SpellSystem
             IsLearned = true;
         }
 
-        public void UpgradeSpell(string lvl, string cost)
+        public void UpgradeSpell(ISpellItem spellItem)
         {
-            spellLvl.text = lvl;
-            manaCost.text = cost;
+            SetupSpellData(spellItem);
         }
 
         public void ActivateSpell()
@@ -72,8 +71,7 @@ namespace SpellSystem
             {
                 activeSpellIdentifier.gameObject.SetActive(false);
             }
-
-            if (state && IsLearned)
+            else if (_isActive)
             {
                 activeSpellIdentifier.gameObject.SetActive(true);
             }
@@ -84,7 +82,7 @@ namespace SpellSystem
             if (_spellItem != null && !_isActive)
             {
                 _mainSpellPanel.SetupActiveSpell(_spellItem);
-                
+                _mainSpellPanel.HideLearnedSpellsPanel();
             }
         }
     }
