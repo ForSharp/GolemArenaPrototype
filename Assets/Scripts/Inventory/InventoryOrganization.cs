@@ -12,7 +12,8 @@ namespace Inventory
         [SerializeField] private GameObject[] equippingSlots;
         [SerializeField] private GameObject inventoryBackGround;
         [SerializeField] private Button switchButton;
-
+        [SerializeField] private Button closeButton;
+        
         public InventoryWithSlots inventory;
         public bool InPanel { get; private set; }
         private bool _isHide = false;
@@ -41,7 +42,8 @@ namespace Inventory
 
             inventoryBackGround.SetActive(true);
 
-
+            closeButton.gameObject.SetActive(true);
+            
             foreach (var character in Game.AllCharactersInSession)
             {
                 character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
@@ -54,7 +56,8 @@ namespace Inventory
             {
                 slot.SetActive(false);
             }
-
+            
+            closeButton.gameObject.SetActive(false);
             inventoryBackGround.SetActive(false);
             _isHide = true;
             switchButtonText.text = "Show";
@@ -75,7 +78,7 @@ namespace Inventory
             {
                 slot.SetActive(false);
             }
-
+            closeButton.gameObject.SetActive(false);
             inventoryBackGround.SetActive(false);
         }
 

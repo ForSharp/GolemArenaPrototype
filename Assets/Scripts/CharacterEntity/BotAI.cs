@@ -658,9 +658,7 @@ namespace CharacterEntity
         {
             _attackable = attackable;
         }
-
         
-
         private State.CharacterState[] GetEnemies()
         {
             return Game.AllCharactersInSession.Where(p => p.IsDead == false)

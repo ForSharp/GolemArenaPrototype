@@ -1,5 +1,4 @@
-﻿using System;
-using Inventory.Abstracts;
+﻿using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,15 +10,44 @@ namespace SpellSystem
         [SerializeField] private Button spellChanger;
         [SerializeField] private Image spellIcon;
         [SerializeField] private Text spellLvl;
+        [SerializeField] private Image cooldown;
         public bool IsActive { get; private set; }
+        public bool InCooldown { get; private set; }
         public ISpellItem SpellItem { get; private set; }
         public string SpellId { get; private set; }
+        
+        private float _cooldownDuration;
         
         private void Start()
         {
             spellChanger.gameObject.SetActive(false);
         }
+        
+        private void Update()
+        {
+            if (cooldown.fillAmount > 0)
+            {
+                cooldown.fillAmount -= _cooldownDuration * Time.deltaTime;
+            }
 
+            if (cooldown.fillAmount == 0)
+            {
+                InCooldown = false;
+            }
+        }
+
+        public void StartCooldown()
+        {
+            cooldown.fillAmount = 1;
+            InCooldown = true;
+        }
+
+        public void EndCooldown()
+        {
+            cooldown.fillAmount = 0;
+            InCooldown = false;
+        }
+        
         public void ActivateSpell(ISpellItem spellItem)
         {
             SpellItem = spellItem;
@@ -29,6 +57,7 @@ namespace SpellSystem
             spellChanger.gameObject.SetActive(true);
             spellLvl.text = GetStringSpellLvl(spellItem);
             SpellId = item.Info.Id;
+            _cooldownDuration = 60 / spellItem.SpellInfo.Cooldown;
         }
 
         private string GetStringSpellLvl(ISpellItem spellItem)

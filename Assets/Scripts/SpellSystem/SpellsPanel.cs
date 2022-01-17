@@ -1,4 +1,5 @@
-﻿using CharacterEntity.State;
+﻿using System;
+using CharacterEntity.State;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using UnityEngine;
@@ -18,6 +19,12 @@ namespace SpellSystem
         [HideInInspector] public CharacterState character;
         
         public bool InPanel { get; private set; }
+
+        public void EndCooldownAllSpells()
+        {
+            
+        }
+
         public void HideLearnedSpellsPanel()
         {
             learnedSpellsPanel.HideLearnedSpells();
@@ -41,7 +48,29 @@ namespace SpellSystem
             }
             else
             {
-                //cast spell
+                StartCastSpell(spellNumb);
+            }
+        }
+
+        private void StartCastSpell(int spellNumb)
+        {
+            switch (spellNumb)
+            {
+                case 1:
+                    if (spellButtonFirst.InCooldown)
+                        return;
+                    spellButtonFirst.StartCooldown();
+                    break;
+                case 2:
+                    if (spellButtonSecond.InCooldown)
+                        return;
+                    spellButtonSecond.StartCooldown();
+                    break;
+                case 3:
+                    if (spellButtonThird.InCooldown)
+                        return;
+                    spellButtonThird.StartCooldown();
+                    break;
             }
         }
 

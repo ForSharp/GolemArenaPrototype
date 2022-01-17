@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Behaviour;
 using Behaviour.Abstracts;
@@ -7,7 +8,6 @@ using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using Inventory.Items.SpellItems;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SpellSystem
 {
@@ -22,6 +22,10 @@ namespace SpellSystem
         private ICastable _spellSecond;
         private ICastable _spellThird;
 
+        private bool _spellFirstOnCooldown;
+        private bool _spellSecondOnCooldown;
+        private bool _spellThirdOnCooldown;
+        
         public void LearnSpell(ISpellItem spell)
         {
             var inventoryItem = (IInventoryItem)spell;
@@ -73,6 +77,18 @@ namespace SpellSystem
         public void CastSpellFirst(CharacterEntity.State.CharacterState targetState)
         {
             _spellFirst.CastSpell(targetState);
+        }
+
+        private IEnumerator EndSpellCooldown(int spellNumb, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            
+            
+        }
+
+        private void EndCooldownAllSpells()
+        {
+            //по сути, преждевременно прервать перезарядку, обнулить ее
         }
 
         public void ActivateSpell(ISpellItem spellItem, int numb) //экипировать спелл

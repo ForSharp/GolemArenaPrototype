@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
 using CharacterEntity;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Controller
 {
@@ -72,6 +70,7 @@ namespace Controller
             SetStandardPanel();
             autoButtonFalse.SetActive(false);
             autoButtonTrue.SetActive(true);
+            controllerPanel.gameObject.SetActive(false);
             _aiControl = true;
             AllowAI?.Invoke(true);
             SetComponents();

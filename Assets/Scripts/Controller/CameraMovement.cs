@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
@@ -36,6 +35,7 @@ namespace Controller
          private void Update()
          {
              SetCameraMode();
+             CorrectPosition();
          }
     
          private void SetCameraMode()
@@ -57,6 +57,14 @@ namespace Controller
                      break;
                  default:
                      throw new ArgumentOutOfRangeException();
+             }
+         }
+
+         private void CorrectPosition()
+         {
+             if (transform.position.y < 1)
+             {
+                 transform.position = new Vector3(transform.position.x, 1, transform.position.z);
              }
          }
          
@@ -90,10 +98,10 @@ namespace Controller
          
          private void SetStandardMovement()
          {
-             MoveCameraAroundHero(false);
+             MoveCameraAroundHero();
          }
 
-         private void MoveCameraAroundHero(bool rts, float multiplier = 1)
+         private void MoveCameraAroundHero(float multiplier = 1)
          {
              if (Input.GetAxis("Mouse ScrollWheel") > 0)
              {
@@ -105,14 +113,13 @@ namespace Controller
              }
              
              cameraMoveAroundSettings.offset.z = Mathf.Clamp(cameraMoveAroundSettings.offset.z * multiplier, -Mathf.Abs(cameraMoveAroundSettings.zoomMax), -Mathf.Abs(cameraMoveAroundSettings.zoomMin));
-
-             if (!rts)
-             {
-                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
-                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
-                 _y = Mathf.Clamp (_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
-                 transform.localEulerAngles = new Vector3(-_y, _x, 0);
-             }
+             
+             
+             _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
+             _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
+             _y = Mathf.Clamp (_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
+             transform.localEulerAngles = new Vector3(-_y, _x, 0);
+             
              
              transform.position = transform.localRotation * cameraMoveAroundSettings.offset + Player.PlayerCharacter.transform.position;
          }
