@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Behaviour;
 using Behaviour.Abstracts;
+using GameLoop;
 using Inventory;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
@@ -17,14 +18,15 @@ namespace SpellSystem
         private readonly Animator _animator;
         private readonly CharacterEntity.State.CharacterState _character;
         private readonly SpellContainer _spellContainer;
-
+        private readonly SpellsPanel _spellsPanel;
+        
         private ICastable _spellFirst;
         private ICastable _spellSecond;
         private ICastable _spellThird;
 
-        private bool _spellFirstOnCooldown;
-        private bool _spellSecondOnCooldown;
-        private bool _spellThirdOnCooldown;
+        private ActiveUISpell _spellFirstUI;
+        private ActiveUISpell _spellSecondUI;
+        private ActiveUISpell _spellThirdUI;
         
         public void LearnSpell(ISpellItem spell)
         {
@@ -38,18 +40,18 @@ namespace SpellSystem
                     if (_learnedSpells[i].SpellInfo.SpellLvl < 3)
                     {
                         _learnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(_learnedSpells[i], _learnedSpells[i].SpellInfo.SpellLvl);
-                        _character.SpellPanelHelper.SpellsPanel.UpdateLearnedSpells(_learnedSpells[i]);
+                        _spellsPanel.UpdateLearnedSpells(_learnedSpells[i]);
                         DeleteSpellItemAfterLearning(inventoryItem);
                         
                         return;
                     }
-                    
+                    //максимальный уровень спелла уже изучен - ничего не делаем
                     return;
                 }
             }
             
             _learnedSpells.Add(spell);
-            _character.SpellPanelHelper.SpellsPanel.AddLearnedSpell(spell);
+            _spellsPanel.AddLearnedSpell(spell);
             DeleteSpellItemAfterLearning(inventoryItem);
         }
 
@@ -72,6 +74,55 @@ namespace SpellSystem
             _animator = animator;
             _character = characterState;
             _spellContainer = spellContainer;
+            _spellsPanel = _character.SpellPanelHelper.SpellsPanel;
+            _spellFirstUI = _spellsPanel.SpellButtonFirst;
+            _spellSecondUI = _spellsPanel.SpellButtonSecond;
+            _spellThirdUI = _spellsPanel.SpellButtonThird;
+        }
+
+        public void CheckCanCastSpell(int spellNumb)
+        {
+            switch (spellNumb)
+            {
+                case 1:
+                    // if (!_spellFirstUI.IsActive)
+                    //     return;
+                    if (!_spellFirstUI.InCooldown && _spellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                                                      && Game.Stage == Game.GameStage.Battle)
+                    {
+                        //show correct targets
+                        //mark spell choice
+                        //set target and then cast spell
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+            
+            
+        }
+
+        private void ShowTargets(ISpellItem spellItem)//mark enemies or friends
+        {
+            switch (spellItem.SpellInfo.SpellType)
+            {
+                case SpellType.Heal:
+                    break;
+                case SpellType.Buff:
+                    break;
+                case SpellType.Debuff:
+                    break;
+                case SpellType.Damage:
+                    break;
+                case SpellType.Summon:
+                    break;
+                case SpellType.Polymorph:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         
         public void CastSpellFirst(CharacterEntity.State.CharacterState targetState)
@@ -91,7 +142,7 @@ namespace SpellSystem
             //по сути, преждевременно прервать перезарядку, обнулить ее
         }
 
-        public void ActivateSpell(ISpellItem spellItem, int numb) //экипировать спелл
+        public void ActivateSpell(ISpellItem spellItem, int numb) 
         {
             switch (numb)
             {
@@ -117,7 +168,7 @@ namespace SpellSystem
                     throw new ArgumentOutOfRangeException(nameof(spell));
             }
         }
-
+        
         private ISpellItem GetSpellItem<T>()where T : ISpellItem 
         {
             foreach (var spellItem in _learnedSpells)
@@ -125,33 +176,19 @@ namespace SpellSystem
                 if (spellItem is T)
                     return spellItem;
             }
-
+        
             throw new Exception();
-        }
-
-        private int GetLearnedSpellLvl(string spellId)
-        {
-            foreach (var spell in _learnedSpells)
-            {
-                var spellItem = (IInventoryItem)spell;
-                if (spellId == spellItem.Info.Id)
-                {
-                    return spell.SpellInfo.SpellLvl;
-                }
-            }
-
-            return default;
         }
         
         private void SetupSpell(out ICastable spellSlot, ISpellItem spellItem)
         {
             switch (spellItem)
             {
-                case FireBallItem fireBallItem:
+                case FireBallItem _:
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem, _character, _animator);
                     break;
-                case FreezingItem freezingItem:
+                case FreezingItem _:
                     break;
                 case GraceItem graceBuffItem:
                     break;

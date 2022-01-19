@@ -18,6 +18,9 @@ namespace SpellSystem
         private bool _learnedSpellPanelEnabled;
         [HideInInspector] public CharacterState character;
         
+        public ActiveUISpell SpellButtonFirst => spellButtonFirst;
+        public ActiveUISpell SpellButtonSecond => spellButtonSecond;
+        public ActiveUISpell SpellButtonThird => spellButtonFirst;
         public bool InPanel { get; private set; }
 
         public void EndCooldownAllSpells()
