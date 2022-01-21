@@ -62,17 +62,18 @@ namespace SpellSystem
                 case 1:
                     if (spellButtonFirst.InCooldown)
                         return;
-                    spellButtonFirst.StartCooldown();
+                    character.SpellManager.CheckCanCastSpell(1);
+                    //spellButtonFirst.StartCooldown();
                     break;
                 case 2:
                     if (spellButtonSecond.InCooldown)
                         return;
-                    spellButtonSecond.StartCooldown();
+                    //spellButtonSecond.StartCooldown();
                     break;
                 case 3:
                     if (spellButtonThird.InCooldown)
                         return;
-                    spellButtonThird.StartCooldown();
+                    //spellButtonThird.StartCooldown();
                     break;
             }
         }

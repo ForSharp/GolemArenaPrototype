@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Behaviour;
 using Behaviour.Abstracts;
+using CharacterEntity;
+using CharacterEntity.State;
 using GameLoop;
 using Inventory;
 using Inventory.Abstracts;
@@ -16,7 +19,7 @@ namespace SpellSystem
     {
         private readonly List<ISpellItem> _learnedSpells = new List<ISpellItem>();
         private readonly Animator _animator;
-        private readonly CharacterEntity.State.CharacterState _character;
+        private readonly CharacterState _character;
         private readonly SpellContainer _spellContainer;
         private readonly SpellsPanel _spellsPanel;
         
@@ -69,7 +72,7 @@ namespace SpellSystem
             inventory.OnInventoryStateChanged(_character);
         }
 
-        public SpellManager(Animator animator, CharacterEntity.State.CharacterState characterState, SpellContainer spellContainer)
+        public SpellManager(Animator animator, CharacterState characterState, SpellContainer spellContainer)
         {
             _animator = animator;
             _character = characterState;
@@ -90,9 +93,22 @@ namespace SpellSystem
                     if (!_spellFirstUI.InCooldown && _spellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
                                                       && Game.Stage == Game.GameStage.Battle)
                     {
-                        //show correct targets
+                        var spellItem = _spellFirstUI.SpellItem;
+                        ShowTargets(spellItem);
                         //mark spell choice
-                        //set target and then cast spell
+                        var target = GetTarget(spellItem);
+                        if (target)
+                        {
+                            CastSpellFirst(target);
+                            
+                            CancelShowingTargets(spellItem);
+                        }
+                        else
+                        {
+                            Debug.Log("no cast");
+                            CancelShowingTargets(spellItem);
+                        }
+                        
                     }
                     break;
                 case 2:
@@ -101,33 +117,185 @@ namespace SpellSystem
                     break;
             }
             
-            
         }
 
-        private void ShowTargets(ISpellItem spellItem)//mark enemies or friends
+        private CharacterState GetTarget(ISpellItem spellItem)
+        {
+            if (Camera.main is null)
+            {
+                return null;
+            }
+            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            if (!Physics.Raycast(ray, out var hit))
+            {
+                return null;
+            }
+            var coll = hit.collider;
+            if (coll.TryGetComponent(out CharacterState state))
+            {
+                switch (spellItem.SpellInfo.SpellType)
+                {
+                    case SpellType.Heal:
+                        if (CheckFriend(state)) return state;
+                        break;
+                    case SpellType.Buff:
+                        if (CheckFriend(state)) return state;
+                        break;
+                    case SpellType.Debuff:
+                        if (CheckEnemy(state)) return state;
+                        break;
+                    case SpellType.Damage:
+                        if (CheckEnemy(state)) return state;
+                        break;
+                    case SpellType.Summon:
+                        if (CheckEnemy(state)) return state;
+                        break;
+                    case SpellType.Polymorph:
+                        if (CheckEnemy(state)) return state;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            
+            return null;
+
+            bool CheckFriend(CharacterState characterState)
+            {
+                foreach (var friend in GetFriends())
+                {
+                    if (friend == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            bool CheckEnemy(CharacterState characterState)
+            {
+                foreach (var enemy in GetEnemies())
+                {
+                    if (enemy == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        private void CancelShowingTargets(ISpellItem spellItem)
         {
             switch (spellItem.SpellInfo.SpellType)
             {
                 case SpellType.Heal:
+                    StopPlayingTargetFriendsEffect();
                     break;
                 case SpellType.Buff:
+                    StopPlayingTargetFriendsEffect();
                     break;
                 case SpellType.Debuff:
+                    StopPlayingTargetEnemiesEffect();
                     break;
                 case SpellType.Damage:
+                    StopPlayingTargetEnemiesEffect();
                     break;
                 case SpellType.Summon:
+                    StopPlayingTargetEnemiesEffect();
                     break;
                 case SpellType.Polymorph:
+                    StopPlayingTargetEnemiesEffect();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
         
-        public void CastSpellFirst(CharacterEntity.State.CharacterState targetState)
+        private void ShowTargets(ISpellItem spellItem)
         {
-            _spellFirst.CastSpell(targetState);
+            switch (spellItem.SpellInfo.SpellType)
+            {
+                case SpellType.Heal:
+                    ShowTargetsFriends();
+                    break;
+                case SpellType.Buff:
+                    ShowTargetsFriends();
+                    break;
+                case SpellType.Debuff:
+                    ShowTargetsEnemies();
+                    break;
+                case SpellType.Damage:
+                    ShowTargetsEnemies();
+                    break;
+                case SpellType.Summon:
+                    ShowTargetsEnemies();
+                    break;
+                case SpellType.Polymorph:
+                    ShowTargetsEnemies();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void ShowTargetsEnemies()
+        {
+            var enemies = GetEnemies();
+            foreach (var enemy in enemies)
+            {
+                enemy.characterEffectsContainer.PlayTargetEnemy();
+            }
+        }
+
+        private void StopPlayingTargetEnemiesEffect()
+        {
+            var enemies = GetEnemies();
+            foreach (var enemy in enemies)
+            {
+                enemy.characterEffectsContainer.StopPlayingTargetEnemy();
+            }
+        }
+
+        private void ShowTargetsFriends()
+        {
+            var friends = GetFriends();
+            foreach (var friend in friends)
+            {
+                friend.characterEffectsContainer.PlayTargetFriend();
+            }
+        }
+
+        private void StopPlayingTargetFriendsEffect()
+        {
+            var friends = GetFriends();
+            foreach (var friend in friends)
+            {
+                friend.characterEffectsContainer.StopPlayingTargetFriend();
+            }
+        }
+
+        private IEnumerable<CharacterState> GetEnemies()
+        {
+            return Game.AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group != _character.Group);
+        }
+
+        private IEnumerable<CharacterState> GetFriends()
+        {
+            return Game.AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group == _character.Group);
+            ;
+        }
+
+        public void CastSpellFirst(CharacterState targetState)
+        {
+            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+            
+            //_spellFirst.CastSpell(targetState);
         }
 
         private IEnumerator EndSpellCooldown(int spellNumb, float duration)

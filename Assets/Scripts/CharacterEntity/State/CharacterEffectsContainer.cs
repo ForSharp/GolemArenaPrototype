@@ -1,29 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameLoop;
 using UnityEngine;
 
 namespace CharacterEntity.State
 {
     public class CharacterEffectsContainer : MonoBehaviour
     {
-        //партикл эффекты должны быть дочерними к префабу персонажа, этот скрипт должен висеть на каждом префабе персонажа
-        [SerializeField] private ParticleSystem lvlUpEffect;
-        [SerializeField] private ParticleSystem targetEnemyEffect;
-        [SerializeField] private ParticleSystem targetFriendEffect;
+        [SerializeField] private ParticleSystem lvlUpEffectPrefab;
+        [SerializeField] private ParticleSystem targetEnemyEffectPrefab;
+        [SerializeField] private ParticleSystem targetFriendEffectPrefab;
 
-        private readonly List<ParticleSystem> _effects;
+        private ParticleSystem _lvlUpEffect;
+        private ParticleSystem _targetEnemyEffect;
+        private ParticleSystem _targetFriendEffect;
+        
+        private readonly List<ParticleSystem> _effects = new List<ParticleSystem>();
         
         private void Start()
         {
-            FillList();
+            CreateEffects();
             StopAllEffect();
         }
 
+        private void OnEnable()
+        {
+            Game.StartBattle += StopAllEffect;
+        }
+
+        private void OnDisable()
+        {
+            Game.StartBattle -= StopAllEffect;
+        }
+
+        private void CreateEffects()
+        {
+            _lvlUpEffect = Instantiate(lvlUpEffectPrefab, gameObject.transform).GetComponent<ParticleSystem>();
+            _targetEnemyEffect = Instantiate(targetEnemyEffectPrefab, gameObject.transform).GetComponent<ParticleSystem>();
+            _targetFriendEffect = Instantiate(targetFriendEffectPrefab, gameObject.transform).GetComponent<ParticleSystem>();
+            FillList();
+        }
+        
         private void FillList()
         {
-            _effects.Add(lvlUpEffect);
-            _effects.Add(targetEnemyEffect);
-            _effects.Add(targetFriendEffect);
+            _effects.Add(_lvlUpEffect);
+            _effects.Add(_targetEnemyEffect);
+            _effects.Add(_targetFriendEffect);
         }
 
         private void StopAllEffect()
@@ -36,17 +58,27 @@ namespace CharacterEntity.State
 
         public void PlayTargetEnemy()
         {
-            targetEnemyEffect.Play();
+            _targetEnemyEffect.Play();
+        }
+
+        public void StopPlayingTargetEnemy()
+        {
+            _targetEnemyEffect.Stop();
         }
         
         public void PlayTargetFriend()
         {
-            targetFriendEffect.Play();
+            _targetFriendEffect.Play();
+        }
+        
+        public void StopPlayingTargetFriend()
+        {
+            targetFriendEffectPrefab.Stop();
         }
         
         public void PlayLvlUpEffect()
         {
-            lvlUpEffect.Play();
+            _lvlUpEffect.Play();
         }
     }
 }

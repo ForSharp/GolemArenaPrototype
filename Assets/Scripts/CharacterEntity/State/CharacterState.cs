@@ -13,9 +13,9 @@ namespace CharacterEntity.State
 {
     public sealed class CharacterState : MonoBehaviour, IDestructible
     {
-        [SerializeField] private bool isDynamicHealthBarCreate = true;
         [SerializeField] private GameObject healthBarPrefab;
         private GameObject _healthBar;
+        public CharacterEffectsContainer characterEffectsContainer;
         
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
@@ -52,8 +52,8 @@ namespace CharacterEntity.State
             SoundsController = GetComponent<SoundsController>();
             roundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
-            SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
             SpellPanelHelper = GetComponent<SpellPanelHelper>();
+            SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
             var unused = new ExtraStatsEditorWithItems(this);
             var dummy = new ConsumablesEater(this);
         }
@@ -133,7 +133,6 @@ namespace CharacterEntity.State
 
         private void CreateHealthBar()
         {
-            if (!isDynamicHealthBarCreate) return;
             _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("HealthBarContainer").transform);
             _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
@@ -176,18 +175,25 @@ namespace CharacterEntity.State
                 _lastEnemyAttacked.RoundKills += 1;
                 IsDead = true;
                 EventContainer.OnCharacterDied(_lastEnemyAttacked);
+                _lastEnemyAttacked.Owner.LvlUpCharacter(1);
             }
         }
 
         public void PrepareAfterNewRound()
         {
             IsDead = false;
-            LvlUpper.LvlUp(this, 7);
+            LvlUpCharacter(7);
             HealAllParameters();
             ShowHealthBar();
             NullRoundStatistics();
         }
 
+        public void LvlUpCharacter(int amount)
+        {
+            LvlUpper.LvlUp(this, amount);
+            characterEffectsContainer.PlayLvlUpEffect();
+        }
+        
         private void NullRoundStatistics()
         {
             roundStatistics.RoundDamage = 0;

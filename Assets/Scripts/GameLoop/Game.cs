@@ -32,7 +32,7 @@ namespace GameLoop
         public static event Action OpenMainMenu;
         public static event Action EndGame;
 
-        private const int MAXRoundNumber = 4;
+        private const int MaxRoundNumber = 4;
 
         static Game()
         {
@@ -80,7 +80,7 @@ namespace GameLoop
 
         private static void PrepareNewRound()
         {
-            if (Round > MAXRoundNumber)
+            if (Round > MaxRoundNumber)
             {
                 OnEndGame();
                 Stage = GameStage.MainMenu;
