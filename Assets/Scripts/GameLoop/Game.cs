@@ -141,6 +141,18 @@ namespace GameLoop
                 }
             }
         }
+        
+        public static IEnumerable<CharacterState> GetEnemies(CharacterState state)
+        {
+            return AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group != state.Group);
+        }
+
+        public static IEnumerable<CharacterState> GetFriends(CharacterState state)
+        {
+            return AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group == state.Group);
+        }
 
         public static CharacterType GetRandomCharacter()
         {

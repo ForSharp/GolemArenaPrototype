@@ -3,6 +3,7 @@ using System.Collections;
 using CharacterEntity;
 using CharacterEntity.State;
 using GameLoop;
+using Inventory.Abstracts.Spells;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,9 +13,17 @@ namespace Controller
     public enum PlayMode
     {
         Standard,
-        Cinematic
+        Cinematic,
+        CastSpell
     }
 
+    public enum ChoosingTargetMode
+    {
+        Enemy,
+        Friend,
+        All
+    }
+    
     public sealed class PlayerController : MonoBehaviour
     {
         [SerializeField] private ControllerPanel controllerPanel;
@@ -28,6 +37,7 @@ namespace Controller
 
         private bool _aiControl = true;
         private PlayMode _playMode = PlayMode.Cinematic;
+        private PlayMode _previousPlayMode;
         private CharacterState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
@@ -39,6 +49,8 @@ namespace Controller
         private bool _isCanMove;
         private bool _isDead;
         private float _moveSpeed;
+        private ChoosingTargetMode _targetMode;
+        private ISpellItem _currentSpell;
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
@@ -66,6 +78,7 @@ namespace Controller
         private void SetStandard()
         {
             _playMode = PlayMode.Standard;
+            _previousPlayMode = PlayMode.Standard;
             PlayModeChanged?.Invoke(PlayMode.Standard);
             SetStandardPanel();
             autoButtonFalse.SetActive(false);
@@ -119,7 +132,7 @@ namespace Controller
         }
 
         #endregion
-        
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
@@ -141,6 +154,15 @@ namespace Controller
                         }
                     }
                     break;
+                case PlayMode.CastSpell:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (Game.Stage != Game.GameStage.MainMenu)
+                        {
+                            TryChooseTarget();
+                        }
+                    }
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -156,6 +178,84 @@ namespace Controller
                 return Input.GetKeyDown(KeyCode.Escape) && Game.Stage != Game.GameStage.MainMenu;
             }
         }
+
+        public void StartChoosingTarget(ChoosingTargetMode mode, ISpellItem spellItem)
+        {
+            _playMode = PlayMode.CastSpell;
+            _targetMode = mode;
+            _currentSpell = spellItem;
+        }
+        
+        private void TryChooseTarget()
+        {
+            if (Camera.main is null)
+            {
+                _currentCharacter.SpellManager.CancelCast(_currentSpell);
+            }
+            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            if (!Physics.Raycast(ray, out var hit))
+            {
+                _currentCharacter.SpellManager.CancelCast(_currentSpell);
+            }
+            var coll = hit.collider;
+            
+            if (coll.TryGetComponent(out CharacterState target))
+            {
+                switch (_targetMode)
+                {
+                    case ChoosingTargetMode.Enemy:
+                        if (CheckEnemy(target))
+                        {
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target);
+                            _playMode = _previousPlayMode;
+                            return;
+                        }
+                        break;
+                    case ChoosingTargetMode.Friend:
+                        if (CheckFriend(target))
+                        {
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target);
+                            _playMode = _previousPlayMode;
+                            return;
+                        }
+                        break;
+                    case ChoosingTargetMode.All:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            _playMode = _previousPlayMode;
+            _currentCharacter.SpellManager.CancelCast(_currentSpell);
+
+            bool CheckFriend(CharacterState characterState)
+            {
+                foreach (var friend in Game.GetFriends(_currentCharacter))
+                {
+                    if (friend == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            bool CheckEnemy(CharacterState characterState)
+            {
+                foreach (var enemy in Game.GetEnemies(_currentCharacter))
+                {
+                    if (enemy == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
 
         private void TryShowHeroStates()
         {
@@ -362,6 +462,7 @@ namespace Controller
             {
                 case "Standard":
                     _playMode = PlayMode.Standard;
+                    _previousPlayMode = PlayMode.Standard;
                     if (_aiControl)
                     {
                         autoButtonFalse.SetActive(false);
@@ -388,6 +489,7 @@ namespace Controller
                     break;
                 case "Cinematic":
                     _playMode = PlayMode.Cinematic;
+                    _previousPlayMode = PlayMode.Cinematic;
                     autoButtonFalse.SetActive(false);
                     autoButtonTrue.SetActive(false);
                     OnCinematicCamera();

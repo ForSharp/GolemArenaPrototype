@@ -16,8 +16,8 @@ namespace CharacterEntity
             for (int i = 0; i < amount; i++)
             {
                 state.Character.ChangeBaseStatsProportionallyPermanent(10);
-                EventContainer.OnCharacterStatsChanged(state);
                 state.Lvl++;
+                EventContainer.OnCharacterStatsChanged(state);
             }
         }
         
@@ -25,8 +25,8 @@ namespace CharacterEntity
         {
             if (state.Lvl <= 1) return;
             state.Character.ChangeBaseStatsProportionallyPermanent(-10);
-            EventContainer.OnCharacterStatsChanged(state);
             state.Lvl--;
+            EventContainer.OnCharacterStatsChanged(state);
         }
     }
 }

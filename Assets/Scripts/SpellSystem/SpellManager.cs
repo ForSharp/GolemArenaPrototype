@@ -6,6 +6,7 @@ using Behaviour;
 using Behaviour.Abstracts;
 using CharacterEntity;
 using CharacterEntity.State;
+using Controller;
 using GameLoop;
 using Inventory;
 using Inventory.Abstracts;
@@ -22,19 +23,20 @@ namespace SpellSystem
         private readonly CharacterState _character;
         private readonly SpellContainer _spellContainer;
         private readonly SpellsPanel _spellsPanel;
-        
+        private readonly PlayerController _playerController;
+
         private ICastable _spellFirst;
         private ICastable _spellSecond;
         private ICastable _spellThird;
 
-        private ActiveUISpell _spellFirstUI;
-        private ActiveUISpell _spellSecondUI;
-        private ActiveUISpell _spellThirdUI;
-        
+        private readonly ActiveUISpell _spellFirstUI;
+        private readonly ActiveUISpell _spellSecondUI;
+        private readonly ActiveUISpell _spellThirdUI;
+
         public void LearnSpell(ISpellItem spell)
         {
             var inventoryItem = (IInventoryItem)spell;
-            
+
             for (var i = 0; i < _learnedSpells.Count; i++)
             {
                 var containedItem = (IInventoryItem)_learnedSpells[i];
@@ -42,17 +44,18 @@ namespace SpellSystem
                 {
                     if (_learnedSpells[i].SpellInfo.SpellLvl < 3)
                     {
-                        _learnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(_learnedSpells[i], _learnedSpells[i].SpellInfo.SpellLvl);
+                        _learnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(_learnedSpells[i],
+                            _learnedSpells[i].SpellInfo.SpellLvl);
                         _spellsPanel.UpdateLearnedSpells(_learnedSpells[i]);
                         DeleteSpellItemAfterLearning(inventoryItem);
-                        
+
                         return;
                     }
                     //максимальный уровень спелла уже изучен - ничего не делаем
                     return;
                 }
             }
-            
+
             _learnedSpells.Add(spell);
             _spellsPanel.AddLearnedSpell(spell);
             DeleteSpellItemAfterLearning(inventoryItem);
@@ -81,6 +84,7 @@ namespace SpellSystem
             _spellFirstUI = _spellsPanel.SpellButtonFirst;
             _spellSecondUI = _spellsPanel.SpellButtonSecond;
             _spellThirdUI = _spellsPanel.SpellButtonThird;
+            _playerController = GameObject.Find("Tester").GetComponent<PlayerController>();
         }
 
         public void CheckCanCastSpell(int spellNumb)
@@ -88,103 +92,104 @@ namespace SpellSystem
             switch (spellNumb)
             {
                 case 1:
-                    // if (!_spellFirstUI.IsActive)
-                    //     return;
-                    if (!_spellFirstUI.InCooldown && _spellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
-                                                      && Game.Stage == Game.GameStage.Battle)
+                    if (!_spellFirstUI.InCooldown && _spellFirstUI.SpellItem.SpellInfo.ManaCost <=
+                                                  _character.CurrentMana
+                                                  && Game.Stage == Game.GameStage.Battle)
                     {
                         var spellItem = _spellFirstUI.SpellItem;
                         ShowTargets(spellItem);
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
                         //mark spell choice
-                        var target = GetTarget(spellItem);
-                        if (target)
-                        {
-                            CastSpellFirst(target);
-                            
-                            CancelShowingTargets(spellItem);
-                        }
-                        else
-                        {
-                            Debug.Log("no cast");
-                            CancelShowingTargets(spellItem);
-                        }
-                        
                     }
                     break;
                 case 2:
+                    if (!_spellSecondUI.InCooldown && _spellSecondUI.SpellItem.SpellInfo.ManaCost <=
+                                                   _character.CurrentMana
+                                                   && Game.Stage == Game.GameStage.Battle)
+                    {
+                        var spellItem = _spellSecondUI.SpellItem;
+                        ShowTargets(spellItem);
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
+                        //mark spell choice
+                    }
                     break;
                 case 3:
+                    if (!_spellThirdUI.InCooldown && _spellThirdUI.SpellItem.SpellInfo.ManaCost <=
+                                                  _character.CurrentMana
+                                                  && Game.Stage == Game.GameStage.Battle)
+                    {
+                        var spellItem = _spellThirdUI.SpellItem;
+                        ShowTargets(spellItem);
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
+                        //mark spell choice
+                    }
                     break;
             }
-            
         }
 
-        private CharacterState GetTarget(ISpellItem spellItem)
+        public void CastSpell(ISpellItem spellItem, CharacterState target)
         {
-            if (Camera.main is null)
+            if (_spellFirstUI.SpellItem == spellItem)
             {
-                return null;
+                CastSpellFirst(target, spellItem);
             }
-            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-            if (!Physics.Raycast(ray, out var hit))
+            else if (_spellSecondUI.SpellItem == spellItem)
             {
-                return null;
+                CastSpellSecond(target, spellItem);
             }
-            var coll = hit.collider;
-            if (coll.TryGetComponent(out CharacterState state))
+            else if (_spellThirdUI.SpellItem == spellItem)
             {
-                switch (spellItem.SpellInfo.SpellType)
-                {
-                    case SpellType.Heal:
-                        if (CheckFriend(state)) return state;
-                        break;
-                    case SpellType.Buff:
-                        if (CheckFriend(state)) return state;
-                        break;
-                    case SpellType.Debuff:
-                        if (CheckEnemy(state)) return state;
-                        break;
-                    case SpellType.Damage:
-                        if (CheckEnemy(state)) return state;
-                        break;
-                    case SpellType.Summon:
-                        if (CheckEnemy(state)) return state;
-                        break;
-                    case SpellType.Polymorph:
-                        if (CheckEnemy(state)) return state;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                CastSpellThird(target, spellItem);
+            }
+            else
+            {
+                throw new Exception();
             }
             
+            //отнять ману
             
-            return null;
+            //отменить выделение спелла
+            
+            //врубить перезарядку
+            
+            CancelShowingTargets(spellItem);
+        }
+        
+        private IEnumerator EndSpellCooldown(int spellNumb, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+        }
 
-            bool CheckFriend(CharacterState characterState)
+        private void EndCooldownAllSpells()
+        {
+            //по сути, преждевременно прервать перезарядку, обнулить ее
+        }
+
+        public void CancelCast(ISpellItem spellItem)
+        {
+            Debug.Log("no cast");
+            CancelShowingTargets(spellItem);
+            //отменить выделение спелла
+        }
+
+        private ChoosingTargetMode GetChoosingTargetMode(ISpellItem spellItem)
+        {
+            switch (spellItem.SpellInfo.SpellType)
             {
-                foreach (var friend in GetFriends())
-                {
-                    if (friend == characterState)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            bool CheckEnemy(CharacterState characterState)
-            {
-                foreach (var enemy in GetEnemies())
-                {
-                    if (enemy == characterState)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                case SpellType.Heal:
+                    return ChoosingTargetMode.Friend;
+                case SpellType.Buff:
+                    return ChoosingTargetMode.Friend;
+                case SpellType.Debuff:
+                    return ChoosingTargetMode.Enemy;
+                case SpellType.Damage:
+                    return ChoosingTargetMode.Enemy;
+                case SpellType.Summon:
+                    return ChoosingTargetMode.Enemy;
+                case SpellType.Polymorph:
+                    return ChoosingTargetMode.Enemy;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -214,7 +219,7 @@ namespace SpellSystem
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         private void ShowTargets(ISpellItem spellItem)
         {
             switch (spellItem.SpellInfo.SpellType)
@@ -244,7 +249,7 @@ namespace SpellSystem
 
         private void ShowTargetsEnemies()
         {
-            var enemies = GetEnemies();
+            var enemies = Game.GetEnemies(_character);
             foreach (var enemy in enemies)
             {
                 enemy.characterEffectsContainer.PlayTargetEnemy();
@@ -253,7 +258,7 @@ namespace SpellSystem
 
         private void StopPlayingTargetEnemiesEffect()
         {
-            var enemies = GetEnemies();
+            var enemies = Game.GetEnemies(_character);
             foreach (var enemy in enemies)
             {
                 enemy.characterEffectsContainer.StopPlayingTargetEnemy();
@@ -262,7 +267,7 @@ namespace SpellSystem
 
         private void ShowTargetsFriends()
         {
-            var friends = GetFriends();
+            var friends = Game.GetFriends(_character);
             foreach (var friend in friends)
             {
                 friend.characterEffectsContainer.PlayTargetFriend();
@@ -271,46 +276,35 @@ namespace SpellSystem
 
         private void StopPlayingTargetFriendsEffect()
         {
-            var friends = GetFriends();
+            var friends = Game.GetFriends(_character);
             foreach (var friend in friends)
             {
                 friend.characterEffectsContainer.StopPlayingTargetFriend();
             }
         }
-
-        private IEnumerable<CharacterState> GetEnemies()
-        {
-            return Game.AllCharactersInSession.Where(character => !character.IsDead)
-                .Where(group => group.Group != _character.Group);
-        }
-
-        private IEnumerable<CharacterState> GetFriends()
-        {
-            return Game.AllCharactersInSession.Where(character => !character.IsDead)
-                .Where(group => group.Group == _character.Group);
-            ;
-        }
-
-        public void CastSpellFirst(CharacterState targetState)
+        
+        private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
             
             //_spellFirst.CastSpell(targetState);
         }
 
-        private IEnumerator EndSpellCooldown(int spellNumb, float duration)
+        private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem)
         {
-            yield return new WaitForSeconds(duration);
-            
-            
+            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+
+            //_spellSecond.CastSpell(targetState);
         }
 
-        private void EndCooldownAllSpells()
+        private void CastSpellThird(CharacterState targetState, ISpellItem spellItem)
         {
-            //по сути, преждевременно прервать перезарядку, обнулить ее
+            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+
+            //_spellThird.CastSpell(targetState);
         }
 
-        public void ActivateSpell(ISpellItem spellItem, int numb) 
+        public void ActivateSpell(ISpellItem spellItem, int numb)
         {
             switch (numb)
             {
@@ -336,18 +330,18 @@ namespace SpellSystem
                     throw new ArgumentOutOfRangeException(nameof(spell));
             }
         }
-        
-        private ISpellItem GetSpellItem<T>()where T : ISpellItem 
+
+        private ISpellItem GetSpellItem<T>() where T : ISpellItem
         {
             foreach (var spellItem in _learnedSpells)
             {
                 if (spellItem is T)
                     return spellItem;
             }
-        
+
             throw new Exception();
         }
-        
+
         private void SetupSpell(out ICastable spellSlot, ISpellItem spellItem)
         {
             switch (spellItem)

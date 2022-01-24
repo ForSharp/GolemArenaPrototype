@@ -73,7 +73,7 @@ namespace CharacterEntity.State
         
         public void StopPlayingTargetFriend()
         {
-            targetFriendEffectPrefab.Stop();
+            _targetFriendEffect.Stop();
         }
         
         public void PlayLvlUpEffect()

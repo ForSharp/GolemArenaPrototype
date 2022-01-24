@@ -68,11 +68,13 @@ namespace SpellSystem
                 case 2:
                     if (spellButtonSecond.InCooldown)
                         return;
+                    character.SpellManager.CheckCanCastSpell(2);
                     //spellButtonSecond.StartCooldown();
                     break;
                 case 3:
                     if (spellButtonThird.InCooldown)
                         return;
+                    character.SpellManager.CheckCanCastSpell(3);
                     //spellButtonThird.StartCooldown();
                     break;
             }

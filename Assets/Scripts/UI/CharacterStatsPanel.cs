@@ -143,7 +143,6 @@ namespace UI
 
         public void SetStatsValues(CharacterState state)
         {
-            
             if (_state.Stats != null)
             {
                 _stats = _state.Stats;
