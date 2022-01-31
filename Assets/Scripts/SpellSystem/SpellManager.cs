@@ -98,8 +98,9 @@ namespace SpellSystem
                     {
                         var spellItem = _spellFirstUI.SpellItem;
                         ShowTargets(spellItem);
-                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
-                        //mark spell choice
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
+                        
+                        _spellFirstUI.MarkSpell();
                     }
                     break;
                 case 2:
@@ -109,8 +110,9 @@ namespace SpellSystem
                     {
                         var spellItem = _spellSecondUI.SpellItem;
                         ShowTargets(spellItem);
-                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
-                        //mark spell choice
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
+                        
+                        _spellSecondUI.MarkSpell();
                     }
                     break;
                 case 3:
@@ -120,56 +122,50 @@ namespace SpellSystem
                     {
                         var spellItem = _spellThirdUI.SpellItem;
                         ShowTargets(spellItem);
-                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem);
-                        //mark spell choice
+                        _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
+                        
+                        _spellThirdUI.MarkSpell();
                     }
                     break;
             }
         }
 
-        public void CastSpell(ISpellItem spellItem, CharacterState target)
+        public void CastSpell(ISpellItem spellItem, CharacterState target, int spellNumb)
         {
-            if (_spellFirstUI.SpellItem == spellItem)
+            switch (spellNumb)
             {
-                CastSpellFirst(target, spellItem);
+                case 1:
+                    CastSpellFirst(target, spellItem);
+                    break;
+                case 2:
+                    CastSpellSecond(target, spellItem);
+                    break;
+                case 3:
+                    CastSpellThird(target, spellItem);
+                    break;
             }
-            else if (_spellSecondUI.SpellItem == spellItem)
-            {
-                CastSpellSecond(target, spellItem);
-            }
-            else if (_spellThirdUI.SpellItem == spellItem)
-            {
-                CastSpellThird(target, spellItem);
-            }
-            else
-            {
-                throw new Exception();
-            }
-            
-            //отнять ману
-            
-            //отменить выделение спелла
-            
-            //врубить перезарядку
-            
+
             CancelShowingTargets(spellItem);
         }
-        
-        private IEnumerator EndSpellCooldown(int spellNumb, float duration)
-        {
-            yield return new WaitForSeconds(duration);
-        }
 
-        private void EndCooldownAllSpells()
-        {
-            //по сути, преждевременно прервать перезарядку, обнулить ее
-        }
-
-        public void CancelCast(ISpellItem spellItem)
+        public void CancelCast(ISpellItem spellItem, int spellNumb)
         {
             Debug.Log("no cast");
             CancelShowingTargets(spellItem);
-            //отменить выделение спелла
+            
+            switch (spellNumb)
+            {
+                case 1:
+                    _spellFirstUI.StopMarkSpell();
+                    break;
+                case 2:
+                    _spellSecondUI.StopMarkSpell();
+                    break;
+                case 3:
+                    _spellThirdUI.StopMarkSpell();
+                    break;
+            }
+            
         }
 
         private ChoosingTargetMode GetChoosingTargetMode(ISpellItem spellItem)
@@ -282,10 +278,20 @@ namespace SpellSystem
                 friend.characterEffectsContainer.StopPlayingTargetFriend();
             }
         }
+
+        private void EndCooldownAllSpells()
+        {
+            //по сути, преждевременно прервать перезарядку, обнулить ее
+        }
         
         private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+            _spellFirstUI.StopMarkSpell();
+            
+            _spellFirstUI.StartCooldown();
+            //отнять ману
+            //врубить перезарядку
             
             //_spellFirst.CastSpell(targetState);
         }
@@ -293,14 +299,18 @@ namespace SpellSystem
         private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
-
+            _spellSecondUI.StopMarkSpell();
+            
+            _spellSecondUI.StartCooldown();
             //_spellSecond.CastSpell(targetState);
         }
 
         private void CastSpellThird(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
-
+            _spellThirdUI.StopMarkSpell();
+            
+            _spellThirdUI.StartCooldown();
             //_spellThird.CastSpell(targetState);
         }
 

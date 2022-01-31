@@ -5,49 +5,54 @@ using UnityEngine.UI;
 
 namespace SpellSystem
 {
-    public class ActiveUISpell: MonoBehaviour
+    public class ActiveUISpell : MonoBehaviour
     {
         [SerializeField] private Button spellChanger;
         [SerializeField] private Image spellIcon;
         [SerializeField] private Text spellLvl;
         [SerializeField] private Image cooldown;
+        [SerializeField] private Image imageMark;
+        [SerializeField] private Text cooldownText;
         public bool IsActive { get; private set; }
         public bool InCooldown { get; private set; }
         public ISpellItem SpellItem { get; private set; }
         public string SpellId { get; private set; }
-        
+
         private float _cooldownDuration;
-        
+        private float _currentCooldown;
+
         private void Start()
         {
             spellChanger.gameObject.SetActive(false);
         }
-        
+
         private void Update()
         {
-            if (cooldown.fillAmount > 0)
+            if (_currentCooldown > 0)
             {
-                cooldown.fillAmount -= _cooldownDuration * Time.deltaTime;
+                _currentCooldown -= Time.deltaTime;
+                cooldown.fillAmount = _currentCooldown / _cooldownDuration;
+                cooldownText.text = _currentCooldown.ToString("F1");
             }
-
-            if (cooldown.fillAmount == 0)
+            else
             {
-                InCooldown = false;
+                EndCooldown();
             }
         }
 
         public void StartCooldown()
         {
-            cooldown.fillAmount = 1;
+            _currentCooldown = _cooldownDuration;
             InCooldown = true;
         }
 
         public void EndCooldown()
         {
-            cooldown.fillAmount = 0;
+            _currentCooldown = 0;
             InCooldown = false;
+            cooldownText.text = "";
         }
-        
+
         public void ActivateSpell(ISpellItem spellItem)
         {
             SpellItem = spellItem;
@@ -80,6 +85,16 @@ namespace SpellSystem
             IsActive = false;
             spellChanger.gameObject.SetActive(false);
             SpellItem = null;
+        }
+
+        public void MarkSpell()
+        {
+            imageMark.gameObject.SetActive(true);
+        }
+
+        public void StopMarkSpell()
+        {
+            imageMark.gameObject.SetActive(false);
         }
     }
 }

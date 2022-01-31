@@ -16,11 +16,11 @@ namespace SpellSystem
         [SerializeField] private LearnedSpellsPanel learnedSpellsPanel;
         private int _spellNumberToChange;
         private bool _learnedSpellPanelEnabled;
-        [HideInInspector] public CharacterState character;
+        public CharacterState Character { get; set; }
         
         public ActiveUISpell SpellButtonFirst => spellButtonFirst;
         public ActiveUISpell SpellButtonSecond => spellButtonSecond;
-        public ActiveUISpell SpellButtonThird => spellButtonFirst;
+        public ActiveUISpell SpellButtonThird => spellButtonThird;
         public bool InPanel { get; private set; }
 
         public void EndCooldownAllSpells()
@@ -57,27 +57,7 @@ namespace SpellSystem
 
         private void StartCastSpell(int spellNumb)
         {
-            switch (spellNumb)
-            {
-                case 1:
-                    if (spellButtonFirst.InCooldown)
-                        return;
-                    character.SpellManager.CheckCanCastSpell(1);
-                    //spellButtonFirst.StartCooldown();
-                    break;
-                case 2:
-                    if (spellButtonSecond.InCooldown)
-                        return;
-                    character.SpellManager.CheckCanCastSpell(2);
-                    //spellButtonSecond.StartCooldown();
-                    break;
-                case 3:
-                    if (spellButtonThird.InCooldown)
-                        return;
-                    character.SpellManager.CheckCanCastSpell(3);
-                    //spellButtonThird.StartCooldown();
-                    break;
-            }
+            Character.SpellManager.CheckCanCastSpell(spellNumb);
         }
 
         public void ChangeActiveSpell(int spellNumb)
@@ -123,7 +103,7 @@ namespace SpellSystem
                         }
                     }
                     spellButtonFirst.ActivateSpell(spellItem);
-                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    Character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
                     learnedSpellsPanel.ActivateSpell(id);
                     break;
                 case 2:
@@ -138,7 +118,7 @@ namespace SpellSystem
                         }
                     }
                     spellButtonSecond.ActivateSpell(spellItem);
-                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    Character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
                     learnedSpellsPanel.ActivateSpell(id);
                     break;
                 case 3:
@@ -153,7 +133,7 @@ namespace SpellSystem
                         }
                     }
                     spellButtonThird.ActivateSpell(spellItem);
-                    character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    Character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
                     learnedSpellsPanel.ActivateSpell(id);
                     break;
             }
@@ -163,7 +143,7 @@ namespace SpellSystem
         private void ShowLearnedSpellsPanel()
         {
             learnedSpellsPanel.ShowLearnedSpells();
-            character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+            Character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
             _learnedSpellPanelEnabled = true;
         }
 

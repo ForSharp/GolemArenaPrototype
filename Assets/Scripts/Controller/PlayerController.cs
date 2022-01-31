@@ -51,6 +51,7 @@ namespace Controller
         private float _moveSpeed;
         private ChoosingTargetMode _targetMode;
         private ISpellItem _currentSpell;
+        private int _currentSpellNumb;
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
@@ -179,23 +180,24 @@ namespace Controller
             }
         }
 
-        public void StartChoosingTarget(ChoosingTargetMode mode, ISpellItem spellItem)
+        public void StartChoosingTarget(ChoosingTargetMode mode, ISpellItem spellItem, int spellNumb)
         {
             _playMode = PlayMode.CastSpell;
             _targetMode = mode;
             _currentSpell = spellItem;
+            _currentSpellNumb = spellNumb;
         }
         
         private void TryChooseTarget()
         {
             if (Camera.main is null)
             {
-                _currentCharacter.SpellManager.CancelCast(_currentSpell);
+                _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
             }
             var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit))
             {
-                _currentCharacter.SpellManager.CancelCast(_currentSpell);
+                _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
             }
             var coll = hit.collider;
             
@@ -206,7 +208,7 @@ namespace Controller
                     case ChoosingTargetMode.Enemy:
                         if (CheckEnemy(target))
                         {
-                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target);
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target, _currentSpellNumb);
                             _playMode = _previousPlayMode;
                             return;
                         }
@@ -214,7 +216,7 @@ namespace Controller
                     case ChoosingTargetMode.Friend:
                         if (CheckFriend(target))
                         {
-                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target);
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target, _currentSpellNumb);
                             _playMode = _previousPlayMode;
                             return;
                         }
@@ -227,7 +229,7 @@ namespace Controller
             }
             
             _playMode = _previousPlayMode;
-            _currentCharacter.SpellManager.CancelCast(_currentSpell);
+            _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
 
             bool CheckFriend(CharacterState characterState)
             {
