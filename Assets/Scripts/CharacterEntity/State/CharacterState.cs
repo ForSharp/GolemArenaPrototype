@@ -141,6 +141,11 @@ namespace CharacterEntity.State
         {
             CurrentHealth -= damage;
 
+            if (statistics != null)
+            {
+                _lastEnemyAttacked = statistics;
+            }
+            
             if (CurrentHealth <= 0)
             {
                 damage += CurrentHealth;
@@ -151,7 +156,6 @@ namespace CharacterEntity.State
             {
                 statistics.Damage += damage;
                 statistics.RoundDamage += damage;
-                _lastEnemyAttacked = statistics;
             }
 
             OnCurrentHealthChanged(CurrentHealth);

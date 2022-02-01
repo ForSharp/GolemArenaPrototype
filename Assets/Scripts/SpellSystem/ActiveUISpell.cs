@@ -62,7 +62,7 @@ namespace SpellSystem
             spellChanger.gameObject.SetActive(true);
             spellLvl.text = GetStringSpellLvl(spellItem);
             SpellId = item.Info.Id;
-            _cooldownDuration = 60 / spellItem.SpellInfo.Cooldown;
+            _cooldownDuration = spellItem.SpellInfo.Cooldown;
         }
 
         private string GetStringSpellLvl(ISpellItem spellItem)

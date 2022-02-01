@@ -11,7 +11,7 @@ namespace Behaviour.Abstracts
     {
         void CastSpell(CharacterState target);
 
-        void SpellConstructor(ISpellItem info, CharacterState character, Animator animator);
+        void SpellConstructor(ISpellItem info);
 
     }
 }

@@ -281,37 +281,39 @@ namespace SpellSystem
 
         private void EndCooldownAllSpells()
         {
-            //по сути, преждевременно прервать перезарядку, обнулить ее
+            _spellFirstUI.EndCooldown();
+            _spellSecondUI.EndCooldown();
+            _spellThirdUI.EndCooldown();
         }
         
         private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
             _spellFirstUI.StopMarkSpell();
-            
             _spellFirstUI.StartCooldown();
-            //отнять ману
-            //врубить перезарядку
-            
-            //_spellFirst.CastSpell(targetState);
+            _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
+
+            _spellFirst.CastSpell(targetState);
         }
 
         private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem)
         {
-            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+            Debug.Log($"Target: {targetState.Type}, Spell: {_spellSecondUI.SpellItem.SpellInfo.SpellType}");
             _spellSecondUI.StopMarkSpell();
-            
             _spellSecondUI.StartCooldown();
-            //_spellSecond.CastSpell(targetState);
+            _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
+            
+            _spellSecond.CastSpell(targetState);
         }
 
         private void CastSpellThird(CharacterState targetState, ISpellItem spellItem)
         {
-            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
+            Debug.Log($"Target: {targetState.Type}, Spell: {_spellThirdUI.SpellItem.SpellInfo.SpellType}");
             _spellThirdUI.StopMarkSpell();
-            
             _spellThirdUI.StartCooldown();
-            //_spellThird.CastSpell(targetState);
+            _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
+            
+            _spellThird.CastSpell(targetState);
         }
 
         public void ActivateSpell(ISpellItem spellItem, int numb)
@@ -358,21 +360,28 @@ namespace SpellSystem
             {
                 case FireBallItem _:
                     spellSlot = _spellContainer.FireballSpell;
-                    _spellContainer.FireballSpell.SpellConstructor(spellItem, _character, _animator);
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case FreezingItem _:
+                case FreezingItem _://
+                    spellSlot = _spellContainer.FireballSpell;
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case GraceItem graceBuffItem:
+                case GraceItem graceBuffItem://
+                    spellSlot = _spellContainer.FireballSpell;
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case SnowstormItem snowstormItem:
+                case SnowstormItem snowstormItem://
+                    spellSlot = _spellContainer.FireballSpell;
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case SummonSpiderItem summonSpiderItem:
+                case SummonSpiderItem summonSpiderItem://
+                    spellSlot = _spellContainer.FireballSpell;
+                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spellItem));
             }
 
-            spellSlot = null;
         }
     }
 }

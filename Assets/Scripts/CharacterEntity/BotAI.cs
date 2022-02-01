@@ -371,8 +371,7 @@ namespace CharacterEntity
             //привести к нужному типу, эти данные могут храниться например в каррент стэйт
 
             SetSpellCast(_fireballSpell);
-            _fireballSpell.SpellConstructor(ItemContainer.Instance.GetFireBallLvl1(), _thisState, 
-                _animator);
+            _fireballSpell.SpellConstructor(ItemContainer.Instance.GetFireBallLvl1());
             _spellCast.CastSpell(_targetState);
         }
         

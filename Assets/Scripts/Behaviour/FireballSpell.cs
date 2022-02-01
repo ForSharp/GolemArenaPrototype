@@ -18,12 +18,16 @@ namespace Behaviour
         private Animator _animator;
         private GameObject _spellEffect;
 
-        public void SpellConstructor(ISpellItem info, CharacterState character, Animator animator)
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+            _character = GetComponent<CharacterState>();
+        }
+
+        public void SpellConstructor(ISpellItem info)
         {
             _info = (FireBallItem)info;
-            _animator = animator;
             _spellEffect = _info.SpellInfo.SpellEffect;
-            _character = character;
         }
 
         public void CastSpell(CharacterState target)
