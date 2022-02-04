@@ -1,4 +1,6 @@
-﻿using Inventory.Abstracts;
+﻿using System;
+using GameLoop;
+using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +26,16 @@ namespace SpellSystem
         private void Start()
         {
             spellChanger.gameObject.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            Game.StartBattle += EndCooldown;
+        }
+
+        private void OnDisable()
+        {
+            Game.StartBattle -= EndCooldown;
         }
 
         private void Update()

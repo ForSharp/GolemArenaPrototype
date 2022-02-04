@@ -278,13 +278,6 @@ namespace SpellSystem
                 friend.characterEffectsContainer.StopPlayingTargetFriend();
             }
         }
-
-        private void EndCooldownAllSpells()
-        {
-            _spellFirstUI.EndCooldown();
-            _spellSecondUI.EndCooldown();
-            _spellThirdUI.EndCooldown();
-        }
         
         private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {

@@ -27,8 +27,8 @@ namespace UI
 
             if (_characterState)
             {
-                AddListeners();
                 SetStartValues();
+                AddListeners();
             }
         }
 
@@ -84,9 +84,11 @@ namespace UI
         private void SetMaxValues(CharacterExtraStats stats)
         {
             sliderHealth.maxValue = stats.health;
+            sliderHealth.value = _characterState.CurrentHealth;
             maxHealthText.text = sliderHealth.maxValue.ToString("#.");
 
             sliderMana.maxValue = stats.manaPool;
+            sliderMana.value = _characterState.CurrentMana;
             maxManaText.text = sliderMana.maxValue.ToString("#.");
             
         }

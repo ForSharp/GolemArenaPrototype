@@ -8,15 +8,18 @@ using Inventory;
 using SpellSystem;
 using UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CharacterEntity.State
 {
     public sealed class CharacterState : MonoBehaviour, IDestructible
     {
         [SerializeField] private GameObject healthBarPrefab;
+        [SerializeField] private GameObject stateBarPrefab;
         private GameObject _healthBar;
+        public DynamicStateBar stateBar { get; private set; }
         public CharacterEffectsContainer characterEffectsContainer;
-        
+
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
         public float MaxMana { get; private set; }
@@ -34,13 +37,14 @@ namespace CharacterEntity.State
         public InventoryHelper InventoryHelper { get; private set; }
         public SpellManager SpellManager { get; private set; }
         public SpellPanelHelper SpellPanelHelper { get; private set; }
-        
+
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics roundStatistics;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentManaChanged;
         public event Action<CharacterExtraStats> StatsChanged;
+        public event Action<Sprite, float, bool, string> StateEffectAdded;
 
         public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
@@ -90,6 +94,7 @@ namespace CharacterEntity.State
             {
                 CurrentHealth = newMaxHealth;
             }
+
             OnCurrentHealthChanged(CurrentHealth);
         }
 
@@ -101,6 +106,7 @@ namespace CharacterEntity.State
             {
                 CurrentMana = newMaxMana;
             }
+
             OnCurrentManaChanged(CurrentMana);
         }
 
@@ -129,12 +135,22 @@ namespace CharacterEntity.State
             CurrentMana = MaxMana;
 
             CreateHealthBar();
+            CreateStateBar();
         }
 
         private void CreateHealthBar()
         {
-            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, GameObject.Find("HealthBarContainer").transform);
+            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity,
+                GameObject.Find("HealthBarContainer").transform);
             _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
+        }
+
+        private void CreateStateBar()
+        {
+            var bar = Instantiate(stateBarPrefab, transform.position, Quaternion.identity,
+                GameObject.Find("HealthBarContainer").transform);
+            stateBar = bar.GetComponent<DynamicStateBar>();
+            stateBar.SetCharacterState(this);
         }
 
         public void TakeDamage(float damage, RoundStatistics statistics)
@@ -145,7 +161,7 @@ namespace CharacterEntity.State
             {
                 _lastEnemyAttacked = statistics;
             }
-            
+
             if (CurrentHealth <= 0)
             {
                 damage += CurrentHealth;
@@ -170,6 +186,7 @@ namespace CharacterEntity.State
             OnCurrentManaChanged(CurrentMana);
             return true;
         }
+
         private void PrepareToDie()
         {
             if (!IsDead)
@@ -197,7 +214,7 @@ namespace CharacterEntity.State
             LvlUpper.LvlUp(this, amount);
             characterEffectsContainer.PlayLvlUpEffect();
         }
-        
+
         private void NullRoundStatistics()
         {
             roundStatistics.RoundDamage = 0;
@@ -218,6 +235,7 @@ namespace CharacterEntity.State
         private void ShowHealthBar()
         {
             _healthBar.gameObject.SetActive(true);
+            stateBar.gameObject.SetActive(true);
         }
 
         public void HealCurrentsFlat(MainCharacterParameter parameter, float healingValue)
@@ -230,6 +248,7 @@ namespace CharacterEntity.State
                     {
                         CurrentHealth = MaxHealth;
                     }
+
                     OnCurrentHealthChanged(CurrentHealth);
                     break;
                 case MainCharacterParameter.Intelligence:
@@ -238,13 +257,14 @@ namespace CharacterEntity.State
                     {
                         CurrentMana = MaxMana;
                     }
+
                     OnCurrentManaChanged(CurrentMana);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
             }
         }
-        
+
         public void HealCurrentsMultiply(MainCharacterParameter parameter, float healingValue)
         {
             switch (parameter)
@@ -255,6 +275,7 @@ namespace CharacterEntity.State
                     {
                         CurrentHealth = MaxHealth;
                     }
+
                     OnCurrentHealthChanged(CurrentHealth);
                     break;
                 case MainCharacterParameter.Intelligence:
@@ -263,13 +284,14 @@ namespace CharacterEntity.State
                     {
                         CurrentMana = MaxMana;
                     }
+
                     OnCurrentManaChanged(CurrentMana);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
             }
         }
-        
+
         private IEnumerator RegenerateCurrents()
         {
             yield return new WaitForSeconds(1);
@@ -283,6 +305,7 @@ namespace CharacterEntity.State
                     {
                         CurrentHealth = MaxHealth;
                     }
+
                     OnCurrentHealthChanged(CurrentHealth);
                 }
 
@@ -293,13 +316,13 @@ namespace CharacterEntity.State
                     {
                         CurrentMana = MaxMana;
                     }
+
                     OnCurrentManaChanged(CurrentMana);
                 }
 
-            
+
                 StartCoroutine(RegenerateCurrents());
             }
-
         }
 
         private void OnCurrentHealthChanged(float health)
@@ -315,6 +338,11 @@ namespace CharacterEntity.State
         private void OnStatsChanged(CharacterExtraStats stats)
         {
             StatsChanged?.Invoke(stats);
+        }
+
+        public void OnStateEffectAdded(Sprite effectImage, float effectDuration, bool effectIsPositive, string effectId)
+        {
+            StateEffectAdded?.Invoke(effectImage, effectDuration, effectIsPositive, effectId);
         }
     }
 }
