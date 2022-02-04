@@ -17,7 +17,7 @@ namespace CharacterEntity.State
         [SerializeField] private GameObject healthBarPrefab;
         [SerializeField] private GameObject stateBarPrefab;
         private GameObject _healthBar;
-        public DynamicStateBar stateBar { get; private set; }
+        public DynamicStateBar StateBar { get; private set; }
         public CharacterEffectsContainer characterEffectsContainer;
 
         public float MaxHealth { get; private set; }
@@ -149,8 +149,8 @@ namespace CharacterEntity.State
         {
             var bar = Instantiate(stateBarPrefab, transform.position, Quaternion.identity,
                 GameObject.Find("HealthBarContainer").transform);
-            stateBar = bar.GetComponent<DynamicStateBar>();
-            stateBar.SetCharacterState(this);
+            StateBar = bar.GetComponent<DynamicStateBar>();
+            StateBar.SetCharacterState(this);
         }
 
         public void TakeDamage(float damage, RoundStatistics statistics)
@@ -235,7 +235,7 @@ namespace CharacterEntity.State
         private void ShowHealthBar()
         {
             _healthBar.gameObject.SetActive(true);
-            stateBar.gameObject.SetActive(true);
+            StateBar.gameObject.SetActive(true);
         }
 
         public void HealCurrentsFlat(MainCharacterParameter parameter, float healingValue)

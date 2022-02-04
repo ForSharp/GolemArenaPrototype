@@ -54,6 +54,7 @@ namespace GameLoop
             StartBattle?.Invoke();
             Stage = GameStage.Battle;
             RoundEnded = false;
+            
         }
         
         public static void OnOpenMainMenu()
@@ -76,6 +77,8 @@ namespace GameLoop
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
+            
+            
         }
 
         private static void PrepareNewRound()

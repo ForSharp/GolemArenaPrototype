@@ -48,7 +48,7 @@ namespace Behaviour
             var fireBall = Instantiate(_spellEffect, transform.position + Vector3.forward + Vector3.up, transform.rotation);
             
             var fireballEffect = fireBall.GetComponent<FireballEffect>();
-            fireballEffect.CustomConstructor(_character, _info);
+            fireballEffect.CustomConstructor(_character, _info, _target);
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using CharacterEntity.State;
 using GameLoop;
@@ -15,6 +16,7 @@ namespace UI
         private Camera _mainCamera;
         private bool _isDead;
         private float _boundsSizeY;
+        private readonly Dictionary<string,Coroutine> _delays = new Dictionary<string,Coroutine>();
 
         private void Start()
         {
@@ -28,6 +30,20 @@ namespace UI
                 SetRequiredPosition(2f);
         }
 
+        private void OnEnable()
+        {
+            if (_characterState)
+            {
+                AddListeners();
+                _isDead = false;
+            }
+        }
+
+        private void OnDisable()
+        {
+            RemoveListeners();
+        }
+
         public void SetCharacterState(CharacterState state)
         {
             _characterState = state;
@@ -38,23 +54,45 @@ namespace UI
         {
             foreach (var effect in effects.Where(effect => effect.gameObject.activeSelf))
             {
-                if (effect.currentEffectId == effectId)
-                    effect.StopShowEffect();
+                if (effect.CurrentEffectId == effectId)
+                {
+                    effect.gameObject.SetActive(false);
+                }
+
+                _delays.TryGetValue(effectId, out var coroutine);
+                StopCoroutine(coroutine);
+                _delays.Remove(effectId);
             }
         }
 
         private void AddEffect(Sprite effectImage, float effectDuration, bool isPositive, string effectId)
         {
             var stateEffect = effects.First(effect => !effect.gameObject.activeSelf);
+            stateEffect.gameObject.SetActive(true);
             stateEffect.StartShowEffect(effectImage, effectDuration, isPositive, effectId);
+
+            _delays.Add(effectId, StartCoroutine(DisableEffectAfterDelay(effectDuration, stateEffect, effectId)));
         }
 
+        private IEnumerator DisableEffectAfterDelay(float delay, StateEffect stateEffect, string id)
+        {
+            yield return new WaitForSeconds(delay);
+            stateEffect.gameObject.SetActive(false);
+            _delays.Remove(id);
+        }
+        
         private void RemoveAllEffects()
         {
             foreach (var effect in effects)
             {
-                effect.StopShowEffect();
+                effect.gameObject.SetActive(false);
             }
+
+            foreach (var coroutine in _delays.Values)
+            {
+                StopCoroutine(coroutine);
+            }
+            _delays.Clear();
         }
         
         private void SetRequiredPosition(float multiplier = 1)
@@ -100,7 +138,6 @@ namespace UI
         {
             yield return new WaitForSeconds(sec);
             RemoveAllEffects();
-            RemoveListeners();
             gameObject.SetActive(false);
         }
     }

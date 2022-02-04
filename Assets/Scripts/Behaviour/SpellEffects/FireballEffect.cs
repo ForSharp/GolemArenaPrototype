@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using CharacterEntity;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
+using Inventory.Abstracts;
 using Inventory.Items;
 using Inventory.Items.SpellItems;
 using UnityEngine;
@@ -16,6 +18,7 @@ namespace Behaviour.SpellEffects
         [SerializeField] private GameObject flame;
 
         private CharacterState _state;
+        private CharacterState _target;
         private float _magicPower;
         private float _magicAccuracy;
         private int _ownerGroupNumber;
@@ -30,13 +33,14 @@ namespace Behaviour.SpellEffects
             Destroy(gameObject, 10);
         }
 
-        public void CustomConstructor(CharacterState ownerState, FireBallItem info)
+        public void CustomConstructor(CharacterState ownerState, FireBallItem info, CharacterState target)
         {
             _magicPower = ownerState.Stats.magicPower;
             _magicAccuracy = ownerState.Stats.magicAccuracy;
             _state = ownerState;
             _ownerGroupNumber = ownerState.Group;
             _info = info;
+            _target = target;
         }
         
         private void Update()
@@ -44,6 +48,8 @@ namespace Behaviour.SpellEffects
             if (!_isExplosionStarted)
             {
                 transform.position += Vector3.forward * Time.deltaTime * 5;
+                
+                transform.LookAt(_target.transform);
                 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 0.1f);
                 if (FilterCollidersArray(colliders).Length > 0)
@@ -72,6 +78,10 @@ namespace Behaviour.SpellEffects
                                 var flameObj = Instantiate(flame, state.gameObject.transform);
                                 var flameEffect = flameObj.GetComponent<FlameEffect>();
                                 flameEffect.BurnTarget(_state, state, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration);
+
+                                var inventoryItem = (IInventoryItem)_info;
+                                state.OnStateEffectAdded(inventoryItem.Info.SpriteIcon, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration, false, inventoryItem.Info.Id);
+                                
                                 //при поджоге наносить переодический урон
                                 //при поджоге добавить эффект горения
                                 //урон увеличивается от магической мощи нападающего, уменьшается от магического сопротивления жертвы

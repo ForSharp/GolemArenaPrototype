@@ -36,7 +36,7 @@ namespace CharacterEntity
                         CoroutineManager.StopRoutine(_effects[effect]);
                         _effects.Remove(effect);
                         _character.Character.RemoveTempExtraStats(effect);
-                        _character.stateBar.StopEffect(item.Info.Id);
+                        _character.StateBar.StopEffect(item.Info.Id);
                     }
                     _character.OnStateEffectAdded(item.Info.SpriteIcon, buffItem.ConsumableBuffInfo.BuffDuration, true, item.Info.Id);
                     _character.Character.AddTempExtraStats(effect);

@@ -1,6 +1,4 @@
-﻿using System;
-using GameLoop;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -14,11 +12,11 @@ namespace UI
 
         private float _effectDuration;
         private float _currentDuration;
-        public string currentEffectId { get; private set; }
+        public string CurrentEffectId { get; private set; }
 
         private void Start()
         {
-            StopShowEffect();
+            gameObject.SetActive(false);
         }
 
         private void Update()
@@ -28,27 +26,18 @@ namespace UI
                 _currentDuration -= Time.deltaTime;
                 durationImage.fillAmount = _currentDuration / _effectDuration;
             }
-            else
-            {
-                StopShowEffect();
-            }
         }
 
         public void StartShowEffect(Sprite effect, float effectDuration, bool isPositive, string effectId)
         {
-            gameObject.SetActive(true);
+
             effectImage.sprite = effect;
             _effectDuration = effectDuration;
             _currentDuration = _effectDuration;
 
             durationImage.color = isPositive ? positiveColor : negativeColor;
 
-            currentEffectId = effectId;
-        }
-
-        public void StopShowEffect()
-        {
-            gameObject.SetActive(false);
+            CurrentEffectId = effectId;
         }
     }
 }

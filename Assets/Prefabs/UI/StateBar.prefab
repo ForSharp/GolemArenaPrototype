@@ -44,7 +44,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 100}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4355469308920938039
 MonoBehaviour:
@@ -106,7 +106,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6336874965992052059
 MonoBehaviour:
@@ -176,12 +176,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -318,12 +318,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -460,12 +460,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -602,12 +602,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -744,12 +744,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -886,12 +886,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -1028,12 +1028,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -1170,12 +1170,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -1312,12 +1312,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
@@ -1454,12 +1454,12 @@ PrefabInstance:
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5490327702931455579, guid: d19030a1e2217484c91065631c01073c,
         type: 3}
