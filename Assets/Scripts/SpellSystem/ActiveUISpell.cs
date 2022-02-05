@@ -31,11 +31,13 @@ namespace SpellSystem
         private void OnEnable()
         {
             Game.StartBattle += EndCooldown;
+            Game.StartBattle += StopMarkSpell;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= EndCooldown;
+            Game.StartBattle -= StopMarkSpell;
         }
 
         private void Update()

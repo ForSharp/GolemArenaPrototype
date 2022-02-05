@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Behaviour;
 using Behaviour.Abstracts;
-using CharacterEntity;
 using CharacterEntity.State;
 using Controller;
 using GameLoop;
@@ -51,6 +48,7 @@ namespace SpellSystem
 
                         return;
                     }
+
                     //максимальный уровень спелла уже изучен - ничего не делаем
                     return;
                 }
@@ -92,40 +90,49 @@ namespace SpellSystem
             switch (spellNumb)
             {
                 case 1:
-                    if (!_spellFirstUI.InCooldown && _spellFirstUI.SpellItem.SpellInfo.ManaCost <=
-                                                  _character.CurrentMana
-                                                  && Game.Stage == Game.GameStage.Battle)
+                    if (!_character.IsDead && !_spellFirstUI.InCooldown &&
+                        _spellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                        && Game.Stage == Game.GameStage.Battle)
                     {
                         var spellItem = _spellFirstUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
-                        
+
                         _spellFirstUI.MarkSpell();
+                        
+                        _character.OnStartSpellCast();
                     }
+
                     break;
                 case 2:
-                    if (!_spellSecondUI.InCooldown && _spellSecondUI.SpellItem.SpellInfo.ManaCost <=
-                                                   _character.CurrentMana
-                                                   && Game.Stage == Game.GameStage.Battle)
+                    if (!_character.IsDead && !_spellSecondUI.InCooldown &&
+                        _spellSecondUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                        && Game.Stage == Game.GameStage.Battle)
                     {
                         var spellItem = _spellSecondUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
-                        
+
                         _spellSecondUI.MarkSpell();
+                        
+                        _character.OnStartSpellCast();
                     }
+
                     break;
                 case 3:
-                    if (!_spellThirdUI.InCooldown && _spellThirdUI.SpellItem.SpellInfo.ManaCost <=
-                                                  _character.CurrentMana
-                                                  && Game.Stage == Game.GameStage.Battle)
+                    if (!_character.IsDead && !_spellThirdUI.InCooldown && 
+                        _spellThirdUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                        && Game.Stage == Game.GameStage.Battle)
                     {
                         var spellItem = _spellThirdUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
-                        
+
                         _spellThirdUI.MarkSpell();
+                        
+                        _character.OnStartSpellCast();
                     }
+
                     break;
             }
         }
@@ -152,6 +159,7 @@ namespace SpellSystem
         {
             Debug.Log("no cast");
             CancelShowingTargets(spellItem);
+            _character.OnCancelSpellCast();
             
             switch (spellNumb)
             {
@@ -165,7 +173,6 @@ namespace SpellSystem
                     _spellThirdUI.StopMarkSpell();
                     break;
             }
-            
         }
 
         private ChoosingTargetMode GetChoosingTargetMode(ISpellItem spellItem)
@@ -278,7 +285,7 @@ namespace SpellSystem
                 friend.characterEffectsContainer.StopPlayingTargetFriend();
             }
         }
-        
+
         private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {
             Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
@@ -295,7 +302,7 @@ namespace SpellSystem
             _spellSecondUI.StopMarkSpell();
             _spellSecondUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
-            
+
             _spellSecond.CastSpell(targetState);
         }
 
@@ -305,7 +312,7 @@ namespace SpellSystem
             _spellThirdUI.StopMarkSpell();
             _spellThirdUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
-            
+
             _spellThird.CastSpell(targetState);
         }
 
@@ -325,28 +332,6 @@ namespace SpellSystem
             }
         }
 
-        private ISpellItem GetSpellItem(ICastable spell)
-        {
-            switch (spell)
-            {
-                case FireballSpell fireballSpell:
-                    return GetSpellItem<FireBallItem>();
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(spell));
-            }
-        }
-
-        private ISpellItem GetSpellItem<T>() where T : ISpellItem
-        {
-            foreach (var spellItem in _learnedSpells)
-            {
-                if (spellItem is T)
-                    return spellItem;
-            }
-
-            throw new Exception();
-        }
-
         private void SetupSpell(out ICastable spellSlot, ISpellItem spellItem)
         {
             switch (spellItem)
@@ -355,26 +340,25 @@ namespace SpellSystem
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case FreezingItem _://
+                case FreezingItem _: //
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case GraceItem graceBuffItem://
+                case GraceItem graceBuffItem: //
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case SnowstormItem snowstormItem://
+                case SnowstormItem snowstormItem: //
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case SummonSpiderItem summonSpiderItem://
+                case SummonSpiderItem summonSpiderItem: //
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spellItem));
             }
-
         }
     }
 }

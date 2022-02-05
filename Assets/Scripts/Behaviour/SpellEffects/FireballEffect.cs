@@ -49,7 +49,7 @@ namespace Behaviour.SpellEffects
             {
                 transform.position += Vector3.forward * Time.deltaTime * 5;
                 
-                transform.LookAt(_target.transform);
+                //transform.LookAt(_target.transform); хз не работает
                 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 0.1f);
                 if (FilterCollidersArray(colliders).Length > 0)

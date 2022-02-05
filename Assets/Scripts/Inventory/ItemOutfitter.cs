@@ -30,8 +30,6 @@ namespace Inventory
                 
                 inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(allCorrectItems[i]), inventory.GetAllEmptyEquippingSlots()[0]);
             }
-            
-            
         }
 
         private static void UnEquipAllItems(CharacterState character)

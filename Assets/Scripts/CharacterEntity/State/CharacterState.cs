@@ -45,6 +45,8 @@ namespace CharacterEntity.State
         public event Action<float> CurrentManaChanged;
         public event Action<CharacterExtraStats> StatsChanged;
         public event Action<Sprite, float, bool, string> StateEffectAdded;
+        public event Action StartSpellCast;
+        public event Action CancelSpellCast;
 
         public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
@@ -95,6 +97,11 @@ namespace CharacterEntity.State
                 CurrentHealth = newMaxHealth;
             }
 
+            if (CurrentHealth < 0)
+            {
+                CurrentHealth = 0;
+            }
+
             OnCurrentHealthChanged(CurrentHealth);
         }
 
@@ -105,6 +112,11 @@ namespace CharacterEntity.State
             if (CurrentMana > newMaxMana)
             {
                 CurrentMana = newMaxMana;
+            }
+
+            if (CurrentMana < 0)
+            {
+                CurrentMana = 0;
             }
 
             OnCurrentManaChanged(CurrentMana);
@@ -343,6 +355,16 @@ namespace CharacterEntity.State
         public void OnStateEffectAdded(Sprite effectImage, float effectDuration, bool effectIsPositive, string effectId)
         {
             StateEffectAdded?.Invoke(effectImage, effectDuration, effectIsPositive, effectId);
+        }
+
+        public void OnStartSpellCast()
+        {
+            StartSpellCast?.Invoke();
+        }
+
+        public void OnCancelSpellCast()
+        {
+            CancelSpellCast?.Invoke();
         }
     }
 }

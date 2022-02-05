@@ -55,7 +55,6 @@ namespace Controller
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
-        public static event Action SpellCastByController;
         public static event Action<PlayMode> PlayModeChanged;
         
         private void OnEnable()
@@ -136,11 +135,6 @@ namespace Controller
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                SpellCastByController?.Invoke();
-            }
-
             switch (_playMode)
             {
                 case PlayMode.Standard:

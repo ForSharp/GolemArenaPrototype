@@ -8,7 +8,6 @@ using CharacterEntity.State;
 using Controller;
 using Environment;
 using GameLoop;
-using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using PlayMode = Controller.PlayMode;
@@ -18,9 +17,6 @@ namespace CharacterEntity
 {
     public class BotAI : MonoBehaviour
     {
-        //компонент, который весит на герое 0
-        private FireballSpell _fireballSpell; //вынести туда, где вся логика работы со спеллами
-
         private bool _isAIControlAllowed = true;
         private bool _playerAI = true;
         private bool _isIKAllowed;
@@ -32,7 +28,6 @@ namespace CharacterEntity
 
         private IMoveable _moveable;
         private IAttackable _attackable;
-        private ICastable _spellCast;
 
         private State.CharacterState _thisState;
         private State.CharacterState _targetState;
@@ -62,10 +57,6 @@ namespace CharacterEntity
             _isDies = false;
             _soundsController = GetComponent<SoundsController>();
 
-            if (_thisState == Player.PlayerCharacter)
-            {
-                _fireballSpell = GetComponent<FireballSpell>();
-            }
         }
 
         private void Update()
@@ -96,14 +87,14 @@ namespace CharacterEntity
         {
             yield return new WaitForSeconds(0.05f);
             _thisState.AttackReceived += HandleHitReceiving;
+            _thisState.StartSpellCast += StartSpellCast;
+            _thisState.CancelSpellCast += OnSpellCasted;
             _navMeshAgent.enabled = true;
             if (_thisState == Player.PlayerCharacter)
             {
                 PlayerController.AllowAI += SetAIBehaviour;
                 PlayerController.AttackByController += AttackTarget;
                 PlayerController.PlayModeChanged += ChangeMode;
-
-                PlayerController.SpellCastByController += CastSpell;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
@@ -116,13 +107,13 @@ namespace CharacterEntity
             Game.StartBattle -= AllowFight;
             EventContainer.CharacterDied -= HandleCharacterDeath;
             _thisState.AttackReceived -= HandleHitReceiving;
+            _thisState.StartSpellCast -= StartSpellCast;
+            _thisState.CancelSpellCast -= OnSpellCasted;
             if (_thisState == Player.PlayerCharacter)
             {
                 PlayerController.AllowAI -= SetAIBehaviour;
                 PlayerController.AttackByController -= AttackTarget;
                 PlayerController.PlayModeChanged -= ChangeMode;
-
-                PlayerController.SpellCastByController -= CastSpell;
             }
             else if (_thisState != Player.PlayerCharacter)
             {
@@ -176,6 +167,7 @@ namespace CharacterEntity
                 case FightStatus.Fallen:
                     break;
                 case FightStatus.CastsSpell:
+                    DoNothing();
                     break;
                 case FightStatus.Dead:
                     SetDeadBehaviour();
@@ -257,19 +249,15 @@ namespace CharacterEntity
 
         private void OnCanFight()
         {
-            if (!_thisState.IsDead && _isAIControlAllowed)
+            if (!_thisState.IsDead && _isAIControlAllowed && _status != FightStatus.CastsSpell)
             {
                 _status = FightStatus.Active;
             }
-            else if (!_thisState.IsDead && !_isAIControlAllowed && _thisState == Player.PlayerCharacter)
+            else if (!_thisState.IsDead && !_isAIControlAllowed && _thisState == Player.PlayerCharacter 
+                     && _status != FightStatus.CastsSpell)
             {
                 _status = FightStatus.Neutral;
             }
-        }
-
-        private void OnSpellCastStarted()
-        {
-            _status = FightStatus.CastsSpell;
         }
 
         private void OnSpellCasted()
@@ -278,6 +266,19 @@ namespace CharacterEntity
         }
 
         #endregion
+
+        private void DoNothing()
+        {
+            _moveable = new NoMoveBehaviour(_animator, _navMeshAgent, AnimationChanger.SetFightIdle);
+            _moveable.Move(default, default);
+            _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
+            _attackable.Attack();
+        }
+
+        private void StartSpellCast()
+        {
+            _status = FightStatus.CastsSpell;
+        }
 
         private void SetFightBehaviour()
         {
@@ -364,20 +365,6 @@ namespace CharacterEntity
             _isIKAllowed = true;
             if (!_inAttack)
                 TurnSmoothlyToTarget();
-        }
-
-        public void CastSpell()
-        {
-            //привести к нужному типу, эти данные могут храниться например в каррент стэйт
-
-            SetSpellCast(_fireballSpell);
-            _fireballSpell.SpellConstructor(ItemContainer.Instance.GetFireBallLvl1());
-            _spellCast.CastSpell(_targetState);
-        }
-        
-        private void SetSpellCast(ICastable castable)
-        {
-            _spellCast = castable;
         }
 
         private float GetDelayBetweenHits()
@@ -515,6 +502,7 @@ namespace CharacterEntity
             if (_status == FightStatus.CastsSpell)
             {
                 GetHit(hitArgs);
+                EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false));
                 return;
             }
 
@@ -530,8 +518,7 @@ namespace CharacterEntity
                 _isAvoidsHit = false;
 
                 _status = FightStatus.AvoidingHit;
-
-
+                
                 EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false, true));
             }
         }

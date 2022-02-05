@@ -14,11 +14,6 @@ namespace UI
         private float _currentDuration;
         public string CurrentEffectId { get; private set; }
 
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
         private void Update()
         {
             if (_currentDuration > 0)

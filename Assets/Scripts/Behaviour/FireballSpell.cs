@@ -1,8 +1,6 @@
-﻿using System;
-using Behaviour.Abstracts;
+﻿using Behaviour.Abstracts;
 using Behaviour.SpellEffects;
 using CharacterEntity;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using Inventory.Abstracts.Spells;
 using Inventory.Items.SpellItems;
@@ -45,7 +43,7 @@ namespace Behaviour
         private void OnSpellCasted()
         {
             transform.LookAt(_target.transform);
-            var fireBall = Instantiate(_spellEffect, transform.position + Vector3.forward + Vector3.up, transform.rotation);
+            var fireBall = Instantiate(_spellEffect, transform.localPosition + Vector3.forward + Vector3.up, transform.localRotation);
             
             var fireballEffect = fireBall.GetComponent<FireballEffect>();
             fireballEffect.CustomConstructor(_character, _info, _target);

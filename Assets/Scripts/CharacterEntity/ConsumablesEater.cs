@@ -27,6 +27,9 @@ namespace CharacterEntity
 
         private void InventoryOnConsumableItemUsed(IInventorySlot slot, IInventoryItem item)
         {
+            if (_character.IsDead)
+                return;
+            
             switch (item)
             {
                 case IConsumableBuffItem buffItem:
