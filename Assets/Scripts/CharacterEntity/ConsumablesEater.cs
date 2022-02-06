@@ -25,6 +25,20 @@ namespace CharacterEntity
             Game.EndGame += RemoveAllListeners;
         }
 
+        public void AddSpellEffect(ExtraStatsParameter[] effects, float duration)
+        {
+            if (_effects.ContainsKey(effects))
+            {
+                CoroutineManager.StopRoutine(_effects[effects]);
+                _effects.Remove(effects);
+                _character.Character.RemoveTempExtraStats(effects);
+            }
+            _character.Character.AddTempExtraStats(effects);
+            EventContainer.OnCharacterStatsChanged(_character);
+            var coroutine = CoroutineManager.StartRoutine(RemoveEffectAfterDelay(effects, duration));
+            _effects.Add(effects, coroutine);
+        }
+        
         private void InventoryOnConsumableItemUsed(IInventorySlot slot, IInventoryItem item)
         {
             if (_character.IsDead)
@@ -41,7 +55,7 @@ namespace CharacterEntity
                         _character.Character.RemoveTempExtraStats(effect);
                         _character.StateBar.StopEffect(item.Info.Id);
                     }
-                    _character.OnStateEffectAdded(item.Info.SpriteIcon, buffItem.ConsumableBuffInfo.BuffDuration, true, item.Info.Id);
+                    _character.OnStateEffectAdded(item.Info.SpriteIcon, buffItem.ConsumableBuffInfo.BuffDuration, true, false, item.Info.Id);
                     _character.Character.AddTempExtraStats(effect);
                     item.State.Amount--;
                     EventContainer.OnCharacterStatsChanged(_character);

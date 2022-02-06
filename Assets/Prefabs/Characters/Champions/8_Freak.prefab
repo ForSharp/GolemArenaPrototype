@@ -1205,6 +1205,8 @@ GameObject:
   - component: {fileID: 2465912764561445406}
   - component: {fileID: -3505501303308190305}
   - component: {fileID: 8621610066468290582}
+  - component: {fileID: 3375360643401128551}
+  - component: {fileID: -6378605895364969899}
   m_Layer: 0
   m_Name: 8_Freak
   m_TagString: Untagged
@@ -1764,6 +1766,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
     type: 3}
+--- !u!114 &3375360643401128551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5941936137483459572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627848ac5b1f4acf8cea364734bdde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6378605895364969899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5941936137483459572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5941939400643985816
 GameObject:
   m_ObjectHideFlags: 0

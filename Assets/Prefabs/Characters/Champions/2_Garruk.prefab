@@ -1035,6 +1035,8 @@ GameObject:
   - component: {fileID: -5416361418837985949}
   - component: {fileID: 8446859471185758038}
   - component: {fileID: -1552994599195231552}
+  - component: {fileID: 2463617269570628620}
+  - component: {fileID: -3210571512711232284}
   m_Layer: 0
   m_Name: 2_Garruk
   m_TagString: Untagged
@@ -1651,6 +1653,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
     type: 3}
+--- !u!114 &2463617269570628620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071977361841678309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627848ac5b1f4acf8cea364734bdde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3210571512711232284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071977361841678309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9072013964762720815
 GameObject:
   m_ObjectHideFlags: 0

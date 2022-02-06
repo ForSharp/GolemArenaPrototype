@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Behaviour;
 using Behaviour.Abstracts;
@@ -89,6 +90,8 @@ namespace CharacterEntity
             _thisState.AttackReceived += HandleHitReceiving;
             _thisState.StartSpellCast += StartSpellCast;
             _thisState.CancelSpellCast += OnSpellCasted;
+            _thisState.StunCharacter += StunCharacter;
+            _thisState.EndStunCharacter += EndStunCharacter;
             _navMeshAgent.enabled = true;
             if (_thisState == Player.PlayerCharacter)
             {
@@ -109,6 +112,8 @@ namespace CharacterEntity
             _thisState.AttackReceived -= HandleHitReceiving;
             _thisState.StartSpellCast -= StartSpellCast;
             _thisState.CancelSpellCast -= OnSpellCasted;
+            _thisState.StunCharacter -= StunCharacter;
+            _thisState.EndStunCharacter -= EndStunCharacter;
             if (_thisState == Player.PlayerCharacter)
             {
                 PlayerController.AllowAI -= SetAIBehaviour;
@@ -163,8 +168,7 @@ namespace CharacterEntity
                     SetFightBehaviour();
                     break;
                 case FightStatus.Stunned:
-                    break;
-                case FightStatus.Fallen:
+                    DoNothing();
                     break;
                 case FightStatus.CastsSpell:
                     DoNothing();
@@ -190,7 +194,7 @@ namespace CharacterEntity
         {
             return _isAIControlAllowed && !_thisState.IsDead && _status != FightStatus.GettingHit &&
                    _status != FightStatus.AvoidingHit && _status != FightStatus.CastsSpell &&
-                   Game.Stage == Game.GameStage.Battle;
+                   Game.Stage == Game.GameStage.Battle && _status != FightStatus.Stunned;
         }
 
         private void SetDefaultBehaviour()
@@ -254,7 +258,7 @@ namespace CharacterEntity
                 _status = FightStatus.Active;
             }
             else if (!_thisState.IsDead && !_isAIControlAllowed && _thisState == Player.PlayerCharacter 
-                     && _status != FightStatus.CastsSpell)
+                     && _status != FightStatus.CastsSpell && _status != FightStatus.Stunned)
             {
                 _status = FightStatus.Neutral;
             }
@@ -273,8 +277,24 @@ namespace CharacterEntity
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
             _attackable.Attack();
+            _navMeshAgent.enabled = true;
         }
 
+        private List<string> _activeStunsId = new List<string>();
+
+        private void StunCharacter(string stunId)
+        {
+            _status = FightStatus.Stunned;
+            _activeStunsId.Add(stunId);
+        }
+
+        private void EndStunCharacter(string stunId)
+        {
+            _activeStunsId.Remove(stunId);
+            if (_activeStunsId.Count == 0)
+                _status = FightStatus.Neutral;
+        }
+        
         private void StartSpellCast()
         {
             _status = FightStatus.CastsSpell;
@@ -499,7 +519,7 @@ namespace CharacterEntity
 
         private void GetHitOrAvoid(AttackHitEventArgs hitArgs)
         {
-            if (_status == FightStatus.CastsSpell)
+            if (_status == FightStatus.CastsSpell || _status == FightStatus.Stunned)
             {
                 GetHit(hitArgs);
                 EventContainer.OnFightEvent(_thisState, new FightEventArgs(hitArgs, _thisState.Type, false));
@@ -528,7 +548,7 @@ namespace CharacterEntity
             _thisState.TakeDamage(hitArgs.DamagePerHit, hitArgs.Statistics);
             if (!_thisState.IsDead)
             {
-                if (_status != FightStatus.CastsSpell)
+                if (_status != FightStatus.CastsSpell && _status != FightStatus.Stunned)
                 {
                     _isGetsHit = false;
                     _status = FightStatus.GettingHit;

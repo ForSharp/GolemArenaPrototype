@@ -362,6 +362,8 @@ GameObject:
   - component: {fileID: 3110730161695784466}
   - component: {fileID: 2112169923475012858}
   - component: {fileID: -8958762460591691355}
+  - component: {fileID: -6103055201388044512}
+  - component: {fileID: 4545840237882920774}
   m_Layer: 0
   m_Name: 20_Raven
   m_TagString: Untagged
@@ -852,6 +854,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
     type: 3}
+--- !u!114 &-6103055201388044512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246891314395918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627848ac5b1f4acf8cea364734bdde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4545840237882920774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246891314395918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1261939588107060
 GameObject:
   m_ObjectHideFlags: 0

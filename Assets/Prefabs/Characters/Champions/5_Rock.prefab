@@ -1164,6 +1164,8 @@ GameObject:
   - component: {fileID: 7764310817278641304}
   - component: {fileID: 2874345716359168458}
   - component: {fileID: -8747864325818929845}
+  - component: {fileID: 6120083755091258672}
+  - component: {fileID: 5199471352261861222}
   m_Layer: 0
   m_Name: 5_Rock
   m_TagString: Untagged
@@ -1723,6 +1725,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
     type: 3}
+--- !u!114 &6120083755091258672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732600999845990711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627848ac5b1f4acf8cea364734bdde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5199471352261861222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732600999845990711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5732610730719946637
 GameObject:
   m_ObjectHideFlags: 0

@@ -1484,6 +1484,8 @@ GameObject:
   - component: {fileID: -3548968993187628974}
   - component: {fileID: 8566071427463674856}
   - component: {fileID: -2118858572494485317}
+  - component: {fileID: -4596955607894539674}
+  - component: {fileID: 9094227236198341893}
   m_Layer: 0
   m_Name: 7_Mario
   m_TagString: Untagged
@@ -2100,6 +2102,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPanelPrefab: {fileID: 8048582548594595937, guid: 73d349785f39bc54c963068b26876211,
     type: 3}
+--- !u!114 &-4596955607894539674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739811393562177581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627848ac5b1f4acf8cea364734bdde55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9094227236198341893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739811393562177581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4739852204668627317
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-using CharacterEntity;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
 using Inventory.Abstracts;
-using Inventory.Items;
 using Inventory.Items.SpellItems;
 using UnityEngine;
 
@@ -24,6 +22,9 @@ namespace Behaviour.SpellEffects
         private int _ownerGroupNumber;
         private bool _isExplosionStarted;
         private FireBallItem _info;
+        private Vector3 _startPos;
+        private Vector3 _endPos;
+        private float _movementProgress;
         
         private void Start()
         {
@@ -41,16 +42,17 @@ namespace Behaviour.SpellEffects
             _ownerGroupNumber = ownerState.Group;
             _info = info;
             _target = target;
+            _startPos = transform.position;
+            _endPos = target.transform.position;
         }
         
         private void Update()
         {
             if (!_isExplosionStarted)
             {
-                transform.position += Vector3.forward * Time.deltaTime * 5;
-                
-                //transform.LookAt(_target.transform); хз не работает
-                
+                transform.position = Vector3.Lerp(_startPos, _endPos, _movementProgress);
+                _movementProgress += 0.1f;
+
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 0.1f);
                 if (FilterCollidersArray(colliders).Length > 0)
                 {
@@ -80,7 +82,7 @@ namespace Behaviour.SpellEffects
                                 flameEffect.BurnTarget(_state, state, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration);
 
                                 var inventoryItem = (IInventoryItem)_info;
-                                state.OnStateEffectAdded(inventoryItem.Info.SpriteIcon, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration, false, inventoryItem.Info.Id);
+                                state.OnStateEffectAdded(inventoryItem.Info.SpriteIcon, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration, false, true, inventoryItem.Info.Id);
                                 
                                 //при поджоге наносить переодический урон
                                 //при поджоге добавить эффект горения

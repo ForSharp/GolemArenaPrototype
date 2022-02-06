@@ -65,13 +65,29 @@ namespace UI
             }
         }
 
-        private void AddEffect(Sprite effectImage, float effectDuration, bool isPositive, string effectId)
+        private void AddEffect(Sprite effectImage, float effectDuration, bool isPositive, bool canStack, string effectId)
         {
-            var stateEffect = effects.First(effect => !effect.gameObject.activeSelf);
-            stateEffect.gameObject.SetActive(true);
-            stateEffect.StartShowEffect(effectImage, effectDuration, isPositive, effectId);
-
-            _delays.Add(effectId, StartCoroutine(DisableEffectAfterDelay(effectDuration, stateEffect, effectId)));
+            if (!_delays.ContainsKey(effectId))
+            {
+                Add(effectId);
+            }
+            else if (canStack && _delays.ContainsKey(effectId))
+            {
+                Add(effectId + Guid.NewGuid());
+            }
+            else if (!canStack && _delays.ContainsKey(effectId))
+            {
+                StopEffect(effectId);
+                Add(effectId);
+            }
+            
+            void Add(string id)
+            {
+                var stateEffect = effects.First(effect => !effect.gameObject.activeSelf);
+                stateEffect.gameObject.SetActive(true);
+                stateEffect.StartShowEffect(effectImage, effectDuration, isPositive, id);
+                _delays.Add(id, StartCoroutine(DisableEffectAfterDelay(effectDuration, stateEffect, id)));
+            }
         }
 
         private IEnumerator DisableEffectAfterDelay(float delay, StateEffect stateEffect, string id)

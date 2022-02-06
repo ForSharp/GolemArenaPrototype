@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FreezingSpellInfoLvl3
   m_EditorClassIdentifier: 
   spellType: 5
-  spellEffect: {fileID: 0}
+  spellEffect: {fileID: 5980464126035224316, guid: 038a6d797b728904b9280d3307ec0b90,
+    type: 3}
   manaCost: 50
   cooldown: 5
   spellLvl: 3

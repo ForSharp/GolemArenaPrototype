@@ -8,14 +8,15 @@ using UnityEngine;
 
 namespace Behaviour
 {
-    public class FireballSpell : MonoBehaviour, ICastable
+    public class FreezingSpell : MonoBehaviour, ICastable
     {
-        private FireBallItem _info;
+
+        private FreezingItem _info;
         private CharacterState _character;
         private CharacterState _target;
         private Animator _animator;
         private GameObject _spellEffect;
-
+        
         private void Start()
         {
             _animator = GetComponent<Animator>();
@@ -24,7 +25,7 @@ namespace Behaviour
 
         public void SpellConstructor(ISpellItem info)
         {
-            _info = (FireBallItem)info;
+            _info = (FreezingItem)info;
             _spellEffect = _info.SpellInfo.SpellEffect;
         }
 
@@ -40,15 +41,20 @@ namespace Behaviour
             }
         }
         
+        
         private void ContinueCast()
         {
-            transform.LookAt(_target.transform);
-            var fireBall = Instantiate(_spellEffect, new Vector3(transform.localPosition.x + 1, 
-                transform.localPosition.y + 1, transform.localPosition.z), Quaternion.identity, transform);
-            
-            var fireballEffect = fireBall.GetComponent<FireballEffect>();
-            fireballEffect.CustomConstructor(_character, _info, _target);
-        }
 
+            transform.LookAt(_target.transform);
+            
+            //тут решить, прошел каст или нет (маг точность, маг уклонение)
+            
+            
+            var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity, _target.transform);
+            var freezingEffect = effect.GetComponent<FreezingEffect>();
+            freezingEffect.Initialize(_character, _target, _info);
+            
+        }
+        
     }
 }

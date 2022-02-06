@@ -340,13 +340,13 @@ namespace SpellSystem
                     spellSlot = _spellContainer.FireballSpell;
                     _spellContainer.FireballSpell.SpellConstructor(spellItem);
                     break;
-                case FreezingItem _: //
-                    spellSlot = _spellContainer.FireballSpell;
-                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
+                case FreezingItem _: 
+                    spellSlot = _spellContainer.FreezingSpell;
+                    _spellContainer.FreezingSpell.SpellConstructor(spellItem);
                     break;
-                case GraceItem graceBuffItem: //
-                    spellSlot = _spellContainer.FireballSpell;
-                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
+                case GraceItem _: 
+                    spellSlot = _spellContainer.GraceSpell;
+                    _spellContainer.GraceSpell.SpellConstructor(spellItem);
                     break;
                 case SnowstormItem snowstormItem: //
                     spellSlot = _spellContainer.FireballSpell;

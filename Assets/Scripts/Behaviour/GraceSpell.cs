@@ -1,4 +1,5 @@
-﻿using Behaviour.Abstracts;
+﻿using System;
+using Behaviour.Abstracts;
 using Behaviour.SpellEffects;
 using CharacterEntity;
 using CharacterEntity.State;
@@ -8,9 +9,9 @@ using UnityEngine;
 
 namespace Behaviour
 {
-    public class FireballSpell : MonoBehaviour, ICastable
+    public class GraceSpell : MonoBehaviour, ICastable
     {
-        private FireBallItem _info;
+        private GraceItem _info;
         private CharacterState _character;
         private CharacterState _target;
         private Animator _animator;
@@ -24,7 +25,7 @@ namespace Behaviour
 
         public void SpellConstructor(ISpellItem info)
         {
-            _info = (FireBallItem)info;
+            _info = (GraceItem)info;
             _spellEffect = _info.SpellInfo.SpellEffect;
         }
 
@@ -35,20 +36,21 @@ namespace Behaviour
                 transform.LookAt(target.transform);
                 AnimationChanger.SetCastSpell(_animator);
                 _target = target;
-                
                 Invoke(nameof(ContinueCast), 1);
             }
         }
         
         private void ContinueCast()
         {
-            transform.LookAt(_target.transform);
-            var fireBall = Instantiate(_spellEffect, new Vector3(transform.localPosition.x + 1, 
-                transform.localPosition.y + 1, transform.localPosition.z), Quaternion.identity, transform);
+            if (_target.GetComponentInChildren<GraceEffect>())
+            {
+                var oldEffect = _target.GetComponentInChildren<GraceEffect>();
+                Destroy(oldEffect.gameObject);
+            }
+            var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity, _target.transform);
+            var freezingEffect = effect.GetComponent<GraceEffect>();
+            freezingEffect.Initialize(_character, _target, _info);
             
-            var fireballEffect = fireBall.GetComponent<FireballEffect>();
-            fireballEffect.CustomConstructor(_character, _info, _target);
         }
-
     }
 }

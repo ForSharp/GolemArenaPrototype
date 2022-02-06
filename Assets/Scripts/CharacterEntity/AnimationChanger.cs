@@ -33,7 +33,7 @@ namespace CharacterEntity
             animator.applyRootMotion = true;
         }
 
-        public static void SetCastFireBall(Animator animator)
+        public static void SetCastSpell(Animator animator)
         {
             animator.SetTrigger("CastSpell");
             animator.SetFloat(Animator.StringToHash("CastSpellVariation"), 0);

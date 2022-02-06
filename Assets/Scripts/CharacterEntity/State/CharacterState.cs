@@ -37,6 +37,7 @@ namespace CharacterEntity.State
         public InventoryHelper InventoryHelper { get; private set; }
         public SpellManager SpellManager { get; private set; }
         public SpellPanelHelper SpellPanelHelper { get; private set; }
+        public ConsumablesEater ConsumablesEater { get; private set; }
 
         private RoundStatistics _lastEnemyAttacked;
         public RoundStatistics roundStatistics;
@@ -44,9 +45,11 @@ namespace CharacterEntity.State
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentManaChanged;
         public event Action<CharacterExtraStats> StatsChanged;
-        public event Action<Sprite, float, bool, string> StateEffectAdded;
+        public event Action<Sprite, float, bool, bool, string> StateEffectAdded;
         public event Action StartSpellCast;
         public event Action CancelSpellCast;
+        public event Action<string> StunCharacter;
+        public event Action<string> EndStunCharacter;
 
         public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
@@ -61,7 +64,7 @@ namespace CharacterEntity.State
             SpellPanelHelper = GetComponent<SpellPanelHelper>();
             SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
             var unused = new ExtraStatsEditorWithItems(this);
-            var dummy = new ConsumablesEater(this);
+            ConsumablesEater = new ConsumablesEater(this);
         }
 
         private void OnEnable()
@@ -352,9 +355,9 @@ namespace CharacterEntity.State
             StatsChanged?.Invoke(stats);
         }
 
-        public void OnStateEffectAdded(Sprite effectImage, float effectDuration, bool effectIsPositive, string effectId)
+        public void OnStateEffectAdded(Sprite effectImage, float effectDuration, bool effectIsPositive, bool canStack, string effectId)
         {
-            StateEffectAdded?.Invoke(effectImage, effectDuration, effectIsPositive, effectId);
+            StateEffectAdded?.Invoke(effectImage, effectDuration, effectIsPositive, canStack, effectId);
         }
 
         public void OnStartSpellCast()
@@ -365,6 +368,16 @@ namespace CharacterEntity.State
         public void OnCancelSpellCast()
         {
             CancelSpellCast?.Invoke();
+        }
+
+        public void OnStunCharacter(string stunId)
+        {
+            StunCharacter?.Invoke(stunId);
+        }
+        
+        public void OnEndStunCharacter(string stunId)
+        {
+            EndStunCharacter?.Invoke(stunId);
         }
     }
 }
