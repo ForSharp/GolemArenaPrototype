@@ -48,7 +48,7 @@ namespace UI
         private void Update()
         {
             if (_characterState)
-                SetRequiredPosition(1.75f);
+                SetRequiredPosition(0.75f);
             
         }
 

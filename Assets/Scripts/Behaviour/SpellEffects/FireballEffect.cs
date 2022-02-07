@@ -34,7 +34,7 @@ namespace Behaviour.SpellEffects
             Destroy(gameObject, 10);
         }
 
-        public void CustomConstructor(CharacterState ownerState, FireBallItem info, CharacterState target)
+        public void Initialize(CharacterState ownerState, CharacterState target, FireBallItem info)
         {
             _magicPower = ownerState.Stats.magicPower;
             _magicAccuracy = ownerState.Stats.magicAccuracy;
@@ -111,19 +111,7 @@ namespace Behaviour.SpellEffects
 
         private Collider[] FilterCollidersArray(Collider[] colliders)
         {
-            
-            // var filteredDestructibleObjects = colliders.Where(c =>
-            //         c.GetComponentInParent<DestructibleObject>())
-            //     .Where(c => c.GetComponentInParent<DestructibleObject>().IsDead == false);
-            //
-            //
-            // var destructibleObjects =
-            //     filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
-            //
-            //
-            //
-            // return destructibleObjects;
-            
+
             var filteredGameCharacterColliders = colliders.Where(c =>
                     c.GetComponentInParent<CharacterState>())
                 .Where(c => c.GetComponentInParent<CharacterState>().IsDead == false);

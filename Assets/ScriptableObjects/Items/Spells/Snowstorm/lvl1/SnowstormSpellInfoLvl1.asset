@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SnowstormSpellInfoLvl1
   m_EditorClassIdentifier: 
   spellType: 3
-  spellEffect: {fileID: 0}
+  spellEffect: {fileID: 4645528066704512222, guid: f3d7130e1c796d842867f0a39da805e9,
+    type: 3}
   manaCost: 550
   cooldown: 5
   spellLvl: 1

@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 7655737754023771122}
   - component: {fileID: 4984848255030540126}
   - component: {fileID: -7483954854294779714}
+  - component: {fileID: 8340745567424761655}
   m_Layer: 0
   m_Name: 15_Shanti
   m_TagString: Untagged
@@ -543,9 +544,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &481154204673948548
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -975,6 +976,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8340745567424761655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2369244242134263840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2369249913285163390

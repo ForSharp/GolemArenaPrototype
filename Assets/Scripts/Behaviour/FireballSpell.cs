@@ -47,7 +47,7 @@ namespace Behaviour
                 transform.localPosition.y + 1, transform.localPosition.z), Quaternion.identity, transform);
             
             var fireballEffect = fireBall.GetComponent<FireballEffect>();
-            fireballEffect.CustomConstructor(_character, _info, _target);
+            fireballEffect.Initialize(_character, _target, _info);
         }
 
     }

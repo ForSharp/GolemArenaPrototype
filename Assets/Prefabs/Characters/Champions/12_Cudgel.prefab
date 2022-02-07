@@ -882,6 +882,7 @@ GameObject:
   - component: {fileID: 4718078925082534677}
   - component: {fileID: 4249729210900722384}
   - component: {fileID: 440295542815303540}
+  - component: {fileID: -8594346341783552391}
   m_Layer: 0
   m_Name: 12_Cudgel
   m_TagString: Untagged
@@ -936,9 +937,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &7175518338634110898
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1463,6 +1464,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8594346341783552391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9786174127056526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9849089511681166

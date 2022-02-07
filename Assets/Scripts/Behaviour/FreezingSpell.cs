@@ -10,7 +10,6 @@ namespace Behaviour
 {
     public class FreezingSpell : MonoBehaviour, ICastable
     {
-
         private FreezingItem _info;
         private CharacterState _character;
         private CharacterState _target;

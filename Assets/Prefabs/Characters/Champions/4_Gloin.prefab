@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: -6572976003159229235}
   - component: {fileID: 6200456015971121975}
   - component: {fileID: -8051138250928196053}
+  - component: {fileID: -2658006740417698238}
   m_Layer: 0
   m_Name: 4_Gloin
   m_TagString: Untagged
@@ -421,9 +422,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &7294028264914829145
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -879,6 +880,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 529057e98cc9482a9277be9f23ebeba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2658006740417698238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625021491795756817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1625045130830643537

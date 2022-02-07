@@ -27,7 +27,7 @@ namespace UI
         private void Update()
         {
             if (_characterState)
-                SetRequiredPosition(2f);
+                SetRequiredPosition();
         }
 
         private void OnEnable()

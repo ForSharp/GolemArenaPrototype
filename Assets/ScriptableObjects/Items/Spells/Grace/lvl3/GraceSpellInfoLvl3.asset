@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GraceSpellInfoLvl3
   m_EditorClassIdentifier: 
   spellType: 0
-  spellEffect: {fileID: 0}
+  spellEffect: {fileID: 2162355470344490588, guid: 0467e43164173404dbae349e7d20487d,
+    type: 3}
   manaCost: 50
   cooldown: 5
   spellLvl: 3

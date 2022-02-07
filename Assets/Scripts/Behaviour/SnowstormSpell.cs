@@ -1,21 +1,56 @@
-﻿using Behaviour.Abstracts;
+﻿using System;
+using Behaviour.Abstracts;
+using Behaviour.SpellEffects;
+using CharacterEntity;
 using CharacterEntity.State;
 using Inventory.Abstracts.Spells;
+using Inventory.Items.SpellItems;
 using UnityEngine;
 
 namespace Behaviour
 {
     public class SnowstormSpell : MonoBehaviour, ICastable
     {
-        //pf_vfx-ult_demo_psys_loop_snowstorm2
-        public void CastSpell(CharacterState target)
+        private SnowstormItem _info;
+        private CharacterState _character;
+        private CharacterState _target;
+        private Animator _animator;
+        private GameObject _spellEffect;
+
+        private void Start()
         {
-            throw new System.NotImplementedException();
+            _animator = GetComponent<Animator>();
+            _character = GetComponent<CharacterState>();
         }
 
         public void SpellConstructor(ISpellItem info)
         {
-            throw new System.NotImplementedException();
+            _info = (SnowstormItem)info;
+            _spellEffect = _info.SpellInfo.SpellEffect;
+        }
+
+        public void CastSpell(CharacterState target)
+        {
+            if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
+            {
+                transform.LookAt(target.transform);
+                AnimationChanger.SetCastSpell(_animator);
+                _target = target;
+                
+                Invoke(nameof(ContinueCast), 1);
+            }
+        }
+        
+        private void ContinueCast()
+        {
+            transform.LookAt(_target.transform);
+            
+            // var effect = Instantiate(_spellEffect, new Vector3(_target.transform.position.x, 
+            //     _target.transform.position.y + 1, _target.transform.position.x), Quaternion.identity);
+            var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity);
+            var snowstormEffect = effect.GetComponent<SnowstormEffect>();
+            snowstormEffect.Initialize(_character, _target, _info);
+            
         }
     }
 }

@@ -348,9 +348,9 @@ namespace SpellSystem
                     spellSlot = _spellContainer.GraceSpell;
                     _spellContainer.GraceSpell.SpellConstructor(spellItem);
                     break;
-                case SnowstormItem snowstormItem: //
-                    spellSlot = _spellContainer.FireballSpell;
-                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
+                case SnowstormItem _: 
+                    spellSlot = _spellContainer.SnowstormSpell;
+                    _spellContainer.SnowstormSpell.SpellConstructor(spellItem);
                     break;
                 case SummonSpiderItem summonSpiderItem: //
                     spellSlot = _spellContainer.FireballSpell;
