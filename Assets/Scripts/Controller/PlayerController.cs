@@ -27,7 +27,7 @@ namespace Controller
     public sealed class PlayerController : MonoBehaviour
     {
         [SerializeField] private ControllerPanel controllerPanel;
-        [SerializeField] private CharacterStatsPanel standardPanel;
+        [SerializeField] private ChampionStatsPanel standardPanel;
         [SerializeField] private GameObject autoButtonFalse;
         [SerializeField] private GameObject autoButtonTrue;
         
@@ -38,11 +38,11 @@ namespace Controller
         private bool _aiControl = true;
         private PlayMode _playMode = PlayMode.Cinematic;
         private PlayMode _previousPlayMode;
-        private CharacterState _state;
+        private ChampionState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
         private CharacterController _controller;
-        private CharacterState _currentCharacter;
+        private ChampionState _currentCharacter;
         private Vector3 _velocity;
         private Vector3 _moveDirection;
         private bool _isGrounded;
@@ -259,7 +259,7 @@ namespace Controller
             var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit)) return;
             var coll = hit.collider;
-            if (coll.TryGetComponent(out CharacterState state))
+            if (coll.TryGetComponent(out ChampionState state))
             {
                 standardPanel.gameObject.SetActive(true);
                 standardPanel.HandleClick(state);
@@ -271,8 +271,11 @@ namespace Controller
                 standardPanel.gameObject.SetActive(false);
                 foreach (var character in Game.AllCharactersInSession)
                 {
-                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
-                    character.SpellPanelHelper.SpellsPanel.HideAll();
+                    if (character is ChampionState champion)
+                    {
+                        champion.InventoryHelper.InventoryOrganization.HideAllInventory();
+                        champion.SpellPanelHelper.SpellsPanel.HideAll();
+                    }
                 }
             }
         }
@@ -434,10 +437,10 @@ namespace Controller
             Player.PlayerCharacter.SpellPanelHelper.SpellsPanel.ShowActiveSpells();
             foreach (var character in Game.AllCharactersInSession)
             {
-                if (character != Player.PlayerCharacter)
+                if (character != Player.PlayerCharacter && character is ChampionState champion)
                 {
-                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
-                    character.SpellPanelHelper.SpellsPanel.HideAll();
+                    champion.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    champion.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
             standardPanel.SetPlayerCharacter();

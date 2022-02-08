@@ -7,6 +7,8 @@ using CharacterEntity.State;
 using Inventory;
 using Inventory.Abstracts;
 using Optimization;
+using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace GameLoop
@@ -22,6 +24,7 @@ namespace GameLoop
         
         public static GameStage Stage { get; set; }
         public static List<CharacterState> AllCharactersInSession { get; }
+        public static List<ChampionState> AllChampionsInSession { get; }
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
         
@@ -37,8 +40,9 @@ namespace GameLoop
         static Game()
         {
             AllCharactersInSession = new List<CharacterState>();
-            FreeTypes = Enum.GetNames(typeof(CharacterType)).ToList();
-            FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
+            AllChampionsInSession = new List<ChampionState>();
+            FreeTypes = Enum.GetNames(typeof(CharacterType)).Reverse().Skip(1).Reverse().ToList();
+            FreeSpecs = Enum.GetNames(typeof(Specialization)).Reverse().Skip(1).Reverse().ToList();
 
             Stage = GameStage.MainMenu;
             
@@ -62,18 +66,24 @@ namespace GameLoop
             OpenMainMenu?.Invoke();
         }
         
-        public static void AddCharacterToAllCharactersList(CharacterState golem)
+        public static void AddCharacterToAllCharactersList(CharacterState character)
         {
-            AllCharactersInSession.Add(golem);
-            FreeTypes.Remove(golem.Type);
-            FreeSpecs.Remove(golem.Spec);
+            AllCharactersInSession.Add(character);
+
+            if (character is ChampionState champion)
+            {
+                AllChampionsInSession.Add(champion);
+                FreeTypes.Remove(champion.Type);
+                FreeSpecs.Remove(champion.Spec);
+            }
+            
         }
 
         private static void CreateBotCharacters()
         {
             for (var i = 0; i < 4; i++)
             {
-                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization());
+                Spawner.Instance.SpawnChampion(GetRandomCharacter(), GetRandomSpecialization());
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
@@ -90,7 +100,7 @@ namespace GameLoop
                 return;
             }
 
-            foreach (var character in AllCharactersInSession)
+            foreach (var character in AllChampionsInSession)
             {
                 character.gameObject.SetActive(true);
             }
@@ -98,7 +108,7 @@ namespace GameLoop
             SetRoundRates();
             ItemDispenser.DispenseItems();
 
-            foreach (var character in AllCharactersInSession)
+            foreach (var character in AllChampionsInSession)
             {
                 if (character != Player.PlayerCharacter)
                 {
@@ -111,8 +121,12 @@ namespace GameLoop
             
             foreach (var character in AllCharactersInSession)
             {
-                
-                character.PrepareAfterNewRound();
+                if (character is ChampionState champion)
+                    champion.PrepareAfterNewRound();
+                else
+                {
+                    //Object.Destroy(character.gameObject);
+                }
             }
             
             OnStartBattle();
@@ -128,7 +142,8 @@ namespace GameLoop
 
         public static void SetRoundRates()
         {
-            var statistics = Game.AllCharactersInSession.Select(character => character.roundStatistics).ToList();
+            
+            var statistics = AllChampionsInSession.Select(character => character.RoundStatistics).ToList();
 
             var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
 
@@ -168,9 +183,9 @@ namespace GameLoop
                 typeof(Specialization));
         }
 
-        public static CharacterState GetCharacterByInventory(IInventory inventory)
+        public static ChampionState GetCharacterByInventory(IInventory inventory)
         {
-            return AllCharactersInSession.Find(character =>
+            return AllChampionsInSession.Find(character =>
                 character.InventoryHelper.InventoryOrganization.inventory == inventory);
         }
         

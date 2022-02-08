@@ -5,9 +5,9 @@ namespace GameLoop
 {
     public static class Player
     {
-        public static CharacterState PlayerCharacter { get; private set; }
+        public static ChampionState PlayerCharacter { get; private set; }
 
-        public static void SetPlayerCharacter(CharacterState character)
+        public static void SetPlayerCharacter(ChampionState character)
         {
             PlayerCharacter = character;
             EventContainer.OnPlayerCharacterCreated();

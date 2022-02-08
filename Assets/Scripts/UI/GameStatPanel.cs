@@ -86,9 +86,9 @@ namespace UI
         {
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
-                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllCharactersInSession[i].Type,
-                    Game.AllCharactersInSession[i].Spec, Game.AllCharactersInSession[i].roundStatistics.RoundDamage,
-                    Game.AllCharactersInSession[i].roundStatistics.RoundKills, Game.AllCharactersInSession[i].roundStatistics.Wins,
+                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllChampionsInSession[i].Type,
+                    Game.AllChampionsInSession[i].Spec, Game.AllChampionsInSession[i].RoundStatistics.RoundDamage,
+                    Game.AllChampionsInSession[i].RoundStatistics.RoundKills, Game.AllChampionsInSession[i].RoundStatistics.Wins,
                     Game.AllCharactersInSession[i].ColorGroup);
             }
         }
@@ -98,9 +98,9 @@ namespace UI
             _isEndGame = true;
             for (int i = 0; i < _gameStatTemplates.Count; i++)
             {
-                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllCharactersInSession[i].Type,
-                    Game.AllCharactersInSession[i].Spec, Game.AllCharactersInSession[i].roundStatistics.Damage,
-                    Game.AllCharactersInSession[i].roundStatistics.Kills, Game.AllCharactersInSession[i].roundStatistics.Wins,
+                _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllChampionsInSession[i].Type,
+                    Game.AllChampionsInSession[i].Spec, Game.AllChampionsInSession[i].RoundStatistics.Damage,
+                    Game.AllChampionsInSession[i].RoundStatistics.Kills, Game.AllChampionsInSession[i].RoundStatistics.Wins,
                     Game.AllCharactersInSession[i].ColorGroup);
             }
             

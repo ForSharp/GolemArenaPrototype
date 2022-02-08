@@ -11,13 +11,13 @@ namespace Behaviour.SpellEffects
     {
         [SerializeField] private AudioClip freezeSound;
         
-        private CharacterState _state;
+        private ChampionState _state;
         private CharacterState _target;
         private SnowstormItem _info;
         private ExtraStatsParameter[] _debuff;
         private AudioSource _audioSource;
         
-        public void Initialize(CharacterState state, CharacterState target, SnowstormItem info)
+        public void Initialize(ChampionState state, CharacterState target, SnowstormItem info)
         {
             _state = state;
             _target = target;
@@ -31,7 +31,7 @@ namespace Behaviour.SpellEffects
             
             var image = _info.Info.SpriteIcon;
             var id = _info.Info.Id;
-            _target.OnStateEffectAdded(image, 10000,true, false, id);
+            _target.OnStateEffectAdded(image, 10000,false, false, id);
             _debuff = _info.DebuffSpellInfo.AffectsExtraStats;
             //можно перед этим изменить значения в зависимости от магической мощи
             
@@ -40,11 +40,11 @@ namespace Behaviour.SpellEffects
             StartCoroutine(SetPeriodicDamage(_state, _target, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue));
         }
 
-        private IEnumerator SetPeriodicDamage(CharacterState attacker, CharacterState target, float periodicDamage)
+        private IEnumerator SetPeriodicDamage(ChampionState attacker, CharacterState target, float periodicDamage)
         {
             yield return new WaitForSeconds(1);
             
-            target.TakeDamage(periodicDamage, attacker.roundStatistics);
+            target.TakeDamage(periodicDamage, attacker.RoundStatistics);
             EventContainer.OnMagicDamageReceived(attacker, target, periodicDamage, true);
 
             StartCoroutine(SetPeriodicDamage(attacker, target, periodicDamage));
@@ -54,7 +54,7 @@ namespace Behaviour.SpellEffects
         {
             var image = _info.Info.SpriteIcon;
             var id = _info.Info.Id;
-            _target.OnStateEffectAdded(image, 0.01f,true, false, id);
+            _target.OnStateEffectAdded(image, 0.01f,false, false, id);
             _target.ConsumablesEater.AddSpellEffect(_debuff, 0.01f);
             Destroy(gameObject);
         }

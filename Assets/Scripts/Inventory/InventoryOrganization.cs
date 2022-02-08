@@ -44,7 +44,7 @@ namespace Inventory
 
             closeButton.gameObject.SetActive(true);
             
-            foreach (var character in Game.AllCharactersInSession)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
             }

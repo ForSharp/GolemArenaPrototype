@@ -30,7 +30,7 @@ namespace CharacterEntity
         private IMoveable _moveable;
         private IAttackable _attackable;
 
-        private State.CharacterState _thisState;
+        private ChampionState _thisState;
         private State.CharacterState _targetState;
         private CommonMeleeAttackBehaviour _attack;
         private NavMeshAgent _navMeshAgent;
@@ -47,7 +47,7 @@ namespace CharacterEntity
 
         private void Start()
         {
-            _thisState = GetComponent<State.CharacterState>();
+            _thisState = GetComponent<ChampionState>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _attack = GetComponent<CommonMeleeAttackBehaviour>();
@@ -231,6 +231,7 @@ namespace CharacterEntity
             {
                 _navMeshAgent.enabled = true;
             }
+            _animator.applyRootMotion = false;
         }
 
         private void OnStartJump()
@@ -379,7 +380,7 @@ namespace CharacterEntity
                 _animator, _thisState.Group, _thisState.Stats.damagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.hitAccuracy,
                 _targetState.gameObject, _thisState.Type,
-                _thisState.roundStatistics,
+                _thisState.RoundStatistics,
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
@@ -681,8 +682,8 @@ namespace CharacterEntity
                 {
                     _isWin = true;
                     EventContainer.OnWinBattle(_thisState);
-                    _thisState.roundStatistics.Wins++;
-                    _thisState.roundStatistics.WinLastRound = true;
+                    _thisState.RoundStatistics.Wins++;
+                    _thisState.RoundStatistics.WinLastRound = true;
                 }
 
                 yield return new WaitForSeconds(1);

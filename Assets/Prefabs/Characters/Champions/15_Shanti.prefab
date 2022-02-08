@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 2427444523812656098}
   - component: {fileID: 1584036126909634835}
   - component: {fileID: 481154204673948548}
-  - component: {fileID: -4562200412380535205}
+  - component: {fileID: 3276169089646102086}
   - component: {fileID: 9035161412596298670}
   - component: {fileID: 2250710001055167720}
   - component: {fileID: -3628027346477750623}
@@ -569,7 +569,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-4562200412380535205
+--- !u!114 &3276169089646102086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2369244242134263840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e519c67cdbd2a8b4f9038a288c531e8d, type: 3}
+  m_Script: {fileID: 11500000, guid: b16c196b31434dcb9a977ef6f72a0aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 9158814798391791950, guid: 7f3e38c7bbeeff2448b68f44e269c1a7,

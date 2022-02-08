@@ -12,18 +12,16 @@ namespace Behaviour.SpellEffects
     {   
         
         [SerializeField] private GameObject snowstormFreezingEffect;
-        private CharacterState _state;
-        private CharacterState _target;
+        private ChampionState _state;
         private int _ownerGroupNumber;
         private SnowstormItem _info;
 
         private Dictionary<CharacterState, SnowstormFreezingEffect> _snowstormFreezingEffects =
             new Dictionary<CharacterState, SnowstormFreezingEffect>();
 
-        public void Initialize(CharacterState character, CharacterState target, SnowstormItem info)
+        public void Initialize(ChampionState character, SnowstormItem info)
         {
             _state = character;
-            _target = target;
             _ownerGroupNumber = character.Group;
             _info = info;
             

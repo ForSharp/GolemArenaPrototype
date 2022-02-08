@@ -8,7 +8,7 @@ namespace Inventory
 {
     public static class ItemOutfitter
     {
-        public static void EquipItems(CharacterState character)
+        public static void EquipItems(ChampionState character)
         {
             UnEquipAllItems(character);
             var inventory = character.InventoryHelper.InventoryOrganization.inventory;
@@ -32,7 +32,7 @@ namespace Inventory
             }
         }
 
-        private static void UnEquipAllItems(CharacterState character)
+        private static void UnEquipAllItems(ChampionState character)
         {
             var inventory = character.InventoryHelper.InventoryOrganization.inventory;
             foreach (var slot in inventory.GetAllEquippingSlotsWithItems())

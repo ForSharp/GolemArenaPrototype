@@ -27,6 +27,17 @@ namespace CharacterEntity
             SetDefaultStatsByRate();
             InitExtraProvider();
         }
+
+        public Character() //for creeps
+        {
+            _characterType = CharacterType.Default;
+            _specialization = Specialization.Default;
+            
+            InitProvider();
+            SetRate();
+            SetDefaultStatsByRate();
+            InitExtraProvider();
+        }
         
         public void ChangeBaseStatsProportionallyPermanent(float value)
         {

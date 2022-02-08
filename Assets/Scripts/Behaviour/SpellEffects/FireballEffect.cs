@@ -15,7 +15,7 @@ namespace Behaviour.SpellEffects
         [SerializeField] private GameObject afterExplosion;
         [SerializeField] private GameObject flame;
 
-        private CharacterState _state;
+        private ChampionState _state;
         private CharacterState _target;
         private float _magicPower;
         private float _magicAccuracy;
@@ -34,7 +34,7 @@ namespace Behaviour.SpellEffects
             Destroy(gameObject, 10);
         }
 
-        public void Initialize(CharacterState ownerState, CharacterState target, FireBallItem info)
+        public void Initialize(ChampionState ownerState, CharacterState target, FireBallItem info)
         {
             _magicPower = ownerState.Stats.magicPower;
             _magicAccuracy = ownerState.Stats.magicAccuracy;
@@ -103,7 +103,7 @@ namespace Behaviour.SpellEffects
                 if (state.Group != _ownerGroupNumber)
                 {
                     //takedamage
-                    state.TakeDamage(_info.DamageSpellInfo.DamagingValue, _state.roundStatistics);
+                    state.TakeDamage(_info.DamageSpellInfo.DamagingValue, _state.RoundStatistics);
                     EventContainer.OnMagicDamageReceived(_state, state, _info.DamageSpellInfo.DamagingValue, false);
                 }
             }

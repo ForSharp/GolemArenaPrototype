@@ -11,7 +11,7 @@ namespace Behaviour
     public class FireballSpell : MonoBehaviour, ICastable
     {
         private FireBallItem _info;
-        private CharacterState _character;
+        private ChampionState _character;
         private CharacterState _target;
         private Animator _animator;
         private GameObject _spellEffect;
@@ -19,7 +19,7 @@ namespace Behaviour
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            _character = GetComponent<CharacterState>();
+            _character = GetComponent<ChampionState>();
         }
 
         public void SpellConstructor(ISpellItem info)

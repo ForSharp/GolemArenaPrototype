@@ -12,151 +12,158 @@ namespace CharacterEntity
             switch (type)
             {
                 case CharacterType.Cleopatra:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.14f,
                         agility = 0.54f,
                         intelligence = 0.82f
                     };
                 case CharacterType.Ramzes:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.37f,
                         agility = 0.86f,
                         intelligence = 0.27f
                     };
                 case CharacterType.Garruk:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.82f,
                         agility = 0.22f,
                         intelligence = 0.46f
                     };
                 case CharacterType.Bagrak:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.84f,
                         agility = 0.21f,
                         intelligence = 0.45f
                     };
                 case CharacterType.Gloin:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.54f,
                         agility = 0.86f,
                         intelligence = 0.1f
                     };
                 case CharacterType.Rock:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.95f,
                         agility = 0.14f,
                         intelligence = 0.41f
                     };
                 case CharacterType.Fort:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.92f,
                         agility = 0.11f,
                         intelligence = 0.47f
                     };
                 case CharacterType.Mario:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.6f,
                         agility = 0.65f,
                         intelligence = 0.25f
                     };
                 case CharacterType.Freak:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.57f,
                         agility = 0.39f,
                         intelligence = 0.54f
                     };
                 case CharacterType.Peppa:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.83f,
                         agility = 0.14f,
                         intelligence = 0.53f
                     };
                 case CharacterType.Satyr:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.29f,
                         agility = 0.56f,
                         intelligence = 0.65f
                     };
                 case CharacterType.Maron:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.65f,
                         agility = 0.75f,
                         intelligence = 0.1f
                     };
                 case CharacterType.Cudgel:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.67f,
                         agility = 0.27f,
                         intelligence = 0.56f
                     };
                 case CharacterType.Belesar:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.56f,
                         agility = 0.61f,
                         intelligence = 0.33f
                     };
                 case CharacterType.Yama:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.34f,
                         agility = 0.44f,
                         intelligence = 0.72f
                     };
                 case CharacterType.Shanti:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.34f,
                         agility = 0.46f,
                         intelligence = 0.7f
                     };
                 case CharacterType.Aine:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.43f,
                         agility = 0.5f,
                         intelligence = 0.57f
                     };
                 case CharacterType.Medusa:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.22f,
                         agility = 0.38f,
                         intelligence = 0.9f
                     };
                 case CharacterType.Sazum:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.37f,
                         agility = 0.5f,
                         intelligence = 0.63f
                     };
                 case CharacterType.Nissa:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.54f,
                         agility = 0.65f,
                         intelligence = 0.31f
                     };
                 case CharacterType.Raven:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.61f,
                         agility = 0.65f,
                         intelligence = 0.24f
+                    };
+                case CharacterType.Default:
+                    return new CharacterBaseStats
+                    {
+                        strength = 0.5f,
+                        agility = 0.5f,
+                        intelligence = 0.5f
                     };
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -168,151 +175,158 @@ namespace CharacterEntity
             switch (spec)
             {
                 case Specialization.Barbarian:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.82f,
                         agility = 0.4f,
                         intelligence = 0.28f
                     };
                 case Specialization.Bard:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.2f,
                         agility = 0.67f,
                         intelligence = 0.63f
                     };
                 case Specialization.BattleMage:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.56f,
                         agility = 0.17f,
                         intelligence = 0.77f
                     };
                 case Specialization.Cleric:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.61f,
                         agility = 0.55f,
                         intelligence = 0.34f
                     };
                 case Specialization.DeathKnight:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.70f,
                         agility = 0.50f,
                         intelligence = 0.30f
                     };
                 case Specialization.DemonHunter:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.33f,
                         agility = 0.68f,
                         intelligence = 0.49f
                     };
                 case Specialization.Druid:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.40f,
                         agility = 0.35f,
                         intelligence = 0.75f
                     };
                 case Specialization.Fighter:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.76f,
                         agility = 0.69f,
                         intelligence = 0.05f
                     };
                 case Specialization.Hunter:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.13f,
                         agility = 0.75f,
                         intelligence = 0.62f
                     };
                 case Specialization.Illusionist:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.14f,
                         agility = 0.89f,
                         intelligence = 0.47f
                     };
                 case Specialization.Monk:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.50f,
                         agility = 0.50f,
                         intelligence = 0.50f
                     };
                 case Specialization.Paladin:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.70f,
                         agility = 0.63f,
                         intelligence = 0.17f
                     };
                 case Specialization.Ranger:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.29f,
                         agility = 0.82f,
                         intelligence = 0.39f
                     };
                 case Specialization.Rogue:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.20f,
                         agility = 0.66f,
                         intelligence = 0.64f
                     };
                 case Specialization.Shaman:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.57f,
                         agility = 0.15f,
                         intelligence = 0.78f
                     };
                 case Specialization.Sorcerer:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.69f,
                         agility = 0.02f,
                         intelligence = 0.79f
                     };
                 case Specialization.Tank:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.83f,
                         agility = 0.57f,
                         intelligence = 0.1f
                     };
                 case Specialization.Thief:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.43f,
                         agility = 0.54f,
                         intelligence = 0.53f
                     };
                 case Specialization.Warlock:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.61f,
                         agility = 0.25f,
                         intelligence = 0.64f
                     };
                 case Specialization.Warrior:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.68f,
                         agility = 0.56f,
                         intelligence = 0.26f
                     };
                 case Specialization.Wizard:
-                    return new CharacterBaseStats()
+                    return new CharacterBaseStats
                     {
                         strength = 0.62f,
                         agility = 0.06f,
                         intelligence = 0.82f
+                    };
+                case Specialization.Default:
+                    return new CharacterBaseStats
+                    {
+                        strength = 0.5f,
+                        agility = 0.5f,
+                        intelligence = 0.5f
                     };
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spec), spec, null);
@@ -458,6 +472,8 @@ namespace CharacterEntity
                         DamagePerHeatArgSt = strength * 1.1f,
                         HealthArgSt = strength * 1.1f
                     });
+                case CharacterType.Default:
+                    return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
                 default:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
             }
@@ -609,6 +625,8 @@ namespace CharacterEntity
                         MagicResistanceArgSt = strength * 1.2f,
                         ManaPoolArgIn = intelligence * 0.9f
                     });
+                case Specialization.Default:
+                    return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
                 default:
                     return ExtraStatsRate.InitializeExtraStats(new ExtraStatsRate(strength, agility, intelligence));
             }
@@ -665,6 +683,8 @@ namespace CharacterEntity
                     return MainCharacterParameter.Agility;
                 case CharacterType.Raven:
                     return MainCharacterParameter.Agility;
+                case CharacterType.Default:
+                    return MainCharacterParameter.Strength;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -716,6 +736,8 @@ namespace CharacterEntity
                     return MainCharacterParameter.Strength;
                 case Specialization.Wizard:
                     return MainCharacterParameter.Intelligence;
+                case Specialization.Default:
+                    return MainCharacterParameter.Strength;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spec), spec, null);
             }
@@ -744,15 +766,15 @@ namespace CharacterEntity
         }
 
         private static readonly CharacterBaseStats BaseStats = new CharacterBaseStats
-            {strength = 150, agility = 150, intelligence = 150};
+            {strength = 10, agility = 10, intelligence = 10};
 
-        private const int NonExistentEnumValue = 2222222;
+        
 
         public static List<string> GetCharacterFeatures(CharacterType type)
         {
             var typeStats = GetExtraStats(type, BaseStats); //must be here
             typeStats = GetExtraStats(type, BaseStats);
-            var defaultStats = GetExtraStats((CharacterType) NonExistentEnumValue, BaseStats);
+            var defaultStats = GetExtraStats(CharacterType.Default, BaseStats);
             var typeStatsColl = GetStatsCollection(typeStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
@@ -763,7 +785,7 @@ namespace CharacterEntity
         {
             var specStats = GetExtraStats(spec, BaseStats); //must be here
             specStats = GetExtraStats(spec, BaseStats);
-            var defaultStats = GetExtraStats((Specialization) NonExistentEnumValue, BaseStats);
+            var defaultStats = GetExtraStats(Specialization.Default, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);
 
@@ -774,7 +796,7 @@ namespace CharacterEntity
         {
             var currentStats = GetExtraStats(type, spec, BaseStats); //must be here
             currentStats = GetExtraStats(type, spec, BaseStats);
-            var defaultStats = GetExtraStats((CharacterType) NonExistentEnumValue, (Specialization) NonExistentEnumValue,
+            var defaultStats = GetExtraStats(CharacterType.Default, Specialization.Default,
                 BaseStats);
             var typeStatsColl = GetStatsCollection(currentStats);
             var defaultStatsColl = GetStatsCollection(defaultStats);

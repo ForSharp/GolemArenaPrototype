@@ -34,7 +34,7 @@ namespace Inventory
             EventContainer.OnCharacterStatsChanged(character);
         }
 
-        public static void DrinkAllPotions(CharacterState character)
+        public static void DrinkAllPotions(ChampionState character)
         {
             var inventory = character.InventoryHelper.InventoryOrganization.inventory;
 
@@ -99,7 +99,7 @@ namespace Inventory
             }
         }
 
-        private static void ChangeInventoryState(IInventoryItem item, CharacterState character)
+        private static void ChangeInventoryState(IInventoryItem item, ChampionState character)
         {
             item.State.Amount--;
             var inventory = character.InventoryHelper.InventoryOrganization.inventory;

@@ -12,7 +12,7 @@ namespace Behaviour
     public class SnowstormSpell : MonoBehaviour, ICastable
     {
         private SnowstormItem _info;
-        private CharacterState _character;
+        private ChampionState _character;
         private CharacterState _target;
         private Animator _animator;
         private GameObject _spellEffect;
@@ -20,7 +20,7 @@ namespace Behaviour
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            _character = GetComponent<CharacterState>();
+            _character = GetComponent<ChampionState>();
         }
 
         public void SpellConstructor(ISpellItem info)
@@ -49,7 +49,7 @@ namespace Behaviour
             //     _target.transform.position.y + 1, _target.transform.position.x), Quaternion.identity);
             var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity);
             var snowstormEffect = effect.GetComponent<SnowstormEffect>();
-            snowstormEffect.Initialize(_character, _target, _info);
+            snowstormEffect.Initialize(_character, _info);
             
         }
     }

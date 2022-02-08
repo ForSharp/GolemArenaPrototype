@@ -22,11 +22,11 @@ namespace GameLoop
             Instance = this;
         }
 
-        public void SpawnGolem(CharacterType characterType, Specialization specialization, bool isPlayerCharacter = false)
+        public void SpawnChampion(CharacterType characterType, Specialization specialization, bool isPlayerCharacter = false)
         {
             var character = new Character(characterType, specialization);
             var newCharacter = Instantiate(GetRelevantPrefab(characterType), GetRandomSpawnPoint(), Quaternion.identity);
-            var state = ConnectGolemWithState(newCharacter, character, characterType, specialization);
+            var state = ConnectChampionWithState(newCharacter, character, characterType, specialization);
 
             _group++;
 
@@ -44,9 +44,9 @@ namespace GameLoop
             return randomPoint;
         }
 
-        private CharacterState ConnectGolemWithState(GameObject newGolem, Character character, CharacterType characterType, Specialization specialization)
+        private ChampionState ConnectChampionWithState(GameObject newChampion, Character character, CharacterType characterType, Specialization specialization)
         {
-            var state = newGolem.GetComponent<CharacterState>();
+            var state = newChampion.GetComponent<ChampionState>();
             if (_group < groupColors.Length)
             {
                 state.InitializeState(character, _group, groupColors[_group], characterType.ToString(), specialization.ToString());

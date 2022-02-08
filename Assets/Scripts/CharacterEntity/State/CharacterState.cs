@@ -4,50 +4,39 @@ using CharacterEntity.BaseStats;
 using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
 using GameLoop;
-using Inventory;
-using SpellSystem;
 using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CharacterEntity.State
 {
-    public sealed class CharacterState : MonoBehaviour, IDestructible
+    public abstract class CharacterState : MonoBehaviour, IDestructible
     {
         [SerializeField] private GameObject healthBarPrefab;
         [SerializeField] private GameObject stateBarPrefab;
-        private GameObject _healthBar;
+        protected GameObject healthBar;
         public DynamicStateBar StateBar { get; private set; }
         public CharacterEffectsContainer characterEffectsContainer;
 
-        public float MaxHealth { get; private set; }
-        public float CurrentHealth { get; private set; }
-        public float MaxMana { get; private set; }
-        public float CurrentMana { get; private set; }
-        public int Group { get; private set; }
-        public Color ColorGroup { get; private set; }
+        public string Type { get; protected set; }
+        public float MaxHealth { get; protected set; }
+        public float CurrentHealth { get; protected set; }
+        public float MaxMana { get; protected set; }
+        public float CurrentMana { get; protected set; }
+        public int Group { get; protected set; }
+        public Color ColorGroup { get; protected set; }
         public int Lvl { get; set; }
-        public bool IsDead { get; private set; }
-        public CharacterBaseStats BaseStats { get; private set; }
-        public CharacterExtraStats Stats { get; private set; }
-        public string Type { get; private set; }
-        public string Spec { get; private set; }
-        public Character Character { get; private set; }
+        public bool IsDead { get; protected set; }
+        public CharacterBaseStats BaseStats { get; protected set; }
+        public CharacterExtraStats Stats { get; protected set; }
         public SoundsController SoundsController { get; private set; }
-        public InventoryHelper InventoryHelper { get; private set; }
-        public SpellManager SpellManager { get; private set; }
-        public SpellPanelHelper SpellPanelHelper { get; private set; }
-        public ConsumablesEater ConsumablesEater { get; private set; }
-
+        public Character Character { get; protected set; }
+        public ConsumablesEater ConsumablesEater { get; protected set; }
         private RoundStatistics _lastEnemyAttacked;
-        public RoundStatistics roundStatistics;
+        public event Action<CharacterExtraStats> StatsChanged;
         public event EventHandler AttackReceived;
         public event Action<float> CurrentHealthChanged;
         public event Action<float> CurrentManaChanged;
-        public event Action<CharacterExtraStats> StatsChanged;
         public event Action<Sprite, float, bool, bool, string> StateEffectAdded;
-        public event Action StartSpellCast;
-        public event Action CancelSpellCast;
         public event Action<string> StunCharacter;
         public event Action<string> EndStunCharacter;
 
@@ -56,24 +45,17 @@ namespace CharacterEntity.State
             AttackReceived?.Invoke(sender, args);
         }
 
-        private void Start()
+        protected void Start()
         {
             SoundsController = GetComponent<SoundsController>();
-            roundStatistics = new RoundStatistics(this);
-            InventoryHelper = GetComponent<InventoryHelper>();
-            SpellPanelHelper = GetComponent<SpellPanelHelper>();
-            SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
-            var unused = new ExtraStatsEditorWithItems(this);
-            ConsumablesEater = new ConsumablesEater(this);
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             EventContainer.CharacterStatsChanged += UpdateStats;
-
             StartCoroutine(RegenerateCurrents());
         }
-
+        
         private void OnDestroy()
         {
             EventContainer.CharacterStatsChanged -= UpdateStats;
@@ -125,18 +107,7 @@ namespace CharacterEntity.State
             OnCurrentManaChanged(CurrentMana);
         }
 
-        public void InitializeState(Character character, int group, Color colorGroup, string type, string spec)
-        {
-            Character = character;
-            Group = group;
-            ColorGroup = colorGroup;
-            Type = type;
-            Spec = spec;
-
-            SetStartState();
-        }
-
-        private void SetStartState()
+        protected void SetStartState()
         {
             if (Character == null) return;
 
@@ -155,9 +126,9 @@ namespace CharacterEntity.State
 
         private void CreateHealthBar()
         {
-            _healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity,
+            healthBar = Instantiate(healthBarPrefab, transform.position, Quaternion.identity,
                 GameObject.Find("HealthBarContainer").transform);
-            _healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
+            healthBar.GetComponent<DynamicHealthBar>().SetCharacterState(this);
         }
 
         private void CreateStateBar()
@@ -215,42 +186,10 @@ namespace CharacterEntity.State
             }
         }
 
-        public void PrepareAfterNewRound()
-        {
-            IsDead = false;
-            LvlUpCharacter(7);
-            HealAllParameters();
-            ShowHealthBar();
-            NullRoundStatistics();
-        }
-
         public void LvlUpCharacter(int amount)
         {
             LvlUpper.LvlUp(this, amount);
             characterEffectsContainer.PlayLvlUpEffect();
-        }
-
-        private void NullRoundStatistics()
-        {
-            roundStatistics.RoundDamage = 0;
-            roundStatistics.RoundKills = 0;
-            roundStatistics.WinLastRound = false;
-            roundStatistics.RoundRate = 0;
-        }
-
-        private void HealAllParameters()
-        {
-            CurrentHealth = MaxHealth;
-            CurrentMana = MaxMana;
-
-            OnCurrentHealthChanged(CurrentHealth);
-            OnCurrentManaChanged(CurrentMana);
-        }
-
-        private void ShowHealthBar()
-        {
-            _healthBar.gameObject.SetActive(true);
-            StateBar.gameObject.SetActive(true);
         }
 
         public void HealCurrentsFlat(MainCharacterParameter parameter, float healingValue)
@@ -340,12 +279,12 @@ namespace CharacterEntity.State
             }
         }
 
-        private void OnCurrentHealthChanged(float health)
+        protected void OnCurrentHealthChanged(float health)
         {
             CurrentHealthChanged?.Invoke(health);
         }
 
-        private void OnCurrentManaChanged(float mana)
+        protected void OnCurrentManaChanged(float mana)
         {
             CurrentManaChanged?.Invoke(mana);
         }
@@ -358,16 +297,6 @@ namespace CharacterEntity.State
         public void OnStateEffectAdded(Sprite effectImage, float effectDuration, bool effectIsPositive, bool canStack, string effectId)
         {
             StateEffectAdded?.Invoke(effectImage, effectDuration, effectIsPositive, canStack, effectId);
-        }
-
-        public void OnStartSpellCast()
-        {
-            StartSpellCast?.Invoke();
-        }
-
-        public void OnCancelSpellCast()
-        {
-            CancelSpellCast?.Invoke();
         }
 
         public void OnStunCharacter(string stunId)

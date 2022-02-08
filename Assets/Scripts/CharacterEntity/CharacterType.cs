@@ -22,6 +22,8 @@
         Medusa, //I
         Sazum, //I
         Nissa, //A
-        Raven //A
+        Raven, //A
+        
+        Default
     }
 }

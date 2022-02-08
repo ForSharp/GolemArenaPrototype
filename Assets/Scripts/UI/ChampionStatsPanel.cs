@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public sealed class CharacterStatsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+    public sealed class ChampionStatsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
         [SerializeField] private GameObject panel;
         [SerializeField] private HeroPortraitController portrait;
@@ -44,7 +44,7 @@ namespace UI
         [SerializeField] private StaticHealthBar healthBar;
         public bool InPanel { get; private set; }
 
-        private CharacterState _state;
+        private ChampionState _state;
 
         private CharacterExtraStats _stats;
 
@@ -86,7 +86,7 @@ namespace UI
             extraPanel.SetActive(false);
         }
 
-        public void HandleClick(CharacterState state)
+        public void HandleClick(ChampionState state)
         {
             if (Game.Stage == Game.GameStage.MainMenu)
                 return;
@@ -111,7 +111,7 @@ namespace UI
 
         private void CloseLearnedSpells()
         {
-            foreach (var character in Game.AllCharactersInSession)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
             }
@@ -119,7 +119,7 @@ namespace UI
 
         private void CloseSpellPanels()
         {
-            foreach (var character in Game.AllCharactersInSession)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 character.SpellPanelHelper.SpellsPanel.HideAll();
             }
@@ -127,7 +127,7 @@ namespace UI
 
         private void CloseNonEquippingInventory()
         {
-            foreach (var character in Game.AllCharactersInSession)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
             }
@@ -135,7 +135,7 @@ namespace UI
 
         private void HideAllInventoryPanels()
         {
-            foreach (var character in Game.AllCharactersInSession)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 character.InventoryHelper.InventoryOrganization.HideAllInventory();
             }

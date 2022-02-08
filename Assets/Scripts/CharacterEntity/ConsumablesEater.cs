@@ -18,6 +18,14 @@ namespace CharacterEntity
         public ConsumablesEater(State.CharacterState character)
         {
             _character = character;
+
+            EventContainer.NewRound += RemoveAllTemporaryEffects;
+            Game.EndGame += RemoveAllListenersSummon;
+        }
+        
+        public ConsumablesEater(State.ChampionState character)
+        {
+            _character = character;
             _inventory = character.InventoryHelper.InventoryOrganization.inventory;
 
             _inventory.ConsumableItemUsed += InventoryOnConsumableItemUsed;
@@ -104,6 +112,12 @@ namespace CharacterEntity
             _inventory.ConsumableItemUsed -= InventoryOnConsumableItemUsed;
             EventContainer.NewRound -= RemoveAllTemporaryEffects;
             Game.EndGame -= RemoveAllListeners;
+        }
+        
+        private void RemoveAllListenersSummon()
+        {
+            EventContainer.NewRound -= RemoveAllTemporaryEffects;
+            Game.EndGame -= RemoveAllListenersSummon;
         }
     }
 }

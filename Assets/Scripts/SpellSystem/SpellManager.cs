@@ -17,7 +17,7 @@ namespace SpellSystem
     {
         private readonly List<ISpellItem> _learnedSpells = new List<ISpellItem>();
         private readonly Animator _animator;
-        private readonly CharacterState _character;
+        private readonly ChampionState _character;
         private readonly SpellContainer _spellContainer;
         private readonly SpellsPanel _spellsPanel;
         private readonly PlayerController _playerController;
@@ -73,7 +73,7 @@ namespace SpellSystem
             inventory.OnInventoryStateChanged(_character);
         }
 
-        public SpellManager(Animator animator, CharacterState characterState, SpellContainer spellContainer)
+        public SpellManager(Animator animator, ChampionState characterState, SpellContainer spellContainer)
         {
             _animator = animator;
             _character = characterState;
@@ -288,7 +288,6 @@ namespace SpellSystem
 
         private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
         {
-            Debug.Log($"Target: {targetState.Type}, Spell: {_spellFirstUI.SpellItem.SpellInfo.SpellType}");
             _spellFirstUI.StopMarkSpell();
             _spellFirstUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
@@ -298,7 +297,6 @@ namespace SpellSystem
 
         private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem)
         {
-            Debug.Log($"Target: {targetState.Type}, Spell: {_spellSecondUI.SpellItem.SpellInfo.SpellType}");
             _spellSecondUI.StopMarkSpell();
             _spellSecondUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
@@ -308,7 +306,6 @@ namespace SpellSystem
 
         private void CastSpellThird(CharacterState targetState, ISpellItem spellItem)
         {
-            Debug.Log($"Target: {targetState.Type}, Spell: {_spellThirdUI.SpellItem.SpellInfo.SpellType}");
             _spellThirdUI.StopMarkSpell();
             _spellThirdUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);

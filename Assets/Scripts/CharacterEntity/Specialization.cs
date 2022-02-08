@@ -22,6 +22,8 @@
         Thief,//A
         Warlock,//I
         Warrior,//S
-        Wizard//I
+        Wizard,//I
+        
+        Default
     }
 }

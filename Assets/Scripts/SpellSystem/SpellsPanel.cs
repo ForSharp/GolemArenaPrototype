@@ -16,17 +16,12 @@ namespace SpellSystem
         [SerializeField] private LearnedSpellsPanel learnedSpellsPanel;
         private int _spellNumberToChange;
         private bool _learnedSpellPanelEnabled;
-        public CharacterState Character { get; set; }
+        public ChampionState Character { get; set; }
         
         public ActiveUISpell SpellButtonFirst => spellButtonFirst;
         public ActiveUISpell SpellButtonSecond => spellButtonSecond;
         public ActiveUISpell SpellButtonThird => spellButtonThird;
         public bool InPanel { get; private set; }
-
-        public void EndCooldownAllSpells()
-        {
-            
-        }
 
         public void HideLearnedSpellsPanel()
         {
