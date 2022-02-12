@@ -14,7 +14,7 @@ namespace CharacterEntity.State
         [SerializeField] private GameObject healthBarPrefab;
         [SerializeField] private GameObject stateBarPrefab;
         protected GameObject healthBar;
-        public DynamicStateBar StateBar { get; private set; }
+        public DynamicStateBar StateBar { get; protected set; }
         public CharacterEffectsContainer characterEffectsContainer;
 
         public string Type { get; protected set; }

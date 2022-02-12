@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CharacterEntity;
-using CharacterEntity.CharacterState;
+﻿using CharacterEntity;
 using CharacterEntity.ExtraStats;
 using CharacterEntity.State;
 using Controller;

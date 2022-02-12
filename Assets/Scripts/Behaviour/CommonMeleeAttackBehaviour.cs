@@ -32,7 +32,7 @@ namespace Behaviour
         private bool _isReady;
         private bool _isLastHitEnd = true;
 
-        public void CustomConstructor(float hitHeight, float attackRange, float destructionRadius, Animator animator,
+        public void Initialize(float hitHeight, float attackRange, float destructionRadius, Animator animator,
             int group, float damage, float delayBetweenHits, float hitAccuracy, GameObject target,
             string nameCharacter, RoundStatistics statistics = default, params Action<Animator>[] hitAnimationSetters)
         {

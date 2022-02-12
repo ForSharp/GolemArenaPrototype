@@ -7,12 +7,12 @@ namespace Behaviour
 {
     public class SummonSpiderSpell : MonoBehaviour, ICastable
     {
-        public void CastSpell(CharacterState target)
+        public void SpellConstructor(ISpellItem info)
         {
             throw new System.NotImplementedException();
         }
 
-        public void SpellConstructor(ISpellItem info)
+        public void CastSpell(CharacterState target)
         {
             throw new System.NotImplementedException();
         }
