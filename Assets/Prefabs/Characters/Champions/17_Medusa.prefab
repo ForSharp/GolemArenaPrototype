@@ -716,6 +716,7 @@ GameObject:
   - component: {fileID: -318589195792113314}
   - component: {fileID: -8500829863524958411}
   - component: {fileID: -386921423947292002}
+  - component: {fileID: -4752885566448350640}
   m_Layer: 0
   m_Name: 17_Medusa
   m_TagString: Untagged
@@ -1215,6 +1216,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4752885566448350640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212688883902487369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1212694659741204037

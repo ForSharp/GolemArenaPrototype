@@ -217,6 +217,7 @@ namespace CharacterEntity
         {
             _inAttack = true;
             _timeToResetAttack = 0;
+            _animator.applyRootMotion = true;
         }
 
         private void OnAttackEnded()
@@ -500,7 +501,7 @@ namespace CharacterEntity
         private void HandleHitReceiving(object sender, EventArgs args)
         {
             AttackHitEventArgs hitArgs = (AttackHitEventArgs)args;
-
+            _animator.applyRootMotion = true;
             if (AttackFromBehind())
             {
                 hitArgs.DamagePerHit *= 1.5f;

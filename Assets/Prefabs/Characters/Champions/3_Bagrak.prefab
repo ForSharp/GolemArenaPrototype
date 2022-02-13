@@ -645,6 +645,7 @@ GameObject:
   - component: {fileID: 4150718235904555062}
   - component: {fileID: 7290486166036273866}
   - component: {fileID: 5682001073966039892}
+  - component: {fileID: 5987438914604998578}
   m_Layer: 0
   m_Name: 3_Bagrak
   m_TagString: Untagged
@@ -1295,6 +1296,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5987438914604998578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965680858140807453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4965699765868651749

@@ -338,7 +338,8 @@ namespace CharacterEntity
         
         private void GetHit(AttackHitEventArgs hitArgs)
         {
-            _thisState.TakeDamage(hitArgs.DamagePerHit, hitArgs.Statistics);
+            _thisState.TakeDamage(hitArgs.DamagePerHit, null);
+            //_thisState.TakeDamage(hitArgs.DamagePerHit, hitArgs.Statistics);
             if (!_thisState.IsDead)
             {
                 _soundsController.PlayHittingEnemySound();

@@ -38,11 +38,18 @@ namespace GameLoop
             }
         }
 
-        public void SpawnCreep(CreepType creepType, CharacterBaseStats creepStats, ChampionState owner, Vector3 pos)
+        public void SpawnCreep(CreepType creepType, CharacterBaseStats creepStats, ChampionState owner, Vector3 pos, float duration)
         {
             var character = new Character(creepStats);
             var newCharacter = Instantiate(GetRelevantPrefab(creepType), pos, Quaternion.identity);
-            ConnectCreepWithState(newCharacter, character, creepType, owner);
+            ConnectCreepWithState(newCharacter, character, creepType, owner, duration);
+        }
+        
+        public void SpawnCreep(GameObject creepPrefab, CreepType creepType, CharacterBaseStats creepStats, ChampionState owner, Vector3 pos, float duration)
+        {
+            var character = new Character(creepStats);
+            var newCharacter = Instantiate(creepPrefab, pos, Quaternion.identity);
+            ConnectCreepWithState(newCharacter, character, creepType, owner, duration);
         }
 
         private Vector3 GetRandomSpawnPoint()
@@ -70,10 +77,10 @@ namespace GameLoop
             return state;
         }
 
-        private CreepState ConnectCreepWithState(GameObject newCreep, Character character, CreepType creepType, ChampionState owner)
+        private CreepState ConnectCreepWithState(GameObject newCreep, Character character, CreepType creepType, ChampionState owner, float duration)
         {
             var state = newCreep.GetComponent<CreepState>();
-            state.InitializeState(character, owner, creepType.ToString());
+            state.InitializeState(character, owner, creepType.ToString(), duration);
             return state;
         }
         

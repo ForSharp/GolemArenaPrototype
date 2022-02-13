@@ -1487,6 +1487,7 @@ GameObject:
   - component: {fileID: -4596955607894539674}
   - component: {fileID: 9094227236198341893}
   - component: {fileID: 4871014189017198528}
+  - component: {fileID: 2246463115331551112}
   m_Layer: 0
   m_Name: 7_Mario
   m_TagString: Untagged
@@ -2137,6 +2138,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2246463115331551112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739811393562177581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4739852204668627317

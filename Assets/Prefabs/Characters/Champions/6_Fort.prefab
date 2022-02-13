@@ -1106,6 +1106,7 @@ GameObject:
   - component: {fileID: -5290162160667041146}
   - component: {fileID: 7921495924151782439}
   - component: {fileID: 7602863946671826195}
+  - component: {fileID: 4618376729586012207}
   m_Layer: 0
   m_Name: 6_Fort
   m_TagString: Untagged
@@ -1699,6 +1700,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4618376729586012207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2716287087704530673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2716292260030179369

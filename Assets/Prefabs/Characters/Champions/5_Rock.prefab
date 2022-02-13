@@ -1167,6 +1167,7 @@ GameObject:
   - component: {fileID: 6120083755091258672}
   - component: {fileID: 5199471352261861222}
   - component: {fileID: -2753532469373863915}
+  - component: {fileID: -5719586422768548264}
   m_Layer: 0
   m_Name: 5_Rock
   m_TagString: Untagged
@@ -1760,6 +1761,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5719586422768548264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732600999845990711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5732610730719946637

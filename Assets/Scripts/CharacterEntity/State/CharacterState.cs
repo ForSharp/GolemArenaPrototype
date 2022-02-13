@@ -178,11 +178,16 @@ namespace CharacterEntity.State
             if (!IsDead)
             {
                 CurrentHealth = 0;
-                _lastEnemyAttacked.Kills += 1;
-                _lastEnemyAttacked.RoundKills += 1;
+                
                 IsDead = true;
                 EventContainer.OnCharacterDied(_lastEnemyAttacked);
-                _lastEnemyAttacked.Owner.LvlUpCharacter(1);
+                
+                if (_lastEnemyAttacked != null)
+                {
+                    _lastEnemyAttacked.Kills += 1;
+                    _lastEnemyAttacked.RoundKills += 1;
+                    _lastEnemyAttacked.Owner.LvlUpCharacter(1);
+                }
             }
         }
 

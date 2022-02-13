@@ -1,17 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace CharacterEntity.State
 {
     public class CreepState : CharacterState
     {
         public ChampionState CreepOwner { get; private set; }
+        public float CreepLiveDuration { get; private set; }
         private new void Start()
         {
             base.Start();
             ConsumablesEater = new ConsumablesEater(this);
         }
 
-        public void InitializeState(Character character, ChampionState owner, string type)
+        public void InitializeState(Character character, ChampionState owner, string type, float duration)
         {
             Character = character;
             CreepOwner = owner;
@@ -19,6 +21,21 @@ namespace CharacterEntity.State
             ColorGroup = owner.ColorGroup;
             Type = type;
             SetStartState();
+            CreepLiveDuration = duration;
+
+            StartCoroutine(KillCreep(CreepLiveDuration));
+        }
+
+        private IEnumerator KillCreep(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            
+            GetDeadlyDamage();
+        }
+
+        private void GetDeadlyDamage()
+        {
+            TakeDamage(100000000, null);
         }
     }
 }

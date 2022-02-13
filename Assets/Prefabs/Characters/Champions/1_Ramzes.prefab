@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: -163450849917465849}
   - component: {fileID: 3653798037534465562}
   - component: {fileID: 8933064569925862617}
+  - component: {fileID: -357860637674182072}
   m_Layer: 0
   m_Name: 1_Ramzes
   m_TagString: Untagged
@@ -965,6 +966,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede6e7de005247ed9c0904553cad36cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-357860637674182072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042582501779929281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db9f80ec464f528aecab5caed15d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3042597495283479395

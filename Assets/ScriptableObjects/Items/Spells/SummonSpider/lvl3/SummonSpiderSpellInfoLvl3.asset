@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SummonSpiderSpellInfoLvl3
   m_EditorClassIdentifier: 
   spellType: 4
-  spellEffect: {fileID: 0}
+  spellEffect: {fileID: 873111375659736032, guid: e52d45f3f81fae44c8c870e392a705f0,
+    type: 3}
   manaCost: 400
   cooldown: 50
   spellLvl: 3

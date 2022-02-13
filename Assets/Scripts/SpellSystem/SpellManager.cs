@@ -349,9 +349,9 @@ namespace SpellSystem
                     spellSlot = _spellContainer.SnowstormSpell;
                     _spellContainer.SnowstormSpell.SpellConstructor(spellItem);
                     break;
-                case SummonSpiderItem summonSpiderItem: //
-                    spellSlot = _spellContainer.FireballSpell;
-                    _spellContainer.FireballSpell.SpellConstructor(spellItem);
+                case SummonSpiderItem _:
+                    spellSlot = _spellContainer.SummonSpiderSpell;
+                    _spellContainer.SummonSpiderSpell.SpellConstructor(spellItem);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(spellItem));

@@ -13,13 +13,15 @@ namespace SpellSystem
         
         public SnowstormSpell SnowstormSpell { get; private set; }
         
+        public SummonSpiderSpell SummonSpiderSpell { get; private set; }
+        
         private void Start()
         {
             FireballSpell = GetComponent<FireballSpell>();
             FreezingSpell = GetComponent<FreezingSpell>();
             GraceSpell = GetComponent<GraceSpell>();
             SnowstormSpell = GetComponent<SnowstormSpell>();
-
+            SummonSpiderSpell = GetComponent<SummonSpiderSpell>();
         }
 
         
