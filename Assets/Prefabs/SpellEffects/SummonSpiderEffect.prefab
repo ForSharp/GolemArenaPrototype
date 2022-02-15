@@ -46,7 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spiderPrefab: {fileID: 1356782923155146, guid: fc9ece646c03b5d4f8c2d3adfb6ffa0e,
     type: 3}
-  spawner: {fileID: 0}
 --- !u!1001 &6878967950591873899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,7 +67,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4638536802293286, guid: 98958d79521880540984f3838adbee94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4638536802293286, guid: 98958d79521880540984f3838adbee94, type: 3}
       propertyPath: m_LocalPosition.z

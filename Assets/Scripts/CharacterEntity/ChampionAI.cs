@@ -232,7 +232,11 @@ namespace CharacterEntity
             {
                 _navMeshAgent.enabled = true;
             }
-            _animator.applyRootMotion = false;
+
+            if (_thisState == Player.PlayerCharacter && !_isAIControlAllowed)
+            {
+                _animator.applyRootMotion = false;
+            }
         }
 
         private void OnStartJump()

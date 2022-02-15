@@ -79,6 +79,11 @@ namespace GameLoop
             
         }
 
+        public static void RemoveDeadCreep(CharacterState creep)
+        {
+            AllCharactersInSession.Remove(creep);
+        }
+
         private static void CreateBotCharacters()
         {
             for (var i = 0; i < 4; i++)

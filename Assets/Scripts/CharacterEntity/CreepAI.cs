@@ -29,7 +29,7 @@ namespace CharacterEntity
         private Animator _animator;
         private FightStatus _status;
         private float _timeToResetAttack;
-        private SoundsController _soundsController;
+        //private SoundsController _soundsController;
         
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
@@ -48,7 +48,7 @@ namespace CharacterEntity
             AnimationChangerCreep.SetIdle(_animator);
             StartCoroutine(FindEnemies());
             _isDies = false;
-            _soundsController = GetComponent<SoundsController>();
+            //_soundsController = GetComponent<SoundsController>();
         }
 
         private void OnEnable()
@@ -147,6 +147,20 @@ namespace CharacterEntity
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+        
+        private void OnAttackStarted()
+        {
+            _inAttack = true;
+            _timeToResetAttack = 0;
+            _animator.applyRootMotion = true;
+        }
+
+        private void OnAttackEnded()
+        {
+            _inAttack = false;
+            
+            _navMeshAgent.enabled = true;
         }
         
         private void SetDefaultBehaviour()
@@ -284,7 +298,7 @@ namespace CharacterEntity
         {
             if (_thisState.IsDead)
             {
-                SetDefaultBehaviour();
+                SetDeadBehaviour();
                 _status = FightStatus.Dead;
                 return;
             }
@@ -342,7 +356,7 @@ namespace CharacterEntity
             //_thisState.TakeDamage(hitArgs.DamagePerHit, hitArgs.Statistics);
             if (!_thisState.IsDead)
             {
-                _soundsController.PlayHittingEnemySound();
+                //_soundsController.PlayHittingEnemySound();
             }
         }
         

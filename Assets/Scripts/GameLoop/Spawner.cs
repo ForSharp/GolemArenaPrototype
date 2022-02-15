@@ -81,6 +81,7 @@ namespace GameLoop
         {
             var state = newCreep.GetComponent<CreepState>();
             state.InitializeState(character, owner, creepType.ToString(), duration);
+            Game.AddCharacterToAllCharactersList(state);
             return state;
         }
         

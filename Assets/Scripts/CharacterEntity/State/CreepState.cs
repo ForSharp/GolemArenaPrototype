@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GameLoop;
 using UnityEngine;
 
 namespace CharacterEntity.State
@@ -7,9 +8,8 @@ namespace CharacterEntity.State
     {
         public ChampionState CreepOwner { get; private set; }
         public float CreepLiveDuration { get; private set; }
-        private new void Start()
+        private  void Start()
         {
-            base.Start();
             ConsumablesEater = new ConsumablesEater(this);
         }
 
@@ -36,6 +36,7 @@ namespace CharacterEntity.State
         private void GetDeadlyDamage()
         {
             TakeDamage(100000000, null);
+            Game.RemoveDeadCreep(this);
         }
     }
 }

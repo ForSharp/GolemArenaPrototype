@@ -16,5 +16,5 @@ MonoBehaviour:
   spellEffect: {fileID: 873111375659736032, guid: e52d45f3f81fae44c8c870e392a705f0,
     type: 3}
   manaCost: 400
-  cooldown: 50
+  cooldown: 15
   spellLvl: 3

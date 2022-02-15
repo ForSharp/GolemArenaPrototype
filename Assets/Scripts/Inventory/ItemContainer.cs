@@ -167,28 +167,49 @@ namespace Inventory
             Instance = this;
         }
         
-        private List<IInventoryItem> GetAllItems()
+        public List<IInventoryItem> GetAllItems()
         {
-            return new List<IInventoryItem>()
-            {
-                Apple,
-                WarHelmet,
-                Chocolate,
-                FireBallItemLvl1,
-                FreezingItemLvl1,
-                GraceItemLvl1,
-                SnowstormItemLvl1,
-                SummonSpiderItemLvl1,
-                PotionFlatSmall,
-                PotionFlatMedium, 
-                PotionFlatLarge,
-                PotionMultiplySmall,
-                PotionMultiplyMedium,
-                PotionMultiplyLarge,
-                PotionUltimateAgility,
-                PotionUltimateIntelligence,
-                PotionUltimateStrength
-            };
+            var allItems = new List<IInventoryItem>();
+            allItems.Add(Apple);
+            allItems.Add(WarHelmet);
+            allItems.Add(Chocolate);
+            allItems.Add(FireBallItemLvl1);
+            allItems.Add(FreezingItemLvl1);
+            allItems.Add(GraceItemLvl1);
+            allItems.Add(SnowstormItemLvl1);
+            allItems.Add(SummonSpiderItemLvl1);
+            allItems.Add(PotionFlatSmall);
+            allItems.Add(PotionFlatMedium);
+            allItems.Add(PotionFlatLarge);
+            allItems.Add(PotionMultiplySmall);
+            allItems.Add(PotionMultiplyMedium);
+            allItems.Add(PotionMultiplyLarge);
+            allItems.Add(PotionUltimateAgility);
+            allItems.Add(PotionUltimateIntelligence);
+            allItems.Add(PotionUltimateStrength);
+
+            return allItems;
+
+            // return new List<IInventoryItem>()
+            // {
+            //     Apple,
+            //     WarHelmet,
+            //     Chocolate,
+            //     FireBallItemLvl1,
+            //     FreezingItemLvl1,
+            //     GraceItemLvl1,
+            //     SnowstormItemLvl1,
+            //     SummonSpiderItemLvl1,
+            //     PotionFlatSmall,
+            //     PotionFlatMedium, 
+            //     PotionFlatLarge,
+            //     PotionMultiplySmall,
+            //     PotionMultiplyMedium,
+            //     PotionMultiplyLarge,
+            //     PotionUltimateAgility,
+            //     PotionUltimateIntelligence,
+            //     PotionUltimateStrength
+            // };
         }
         
         public List<IInventoryItem> GetAllConsumables()

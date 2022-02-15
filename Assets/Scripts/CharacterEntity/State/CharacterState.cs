@@ -28,7 +28,7 @@ namespace CharacterEntity.State
         public bool IsDead { get; protected set; }
         public CharacterBaseStats BaseStats { get; protected set; }
         public CharacterExtraStats Stats { get; protected set; }
-        public SoundsController SoundsController { get; private set; }
+        
         public Character Character { get; protected set; }
         public ConsumablesEater ConsumablesEater { get; protected set; }
         private RoundStatistics _lastEnemyAttacked;
@@ -43,11 +43,6 @@ namespace CharacterEntity.State
         public void OnAttackReceived(object sender, AttackHitEventArgs args)
         {
             AttackReceived?.Invoke(sender, args);
-        }
-
-        protected void Start()
-        {
-            SoundsController = GetComponent<SoundsController>();
         }
 
         protected void OnEnable()
@@ -180,13 +175,14 @@ namespace CharacterEntity.State
                 CurrentHealth = 0;
                 
                 IsDead = true;
-                EventContainer.OnCharacterDied(_lastEnemyAttacked);
-                
+
                 if (_lastEnemyAttacked != null)
                 {
                     _lastEnemyAttacked.Kills += 1;
                     _lastEnemyAttacked.RoundKills += 1;
                     _lastEnemyAttacked.Owner.LvlUpCharacter(1);
+                    
+                    EventContainer.OnCharacterDied(_lastEnemyAttacked);
                 }
             }
         }

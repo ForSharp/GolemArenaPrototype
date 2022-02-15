@@ -29,6 +29,8 @@ namespace Behaviour.SpellEffects
         {
             _spawner.SpawnCreep(spiderPrefab, CreepType.Spider, _info.SummonSpellInfo.SummonStats, _owner,
                 _target.transform.position, _info.SummonSpellInfo.SummonDuration);
+            
+            Destroy(gameObject, 2);
         }
     }
 }

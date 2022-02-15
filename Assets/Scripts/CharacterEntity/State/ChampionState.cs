@@ -13,13 +13,12 @@ namespace CharacterEntity.State
         public SpellManager SpellManager { get; private set; }
         public SpellPanelHelper SpellPanelHelper { get; private set; }
         public RoundStatistics RoundStatistics { get; private set; }
-
+        public SoundsController SoundsController { get; private set; }
         public event Action StartSpellCast;
         public event Action CancelSpellCast;
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             RoundStatistics = new RoundStatistics(this);
             
             InventoryHelper = GetComponent<InventoryHelper>();
@@ -29,6 +28,8 @@ namespace CharacterEntity.State
             var unused = new ExtraStatsEditorWithItems(this);
             
             ConsumablesEater = new ConsumablesEater(this);
+            
+            SoundsController = GetComponent<SoundsController>();
         }
         
         public void InitializeState(Character character, int group, Color colorGroup, string type, string spec)

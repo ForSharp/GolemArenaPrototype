@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SummonSpiderSummonInfoLvl2
   m_EditorClassIdentifier: 
   summonStats:
-    strength: 1
-    agility: 10
-    intelligence: 100
-  summonDuration: 10
-  summonedQuantity: 10
+    strength: 50
+    agility: 50
+    intelligence: 50
+  summonDuration: 45
+  summonedQuantity: 1

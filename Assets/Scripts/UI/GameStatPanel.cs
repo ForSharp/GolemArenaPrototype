@@ -46,7 +46,7 @@ namespace UI
                 }
             }
             
-            if (_gameStatTemplates.Count < Game.AllCharactersInSession.Count)
+            if (_gameStatTemplates.Count < Game.AllChampionsInSession.Count)
             {
                 CreateTemplates();
             }
@@ -75,7 +75,7 @@ namespace UI
 
         private void CreateTemplates()
         {
-            for (int i = _gameStatTemplates.Count; i < Game.AllCharactersInSession.Count; i++)
+            for (int i = _gameStatTemplates.Count; i < Game.AllChampionsInSession.Count; i++)
             {
                 var gameStatTemplate = Instantiate(gameStatTemplatePrefab, content);
                 _gameStatTemplates.Add(gameStatTemplate);
@@ -89,7 +89,7 @@ namespace UI
                 _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllChampionsInSession[i].Type,
                     Game.AllChampionsInSession[i].Spec, Game.AllChampionsInSession[i].RoundStatistics.RoundDamage,
                     Game.AllChampionsInSession[i].RoundStatistics.RoundKills, Game.AllChampionsInSession[i].RoundStatistics.Wins,
-                    Game.AllCharactersInSession[i].ColorGroup);
+                    Game.AllChampionsInSession[i].ColorGroup);
             }
         }
         
@@ -101,7 +101,7 @@ namespace UI
                 _gameStatTemplates[i].GetComponentInParent<GameStatTemplate>().FillValues(Game.AllChampionsInSession[i].Type,
                     Game.AllChampionsInSession[i].Spec, Game.AllChampionsInSession[i].RoundStatistics.Damage,
                     Game.AllChampionsInSession[i].RoundStatistics.Kills, Game.AllChampionsInSession[i].RoundStatistics.Wins,
-                    Game.AllCharactersInSession[i].ColorGroup);
+                    Game.AllChampionsInSession[i].ColorGroup);
             }
             
             ShowPanel();

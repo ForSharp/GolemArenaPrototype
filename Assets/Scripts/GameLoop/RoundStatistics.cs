@@ -12,7 +12,7 @@ namespace GameLoop
         public int Wins { get; set; }
         public CharacterState Owner { get; }
         public int RoundRate { get; set; }
-        public bool WinLastRound { get; set; } = false;
+        public bool WinLastRound { get; set; } 
 
         public RoundStatistics(CharacterState owner)
         {
