@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameLoop;
 using Inventory;
 using Inventory.Abstracts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Environment
 {
     public class Store : MonoBehaviour
     {
-        [SerializeField] private ItemContainer itemContainer;
         [SerializeField] private StoreItem storeItem;
         [SerializeField] private GameObject showcase;
         [SerializeField] private Button storeButton;
         [SerializeField] private Text storeButtonText;
+        
         private List<IInventoryItem> _items = new List<IInventoryItem>();
+        private ItemContainer _container;
 
         private void Start()
         {
-            //_items = itemContainer.GetAllItems();
-            _items = ItemContainer.Instance.GetAllItems();
+            _container = ItemContainer.Instance;
+            
+            _items = _container.GetAllItems();
+            
             FillShowcase();
             CloseShowcase();
+            
+            PrintInfo();
         }
-
+        
         public void CloseShowcase()
         {
             storeButtonText.text = "Open";
@@ -57,20 +64,42 @@ namespace Environment
             storeButton.gameObject.SetActive(true);
         }
 
-        private void FillShowcase()
+        private void PrintInfo()
         {
-            //showcase.SetActive(true);
+
+            var number = 0;
+            
             foreach (var item in _items)
             {
-                Instantiate(storeItem, showcase.transform);
-                storeItem.Initialize(item);
+                
+                Debug.Log($"{item.Info.Title} amount: {item.State.Amount} number: {number}");
+                number++;
             }
+            
         }
-        public void SendItemToPlayer(StoreItem item)
+        
+        private void FillShowcase()
         {
-            var newItem = item.Item;
-            newItem.State.Amount = 1;
-            Player.PlayerCharacter.InventoryHelper.AddItem(newItem);
+            for (var i = 0; i < _items.Count; i++)
+            {
+                var go = Instantiate(storeItem, showcase.transform);
+                go.name += i;
+                storeItem.Initialize(_items[i]);
+                _items[i].State.Amount = 1;
+            }
+            
+            
+            // foreach (var item in _items)
+            // {
+            //     Instantiate(storeItem, showcase.transform);
+            //     storeItem.Initialize(item);
+            //     item.State.Amount = 1;
+            // }
+        }
+        
+        public void SendItemToPlayer(string itemId)
+        {
+            ItemDispenser.DispenseItemToCharacter(itemId, Player.PlayerCharacter);
         }
         
     }

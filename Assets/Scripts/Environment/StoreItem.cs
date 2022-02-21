@@ -1,6 +1,7 @@
 ﻿using System;
 using Inventory.Abstracts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Environment
@@ -10,8 +11,8 @@ namespace Environment
         [SerializeField] private Image icon;
         [SerializeField] private Text price;
         [SerializeField] private Text title;
+        [SerializeField] private Text itemId;
         private Store _store;
-        public IInventoryItem Item { get; private set; }
 
         private void Start()
         {
@@ -20,15 +21,15 @@ namespace Environment
 
         public void Initialize(IInventoryItem item)
         {
-            Item = item;
             icon.sprite = item.Info.SpriteIcon;
             title.text = item.Info.Title;
             price.text = item.Info.Price.ToString();
+            itemId.text = item.Info.Id;
         }
 
-        public void OnButtonClicked()
+        public void OnButtonClicked(Text id)
         {
-            _store.SendItemToPlayer(this);
+            _store.SendItemToPlayer(id.text);
         }
     }
 }

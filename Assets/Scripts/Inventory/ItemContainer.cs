@@ -169,47 +169,32 @@ namespace Inventory
         
         public List<IInventoryItem> GetAllItems()
         {
-            var allItems = new List<IInventoryItem>();
-            allItems.Add(Apple);
-            allItems.Add(WarHelmet);
-            allItems.Add(Chocolate);
-            allItems.Add(FireBallItemLvl1);
-            allItems.Add(FreezingItemLvl1);
-            allItems.Add(GraceItemLvl1);
-            allItems.Add(SnowstormItemLvl1);
-            allItems.Add(SummonSpiderItemLvl1);
-            allItems.Add(PotionFlatSmall);
-            allItems.Add(PotionFlatMedium);
-            allItems.Add(PotionFlatLarge);
-            allItems.Add(PotionMultiplySmall);
-            allItems.Add(PotionMultiplyMedium);
-            allItems.Add(PotionMultiplyLarge);
-            allItems.Add(PotionUltimateAgility);
-            allItems.Add(PotionUltimateIntelligence);
-            allItems.Add(PotionUltimateStrength);
+            return new List<IInventoryItem>()
+            {
+                Apple,
+                WarHelmet,
+                Chocolate,
+                FireBallItemLvl1,
+                FreezingItemLvl1,
+                GraceItemLvl1,
+                SnowstormItemLvl1,
+                SummonSpiderItemLvl1,
+                PotionFlatSmall,
+                PotionFlatMedium, 
+                PotionFlatLarge,
+                PotionMultiplySmall,
+                PotionMultiplyMedium,
+                PotionMultiplyLarge,
+                PotionUltimateAgility,
+                PotionUltimateIntelligence,
+                PotionUltimateStrength
+            };
+        }
 
-            return allItems;
-
-            // return new List<IInventoryItem>()
-            // {
-            //     Apple,
-            //     WarHelmet,
-            //     Chocolate,
-            //     FireBallItemLvl1,
-            //     FreezingItemLvl1,
-            //     GraceItemLvl1,
-            //     SnowstormItemLvl1,
-            //     SummonSpiderItemLvl1,
-            //     PotionFlatSmall,
-            //     PotionFlatMedium, 
-            //     PotionFlatLarge,
-            //     PotionMultiplySmall,
-            //     PotionMultiplyMedium,
-            //     PotionMultiplyLarge,
-            //     PotionUltimateAgility,
-            //     PotionUltimateIntelligence,
-            //     PotionUltimateStrength
-            // };
+        public IInventoryItem GetItemById(string itemId)
+        {
+            var allItems = GetAllItems();
+            return allItems.FirstOrDefault(item => item.Info.Id == itemId);
         }
         
         public List<IInventoryItem> GetAllConsumables()
