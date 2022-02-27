@@ -24,6 +24,7 @@ namespace CharacterEntity
         
         public static void SetWalkingFight(Animator animator)
         {
+            //animator.SetFloat(Animator.StringToHash("Forward"), 0.26f);
             animator.Play("Walking");
         }
 

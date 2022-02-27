@@ -308,7 +308,7 @@ namespace CharacterEntity
 
         private void SetFightBehaviour()
         {
-            if (!_targetState)
+            if (!_targetState || Game.Stage != Game.GameStage.Battle)
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
@@ -439,10 +439,6 @@ namespace CharacterEntity
             gameObject.SetActive(false);
             DeathEffect.Instatnce.CreateDeathEffect(new Vector3(transform.position.x, transform.position.y + 2.5f,
                 transform.position.z));
-            if (Game.RoundEnded)
-            {
-                EventContainer.OnNewRound();
-            }
         }
 
         private void WalkSlowlyWithFightPosture()

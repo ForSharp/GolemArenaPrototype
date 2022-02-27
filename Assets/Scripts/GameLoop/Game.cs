@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CharacterEntity;
@@ -48,24 +49,16 @@ namespace GameLoop
             
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
             EventContainer.WinBattle += SetEndOfRound;
-            EventContainer.NewRound += PrepareNewRound;
+            //EventContainer.NewRound += PrepareNewRound;
 
             Round = 1;
         }
 
-        public static void OnStartBattle()
-        {
-            StartBattle?.Invoke();
-            Stage = GameStage.Battle;
-            RoundEnded = false;
-            
-        }
-        
         public static void OnOpenMainMenu()
         {
             OpenMainMenu?.Invoke();
         }
-        
+
         public static void AddCharacterToAllCharactersList(CharacterState character)
         {
             AllCharactersInSession.Add(character);
@@ -92,18 +85,17 @@ namespace GameLoop
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
-            
-            
         }
 
-        private static void PrepareNewRound()
+        private static void EndCurrentGame()
         {
-            if (Round > MaxRoundNumber)
-            {
-                OnEndGame();
-                Stage = GameStage.MainMenu;
-                return;
-            }
+            OnEndGame();
+            Stage = GameStage.MainMenu;
+        }
+
+        private static IEnumerator PrepareNewRound()
+        {
+            yield return new WaitForSeconds(5);
 
             foreach (var character in AllChampionsInSession)
             {
@@ -134,8 +126,48 @@ namespace GameLoop
                 }
             }
             
-            OnStartBattle();
+            OnClearEffects();
             
+            
+            
+            CoroutineManager.StartRoutine(StartBattleAfterDelay(10));
+        }
+
+        private static void ActivateChampionIfNeed()
+        {
+            foreach (var champion in AllChampionsInSession)
+            {
+                if (!champion.gameObject.activeSelf)
+                {
+                    champion.gameObject.SetActive(true);
+                    champion.PrepareAfterNewRoundForException();
+                }
+            }
+            
+        }
+
+        private static IEnumerator StartBattleAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            ActivateChampionIfNeed();
+            
+            OnStartBattle();
+        }
+        
+        public static void OnStartBattle()
+        {
+            StartBattle?.Invoke();
+            Stage = GameStage.Battle;
+            RoundEnded = false;
+            
+        }
+        
+        public static event Action ClearEffects;
+
+        private static void OnClearEffects()
+        {
+            ClearEffects?.Invoke();
         }
 
         private static void SetEndOfRound(CharacterState winner)
@@ -143,9 +175,19 @@ namespace GameLoop
             RoundEnded = true;
             Stage = GameStage.BetweenBattles;
             Round++;
+
+            if (Round > MaxRoundNumber)
+            {
+                EndCurrentGame();
+            }
+            else
+            {
+                CoroutineManager.StartRoutine(PrepareNewRound());
+            }
+            
         }
 
-        public static void SetRoundRates()
+        private static void SetRoundRates()
         {
             
             var statistics = AllChampionsInSession.Select(character => character.RoundStatistics).ToList();
@@ -203,5 +245,7 @@ namespace GameLoop
         {
             EndGame?.Invoke();
         }
+
+        
     }
 }

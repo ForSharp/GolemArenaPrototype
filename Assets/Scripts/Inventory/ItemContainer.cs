@@ -241,16 +241,11 @@ namespace Inventory
             return allItems.Where(item => item is ISpellItem).ToList();
         }
 
-        public FireBallItem GetFireBallLvl1()
-        {
-            return new FireBallItem(fireBallItemInfo, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
-        }
-
         public ISpellItem GetUpgradedSpell(ISpellItem learnedSpell, int previousSpellLvl)
         {
             switch (learnedSpell)
             {
-                case FireBallItem fireBallItem:
+                case FireBallItem _:
                     if (previousSpellLvl == 1)
                     {
                         return FireBallItemLvl2;
@@ -260,7 +255,7 @@ namespace Inventory
                         return FireBallItemLvl3;
                     }
                     break;
-                case FreezingItem freezingItem:
+                case FreezingItem _:
                     if (previousSpellLvl == 1)
                     {
                         return FreezingItemLvl2;
@@ -270,7 +265,7 @@ namespace Inventory
                         return FreezingItemLvl3;
                     }
                     break;
-                case GraceItem graceBuffItem:
+                case GraceItem _:
                     if (previousSpellLvl == 1)
                     {
                         return GraceItemLvl2;
@@ -280,7 +275,7 @@ namespace Inventory
                         return GraceItemLvl3;
                     }
                     break;
-                case SnowstormItem snowstormItem:
+                case SnowstormItem _:
                     if (previousSpellLvl == 1)
                     {
                         return SnowstormItemLvl2;
@@ -290,7 +285,7 @@ namespace Inventory
                         return SnowstormItemLvl3;
                     }
                     break;
-                case SummonSpiderItem summonSpiderItem:
+                case SummonSpiderItem _:
                     if (previousSpellLvl == 1)
                     {
                         return SummonSpiderItemLvl2;

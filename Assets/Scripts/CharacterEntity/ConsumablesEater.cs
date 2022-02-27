@@ -19,7 +19,7 @@ namespace CharacterEntity
         {
             _character = character;
 
-            EventContainer.NewRound += RemoveAllTemporaryEffects;
+            Game.ClearEffects += RemoveAllTemporaryEffects;
             Game.EndGame += RemoveAllListenersSummon;
         }
         
@@ -29,7 +29,7 @@ namespace CharacterEntity
             _inventory = character.InventoryHelper.InventoryOrganization.inventory;
 
             _inventory.ConsumableItemUsed += InventoryOnConsumableItemUsed;
-            EventContainer.NewRound += RemoveAllTemporaryEffects;
+            Game.ClearEffects += RemoveAllTemporaryEffects;
             Game.EndGame += RemoveAllListeners;
         }
 
@@ -110,13 +110,13 @@ namespace CharacterEntity
         private void RemoveAllListeners()
         {
             _inventory.ConsumableItemUsed -= InventoryOnConsumableItemUsed;
-            EventContainer.NewRound -= RemoveAllTemporaryEffects;
+            Game.ClearEffects -= RemoveAllTemporaryEffects;
             Game.EndGame -= RemoveAllListeners;
         }
         
         private void RemoveAllListenersSummon()
         {
-            EventContainer.NewRound -= RemoveAllTemporaryEffects;
+            Game.ClearEffects -= RemoveAllTemporaryEffects;
             Game.EndGame -= RemoveAllListenersSummon;
         }
     }

@@ -49,11 +49,11 @@ namespace GameLoop
             WinBattle?.Invoke(obj);
         }
 
-        public static event Action NewRound;
-
-        public static void OnNewRound()
-        {
-            NewRound?.Invoke();
-        }
+        // public static event Action NewRound;
+        //
+        // public static void OnNewRound()
+        // {
+        //     NewRound?.Invoke();
+        // }
     }
 }

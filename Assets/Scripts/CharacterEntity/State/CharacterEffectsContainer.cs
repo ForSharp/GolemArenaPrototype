@@ -25,12 +25,12 @@ namespace CharacterEntity.State
 
         private void OnEnable()
         {
-            Game.StartBattle += StopAllEffect;
+            Game.ClearEffects += StopAllEffect;
         }
 
         private void OnDisable()
         {
-            Game.StartBattle -= StopAllEffect;
+            Game.ClearEffects -= StopAllEffect;
         }
 
         private void CreateEffects()

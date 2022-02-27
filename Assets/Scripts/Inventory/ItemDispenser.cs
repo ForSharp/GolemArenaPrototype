@@ -20,16 +20,6 @@ namespace Inventory
 
         public static void DispenseItemToCharacter(string itemId, ChampionState character)
         {
-            // var artefacts = ItemContainer.Instance.GetAllArtefacts();
-            // if (artefacts.Count > 0)
-            // {
-            //     var artefactItem = artefacts[Random.Range(0, artefacts.Count)];
-            //     artefactItem.State.Amount = 1;
-            //     character.InventoryHelper.AddItem(artefactItem);
-            // }
-            
-            Debug.Log(itemId);
-            
             var item = ItemContainer.Instance.GetItemById(itemId);
             item.State.Amount = 1;
             character.InventoryHelper.AddItem(item);

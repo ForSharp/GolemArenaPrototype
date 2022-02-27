@@ -28,8 +28,6 @@ namespace Environment
             
             FillShowcase();
             CloseShowcase();
-            
-            PrintInfo();
         }
         
         public void CloseShowcase()
@@ -64,37 +62,14 @@ namespace Environment
             storeButton.gameObject.SetActive(true);
         }
 
-        private void PrintInfo()
-        {
-
-            var number = 0;
-            
-            foreach (var item in _items)
-            {
-                
-                Debug.Log($"{item.Info.Title} amount: {item.State.Amount} number: {number}");
-                number++;
-            }
-            
-        }
-        
         private void FillShowcase()
         {
-            for (var i = 0; i < _items.Count; i++)
+            foreach (var t in _items)
             {
-                var go = Instantiate(storeItem, showcase.transform);
-                go.name += i;
-                storeItem.Initialize(_items[i]);
-                _items[i].State.Amount = 1;
+                Instantiate(storeItem, showcase.transform);
+                storeItem.Initialize(t);
+                t.State.Amount = 1;
             }
-            
-            
-            // foreach (var item in _items)
-            // {
-            //     Instantiate(storeItem, showcase.transform);
-            //     storeItem.Initialize(item);
-            //     item.State.Amount = 1;
-            // }
         }
         
         public void SendItemToPlayer(string itemId)

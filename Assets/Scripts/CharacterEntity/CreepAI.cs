@@ -372,6 +372,13 @@ namespace CharacterEntity
 
             if (enemies.Length == 0)
             {
+                if (Game.Stage == Game.GameStage.Battle && _ownerState.IsDead)
+                {
+                    EventContainer.OnWinBattle(_ownerState);
+                    _ownerState.RoundStatistics.Wins++;
+                    _ownerState.RoundStatistics.WinLastRound = true;
+                }
+
                 yield return new WaitForSeconds(1);
                 _targetState = null;
                 StartCoroutine(FindEnemies());

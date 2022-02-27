@@ -51,6 +51,14 @@ namespace CharacterEntity.State
             ShowHealthBar();
             NullRoundStatistics();
         }
+
+        public void PrepareAfterNewRoundForException()
+        {
+            IsDead = false;
+            HealAllParameters();
+            ShowHealthBar();
+            NullRoundStatistics();
+        }
         
         private void NullRoundStatistics()
         {

@@ -40,6 +40,9 @@ namespace Environment
 
         private void AnnounceKilling(RoundStatistics killer)
         {
+            if (killer == null)
+                return;
+            
             switch (killer.RoundKills)
             {
                 case 1:

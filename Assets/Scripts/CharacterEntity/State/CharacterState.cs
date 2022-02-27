@@ -184,6 +184,10 @@ namespace CharacterEntity.State
                     
                     EventContainer.OnCharacterDied(_lastEnemyAttacked);
                 }
+                else
+                {
+                    EventContainer.OnCharacterDied(_lastEnemyAttacked);
+                }
             }
         }
 
