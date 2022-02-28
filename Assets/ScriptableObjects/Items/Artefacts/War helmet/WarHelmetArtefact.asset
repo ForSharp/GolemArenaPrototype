@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectsExtraStats:
   - ChangingValue: 100
-    StatsType: 4
+    StatsType: 6
     IsFlat: 1
   - ChangingValue: 1000
     StatsType: 2

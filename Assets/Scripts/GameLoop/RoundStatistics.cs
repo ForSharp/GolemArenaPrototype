@@ -1,4 +1,5 @@
-﻿using FightState;
+﻿using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 
 namespace GameLoop
 {
@@ -9,11 +10,11 @@ namespace GameLoop
         public int Kills { get; set; }
         public int RoundKills { get; set; }
         public int Wins { get; set; }
-        public GameCharacterState Owner { get; }
+        public CharacterState Owner { get; }
         public int RoundRate { get; set; }
-        public bool WinLastRound { get; set; } = false;
+        public bool WinLastRound { get; set; } 
 
-        public RoundStatistics(GameCharacterState owner)
+        public RoundStatistics(CharacterState owner)
         {
             Owner = owner;
         }

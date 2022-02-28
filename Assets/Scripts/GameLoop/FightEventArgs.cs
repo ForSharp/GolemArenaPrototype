@@ -1,5 +1,5 @@
 ﻿using System;
-using FightState;
+using CharacterEntity.CharacterState;
 
 namespace GameLoop
 {

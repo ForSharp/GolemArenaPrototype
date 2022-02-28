@@ -11,7 +11,5 @@ namespace Inventory.DragAndDrop
             otherItemTransform.SetParent(transform);
             otherItemTransform.localPosition = Vector3.zero;
         }
-
-        
     }
 }

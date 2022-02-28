@@ -1,4 +1,4 @@
-﻿using GolemEntity;
+﻿using CharacterEntity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,20 +12,20 @@ namespace UI
         [SerializeField] private Slider strengthTypeSpecSlider;
         [SerializeField] private Slider agilityTypeSpecSlider;
         [SerializeField] private Slider intelligenceTypeSpecSlider;
-        public GolemType GolemType { get; private set; }
+        public CharacterType CharacterType { get; private set; }
         public Specialization Specialization { get; private set; }
 
-        public void SetTypeStats(GolemType type)
+        public void SetTypeStats(CharacterType type)
         {
-            GolemType = type;
+            CharacterType = type;
             strengthSlider.value = CharacterStatsService.GetBaseStats(type).strength;
             agilitySlider.value = CharacterStatsService.GetBaseStats(type).agility;
             intelligenceSlider.value = CharacterStatsService.GetBaseStats(type).intelligence;
         }
 
-        public void SetTypeSpecStats(GolemType type, Specialization spec)
+        public void SetTypeSpecStats(CharacterType type, Specialization spec)
         {
-            GolemType = type;
+            CharacterType = type;
             Specialization = spec;
             strengthTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).strength;
             agilityTypeSpecSlider.value = CharacterStatsService.GetBaseStats(type, spec).agility;

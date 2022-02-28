@@ -1,7 +1,8 @@
 ﻿using System.Collections;
-using FightState;
+using CharacterEntity.CharacterState;
+using CharacterEntity.ExtraStats;
+using CharacterEntity.State;
 using GameLoop;
-using GolemEntity.ExtraStats;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,15 +17,19 @@ namespace UI
         [SerializeField] private Color fullHpColor;
         [SerializeField] private Color lowHpColor;
         [SerializeField] private Image currentColor;
+        [SerializeField] private Text lvl;
         
-        private GameCharacterState _characterState;
+        private CharacterState _characterState;
         private const int TimeToDestroy = 1;
         private Camera _mainCamera;
         private bool _isDead;
-        
+        private float _boundsSizeY;
+        private Coroutine _changeBackValueRoutine;
+
         private void Start()
         {
             _mainCamera = Camera.main;
+            _boundsSizeY = _characterState.GetComponent<Collider>().bounds.size.y;
         }
 
         private void OnEnable()
@@ -43,11 +48,11 @@ namespace UI
         private void Update()
         {
             if (_characterState)
-                SetRequiredPosition();
+                SetRequiredPosition(0.75f);
             
         }
 
-        public void SetCharacterState(GameCharacterState state)
+        public void SetCharacterState(CharacterState state)
         {
             _characterState = state;
             SetStartValues();
@@ -63,20 +68,22 @@ namespace UI
 
             sliderBack.maxValue = sliderHealth.maxValue;
             sliderBack.value = sliderHealth.value;
+
+            lvl.text = _characterState.Lvl.ToString();
         }
 
         private void AddListeners()
         {
             _characterState.StatsChanged += SetMaxValues;
             _characterState.CurrentHealthChanged += SetCurrentHealth;
-            EventContainer.GolemDied += DisableOnDeath;
+            EventContainer.CharacterDied += DisableOnDeath;
         }
 
         private void RemoveListeners()
         {
             _characterState.StatsChanged -= SetMaxValues;
             _characterState.CurrentHealthChanged -= SetCurrentHealth;
-            EventContainer.GolemDied -= DisableOnDeath;
+            EventContainer.CharacterDied -= DisableOnDeath;
         }
 
         private void SetCurrentColor()
@@ -90,11 +97,13 @@ namespace UI
             return difference / sliderHealth.maxValue;
         }
 
-        private void SetMaxValues(GolemExtraStats stats)
+        private void SetMaxValues(CharacterExtraStats stats)
         {
             sliderHealth.maxValue = stats.health;
+            sliderBack.maxValue = sliderHealth.maxValue;
             SetCurrentColor();
             
+            lvl.text = _characterState.Lvl.ToString();
         }
 
         private void SetCurrentHealth(float health)
@@ -103,21 +112,26 @@ namespace UI
             sliderHealth.value = roundedValue;
             SetCurrentColor();
 
-            StartCoroutine(SetCurrentBackAfterDelay());
+            if (_changeBackValueRoutine != null)
+            {
+                StopCoroutine(_changeBackValueRoutine);
+            }
+            
+            _changeBackValueRoutine = StartCoroutine(SetCurrentBackAfterDelay());
         }
 
         private IEnumerator SetCurrentBackAfterDelay()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             
             sliderBack.value = sliderHealth.value;
-
+            _changeBackValueRoutine = null;
         }
         
         private void SetRequiredPosition(float multiplier = 1)
         {
             var requirePos = new Vector3(_characterState.transform.position.x,
-                _characterState.transform.position.y + _characterState.GetComponent<Collider>().bounds.size.y * multiplier,
+                _characterState.transform.position.y + _boundsSizeY * multiplier,
                 _characterState.transform.position.z);
 
             var position = _mainCamera.WorldToScreenPoint(requirePos);

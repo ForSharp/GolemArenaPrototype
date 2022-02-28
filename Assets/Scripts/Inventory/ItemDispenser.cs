@@ -1,6 +1,8 @@
 ﻿using System.Linq;
-using FightState;
+using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using GameLoop;
+using Inventory.Abstracts;
 using UnityEngine;
 
 namespace Inventory
@@ -9,16 +11,28 @@ namespace Inventory
     {
         public static void DispenseItems()
         {
-            foreach (var character in Game.AllGolems)
+            foreach (var character in Game.AllChampionsInSession)
             {
                 DispenseAllTypesOfItemsToCurrentCharacter(character);
             }
             
         }
 
-        private static void DispenseAllTypesOfItemsToCurrentCharacter(GameCharacterState character)
+        public static void DispenseItemToCharacter(string itemId, ChampionState character)
         {
-            var money = character.roundStatistics.RoundRate * 100 * Game.Round;
+            var item = ItemContainer.Instance.GetItemById(itemId);
+            item.State.Amount = 1;
+            character.InventoryHelper.AddItem(item);
+        }
+
+        private static void DispenseAllTypesOfItemsToCurrentCharacter(ChampionState character)
+        {
+            var money = character.RoundStatistics.RoundRate * 100 * Game.Round;
+
+            if (character == Player.PlayerCharacter)
+            {
+                money *= 10;
+            }
 
             var moneyForArtefacts = money / 4;
             money -= moneyForArtefacts;
@@ -38,7 +52,7 @@ namespace Inventory
             DispensePotions(money, character, out var potionsBalance);
         }
 
-        private static void DispenseArtefacts(int moneyForArtefacts, GameCharacterState character, out int artefactBalance)
+        private static void DispenseArtefacts(int moneyForArtefacts, ChampionState character, out int artefactBalance)
         {
             const int maxArtefactsCountThatCanGet = 3;
             const int lowestArtefactPrice = 50;
@@ -60,9 +74,9 @@ namespace Inventory
             artefactBalance = moneyForArtefacts;
         }
 
-        private static void DispenseSpells(int moneyForSpells, GameCharacterState character, out int spellsBalance)
+        private static void DispenseSpells(int moneyForSpells, ChampionState character, out int spellsBalance)
         {
-            const int maxSpellsCountThatCanGet = 3;
+            const int maxSpellsCountThatCanGet = 10; //3
             const int lowestSpellPrice = 500;
             var index = 0;
             while (index < maxSpellsCountThatCanGet && moneyForSpells >= lowestSpellPrice)
@@ -82,7 +96,7 @@ namespace Inventory
             spellsBalance = moneyForSpells;
         }
         
-        private static void DispenseConsumables(int moneyForConsumables, GameCharacterState character, out int consumablesBalance)
+        private static void DispenseConsumables(int moneyForConsumables, ChampionState character, out int consumablesBalance)
         {
             const int maxConsumablesCountThatCanGet = 10;
             const int lowestConsumablePrice = 10;
@@ -104,7 +118,7 @@ namespace Inventory
             consumablesBalance = moneyForConsumables;
         }
         
-        private static void DispensePotions(int moneyForPotions, GameCharacterState character, out int potionsBalance)
+        private static void DispensePotions(int moneyForPotions, ChampionState character, out int potionsBalance)
         {
             const int lowestPotionPrice = 100;
             while (moneyForPotions >= lowestPotionPrice)

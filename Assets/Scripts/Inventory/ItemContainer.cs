@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using Inventory.Info;
 using Inventory.Info.Spells;
 using Inventory.Items;
+using Inventory.Items.ConsumableItems;
+using Inventory.Items.PotionItems;
 using Inventory.Items.SpellItems;
 using UnityEngine;
 
@@ -19,25 +22,45 @@ namespace Inventory
         [SerializeField] private InventoryItemInfo warHelmetItemInfo;
         public WarHelmet WarHelmet => new WarHelmet(warHelmetItemInfo, warHelmetArtefactInfo);
         
-        [SerializeField] private InventoryItemInfo fireBallItemInfoLvl1;
-        public FireBallItem FireBallLvl1 => new FireBallItem(fireBallItemInfoLvl1, fireBallLvl1, fireBallDamageLvl1,
+        [SerializeField] private InventoryItemInfo fireBallItemInfo;
+        public FireBallItem FireBallItemLvl1 => new FireBallItem(fireBallItemInfo, fireBallLvl1, fireBallDamageLvl1,
             fireBallPeriodicDamageLvl1);
+        public FireBallItem FireBallItemLvl2 => new FireBallItem(fireBallItemInfo, fireBallLvl2, fireBallDamageLvl2,
+            fireBallPeriodicDamageLvl2);
+        public FireBallItem FireBallItemLvl3 => new FireBallItem(fireBallItemInfo, fireBallLvl3, fireBallDamageLvl3,
+            fireBallPeriodicDamageLvl3);
 
-        [SerializeField] private InventoryItemInfo graceBuffItemInfoLvl1;
-        public GraceBuffItem GraceBuffItemLvl1 => new GraceBuffItem(graceBuffItemInfoLvl1, graceBuffLvl1, 
-            graceBuffHealLvl1, graceBuffBuffLvl1);
+        [SerializeField] private InventoryItemInfo graceBuffItemInfo;
+        public GraceItem GraceItemLvl1 => new GraceItem(graceBuffItemInfo, graceLvl1, 
+            graceBuffHealLvl1, graceBuffLvl1);
+        public GraceItem GraceItemLvl2 => new GraceItem(graceBuffItemInfo, graceLvl2, 
+            graceBuffHealLvl2, graceBuffLvl2);
+        public GraceItem GraceItemLvl3 => new GraceItem(graceBuffItemInfo, graceLvl3, 
+            graceBuffHealLvl3, graceBuffLvl3);
 
-        [SerializeField] private InventoryItemInfo snowstormItemInfoLvl1;
-        public SnowstormItem SnowstormItemLvl1 => new SnowstormItem(snowstormItemInfoLvl1, snowstormLvl1, 
+        [SerializeField] private InventoryItemInfo snowstormItemInfo;
+        public SnowstormItem SnowstormItemLvl1 => new SnowstormItem(snowstormItemInfo, snowstormLvl1, 
             snowstormPeriodicDamageLvl1, snowstormDebuffLvl1);
+        public SnowstormItem SnowstormItemLvl2 => new SnowstormItem(snowstormItemInfo, snowstormLvl2, 
+            snowstormPeriodicDamageLvl2, snowstormDebuffLvl2);
+        public SnowstormItem SnowstormItemLvl3 => new SnowstormItem(snowstormItemInfo, snowstormLvl3, 
+            snowstormPeriodicDamageLvl3, snowstormDebuffLvl3);
 
-        [SerializeField] private InventoryItemInfo summonSpiderInfoLvl1;
+        [SerializeField] private InventoryItemInfo summonSpiderInfo;
         public SummonSpiderItem SummonSpiderItemLvl1 =>
-            new SummonSpiderItem(summonSpiderInfoLvl1, summonSpiderLvl1, summonSpiderSummonInfoLvl1);
+            new SummonSpiderItem(summonSpiderInfo, summonSpiderLvl1, summonSpiderSummonInfoLvl1);
+        public SummonSpiderItem SummonSpiderItemLvl2 =>
+            new SummonSpiderItem(summonSpiderInfo, summonSpiderLvl2, summonSpiderSummonInfoLvl2);
+        public SummonSpiderItem SummonSpiderItemLvl3 =>
+            new SummonSpiderItem(summonSpiderInfo, summonSpiderLvl3, summonSpiderSummonInfoLvl3);
 
-        [SerializeField] private InventoryItemInfo freezingItemInfoLvl1;
+        [SerializeField] private InventoryItemInfo freezingItemInfo;
         public FreezingItem FreezingItemLvl1 =>
-            new FreezingItem(freezingItemInfoLvl1, freezingLvl1, freezingPolymorphInfoLvl1);
+            new FreezingItem(freezingItemInfo, freezingLvl1, freezingPolymorphInfoLvl1);
+        public FreezingItem FreezingItemLvl2 =>
+            new FreezingItem(freezingItemInfo, freezingLvl2, freezingPolymorphInfoLvl2);
+        public FreezingItem FreezingItemLvl3 =>
+            new FreezingItem(freezingItemInfo, freezingLvl3, freezingPolymorphInfoLvl3);
         
         [SerializeField] private InventoryItemInfo potionFlatSmallItemInfo;
         public PotionFlat PotionFlatSmall => new PotionFlat(potionFlatSmallItemInfo, potionFlatSmallInfo);
@@ -91,25 +114,51 @@ namespace Inventory
         [SerializeField] private PotionUltimateInfo potionUltimateIntelligenceInfo;
         [Header("Spells Info")]
         [SerializeField] private SpellInfo fireBallLvl1;
-        [SerializeField] private SpellInfo graceBuffLvl1;
+        [SerializeField] private SpellInfo fireBallLvl2;
+        [SerializeField] private SpellInfo fireBallLvl3;
+        [SerializeField] private SpellInfo graceLvl1;
+        [SerializeField] private SpellInfo graceLvl2;
+        [SerializeField] private SpellInfo graceLvl3;
         [SerializeField] private SpellInfo snowstormLvl1;
+        [SerializeField] private SpellInfo snowstormLvl2;
+        [SerializeField] private SpellInfo snowstormLvl3;
         [SerializeField] private SpellInfo summonSpiderLvl1;
+        [SerializeField] private SpellInfo summonSpiderLvl2;
+        [SerializeField] private SpellInfo summonSpiderLvl3;
         [SerializeField] private SpellInfo freezingLvl1;
+        [SerializeField] private SpellInfo freezingLvl2;
+        [SerializeField] private SpellInfo freezingLvl3;
         [Header("Buff Spells Info")] 
-        [SerializeField] private BuffSpellInfo graceBuffBuffLvl1;
+        [SerializeField] private BuffSpellInfo graceBuffLvl1;
+        [SerializeField] private BuffSpellInfo graceBuffLvl2;
+        [SerializeField] private BuffSpellInfo graceBuffLvl3;
         [Header("Damage Spells Info")]
         [SerializeField] private DamageSpellInfo fireBallDamageLvl1;
+        [SerializeField] private DamageSpellInfo fireBallDamageLvl2;
+        [SerializeField] private DamageSpellInfo fireBallDamageLvl3;
         [Header("Debuff Spells Info")] 
         [SerializeField] private DebuffSpellInfo snowstormDebuffLvl1;
+        [SerializeField] private DebuffSpellInfo snowstormDebuffLvl2;
+        [SerializeField] private DebuffSpellInfo snowstormDebuffLvl3;
         [Header("Heal Spells Info")] 
         [SerializeField] private HealSpellInfo graceBuffHealLvl1;
+        [SerializeField] private HealSpellInfo graceBuffHealLvl2;
+        [SerializeField] private HealSpellInfo graceBuffHealLvl3;
         [Header("Periodic Damage Spells Info")] 
         [SerializeField] private PeriodicDamageSpellInfo fireBallPeriodicDamageLvl1;
+        [SerializeField] private PeriodicDamageSpellInfo fireBallPeriodicDamageLvl2;
+        [SerializeField] private PeriodicDamageSpellInfo fireBallPeriodicDamageLvl3;
         [SerializeField] private PeriodicDamageSpellInfo snowstormPeriodicDamageLvl1;
+        [SerializeField] private PeriodicDamageSpellInfo snowstormPeriodicDamageLvl2;
+        [SerializeField] private PeriodicDamageSpellInfo snowstormPeriodicDamageLvl3;
         [Header("Polymorph Spells")] 
         [SerializeField] private PolymorphSpellInfo freezingPolymorphInfoLvl1;
+        [SerializeField] private PolymorphSpellInfo freezingPolymorphInfoLvl2;
+        [SerializeField] private PolymorphSpellInfo freezingPolymorphInfoLvl3;
         [Header("Summon Spells Info")]
         [SerializeField] private SummonSpellInfo summonSpiderSummonInfoLvl1;
+        [SerializeField] private SummonSpellInfo summonSpiderSummonInfoLvl2;
+        [SerializeField] private SummonSpellInfo summonSpiderSummonInfoLvl3;
         
         public static ItemContainer Instance { get; private set; }
 
@@ -118,14 +167,18 @@ namespace Inventory
             Instance = this;
         }
         
-        private List<IInventoryItem> GetAllItems()
+        public List<IInventoryItem> GetAllItems()
         {
             return new List<IInventoryItem>()
             {
                 Apple,
                 WarHelmet,
                 Chocolate,
-                FireBallLvl1,
+                FireBallItemLvl1,
+                FreezingItemLvl1,
+                GraceItemLvl1,
+                SnowstormItemLvl1,
+                SummonSpiderItemLvl1,
                 PotionFlatSmall,
                 PotionFlatMedium, 
                 PotionFlatLarge,
@@ -136,6 +189,12 @@ namespace Inventory
                 PotionUltimateIntelligence,
                 PotionUltimateStrength
             };
+        }
+
+        public IInventoryItem GetItemById(string itemId)
+        {
+            var allItems = GetAllItems();
+            return allItems.FirstOrDefault(item => item.Info.Id == itemId);
         }
         
         public List<IInventoryItem> GetAllConsumables()
@@ -182,9 +241,65 @@ namespace Inventory
             return allItems.Where(item => item is ISpellItem).ToList();
         }
 
-        public FireBallItem GetFireBallLvl1()
+        public ISpellItem GetUpgradedSpell(ISpellItem learnedSpell, int previousSpellLvl)
         {
-            return new FireBallItem(fireBallItemInfoLvl1, fireBallLvl1, fireBallDamageLvl1, fireBallPeriodicDamageLvl1);
+            switch (learnedSpell)
+            {
+                case FireBallItem _:
+                    if (previousSpellLvl == 1)
+                    {
+                        return FireBallItemLvl2;
+                    }
+                    else if (previousSpellLvl == 2)
+                    {
+                        return FireBallItemLvl3;
+                    }
+                    break;
+                case FreezingItem _:
+                    if (previousSpellLvl == 1)
+                    {
+                        return FreezingItemLvl2;
+                    }
+                    else if (previousSpellLvl == 2)
+                    {
+                        return FreezingItemLvl3;
+                    }
+                    break;
+                case GraceItem _:
+                    if (previousSpellLvl == 1)
+                    {
+                        return GraceItemLvl2;
+                    }
+                    else if (previousSpellLvl == 2)
+                    {
+                        return GraceItemLvl3;
+                    }
+                    break;
+                case SnowstormItem _:
+                    if (previousSpellLvl == 1)
+                    {
+                        return SnowstormItemLvl2;
+                    }
+                    else if (previousSpellLvl == 2)
+                    {
+                        return SnowstormItemLvl3;
+                    }
+                    break;
+                case SummonSpiderItem _:
+                    if (previousSpellLvl == 1)
+                    {
+                        return SummonSpiderItemLvl2;
+                    }
+                    else if (previousSpellLvl == 2)
+                    {
+                        return SummonSpiderItemLvl3;
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(learnedSpell));
+            }
+
+            throw new Exception();
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
-using GolemEntity;
-using GolemEntity.BaseStats;
+using CharacterEntity;
+using CharacterEntity.BaseStats;
 using Inventory.Abstracts;
 using Inventory.Info;
 
-namespace Inventory.Items
+namespace Inventory.Items.PotionItems
 {
     public class PotionUltimate : IInventoryItem, IPotionUltimateItem
     {
@@ -34,7 +34,7 @@ namespace Inventory.Items
             switch (PotionUltimateInfo.MainCharacterParameter)
             {
                 case MainCharacterParameter.Strength:
-                    PotionUltimateInfo.GolemBaseStats = new GolemBaseStats()
+                    PotionUltimateInfo.CharacterBaseStats = new CharacterBaseStats()
                     {
                         strength = UnityEngine.Random.Range(1.0f, 2.0f),
                         agility = UnityEngine.Random.Range(0.6f, 1.6f),
@@ -42,7 +42,7 @@ namespace Inventory.Items
                     };
                     break;
                 case MainCharacterParameter.Agility:
-                    PotionUltimateInfo.GolemBaseStats = new GolemBaseStats()
+                    PotionUltimateInfo.CharacterBaseStats = new CharacterBaseStats()
                     {
                         strength = UnityEngine.Random.Range(0.6f, 1.6f),
                         agility = UnityEngine.Random.Range(1.0f, 2.0f),
@@ -50,7 +50,7 @@ namespace Inventory.Items
                     };
                     break;
                 case MainCharacterParameter.Intelligence:
-                    PotionUltimateInfo.GolemBaseStats = new GolemBaseStats()
+                    PotionUltimateInfo.CharacterBaseStats = new CharacterBaseStats()
                     {
                         strength = UnityEngine.Random.Range(0.6f, 1.6f),
                         agility = UnityEngine.Random.Range(0.6f, 1.6f),

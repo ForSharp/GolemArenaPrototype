@@ -1,13 +1,17 @@
-﻿using FightState;
-using GolemEntity;
+﻿using CharacterEntity;
+using CharacterEntity.BaseStats;
+using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GameLoop
 {
     public class Spawner : MonoBehaviour
     {
-        [SerializeField] private GameObject[] golemPrefabs;
+        [FormerlySerializedAs("golemPrefabs")] [SerializeField] private GameObject[] characterPrefabs;
+        [SerializeField] private GameObject[] creepPrefabs;
         [SerializeField] private Vector3 spawnPoint;
         [SerializeField] private float spawnAreaRadius = 50;
         [SerializeField] private Color[] groupColors;
@@ -20,11 +24,11 @@ namespace GameLoop
             Instance = this;
         }
 
-        public void SpawnGolem(GolemType golemType, Specialization specialization, bool isPlayerCharacter = false)
+        public void SpawnChampion(CharacterType characterType, Specialization specialization, bool isPlayerCharacter = false)
         {
-            var golem = new Golem(golemType, specialization);
-            var newGolem = Instantiate(GetRelevantPrefab(golemType), GetRandomSpawnPoint(), Quaternion.identity);
-            var state = ConnectGolemWithState(newGolem, golem, golemType, specialization);
+            var character = new Character(characterType, specialization);
+            var newCharacter = Instantiate(GetRelevantPrefab(characterType), GetRandomSpawnPoint(), Quaternion.identity);
+            var state = ConnectChampionWithState(newCharacter, character, characterType, specialization);
 
             _group++;
 
@@ -32,6 +36,20 @@ namespace GameLoop
             {
                 Player.SetPlayerCharacter(state);
             }
+        }
+
+        public void SpawnCreep(CreepType creepType, CharacterBaseStats creepStats, ChampionState owner, Vector3 pos, float duration)
+        {
+            var character = new Character(creepStats);
+            var newCharacter = Instantiate(GetRelevantPrefab(creepType), pos, Quaternion.identity);
+            ConnectCreepWithState(newCharacter, character, creepType, owner, duration);
+        }
+        
+        public void SpawnCreep(GameObject creepPrefab, CreepType creepType, CharacterBaseStats creepStats, ChampionState owner, Vector3 pos, float duration)
+        {
+            var character = new Character(creepStats);
+            var newCharacter = Instantiate(creepPrefab, pos, Quaternion.identity);
+            ConnectCreepWithState(newCharacter, character, creepType, owner, duration);
         }
 
         private Vector3 GetRandomSpawnPoint()
@@ -42,27 +60,41 @@ namespace GameLoop
             return randomPoint;
         }
 
-        private GameCharacterState ConnectGolemWithState(GameObject newGolem, Golem golem, GolemType golemType, Specialization specialization)
+        private ChampionState ConnectChampionWithState(GameObject newChampion, Character character, CharacterType characterType, Specialization specialization)
         {
-            var state = newGolem.GetComponent<GameCharacterState>();
+            var state = newChampion.GetComponent<ChampionState>();
             if (_group < groupColors.Length)
             {
-                state.InitializeState(golem, _group, groupColors[_group], golemType.ToString(), specialization.ToString());
+                state.InitializeState(character, _group, groupColors[_group], characterType.ToString(), specialization.ToString());
                 Game.AddCharacterToAllCharactersList(state);
             }
             else if (_group >= groupColors.Length)
             {
-                state.InitializeState(golem, _group, Color.black, golemType.ToString(),specialization.ToString());
+                state.InitializeState(character, _group, Color.black, characterType.ToString(),specialization.ToString());
                 Game.AddCharacterToAllCharactersList(state);
             }
 
             return state;
         }
 
-        private GameObject GetRelevantPrefab(GolemType golemType)
+        private CreepState ConnectCreepWithState(GameObject newCreep, Character character, CreepType creepType, ChampionState owner, float duration)
         {
-            var index = (int) golemType;
-            return golemPrefabs[index];
+            var state = newCreep.GetComponent<CreepState>();
+            state.InitializeState(character, owner, creepType.ToString(), duration);
+            Game.AddCharacterToAllCharactersList(state);
+            return state;
+        }
+        
+        private GameObject GetRelevantPrefab(CharacterType characterType)
+        {
+            var index = (int) characterType;
+            return characterPrefabs[index];
+        }
+        
+        private GameObject GetRelevantPrefab(CreepType creepType)
+        {
+            var index = (int) creepType;
+            return creepPrefabs[index];
         }
     }
 }

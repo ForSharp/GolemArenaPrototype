@@ -1,4 +1,4 @@
-﻿using GolemEntity;
+﻿using CharacterEntity;
 using Optimization;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ namespace UI
     {
         [SerializeField] private RawImage rawImage;
 
-        public void SetTexture(GolemType type)
+        public void SetTexture(CharacterType type)
         {
             rawImage.texture = HeroViewBoxController.Instance.GetHeroPortrait(type);
         }

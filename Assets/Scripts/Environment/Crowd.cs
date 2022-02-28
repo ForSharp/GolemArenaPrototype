@@ -54,13 +54,13 @@ namespace Environment
 
         private void OnEnable()
         {
-            EventContainer.GolemDied += SetHeroDiedReaction;
+            EventContainer.CharacterDied += SetHeroDiedReaction;
             Game.StartBattle += SetStartRoundReaction;
         }
 
         private void OnDisable()
         {
-            EventContainer.GolemDied -= SetHeroDiedReaction;
+            EventContainer.CharacterDied -= SetHeroDiedReaction;
             Game.StartBattle -= SetStartRoundReaction;
         }
 

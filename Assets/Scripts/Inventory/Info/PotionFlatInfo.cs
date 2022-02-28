@@ -1,4 +1,4 @@
-﻿using GolemEntity.BaseStats;
+﻿using CharacterEntity.BaseStats;
 using UnityEngine;
 
 namespace Inventory.Info
@@ -10,7 +10,7 @@ namespace Inventory.Info
         [SerializeField] [Range(0, 15)] private int agility;
         [SerializeField] [Range(0, 15)] private int intelligence;
 
-        public GolemBaseStats GolemBaseStats => new GolemBaseStats()
+        public CharacterBaseStats CharacterBaseStats => new CharacterBaseStats()
             { strength = strength, agility = agility, intelligence = intelligence };
     }
 }

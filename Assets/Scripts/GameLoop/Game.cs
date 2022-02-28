@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FightState;
-using GolemEntity;
+using CharacterEntity;
+using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 using Inventory;
+using Inventory.Abstracts;
 using Optimization;
+using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace GameLoop
@@ -19,7 +24,8 @@ namespace GameLoop
         }
         
         public static GameStage Stage { get; set; }
-        public static List<GameCharacterState> AllGolems { get; }
+        public static List<CharacterState> AllCharactersInSession { get; }
+        public static List<ChampionState> AllChampionsInSession { get; }
         public static List<string> FreeTypes { get; }
         public static List<string> FreeSpecs { get; }
         
@@ -30,62 +36,68 @@ namespace GameLoop
         public static event Action OpenMainMenu;
         public static event Action EndGame;
 
-        private const int MAXRoundNumber = 4;
+        private const int MaxRoundNumber = 4;
 
         static Game()
         {
-            AllGolems = new List<GameCharacterState>();
-            FreeTypes = Enum.GetNames(typeof(GolemType)).ToList();
-            FreeSpecs = Enum.GetNames(typeof(Specialization)).ToList();
+            AllCharactersInSession = new List<CharacterState>();
+            AllChampionsInSession = new List<ChampionState>();
+            FreeTypes = Enum.GetNames(typeof(CharacterType)).Reverse().Skip(1).Reverse().ToList();
+            FreeSpecs = Enum.GetNames(typeof(Specialization)).Reverse().Skip(1).Reverse().ToList();
 
             Stage = GameStage.MainMenu;
             
             EventContainer.PlayerCharacterCreated += CreateBotCharacters;
             EventContainer.WinBattle += SetEndOfRound;
-            EventContainer.NewRound += PrepareNewRound;
+            //EventContainer.NewRound += PrepareNewRound;
 
             Round = 1;
         }
 
-        public static void OnStartBattle()
-        {
-            StartBattle?.Invoke();
-            Stage = GameStage.Battle;
-            RoundEnded = false;
-        }
-        
         public static void OnOpenMainMenu()
         {
             OpenMainMenu?.Invoke();
         }
-        
-        public static void AddCharacterToAllCharactersList(GameCharacterState golem)
+
+        public static void AddCharacterToAllCharactersList(CharacterState character)
         {
-            AllGolems.Add(golem);
-            FreeTypes.Remove(golem.Type);
-            FreeSpecs.Remove(golem.Spec);
+            AllCharactersInSession.Add(character);
+
+            if (character is ChampionState champion)
+            {
+                AllChampionsInSession.Add(champion);
+                FreeTypes.Remove(champion.Type);
+                FreeSpecs.Remove(champion.Spec);
+            }
+            
+        }
+
+        public static void RemoveDeadCreep(CharacterState creep)
+        {
+            AllCharactersInSession.Remove(creep);
         }
 
         private static void CreateBotCharacters()
         {
             for (var i = 0; i < 4; i++)
             {
-                Spawner.Instance.SpawnGolem(GetRandomCharacter(), GetRandomSpecialization());
+                Spawner.Instance.SpawnChampion(GetRandomCharacter(), GetRandomSpecialization());
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
         }
 
-        private static void PrepareNewRound()
+        private static void EndCurrentGame()
         {
-            if (Round > MAXRoundNumber)
-            {
-                OnEndGame();
-                Stage = GameStage.MainMenu;
-                return;
-            }
+            OnEndGame();
+            Stage = GameStage.MainMenu;
+        }
 
-            foreach (var character in AllGolems)
+        private static IEnumerator PrepareNewRound()
+        {
+            yield return new WaitForSeconds(5);
+
+            foreach (var character in AllChampionsInSession)
             {
                 character.gameObject.SetActive(true);
             }
@@ -93,7 +105,7 @@ namespace GameLoop
             SetRoundRates();
             ItemDispenser.DispenseItems();
 
-            foreach (var character in AllGolems)
+            foreach (var character in AllChampionsInSession)
             {
                 if (character != Player.PlayerCharacter)
                 {
@@ -104,26 +116,81 @@ namespace GameLoop
                 //PotionDrinker.DrinkAllPotions(character);
             }
             
-            foreach (var character in AllGolems)
+            foreach (var character in AllCharactersInSession)
             {
-                
-                character.PrepareAfterNewRound();
+                if (character is ChampionState champion)
+                    champion.PrepareAfterNewRound();
+                else
+                {
+                    //Object.Destroy(character.gameObject);
+                }
             }
             
-            OnStartBattle();
+            OnClearEffects();
+            
+            
+            
+            CoroutineManager.StartRoutine(StartBattleAfterDelay(10));
+        }
+
+        private static void ActivateChampionIfNeed()
+        {
+            foreach (var champion in AllChampionsInSession)
+            {
+                if (!champion.gameObject.activeSelf)
+                {
+                    champion.gameObject.SetActive(true);
+                    champion.PrepareAfterNewRoundForException();
+                }
+            }
             
         }
 
-        private static void SetEndOfRound(GameCharacterState winner)
+        private static IEnumerator StartBattleAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            ActivateChampionIfNeed();
+            
+            OnStartBattle();
+        }
+        
+        public static void OnStartBattle()
+        {
+            StartBattle?.Invoke();
+            Stage = GameStage.Battle;
+            RoundEnded = false;
+            
+        }
+        
+        public static event Action ClearEffects;
+
+        private static void OnClearEffects()
+        {
+            ClearEffects?.Invoke();
+        }
+
+        private static void SetEndOfRound(CharacterState winner)
         {
             RoundEnded = true;
             Stage = GameStage.BetweenBattles;
             Round++;
+
+            if (Round > MaxRoundNumber)
+            {
+                EndCurrentGame();
+            }
+            else
+            {
+                CoroutineManager.StartRoutine(PrepareNewRound());
+            }
+            
         }
 
-        public static void SetRoundRates()
+        private static void SetRoundRates()
         {
-            var statistics = Game.AllGolems.Select(character => character.roundStatistics).ToList();
+            
+            var statistics = AllChampionsInSession.Select(character => character.RoundStatistics).ToList();
 
             var sortedStatistics = statistics.OrderBy(stat => stat.RoundDamage).ToList();
 
@@ -139,10 +206,22 @@ namespace GameLoop
                 }
             }
         }
-
-        public static GolemType GetRandomCharacter()
+        
+        public static IEnumerable<CharacterState> GetEnemies(CharacterState state)
         {
-            return (GolemType) ToEnum(FreeTypes[Random.Range(0, FreeTypes.Count)], typeof(GolemType));
+            return AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group != state.Group);
+        }
+
+        public static IEnumerable<CharacterState> GetFriends(CharacterState state)
+        {
+            return AllCharactersInSession.Where(character => !character.IsDead)
+                .Where(group => group.Group == state.Group);
+        }
+
+        public static CharacterType GetRandomCharacter()
+        {
+            return (CharacterType) ToEnum(FreeTypes[Random.Range(0, FreeTypes.Count)], typeof(CharacterType));
         }
 
         public static Specialization GetRandomSpecialization()
@@ -151,6 +230,12 @@ namespace GameLoop
                 typeof(Specialization));
         }
 
+        public static ChampionState GetCharacterByInventory(IInventory inventory)
+        {
+            return AllChampionsInSession.Find(character =>
+                character.InventoryHelper.InventoryOrganization.inventory == inventory);
+        }
+        
         public static Enum ToEnum(string value, Type enumType)
         {
             return (Enum) Enum.Parse(enumType, value, true);
@@ -160,5 +245,7 @@ namespace GameLoop
         {
             EndGame?.Invoke();
         }
+
+        
     }
 }

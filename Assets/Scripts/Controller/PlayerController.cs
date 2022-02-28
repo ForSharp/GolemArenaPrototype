@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
-using FightState;
+using CharacterEntity;
+using CharacterEntity.State;
 using GameLoop;
-using GolemEntity;
+using Inventory.Abstracts.Spells;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,14 +13,21 @@ namespace Controller
     public enum PlayMode
     {
         Standard,
-        Rts,
-        Cinematic
+        Cinematic,
+        CastSpell
     }
 
+    public enum ChoosingTargetMode
+    {
+        Enemy,
+        Friend,
+        All
+    }
+    
     public sealed class PlayerController : MonoBehaviour
     {
-        [SerializeField] private HeroControllerPanel standardPanel;
-        [SerializeField] private GolemStatsPanel rtsPanel;
+        [SerializeField] private ControllerPanel controllerPanel;
+        [SerializeField] private ChampionStatsPanel standardPanel;
         [SerializeField] private GameObject autoButtonFalse;
         [SerializeField] private GameObject autoButtonTrue;
         
@@ -29,35 +37,36 @@ namespace Controller
 
         private bool _aiControl = true;
         private PlayMode _playMode = PlayMode.Cinematic;
-        private GameCharacterState _state;
+        private PlayMode _previousPlayMode;
+        private ChampionState _state;
         private Animator _animator;
         private NavMeshAgent _agent;
         private CharacterController _controller;
+        private ChampionState _currentCharacter;
         private Vector3 _velocity;
         private Vector3 _moveDirection;
         private bool _isGrounded;
         private bool _isCanMove;
         private bool _isDead;
         private float _moveSpeed;
+        private ChoosingTargetMode _targetMode;
+        private ISpellItem _currentSpell;
+        private int _currentSpellNumb;
         
         public static event Action<bool> AllowAI;
         public static event Action AttackByController;
-        
-        public static event Action SpellCastByController;
-        public static event Action<GameCharacterState> SetTargetByController;
-        public static event Action<Vector3> SetMovementPointByController;
         public static event Action<PlayMode> PlayModeChanged;
         
         private void OnEnable()
         {
             Game.StartBattle += SetStandard;
-            EventContainer.GolemDied += CheckDeath;
+            EventContainer.CharacterDied += CheckDeath;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= SetStandard;
-            EventContainer.GolemDied -= CheckDeath;
+            EventContainer.CharacterDied -= CheckDeath;
         }
 
         private void CheckDeath(RoundStatistics killer)
@@ -69,10 +78,12 @@ namespace Controller
         private void SetStandard()
         {
             _playMode = PlayMode.Standard;
+            _previousPlayMode = PlayMode.Standard;
             PlayModeChanged?.Invoke(PlayMode.Standard);
             SetStandardPanel();
             autoButtonFalse.SetActive(false);
             autoButtonTrue.SetActive(true);
+            controllerPanel.gameObject.SetActive(false);
             _aiControl = true;
             AllowAI?.Invoke(true);
             SetComponents();
@@ -121,25 +132,13 @@ namespace Controller
         }
 
         #endregion
-        
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                SpellCastByController?.Invoke();
-            }
-            
-            
             switch (_playMode)
             {
                 case PlayMode.Standard:
                     HandleJoystickInput();
-                    break;
-                case PlayMode.Rts:
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        TrySetCharacterAsTargetOrMove();
-                    }
                     break;
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
@@ -147,6 +146,15 @@ namespace Controller
                         if (Game.Stage != Game.GameStage.MainMenu)
                         {
                             TryShowHeroStates();
+                        }
+                    }
+                    break;
+                case PlayMode.CastSpell:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (Game.Stage != Game.GameStage.MainMenu)
+                        {
+                            TryChooseTarget();
                         }
                     }
                     break;
@@ -166,49 +174,108 @@ namespace Controller
             }
         }
 
-        private void TrySetCharacterAsTargetOrMove()
+        public void StartChoosingTarget(ChoosingTargetMode mode, ISpellItem spellItem, int spellNumb)
         {
-            if (!_aiControl && !_isDead)
-            {
-                if (Camera.main is null) return;
-                var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-                if (!Physics.Raycast(ray, out var hit)) return;
-                var coll = hit.collider;
-                if (coll.TryGetComponent(out GameCharacterState state))
-                {
-                    if (state == _state)
-                    {
-                        state.SoundsController.PlayClickAndVictorySound();
-                    }
-                    else
-                    {
-                        SetTargetByController?.Invoke(state);
-                    }
-                }
-                else
-                {
-                    SetMovementPointByController?.Invoke(hit.point);
-                }
-            }
+            _playMode = PlayMode.CastSpell;
+            _targetMode = mode;
+            _currentSpell = spellItem;
+            _currentSpellNumb = spellNumb;
         }
         
+        private void TryChooseTarget()
+        {
+            if (Camera.main is null)
+            {
+                _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
+            }
+            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            if (!Physics.Raycast(ray, out var hit))
+            {
+                _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
+            }
+            var coll = hit.collider;
+            
+            if (coll.TryGetComponent(out CharacterState target))
+            {
+                switch (_targetMode)
+                {
+                    case ChoosingTargetMode.Enemy:
+                        if (CheckEnemy(target))
+                        {
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target, _currentSpellNumb);
+                            _playMode = _previousPlayMode;
+                            return;
+                        }
+                        break;
+                    case ChoosingTargetMode.Friend:
+                        if (CheckFriend(target))
+                        {
+                            _currentCharacter.SpellManager.CastSpell(_currentSpell, target, _currentSpellNumb);
+                            _playMode = _previousPlayMode;
+                            return;
+                        }
+                        break;
+                    case ChoosingTargetMode.All:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            _playMode = _previousPlayMode;
+            _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
+
+            bool CheckFriend(CharacterState characterState)
+            {
+                foreach (var friend in Game.GetFriends(_currentCharacter))
+                {
+                    if (friend == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            bool CheckEnemy(CharacterState characterState)
+            {
+                foreach (var enemy in Game.GetEnemies(_currentCharacter))
+                {
+                    if (enemy == characterState)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+
         private void TryShowHeroStates()
         {
             if (Camera.main is null) return;
             var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit)) return;
             var coll = hit.collider;
-            if (coll.TryGetComponent(out GameCharacterState state))
+            if (coll.TryGetComponent(out ChampionState state))
             {
-                rtsPanel.gameObject.SetActive(true);
-                rtsPanel.HandleClick(state);
+                standardPanel.gameObject.SetActive(true);
+                standardPanel.HandleClick(state);
+                _currentCharacter = state;
             }
-            else if (!rtsPanel.InPanel && (state && !state.InventoryHelper.inventoryOrganization.InPanel))
+            else if ((!standardPanel.InPanel && !_currentCharacter) || (!standardPanel.InPanel && _currentCharacter) 
+                     && !_currentCharacter.InventoryHelper.InventoryOrganization.InPanel && !_currentCharacter.SpellPanelHelper.SpellsPanel.InPanel)
             {
-                rtsPanel.gameObject.SetActive(false);
-                foreach (var character in Game.AllGolems)
+                standardPanel.gameObject.SetActive(false);
+                foreach (var character in Game.AllCharactersInSession)
                 {
-                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                    if (character is ChampionState champion)
+                    {
+                        champion.InventoryHelper.InventoryOrganization.HideAllInventory();
+                        champion.SpellPanelHelper.SpellsPanel.HideAll();
+                    }
                 }
             }
         }
@@ -224,6 +291,8 @@ namespace Controller
             
             autoButtonFalse.SetActive(true);
             autoButtonTrue.SetActive(false);
+            
+            controllerPanel.gameObject.SetActive(true);
         }
         
         public void AutoButtonFalseClicked()
@@ -237,6 +306,8 @@ namespace Controller
 
             autoButtonTrue.SetActive(true);
             autoButtonFalse.SetActive(false);
+            
+            controllerPanel.gameObject.SetActive(false);
         }
 
         private void SetNavMeshOrController()
@@ -361,26 +432,21 @@ namespace Controller
             yield return new WaitForSeconds(0.1f);
             
             standardPanel.gameObject.SetActive(true);
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.HideNonEquippingSlots();
-            foreach (var character in Game.AllGolems)
+            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.ShowInventory();
+            Player.PlayerCharacter.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+            Player.PlayerCharacter.SpellPanelHelper.SpellsPanel.ShowActiveSpells();
+            foreach (var character in Game.AllCharactersInSession)
             {
-                if (character != Player.PlayerCharacter)
+                if (character != Player.PlayerCharacter && character is ChampionState champion)
                 {
-                    character.InventoryHelper.inventoryOrganization.HideAllInventory();
+                    champion.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    champion.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
-            rtsPanel.gameObject.SetActive(false);
+            standardPanel.SetPlayerCharacter();
+            _currentCharacter = Player.PlayerCharacter;
         }
-
-        private void SetRtsPanel()
-        {
-            standardPanel.gameObject.SetActive(false);
-            rtsPanel.gameObject.SetActive(true);
-            Player.PlayerCharacter.InventoryHelper.inventoryOrganization.ShowInventory();
-            rtsPanel.HandleClick(Player.PlayerCharacter);
-        }
-
+        
         public void StartButtonClick()
         {
             Game.OnStartBattle();
@@ -395,6 +461,7 @@ namespace Controller
             {
                 case "Standard":
                     _playMode = PlayMode.Standard;
+                    _previousPlayMode = PlayMode.Standard;
                     if (_aiControl)
                     {
                         autoButtonFalse.SetActive(false);
@@ -412,35 +479,18 @@ namespace Controller
                         _agent.enabled = false;
                         _controller.enabled = true;
                         _isCanMove = true;
+                        
+                        controllerPanel.gameObject.SetActive(true);
                     }
                     SetStandardPanel();
                     OnStandardCamera();
                     PlayModeChanged?.Invoke(PlayMode.Standard);
                     break;
-                case "Rts":
-                    _playMode = PlayMode.Rts;
-                    if (_aiControl)
-                    {
-                        autoButtonFalse.SetActive(false);
-                        autoButtonTrue.SetActive(true);
-                    }
-                    else
-                    {
-                        autoButtonFalse.SetActive(true);
-                        autoButtonTrue.SetActive(false);
-                    }
-                    SetRtsPanel();
-                    OnRtsCamera();
-                    PlayModeChanged?.Invoke(PlayMode.Rts);
-                    _agent.enabled = true;
-                    _controller.enabled = false;
-                    _isCanMove = false;
-                    break;
                 case "Cinematic":
                     _playMode = PlayMode.Cinematic;
+                    _previousPlayMode = PlayMode.Cinematic;
                     autoButtonFalse.SetActive(false);
                     autoButtonTrue.SetActive(false);
-                    SetRtsPanel();
                     OnCinematicCamera();
                     PlayModeChanged?.Invoke(PlayMode.Cinematic);
                     _agent.enabled = true;
@@ -448,22 +498,19 @@ namespace Controller
                     _isCanMove = false;
                     _aiControl = true;
                     AllowAI?.Invoke(_aiControl);
+                    
+                    controllerPanel.gameObject.SetActive(false);
                     break;
             }
         }
 
         public static event Action StandardCamera;
-        public static event Action RtsCamera;
+        
         public static event Action CinematicCamera;
 
         private static void OnStandardCamera()
         {
             StandardCamera?.Invoke();
-        }
-
-        private static void OnRtsCamera()
-        {
-            RtsCamera?.Invoke();
         }
 
         private static void OnCinematicCamera()

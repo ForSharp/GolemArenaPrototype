@@ -1,5 +1,6 @@
 ﻿using System;
-using FightState;
+using CharacterEntity.CharacterState;
+using CharacterEntity.State;
 
 namespace GameLoop
 {
@@ -12,9 +13,9 @@ namespace GameLoop
             FightEvent?.Invoke(sender, args);
         }
 
-        public static event Action<GameCharacterState, GameCharacterState, float, bool> MagicDamageReceived;
+        public static event Action<CharacterState, CharacterState, float, bool> MagicDamageReceived;
 
-        public static void OnMagicDamageReceived(GameCharacterState sender, GameCharacterState target, float damage,
+        public static void OnMagicDamageReceived(CharacterState sender, CharacterState target, float damage,
             bool isPeriodic)
         {
             MagicDamageReceived?.Invoke(sender, target, damage, isPeriodic);
@@ -27,32 +28,32 @@ namespace GameLoop
             PlayerCharacterCreated?.Invoke();
         }
 
-        public static event Action<GameCharacterState> GolemStatsChanged;
+        public static event Action<CharacterState> CharacterStatsChanged;
 
-        public static void OnGolemStatsChanged(GameCharacterState state)
+        public static void OnCharacterStatsChanged(CharacterState state)
         {
-            GolemStatsChanged?.Invoke(state);
+            CharacterStatsChanged?.Invoke(state);
         }
 
-        public static event Action<RoundStatistics> GolemDied;
+        public static event Action<RoundStatistics> CharacterDied;
     
-        public static void OnGolemDied(RoundStatistics killer)
+        public static void OnCharacterDied(RoundStatistics killer)
         {
-            GolemDied?.Invoke(killer);
+            CharacterDied?.Invoke(killer);
         }
 
-        public static event Action<GameCharacterState> WinBattle;
+        public static event Action<CharacterState> WinBattle;
 
-        public static void OnWinBattle(GameCharacterState obj)
+        public static void OnWinBattle(CharacterState obj)
         {
             WinBattle?.Invoke(obj);
         }
 
-        public static event Action NewRound;
-
-        public static void OnNewRound()
-        {
-            NewRound?.Invoke();
-        }
+        // public static event Action NewRound;
+        //
+        // public static void OnNewRound()
+        // {
+        //     NewRound?.Invoke();
+        // }
     }
 }

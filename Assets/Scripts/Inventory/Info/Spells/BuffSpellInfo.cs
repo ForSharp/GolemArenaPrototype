@@ -1,4 +1,4 @@
-﻿using GolemEntity.ExtraStats;
+﻿using CharacterEntity.ExtraStats;
 using UnityEngine;
 
 namespace Inventory.Info.Spells
