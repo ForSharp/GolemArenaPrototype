@@ -12,7 +12,7 @@ namespace Inventory.Items.PotionItems
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
         public PotionUltimateInfo PotionUltimateInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public PotionUltimate(IInventoryItemInfo info, PotionUltimateInfo potionUltimateInfo)
         {

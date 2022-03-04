@@ -1,8 +1,7 @@
 ﻿using System;
 using __Scripts.Inventory.Abstracts;
-using Inventory.Abstracts;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public class InventorySlot : IInventorySlot
     {
@@ -14,7 +13,7 @@ namespace Inventory
 
         public IInventoryItem Item { get; private set; }
 
-        public Type ItemType => Item.Type;
+        public string ItemId => Item.Id;
 
         public int Amount => IsEmpty ? 0 : Item.State.Amount;
 

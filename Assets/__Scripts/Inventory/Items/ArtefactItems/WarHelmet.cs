@@ -10,7 +10,7 @@ namespace Inventory.Items
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
         public ArtefactInfo ArtefactInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public WarHelmet(IInventoryItemInfo info, ArtefactInfo artefactInfo)
         {

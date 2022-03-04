@@ -13,7 +13,7 @@ namespace Inventory.Items.SpellItems
         public SpellInfo SpellInfo { get; }
         public PeriodicDamageSpellInfo PeriodicDamageSpellInfo { get; }
         public DebuffSpellInfo DebuffSpellInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public SnowstormItem(IInventoryItemInfo info, SpellInfo spellInfo, PeriodicDamageSpellInfo periodicDamageSpellInfo,
             DebuffSpellInfo debuffSpellInfo)

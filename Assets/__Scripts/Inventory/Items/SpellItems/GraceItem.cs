@@ -13,7 +13,7 @@ namespace Inventory.Items.SpellItems
         public SpellInfo SpellInfo { get; }
         public HealSpellInfo HealSpellInfo { get; }
         public BuffSpellInfo BuffSpellInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public GraceItem(IInventoryItemInfo info, SpellInfo spellInfo, HealSpellInfo healSpellInfo,
             BuffSpellInfo buffSpellInfo)

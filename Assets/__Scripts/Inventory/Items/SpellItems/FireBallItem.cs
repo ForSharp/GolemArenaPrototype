@@ -10,7 +10,7 @@ namespace Inventory.Items.SpellItems
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
         public SpellInfo SpellInfo { get; }
         public DamageSpellInfo DamageSpellInfo { get; }
         public PeriodicDamageSpellInfo PeriodicDamageSpellInfo { get; }

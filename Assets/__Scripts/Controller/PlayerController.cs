@@ -30,6 +30,7 @@ namespace __Scripts.Controller
         [SerializeField] private ChampionStatsPanel standardPanel;
         [SerializeField] private GameObject autoButtonFalse;
         [SerializeField] private GameObject autoButtonTrue;
+        [SerializeField] private GameObject controlMode;
         
         [SerializeField] private float gravity = -9.81f;
         [SerializeField] private float groundDistance = 0.05f;
@@ -61,12 +62,14 @@ namespace __Scripts.Controller
         {
             Game.StartBattle += SetStandard;
             EventContainer.CharacterDied += CheckDeath;
+            EventContainer.PlayerCharacterCreated += EnableControlMode;
         }
 
         private void OnDisable()
         {
             Game.StartBattle -= SetStandard;
             EventContainer.CharacterDied -= CheckDeath;
+            EventContainer.PlayerCharacterCreated -= EnableControlMode;
         }
 
         private void CheckDeath(RoundStatistics killer)
@@ -504,6 +507,11 @@ namespace __Scripts.Controller
             }
         }
 
+        private void EnableControlMode()
+        {
+            controlMode.SetActive(true);
+        }
+        
         public static event Action StandardCamera;
         
         public static event Action CinematicCamera;

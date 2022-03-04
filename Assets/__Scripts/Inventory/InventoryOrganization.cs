@@ -1,4 +1,5 @@
-﻿using GameLoop;
+﻿using __Scripts.Inventory;
+using GameLoop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

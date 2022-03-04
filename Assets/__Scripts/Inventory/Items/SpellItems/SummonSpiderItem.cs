@@ -12,7 +12,7 @@ namespace Inventory.Items.SpellItems
         public IInventoryItemState State { get; }
         public SpellInfo SpellInfo { get; }
         public SummonSpellInfo SummonSpellInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public SummonSpiderItem(IInventoryItemInfo info, SpellInfo spellInfo, SummonSpellInfo summonSpellInfo)
         {

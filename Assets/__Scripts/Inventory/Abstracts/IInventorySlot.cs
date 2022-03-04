@@ -1,7 +1,6 @@
 ﻿using System;
-using __Scripts.Inventory.Abstracts;
 
-namespace Inventory.Abstracts
+namespace __Scripts.Inventory.Abstracts
 {
     public interface IInventorySlot
     {
@@ -9,7 +8,7 @@ namespace Inventory.Abstracts
         bool IsEmpty { get; }
         bool IsEquippingSlot { get; set; }
         IInventoryItem Item { get; }
-        Type ItemType { get; }
+        string ItemId { get; }
         int Amount { get; }
         int Capacity { get; }
 

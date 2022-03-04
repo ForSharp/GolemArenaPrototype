@@ -1,20 +1,17 @@
-﻿using System;
-using __Scripts.Inventory.Abstracts;
-
-namespace Inventory.Abstracts
+﻿namespace __Scripts.Inventory.Abstracts
 {
     public interface IInventory
     {
         int Capacity { get; set; }
         bool IsFull { get; }
         
-        IInventoryItem GetItem(Type itemType);
+        IInventoryItem GetItem(string itemId);
         IInventoryItem[] GetAllItems();
-        IInventoryItem[] GetAllItems(Type itemType);
+        IInventoryItem[] GetAllItems(string itemId);
         IInventoryItem[] GetEquippedItems();
-        int GetItemAmount(Type itemType);
+        int GetItemAmount(string itemId);
         bool TryToAdd(object sender, IInventoryItem item);
-        bool TryToRemove(object sender, Type item, int amount = 1);
-        bool HasItem(Type itemType, out IInventoryItem item);
+        bool TryToRemove(object sender, string itemId, int amount = 1);
+        bool HasItem(string itemId, out IInventoryItem item);
     }
 }

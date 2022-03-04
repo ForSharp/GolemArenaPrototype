@@ -7,7 +7,7 @@ namespace __Scripts.Inventory.Abstracts
     {
         IInventoryItemInfo Info { get; }
         IInventoryItemState State { get; }
-        Type Type { get; }
+        string Id { get; }
         IInventoryItem Clone();
     }
 }

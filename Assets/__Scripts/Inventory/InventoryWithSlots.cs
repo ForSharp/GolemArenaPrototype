@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
-using Inventory.Abstracts;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public sealed class InventoryWithSlots : IInventory
     {
@@ -14,7 +13,7 @@ namespace Inventory
 
         public event Action<object, IInventoryItem, int> InventoryItemAdded;
 
-        public event Action<object, Type, int> InventoryItemRemoved;
+        public event Action<object, string, int> InventoryItemRemoved;
 
         public event Action<object> InventoryStateChanged;
 
@@ -23,9 +22,9 @@ namespace Inventory
             InventoryItemAdded?.Invoke(sender, item, amount);
         }
 
-        private void OnInventoryItemRemoved(object sender, Type itemType, int amount)
+        private void OnInventoryItemRemoved(object sender, string itemId, int amount)
         {
-            InventoryItemRemoved?.Invoke(sender, itemType, amount);
+            InventoryItemRemoved?.Invoke(sender, itemId, amount);
         }
         
         public void OnInventoryStateChanged(object sender)
@@ -44,9 +43,9 @@ namespace Inventory
             }
         }
     
-        public IInventoryItem GetItem(Type itemType)
+        public IInventoryItem GetItem(string itemId)
         {
-            return _slots.Find(slot => slot.ItemType == itemType).Item;
+            return _slots.Find(slot => slot.ItemId == itemId).Item;
         }
 
         public IInventoryItem[] GetAllItems()
@@ -63,10 +62,10 @@ namespace Inventory
             return allItems.ToArray();
         }
 
-        public IInventoryItem[] GetAllItems(Type itemType)
+        public IInventoryItem[] GetAllItems(string itemId)
         {
             var allItemsOfType = new List<IInventoryItem>();
-            var slotOfType = _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType);
+            var slotOfType = _slots.FindAll(slot => !slot.IsEmpty && slot.ItemId == itemId);
             foreach (var slot in slotOfType)
             {
                 allItemsOfType.Add(slot.Item);
@@ -87,10 +86,10 @@ namespace Inventory
             return equippedItems.ToArray();
         }
 
-        public int GetItemAmount(Type itemType)
+        public int GetItemAmount(string itemId)
         {
             var amount = 0;
-            var allItemSlots = _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType);
+            var allItemSlots = _slots.FindAll(slot => !slot.IsEmpty && slot.ItemId == itemId);
             foreach (var slot in allItemSlots)
             {
                 amount += slot.Amount;
@@ -102,7 +101,7 @@ namespace Inventory
         public bool TryToAdd(object sender, IInventoryItem item)
         {
             var slotWithSameItemButNotEmpty =
-                _slots.Find(slot => !slot.IsEmpty && slot.ItemType == item.Type && !slot.IsFull);
+                _slots.Find(slot => !slot.IsEmpty && slot.ItemId == item.Id && !slot.IsFull);
             if (slotWithSameItemButNotEmpty != null)
             {
                 return TryToAddToSlot(sender, slotWithSameItemButNotEmpty, item);
@@ -161,9 +160,9 @@ namespace Inventory
             return TryToAdd(sender, item);
         }
 
-        public bool TryToRemove(object sender, Type itemType, int amount = 1)
+        public bool TryToRemove(object sender, string itemId, int amount = 1)
         {
-            var slotsWithItem = GetAllNonEquippingSlots(itemType);
+            var slotsWithItem = GetAllNonEquippingSlots(itemId);
             if (slotsWithItem.Length == 0)
                 return false;
 
@@ -184,14 +183,14 @@ namespace Inventory
                             InventoryItemUnEquipped?.Invoke(slot, item);
                         }
                     }
-                    OnInventoryItemRemoved(sender, itemType, amount);
+                    OnInventoryItemRemoved(sender, itemId, amount);
                     OnInventoryStateChanged(sender);
                     break;
                 }
 
                 var amountRemoved = slot.Amount;
                 amountToRemove -= amountRemoved;
-                OnInventoryItemRemoved(sender, itemType, amountRemoved);
+                OnInventoryItemRemoved(sender, itemId, amountRemoved);
                 OnInventoryStateChanged(sender);
             }
 
@@ -247,7 +246,7 @@ namespace Inventory
             
             bool CantTransit()
             {
-                return fromSlot.IsEmpty || toSlot.IsFull || !toSlot.IsEmpty && fromSlot.ItemType != toSlot.ItemType;
+                return fromSlot.IsEmpty || toSlot.IsFull || !toSlot.IsEmpty && fromSlot.ItemId != toSlot.ItemId;
             }
         }
 
@@ -279,9 +278,9 @@ namespace Inventory
             return _slots.Where(slot => slot.IsEquippingSlot && slot.IsEmpty).ToArray();
         }
         
-        public IInventorySlot[] GetAllNonEquippingSlots(Type itemType)
+        public IInventorySlot[] GetAllNonEquippingSlots(string itemId)
         {
-            return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType).Where(slot => !slot.IsEquippingSlot).ToArray();
+            return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemId == itemId).Where(slot => !slot.IsEquippingSlot).ToArray();
         }
 
         public IInventorySlot[] GetAllNonEquippingSlots()
@@ -289,9 +288,9 @@ namespace Inventory
             return _slots.Where(slot => !slot.IsEquippingSlot).ToArray();
         }
         
-        public IInventorySlot[] GetAllSlots(Type itemType)
+        public IInventorySlot[] GetAllSlots(string itemId)
         {
-            return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemType == itemType).ToArray();
+            return _slots.FindAll(slot => !slot.IsEmpty && slot.ItemId == itemId).ToArray();
         }
 
         public IInventorySlot[] GetAllSlots()
@@ -299,9 +298,9 @@ namespace Inventory
             return _slots.ToArray();
         }
     
-        public bool HasItem(Type itemType, out IInventoryItem item)
+        public bool HasItem(string itemId, out IInventoryItem item)
         {
-            item = GetItem(itemType);
+            item = GetItem(itemId);
             return item != null;
         }
 

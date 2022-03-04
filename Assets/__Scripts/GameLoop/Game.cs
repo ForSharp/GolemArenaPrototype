@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.Inventory.Abstracts;
 using CharacterEntity;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;

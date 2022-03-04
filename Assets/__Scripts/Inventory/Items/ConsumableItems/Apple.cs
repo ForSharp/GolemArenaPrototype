@@ -1,16 +1,17 @@
 ﻿using System;
 using __Scripts.Inventory.Abstracts;
+using Inventory;
 using Inventory.Abstracts;
 using Inventory.Info;
 
-namespace Inventory.Items.ConsumableItems
+namespace __Scripts.Inventory.Items.ConsumableItems
 {
     public class Apple : IInventoryItem, IConsumableHealingItem
     {
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
         public ConsumableHealingInfo ConsumableHealingInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
 
         public Apple(IInventoryItemInfo info, ConsumableHealingInfo consumableHealingInfo)

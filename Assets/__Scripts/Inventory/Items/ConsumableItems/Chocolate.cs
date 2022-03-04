@@ -10,7 +10,7 @@ namespace Inventory.Items.ConsumableItems
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
         public ConsumableBuffInfo ConsumableBuffInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public Chocolate(IInventoryItemInfo info, ConsumableBuffInfo consumableBuffInfo)
         {

@@ -13,7 +13,7 @@ namespace Inventory.Items.SpellItems
         public IInventoryItemState State { get; }
         public SpellInfo SpellInfo { get; }
         public PolymorphSpellInfo PolymorphSpellInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public FreezingItem(IInventoryItemInfo info, SpellInfo spellInfo, PolymorphSpellInfo polymorphSpellInfo)
         {

@@ -10,7 +10,7 @@ namespace Inventory.Items.PotionItems
         public IInventoryItemInfo Info { get; }
         public IInventoryItemState State { get; }
         public PotionMultiplyInfo PotionMultiplyInfo { get; }
-        public Type Type => GetType();
+        public string Id => Info.Id;
 
         public PotionMultiply(IInventoryItemInfo info, PotionMultiplyInfo potionMultiplyInfo)
         {
