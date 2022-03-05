@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using __Scripts.Controller;
+using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
 using Behaviour;
 using Behaviour.Abstracts;

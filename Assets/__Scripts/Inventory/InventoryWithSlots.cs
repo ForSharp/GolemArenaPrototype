@@ -141,6 +141,7 @@ namespace __Scripts.Inventory
                 if (slot.IsEquippingSlot)
                 {
                     InventoryItemEquipped?.Invoke(slot, item);
+                    OnInventoryStateChanged(sender);
                 }
             }
             else
@@ -181,6 +182,7 @@ namespace __Scripts.Inventory
                         if (slot.IsEquippingSlot)
                         {
                             InventoryItemUnEquipped?.Invoke(slot, item);
+                            OnInventoryStateChanged(sender);
                         }
                     }
                     OnInventoryItemRemoved(sender, itemId, amount);
@@ -214,12 +216,14 @@ namespace __Scripts.Inventory
                 if (toSlot.IsEquippingSlot)
                 {
                     InventoryItemEquipped?.Invoke(toSlot, item);
+                    OnInventoryStateChanged(sender);
                 }
                 
                 fromSlot.Clear();
                 if (fromSlot.IsEquippingSlot)
                 {
                     InventoryItemUnEquipped?.Invoke(fromSlot, item);
+                    OnInventoryStateChanged(sender);
                 }
                 toSlot.Item.State.Amount += amountToAdd;
                 OnInventoryStateChanged(sender);
@@ -235,6 +239,7 @@ namespace __Scripts.Inventory
                 if (fromSlot.IsEquippingSlot)
                 {
                     InventoryItemUnEquipped?.Invoke(fromSlot, item);
+                    OnInventoryStateChanged(sender);
                 }
             }
             else

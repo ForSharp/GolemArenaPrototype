@@ -1,4 +1,5 @@
 ﻿using System;
+using __Scripts.GameLoop;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 
@@ -49,11 +50,11 @@ namespace GameLoop
             WinBattle?.Invoke(obj);
         }
 
-        // public static event Action NewRound;
-        //
-        // public static void OnNewRound()
-        // {
-        //     NewRound?.Invoke();
-        // }
+        public static event Action ItemSold;
+        
+        public static void OnItemSold()
+        {
+            ItemSold?.Invoke();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using __Scripts.Controller;
+using __Scripts.GameLoop;
 using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.GameLoop;
 using Behaviour;
 using Behaviour.Abstracts;
 using CharacterEntity.CharacterState;

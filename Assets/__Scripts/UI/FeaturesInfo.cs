@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using __Scripts.GameLoop;
 using CharacterEntity;
 using GameLoop;
 using UnityEngine;

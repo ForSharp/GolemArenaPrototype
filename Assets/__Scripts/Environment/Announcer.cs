@@ -1,4 +1,5 @@
-﻿using GameLoop;
+﻿using __Scripts.GameLoop;
+using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

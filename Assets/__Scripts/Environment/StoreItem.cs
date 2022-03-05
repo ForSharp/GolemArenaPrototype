@@ -12,7 +12,6 @@ namespace __Scripts.Environment
         [SerializeField] private Text price;
         [SerializeField] private Text title;
         [SerializeField] private Text itemId;
-        [SerializeField] private Text quantity;
         private Store _store;
 
         private void Start()

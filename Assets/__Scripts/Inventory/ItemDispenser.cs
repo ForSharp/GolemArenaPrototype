@@ -1,28 +1,35 @@
-﻿using System.Linq;
-using CharacterEntity.CharacterState;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using __Scripts.GameLoop;
+using __Scripts.Inventory.Abstracts;
 using CharacterEntity.State;
-using GameLoop;
-using Inventory.Abstracts;
-using UnityEngine;
+using Inventory;
+using Random = UnityEngine.Random;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public static class ItemDispenser
     {
-        public static void DispenseItems()
-        {
-            foreach (var character in Game.AllChampionsInSession)
-            {
-                DispenseAllTypesOfItemsToCurrentCharacter(character);
-            }
-            
-        }
-
         public static void DispenseItemToCharacter(string itemId, ChampionState character)
         {
             var item = ItemContainer.Instance.GetItemById(itemId);
             item.State.Amount = 1;
             character.InventoryHelper.AddItem(item);
+        }
+
+        private static readonly List<IInventoryItem> ItemsRoundReward = new List<IInventoryItem>();
+
+        public static event Action<ChampionState, List<IInventoryItem>> RoundRewardsDispensed;
+
+        public static void DispenseItemsRoundRewards()
+        {
+            foreach (var character in Game.AllChampionsInSession)
+            {
+                ItemsRoundReward.Clear();
+                DispenseAllTypesOfItemsToCurrentCharacter(character);
+                RoundRewardsDispensed?.Invoke(character, ItemsRoundReward);
+            }
         }
 
         private static void DispenseAllTypesOfItemsToCurrentCharacter(ChampionState character)
@@ -67,6 +74,7 @@ namespace Inventory
                     moneyForArtefacts -= artefactItem.Info.Price;
                     artefactItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(artefactItem);
+                    ItemsRoundReward.Add(ItemContainer.Instance.GetItemById(artefactItem.Id));
                 }
                 index++;
             }
@@ -89,6 +97,7 @@ namespace Inventory
                     moneyForSpells -= spellItem.Info.Price;
                     spellItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(spellItem);
+                    ItemsRoundReward.Add(ItemContainer.Instance.GetItemById(spellItem.Id));
                 }
                 index++;
             }
@@ -111,6 +120,7 @@ namespace Inventory
                     moneyForConsumables -= consumableItem.Info.Price;
                     consumableItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(consumableItem);
+                    ItemsRoundReward.Add(ItemContainer.Instance.GetItemById(consumableItem.Id));
                 }
                 index++;
             }
@@ -131,6 +141,7 @@ namespace Inventory
                     moneyForPotions -= potionItem.Info.Price;
                     potionItem.State.Amount = 1;
                     character.InventoryHelper.AddItem(potionItem);
+                    ItemsRoundReward.Add(ItemContainer.Instance.GetItemById(potionItem.Id));
                 }
             }
 

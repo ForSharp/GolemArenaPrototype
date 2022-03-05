@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using __Scripts.GameLoop;
+using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
+using CharacterEntity.State;
 using GameLoop;
 using Inventory;
 using UnityEngine;
@@ -20,6 +23,8 @@ namespace __Scripts.Environment
         private List<IInventoryItem> _items = new List<IInventoryItem>();
         private ItemContainer _container;
 
+        public readonly Dictionary<ChampionState, int> purses = new Dictionary<ChampionState, int>();
+
         private void Start()
         {
             _container = ItemContainer.Instance;
@@ -30,11 +35,21 @@ namespace __Scripts.Environment
             HideAll();
 
             EventContainer.PlayerCharacterCreated += ShowButton;
+            Game.AllChampionsAreReady += CreatePurses;
         }
 
         private void OnDestroy()
         {
             EventContainer.PlayerCharacterCreated -= ShowButton;
+            Game.AllChampionsAreReady -= CreatePurses;
+        }
+        
+        private void CreatePurses()
+        {
+            foreach (var champion in Game.AllChampionsInSession)
+            {
+                purses.Add(champion, 500);
+            }
         }
 
         private void HideStore()
@@ -91,7 +106,19 @@ namespace __Scripts.Environment
         
         public void SendItemToPlayer(string itemId)
         {
-            ItemDispenser.DispenseItemToCharacter(itemId, Player.PlayerCharacter);
+            purses.TryGetValue(Player.PlayerCharacter, out var cash);
+            var price = ItemContainer.Instance.GetItemById(itemId).Info.Price;
+            if (cash >= price)
+            {
+                purses.Remove(Player.PlayerCharacter);
+                purses.Add(Player.PlayerCharacter, cash - price);
+                ItemDispenser.DispenseItemToCharacter(itemId, Player.PlayerCharacter);
+                EventContainer.OnItemSold();
+            }
+            else
+            {
+                //не хватает денег
+            }
         }
         
     }

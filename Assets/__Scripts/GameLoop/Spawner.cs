@@ -1,12 +1,11 @@
 ﻿using CharacterEntity;
 using CharacterEntity.BaseStats;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public class Spawner : MonoBehaviour
     {

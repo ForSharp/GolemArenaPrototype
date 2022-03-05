@@ -1,8 +1,7 @@
-﻿using System.Timers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Inventory.DragAndDrop
+namespace __Scripts.Inventory.DragAndDrop
 {
     public class UIItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {

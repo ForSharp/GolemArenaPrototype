@@ -1,10 +1,11 @@
 ﻿using System;
 using CharacterEntity;
+using GameLoop;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public class PlayerCharacterSelector : MonoBehaviour
     {

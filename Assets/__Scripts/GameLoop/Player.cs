@@ -1,7 +1,7 @@
-﻿using CharacterEntity.CharacterState;
-using CharacterEntity.State;
+﻿using CharacterEntity.State;
+using GameLoop;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public static class Player
     {

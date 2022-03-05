@@ -1,4 +1,5 @@
-﻿using CharacterEntity;
+﻿using __Scripts.GameLoop;
+using CharacterEntity;
 using CharacterEntity.State;
 using GameLoop;
 using Inventory.Items.SpellItems;

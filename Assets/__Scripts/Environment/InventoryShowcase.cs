@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections;
+﻿using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using CharacterEntity.State;
-using Environment;
 using GameLoop;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace __Scripts.Environment
 {
     public class InventoryShowcase : MonoBehaviour
     {
         [SerializeField] private InventoryShowcaseItem[] cells;
+        [SerializeField] private Text cash;
 
-        private ChampionState _owner;
-        
-        private void Start()
+        private Store _store;
+        public ChampionState Owner { get; private set; }
+
+        private void Awake()
         {
             DisableAllCells();
-
+            _store = GetComponentInParent<Store>();
+            EventContainer.ItemSold += SetCashValue;
         }
 
         private void OnEnable()
@@ -27,16 +29,24 @@ namespace __Scripts.Environment
 
         public void SetOwner(ChampionState owner)
         {
-            if (_owner)
+            if (Owner)
             {
-                _owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged -= FillCells;
+                Owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged -= FillCells;
             }
             
-            _owner = owner;
+            Owner = owner;
+            
+            SetCashValue();
             
             FillCells(this);
 
-            _owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged += FillCells;
+            Owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged += FillCells;
+        }
+
+        private void SetCashValue()
+        {
+            _store.purses.TryGetValue(Owner, out var money);
+            cash.text = money.ToString();
         }
 
         private void FillCells(object sender)
@@ -45,7 +55,7 @@ namespace __Scripts.Environment
             
             for (int i = 0; i < cells.Length; i++)
             {
-                var item = _owner.InventoryHelper.NonEquippingSlots[i].GetSlotItem();
+                var item = Owner.InventoryHelper.NonEquippingSlots[i].GetSlotItem();
                 if (item != null)
                 {
                     cells[i].gameObject.SetActive(true);
@@ -75,10 +85,13 @@ namespace __Scripts.Environment
 
         private void OnDestroy()
         {
-            if (_owner)
+            if (Owner)
             {
-                _owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged -= FillCells;
+                Owner.InventoryHelper.InventoryOrganization.inventory.InventoryStateChanged -= FillCells;
             }
+            
+            EventContainer.ItemSold -= SetCashValue;
+            
         }
     }
 }

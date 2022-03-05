@@ -1,7 +1,6 @@
-﻿using CharacterEntity.CharacterState;
-using CharacterEntity.State;
+﻿using CharacterEntity.State;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public class RoundStatistics
     {

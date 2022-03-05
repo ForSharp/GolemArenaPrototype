@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
 using CharacterEntity.CharacterState;

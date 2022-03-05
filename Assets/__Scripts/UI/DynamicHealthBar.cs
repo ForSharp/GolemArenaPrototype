@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using __Scripts.GameLoop;
 using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;
 using CharacterEntity.State;

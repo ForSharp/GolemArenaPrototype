@@ -2,18 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
 using CharacterEntity;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
+using GameLoop;
 using Inventory;
-using Inventory.Abstracts;
 using Optimization;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public static class Game
     {
@@ -78,6 +77,8 @@ namespace GameLoop
             AllCharactersInSession.Remove(creep);
         }
 
+        public static event Action AllChampionsAreReady;
+        
         private static void CreateBotCharacters()
         {
             for (var i = 0; i < 4; i++)
@@ -86,6 +87,8 @@ namespace GameLoop
             }
             
             HeroViewBoxController.Instance.DeactivateRedundantBoxes();
+
+            AllChampionsAreReady?.Invoke();
         }
 
         private static void EndCurrentGame()
@@ -104,7 +107,7 @@ namespace GameLoop
             }
             
             SetRoundRates();
-            ItemDispenser.DispenseItems();
+            ItemDispenser.DispenseItemsRoundRewards();
 
             foreach (var character in AllChampionsInSession)
             {
