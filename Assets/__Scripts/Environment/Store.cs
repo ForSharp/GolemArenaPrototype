@@ -7,6 +7,7 @@ using CharacterEntity.State;
 using GameLoop;
 using Inventory;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace __Scripts.Environment
@@ -14,11 +15,21 @@ namespace __Scripts.Environment
     public class Store : MonoBehaviour
     {
         [SerializeField] private StoreItem storeItem;
-        [SerializeField] private GameObject showcase;
+        [SerializeField] private GameObject showcaseContainer;
         [SerializeField] private Button storeButton;
         [SerializeField] private Text storeButtonText;
         [SerializeField] private GameObject switchButtons;
         [SerializeField] private GameObject inventoryShowcase;
+        
+        [SerializeField] public GameObject showcaseArtefacts;
+        [SerializeField] public GameObject showcaseConsumables;
+        [SerializeField] public GameObject showcasePotions;
+        [SerializeField] public GameObject showcaseSpells;
+
+        [SerializeField] private Image buttonArtefacts;
+        [SerializeField] private Image buttonConsumables;
+        [SerializeField] private Image buttonPotions;
+        [SerializeField] private Image buttonSpells;
         
         private List<IInventoryItem> _items = new List<IInventoryItem>();
         private ItemContainer _container;
@@ -56,7 +67,7 @@ namespace __Scripts.Environment
         {
             storeButtonText.text = "Open";
             
-            showcase.SetActive(false);
+            showcaseContainer.SetActive(false);
             switchButtons.SetActive(false);
             inventoryShowcase.SetActive(false);
         }
@@ -65,14 +76,86 @@ namespace __Scripts.Environment
         {
             storeButtonText.text = "Close";
             
-            showcase.SetActive(true);
+            showcaseContainer.SetActive(true);
             switchButtons.SetActive(true);
             inventoryShowcase.SetActive(true);
+            
+            SetShowcase("Artefact");
         }
+
+        public void SetShowcase(string itemType)
+        {
+            switch (itemType)
+            {
+                case "Artefact":
+                    showcaseArtefacts.SetActive(true);
+                    buttonArtefacts.color = new Color(buttonArtefacts.color.r, buttonArtefacts.color.g,
+                        buttonArtefacts.color.b, 1);
+                    buttonConsumables.color = new Color(buttonConsumables.color.r, buttonConsumables.color.g,
+                        buttonConsumables.color.b, 0.5f);
+                    buttonPotions.color = new Color(buttonPotions.color.r, buttonPotions.color.g,
+                        buttonPotions.color.b, 0.5f);
+                    buttonSpells.color = new Color(buttonSpells.color.r, buttonSpells.color.g,
+                        buttonSpells.color.b, 0.5f);
+                    
+                    showcaseConsumables.SetActive(false);
+                    showcasePotions.SetActive(false);
+                    showcaseSpells.SetActive(false);
+                    break;
+                case "Consumable":
+                    showcaseConsumables.SetActive(true);
+                    buttonArtefacts.color = new Color(buttonArtefacts.color.r, buttonArtefacts.color.g,
+                        buttonArtefacts.color.b, 0.5f);
+                    buttonConsumables.color = new Color(buttonConsumables.color.r, buttonConsumables.color.g,
+                        buttonConsumables.color.b, 1);
+                    buttonPotions.color = new Color(buttonPotions.color.r, buttonPotions.color.g,
+                        buttonPotions.color.b, 0.5f);
+                    buttonSpells.color = new Color(buttonSpells.color.r, buttonSpells.color.g,
+                        buttonSpells.color.b, 0.5f);
+                    
+                    showcaseArtefacts.SetActive(false);
+                    showcasePotions.SetActive(false);
+                    showcaseSpells.SetActive(false);
+                    break;
+                case "Potion":
+                    showcasePotions.SetActive(true);
+                    buttonArtefacts.color = new Color(buttonArtefacts.color.r, buttonArtefacts.color.g,
+                        buttonArtefacts.color.b, 0.5f);
+                    buttonConsumables.color = new Color(buttonConsumables.color.r, buttonConsumables.color.g,
+                        buttonConsumables.color.b, 0.5f);
+                    buttonPotions.color = new Color(buttonPotions.color.r, buttonPotions.color.g,
+                        buttonPotions.color.b, 1);
+                    buttonSpells.color = new Color(buttonSpells.color.r, buttonSpells.color.g,
+                        buttonSpells.color.b, 0.5f);
+                    
+                    showcaseArtefacts.SetActive(false);
+                    showcaseConsumables.SetActive(false);
+                    showcaseSpells.SetActive(false);
+                    break;
+                case "Spell":
+                    showcaseSpells.SetActive(true);
+                    buttonArtefacts.color = new Color(buttonArtefacts.color.r, buttonArtefacts.color.g,
+                        buttonArtefacts.color.b, 0.5f);
+                    buttonConsumables.color = new Color(buttonConsumables.color.r, buttonConsumables.color.g,
+                        buttonConsumables.color.b, 0.5f);
+                    buttonPotions.color = new Color(buttonPotions.color.r, buttonPotions.color.g,
+                        buttonPotions.color.b, 0.5f);
+                    buttonSpells.color = new Color(buttonSpells.color.r, buttonSpells.color.g,
+                        buttonSpells.color.b, 1);
+                    
+                    showcaseArtefacts.SetActive(false);
+                    showcaseConsumables.SetActive(false);
+                    showcasePotions.SetActive(false);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
         
         public void OpenShowcase()
         {
-            if (!showcase.activeSelf)
+            if (!showcaseContainer.activeSelf)
             {
                 ShowStore();
             }
@@ -98,9 +181,31 @@ namespace __Scripts.Environment
         {
             foreach (var t in _items)
             {
-                Instantiate(storeItem, showcase.transform);
-                storeItem.Initialize(t);
-                t.State.Amount = 1;
+                switch (t.Info.ItemType)
+                {
+                    case ItemType.Artefact:
+                        var artItem = Instantiate(storeItem, showcaseArtefacts.transform);
+                        artItem.Initialize(t);
+                        t.State.Amount = 1;
+                        break;
+                    case ItemType.Consumable:
+                        var conItem = Instantiate(storeItem, showcaseConsumables.transform);
+                        conItem.Initialize(t);
+                        t.State.Amount = 1;
+                        break;
+                    case ItemType.Potion:
+                        var potItem = Instantiate(storeItem, showcasePotions.transform);
+                        potItem.Initialize(t);
+                        t.State.Amount = 1;
+                        break;
+                    case ItemType.Spell:
+                        var spellItem = Instantiate(storeItem, showcaseSpells.transform);
+                        spellItem.Initialize(t);
+                        t.State.Amount = 1;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
         

@@ -1,5 +1,4 @@
 ﻿using __Scripts.GameLoop;
-using __Scripts.Inventory;
 using CharacterEntity.State;
 using GameLoop;
 using UnityEngine;
@@ -64,17 +63,7 @@ namespace __Scripts.Environment
                 
             }
         }
-        
-        private void SortCellsByType(ItemType firstTypeInList)
-        {
-            
-        }
-        
-        private void UpdateCells()
-        {
-            
-        }
-        
+
         private void DisableAllCells()
         {
             foreach (var cell in cells)

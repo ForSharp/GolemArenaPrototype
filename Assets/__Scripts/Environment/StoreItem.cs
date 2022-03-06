@@ -1,6 +1,4 @@
 ﻿using __Scripts.Inventory.Abstracts;
-using Environment;
-using Inventory.Abstracts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +15,7 @@ namespace __Scripts.Environment
         private void Start()
         {
             _store = GetComponentInParent<Store>();
+            
         }
 
         public void Initialize(IInventoryItem item)
