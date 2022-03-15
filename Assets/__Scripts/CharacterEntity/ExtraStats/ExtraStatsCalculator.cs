@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace CharacterEntity.ExtraStats
+namespace __Scripts.CharacterEntity.ExtraStats
 {
     /// <summary>
     /// All methods returns the maximum allowed half,
-    /// then the GolemType values and GolemSpecialization values are concatenated.
+    /// then the CharacterType values and CharacterSpecialization values are concatenated.
     /// </summary>
     public static class ExtraStatsCalculator 
     {

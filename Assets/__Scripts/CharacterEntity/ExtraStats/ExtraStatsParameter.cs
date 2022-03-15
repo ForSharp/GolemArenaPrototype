@@ -6,10 +6,10 @@ namespace CharacterEntity.ExtraStats
     public struct ExtraStatsParameter
     {
         public float ChangingValue;
-        public ExtraStats StatsType;
+        public __Scripts.CharacterEntity.ExtraStats.ExtraStats StatsType;
         public bool IsFlat;
 
-        public ExtraStatsParameter(float changingValue, CharacterEntity.ExtraStats.ExtraStats statsType, bool isFlat)
+        public ExtraStatsParameter(float changingValue, __Scripts.CharacterEntity.ExtraStats.ExtraStats statsType, bool isFlat)
         {
             ChangingValue = changingValue;
             StatsType = statsType;

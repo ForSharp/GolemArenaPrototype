@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CharacterEntity.CharacterState;
+﻿using System.Linq;
 using CharacterEntity.State;
 using Inventory.Abstracts;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public static class ItemOutfitter
     {
@@ -16,7 +14,7 @@ namespace Inventory
             //         item is IArtefactItem || item is IConsumableBuffItem || item is IConsumableHealingItem)
             //     .OrderByDescending(item => item.Info.Price);
             var allCorrectItems = inventory.GetAllItems().Where(item =>
-                    item is IArtefactItem).OrderByDescending(item => item.Info.Price).ToArray();
+                    item.Info.ItemType == ItemType.Artefact).OrderByDescending(item => item.Info.Price).ToArray();
 
             const int equippingSlotsCount = 6;
             
@@ -29,6 +27,7 @@ namespace Inventory
                     return;
                 
                 inventory.TransitFromSlotToSlot(character, inventory.GetSlotByItem(allCorrectItems[i]), inventory.GetAllEmptyEquippingSlots()[0]);
+                inventory.OnInventoryStateChanged(character);
             }
         }
 

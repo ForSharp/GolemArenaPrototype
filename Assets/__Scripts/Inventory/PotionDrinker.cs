@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
 using __Scripts.GameLoop;
-using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
 using Inventory.Abstracts;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public static class PotionDrinker
     {
@@ -67,7 +65,7 @@ namespace Inventory
                         character.Character.ChangeBaseStatsFlatPermanent(stats);
                         potion.State.Amount--;
                     }
-
+                
                     break;
                 }
                 case IPotionMultiplyItem potionMultiplyItem:

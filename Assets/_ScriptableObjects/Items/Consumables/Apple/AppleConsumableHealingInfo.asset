@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healedParameter: 0
   healIsFlat: 1
-  healingValue: 100
+  healingValue: 400

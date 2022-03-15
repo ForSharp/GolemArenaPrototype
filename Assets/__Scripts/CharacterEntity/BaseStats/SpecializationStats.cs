@@ -1,4 +1,6 @@
-﻿namespace CharacterEntity.BaseStats
+﻿using __Scripts.CharacterEntity;
+
+namespace CharacterEntity.BaseStats
 {
     public class SpecializationStats : StatsDecorator
     {

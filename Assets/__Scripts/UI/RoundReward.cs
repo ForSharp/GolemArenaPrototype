@@ -17,11 +17,13 @@ namespace __Scripts.UI
         private void OnEnable()
         {
             ItemDispenser.RoundRewardsDispensed += ShowPanel;
+            Game.StartBattle += CloseRewardPanel;
         }
 
         private void OnDestroy()
         {
             ItemDispenser.RoundRewardsDispensed -= ShowPanel;
+            Game.StartBattle -= CloseRewardPanel;
         }
 
         private void ShowPanel(ChampionState owner, List<IInventoryItem> items)

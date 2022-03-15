@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: chocolate
   title: Chocolate
-  description: Adds +25 magic power for 30 sec
+  description: +1100 mana pool, 10 sec
   maxItemsInInventorySlot: 10
   spriteIcon: {fileID: 21300000, guid: 6abcc03757a494181bcd2f733079582b, type: 3}
   itemType: 2
-  price: 200
+  price: 44

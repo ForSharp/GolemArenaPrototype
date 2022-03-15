@@ -4,7 +4,6 @@ using System.Linq;
 using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
 using CharacterEntity.State;
-using Inventory;
 using Random = UnityEngine.Random;
 
 namespace __Scripts.Inventory
@@ -62,7 +61,7 @@ namespace __Scripts.Inventory
         private static void DispenseArtefacts(int moneyForArtefacts, ChampionState character, out int artefactBalance)
         {
             const int maxArtefactsCountThatCanGet = 3;
-            const int lowestArtefactPrice = 50;
+            const int lowestArtefactPrice = 220;
             var index = 0;
             while (index < maxArtefactsCountThatCanGet && moneyForArtefacts >= lowestArtefactPrice)
             {
@@ -108,7 +107,7 @@ namespace __Scripts.Inventory
         private static void DispenseConsumables(int moneyForConsumables, ChampionState character, out int consumablesBalance)
         {
             const int maxConsumablesCountThatCanGet = 10;
-            const int lowestConsumablePrice = 10;
+            const int lowestConsumablePrice = 40;
             var index = 0;
             while (index < maxConsumablesCountThatCanGet && moneyForConsumables >= lowestConsumablePrice)
             {
@@ -130,7 +129,7 @@ namespace __Scripts.Inventory
         
         private static void DispensePotions(int moneyForPotions, ChampionState character, out int potionsBalance)
         {
-            const int lowestPotionPrice = 100;
+            const int lowestPotionPrice = 150;
             while (moneyForPotions >= lowestPotionPrice)
             {
                 var potionsThatCanGet = ItemContainer.Instance.GetAllPotions().Where(item =>

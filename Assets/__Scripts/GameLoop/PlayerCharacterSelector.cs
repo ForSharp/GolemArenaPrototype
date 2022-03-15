@@ -1,4 +1,5 @@
 ﻿using System;
+using __Scripts.CharacterEntity;
 using CharacterEntity;
 using GameLoop;
 using UI;

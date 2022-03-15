@@ -1,4 +1,5 @@
-﻿using CharacterEntity.BaseStats;
+﻿using __Scripts.CharacterEntity;
+using CharacterEntity.BaseStats;
 
 namespace CharacterEntity.ExtraStats
 {

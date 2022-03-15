@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using CharacterEntity;
 using CharacterEntity.BaseStats;
 using CharacterEntity.ExtraStats;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public static class CharacterStatsService
     {
@@ -772,7 +773,7 @@ namespace CharacterEntity
 
         public static List<string> GetCharacterFeatures(CharacterType type)
         {
-            var typeStats = GetExtraStats(type, BaseStats); //must be here
+            var typeStats = GetExtraStats(type, BaseStats); //must be there
             typeStats = GetExtraStats(type, BaseStats);
             var defaultStats = GetExtraStats(CharacterType.Default, BaseStats);
             var typeStatsColl = GetStatsCollection(typeStats);
@@ -783,7 +784,7 @@ namespace CharacterEntity
 
         public static List<string> GetCharacterFeatures(Specialization spec)
         {
-            var specStats = GetExtraStats(spec, BaseStats); //must be here
+            var specStats = GetExtraStats(spec, BaseStats); //must be there
             specStats = GetExtraStats(spec, BaseStats);
             var defaultStats = GetExtraStats(Specialization.Default, BaseStats);
             var specStatsColl = GetStatsCollection(specStats);
@@ -794,7 +795,7 @@ namespace CharacterEntity
 
         public static List<string> GetCharacterFeatures(CharacterType type, Specialization spec)
         {
-            var currentStats = GetExtraStats(type, spec, BaseStats); //must be here
+            var currentStats = GetExtraStats(type, spec, BaseStats); //must be there
             currentStats = GetExtraStats(type, spec, BaseStats);
             var defaultStats = GetExtraStats(CharacterType.Default, Specialization.Default,
                 BaseStats);

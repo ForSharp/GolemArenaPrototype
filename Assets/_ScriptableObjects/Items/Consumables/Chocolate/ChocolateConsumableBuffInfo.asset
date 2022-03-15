@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChocolateConsumableBuffInfo
   m_EditorClassIdentifier: 
   affectsExtraStats:
-  - ChangingValue: 25
-    StatsType: 9
+  - ChangingValue: 1100
+    StatsType: 11
     IsFlat: 1
-  buffDuration: 3
+  buffDuration: 10

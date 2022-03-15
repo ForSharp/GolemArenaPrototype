@@ -1,4 +1,5 @@
-﻿using CharacterEntity;
+﻿using __Scripts.CharacterEntity;
+using CharacterEntity;
 using UnityEngine;
 using UnityEngine.UI;
 

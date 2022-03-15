@@ -325,7 +325,8 @@ namespace CharacterEntity
             }
             else if (NearToTarget())
             {
-                WalkSlowlyWithFightPosture();
+                //WalkSlowlyWithFightPosture(); //перемещаются как инвалиды
+                WalkToTarget();
             }
             else if (SeeTarget())
             {

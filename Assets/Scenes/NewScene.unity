@@ -74867,8 +74867,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a2f44a9136465cb6fb14d41fdfce6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appleItemInfo: {fileID: 11400000, guid: 4386dba2e34e9c146bdbddd7f83c379f, type: 2}
-  warHelmetItemInfo: {fileID: 11400000, guid: 452625b8b484fd844adbedb68cd1b6af, type: 2}
+  clothChestItemInfo: {fileID: 11400000, guid: e3b29eba47aef3b47bc35c83c181c8f9, type: 2}
+  leatherChestItemInfo: {fileID: 11400000, guid: 36837c6b5a900d14eab240f561fb03e3,
+    type: 2}
+  plateChestItemInfo: {fileID: 11400000, guid: b30521a3a48561a448bf021e135576d3, type: 2}
+  clothCloakItemInfo: {fileID: 11400000, guid: 979b91318985f11489e1a6432cc52434, type: 2}
+  leatherCloakItemInfo: {fileID: 11400000, guid: 32dcaa386474e4e4aaed9f217d1b064c,
+    type: 2}
+  plateCloakItemInfo: {fileID: 11400000, guid: 08c91de07b60b5949b5b64768241bf7f, type: 2}
+  plateShoulderItemInfo: {fileID: 11400000, guid: 594416cb446ca644c9a2bacda4fe6d80,
+    type: 2}
+  clothHelmItemInfo: {fileID: 11400000, guid: 2f634955470a4594bb85dd0f9b89c124, type: 2}
+  leatherHelmItemInfo: {fileID: 11400000, guid: e7f8c23ee3ebb4a4bb824c29bc3272fb,
+    type: 2}
+  plateHelmItemInfo: {fileID: 11400000, guid: 8f19b6bf0e4c6e345be608befbea96d5, type: 2}
+  clothGlovesItemInfo: {fileID: 11400000, guid: 8c423a75cc5129f41a84318620f9e338,
+    type: 2}
+  leatherGlovesItemInfo: {fileID: 11400000, guid: 82841a04212b6b94a938dafa3ee052f4,
+    type: 2}
+  plateGlovesItemInfo: {fileID: 11400000, guid: f2e2b89ee754ba540920ce1124667897,
+    type: 2}
+  clothBootsItemInfo: {fileID: 11400000, guid: 6a915a9c013281b4d96cb19d0a0f67c8, type: 2}
+  leatherBootsItemInfo: {fileID: 11400000, guid: 752caea461de1d045a65fa2e12acf7e0,
+    type: 2}
+  plateBootsItemInfo: {fileID: 11400000, guid: 94469302c5f0fc149b3db648b6eecb12, type: 2}
+  clothPantsItemInfo: {fileID: 11400000, guid: 5ea5577be9825714791fc01d9dc0d162, type: 2}
+  leatherPantsItemInfo: {fileID: 11400000, guid: 5c62088d09b5062429cc72c588235c01,
+    type: 2}
+  platePantsItemInfo: {fileID: 11400000, guid: 6220f8aa86898864a90f61fd008489d5, type: 2}
+  clothChestEItemInfo: {fileID: 11400000, guid: 76947024802cdd8419416f15a36e49df,
+    type: 2}
+  leatherChestEItemInfo: {fileID: 11400000, guid: 918487d56f0fd134baa6c5feee6e1d8c,
+    type: 2}
+  plateChestEItemInfo: {fileID: 11400000, guid: 068a3b5fa193eb843a82857747f78c73,
+    type: 2}
+  clothCloakEItemInfo: {fileID: 11400000, guid: ada5da97818e74b4e87334f78a1b0fed,
+    type: 2}
+  leatherCloakEItemInfo: {fileID: 11400000, guid: cd30e8e5feb8d4d42b47843b55166675,
+    type: 2}
+  plateCloakEItemInfo: {fileID: 11400000, guid: 919e8e06d12e6ea4c9407fbce2b7fecb,
+    type: 2}
+  plateShoulderEItemInfo: {fileID: 11400000, guid: 0957acc44bfd1f24fad681fd3bd4a323,
+    type: 2}
+  clothHelmEItemInfo: {fileID: 11400000, guid: e890cb307a7347e44ad297d0da58a89a, type: 2}
+  leatherHelmEItemInfo: {fileID: 11400000, guid: c79e2df66950b6847ba474ec2db06606,
+    type: 2}
+  plateHelmEItemInfo: {fileID: 11400000, guid: ff9cdffe8e77c424dae3084aa234fae9, type: 2}
+  clothGlovesEItemInfo: {fileID: 11400000, guid: 0986d04d53c22e14c942beb62be83a71,
+    type: 2}
+  leatherGlovesEItemInfo: {fileID: 11400000, guid: 9469d452fa48e5d488d1bb685fd2655e,
+    type: 2}
+  plateGlovesEItemInfo: {fileID: 11400000, guid: fd3e4bf5dbd9059459dcadf2756c7305,
+    type: 2}
+  clothBootsEItemInfo: {fileID: 11400000, guid: b45f88c900593114080824c4e7ebcfa6,
+    type: 2}
+  leatherBootsEItemInfo: {fileID: 11400000, guid: 0aec5966a6f30a941a5c805ef824b4cc,
+    type: 2}
+  plateBootsEItemInfo: {fileID: 11400000, guid: 9664396208e14284d8eb4797423ed93b,
+    type: 2}
+  clothPantsEItemInfo: {fileID: 11400000, guid: b4d75af7f75f94144a3c51108cc666e1,
+    type: 2}
+  leatherPantsEItemInfo: {fileID: 11400000, guid: 2e47ceea1cefe6e4198b2131ae3785a8,
+    type: 2}
+  platePantsEItemInfo: {fileID: 11400000, guid: b213277821cb17445be2cf158ce9515f,
+    type: 2}
+  immortalChestItemInfo: {fileID: 11400000, guid: 70f9732dedad42444815e27697792ac5,
+    type: 2}
+  immortalHelmItemInfo: {fileID: 11400000, guid: 11316253ded1e5a4782f4c29f97fde36,
+    type: 2}
   fireBallItemInfo: {fileID: 11400000, guid: af7221cf9c364194e92b4948abffe4b8, type: 2}
   graceBuffItemInfo: {fileID: 11400000, guid: eb64f6f89f500ca489b655d6dff2cbc6, type: 2}
   snowstormItemInfo: {fileID: 11400000, guid: 59b1a5bf41448a847b01d19f9d760c95, type: 2}
@@ -74888,8 +74954,87 @@ MonoBehaviour:
     type: 2}
   potionUltimateItemInfo: {fileID: 11400000, guid: 896ff1e322b7e92418d85dcc499f55ae,
     type: 2}
+  appleItemInfo: {fileID: 11400000, guid: 4386dba2e34e9c146bdbddd7f83c379f, type: 2}
   chocolateItemInfo: {fileID: 11400000, guid: 38d3fe4ff4e7a78458303c5d4deb6baf, type: 2}
-  warHelmetArtefactInfo: {fileID: 11400000, guid: 36456751bbf448d4084e2c94eb8e0368,
+  clothChestArtefactInfo: {fileID: 11400000, guid: da79acc413cbf3f489b44a5d29d46776,
+    type: 2}
+  leatherChestArtefactInfo: {fileID: 11400000, guid: 500794e781e559344a9476436736be51,
+    type: 2}
+  plateChestArtefactInfo: {fileID: 11400000, guid: 590ba072bab2211439e86c2176bd1a82,
+    type: 2}
+  clothCloakArtefactInfo: {fileID: 11400000, guid: 8a218162a7183cf4385824bb8b5774c3,
+    type: 2}
+  leatherCloakArtefactInfo: {fileID: 11400000, guid: 7402aa27861b02843a80ed161e12be9c,
+    type: 2}
+  plateCloakArtefactInfo: {fileID: 11400000, guid: 6876edab1289e0144992c295ffe5ad0e,
+    type: 2}
+  plateShoulderArtefactInfo: {fileID: 11400000, guid: 3ff487eb9679abf49857e25479c3e006,
+    type: 2}
+  clothHelmArtefactInfo: {fileID: 11400000, guid: 48b9da47cc640634d969181974d7b086,
+    type: 2}
+  leatherHelmArtefactInfo: {fileID: 11400000, guid: f18612a82b8548946b14dd3bfb800793,
+    type: 2}
+  plateHelmArtefactInfo: {fileID: 11400000, guid: 4e28576a7903ee649954b3b9630bc2b2,
+    type: 2}
+  clothGlovesArtefactInfo: {fileID: 11400000, guid: d1720c0bf8ec5fa4ea563c020776d311,
+    type: 2}
+  leatherGlovesArtefactInfo: {fileID: 11400000, guid: 44bafb0854cd6bf468092f1f1f311cdb,
+    type: 2}
+  plateGlovesArtefactInfo: {fileID: 11400000, guid: a31c32a4fdae9f448bb3573922f95970,
+    type: 2}
+  clothBootsArtefactInfo: {fileID: 11400000, guid: 5575970333b52444889a067a1c1bdd4a,
+    type: 2}
+  leatherBootsArtefactInfo: {fileID: 11400000, guid: 2258f4ed55c7f344f92471740eef4599,
+    type: 2}
+  plateBootsArtefactInfo: {fileID: 11400000, guid: be1ff2dca0cac944ebcdce7d50fc0d19,
+    type: 2}
+  clothPantsArtefactInfo: {fileID: 11400000, guid: 924aee6be8307bd4e9452b33d518c743,
+    type: 2}
+  leatherPantsArtefactInfo: {fileID: 11400000, guid: b5bacfcd89cb32c41b539c417b2993da,
+    type: 2}
+  platePantsArtefactInfo: {fileID: 11400000, guid: 2815214a15af3744a97485b03c079d37,
+    type: 2}
+  clothChestEArtefactInfo: {fileID: 11400000, guid: ff9044ab092b8a548bd6f8fc4645489c,
+    type: 2}
+  leatherChestEArtefactInfo: {fileID: 11400000, guid: b12596d71aa672442b064736fd7687c2,
+    type: 2}
+  plateChestEArtefactInfo: {fileID: 11400000, guid: a88e0416a5788144aa7244d09719590e,
+    type: 2}
+  clothCloakEArtefactInfo: {fileID: 11400000, guid: 5e8ad6ee270846b44bcfcfb4eed3b67c,
+    type: 2}
+  leatherCloakEArtefactInfo: {fileID: 11400000, guid: 631c6cd57a638544b89ca3ded2027488,
+    type: 2}
+  plateCloakEArtefactInfo: {fileID: 11400000, guid: b00a04806bb93204b837e3c5aeaf0528,
+    type: 2}
+  plateShoulderEArtefactInfo: {fileID: 11400000, guid: 31ab04af5f5ab43499c8682458ebc614,
+    type: 2}
+  clothHelmEArtefactInfo: {fileID: 11400000, guid: e5fa6d5b609cdca4d993dce2ee3320dc,
+    type: 2}
+  leatherHelmEArtefactInfo: {fileID: 11400000, guid: 9f66a362c8d1547499a9c4502ee4b2e8,
+    type: 2}
+  plateHelmEArtefactInfo: {fileID: 11400000, guid: 68bd0281a9eea624185ec637ec20699a,
+    type: 2}
+  clothGlovesEArtefactInfo: {fileID: 11400000, guid: 5dc9f132c38c71a4488d56463908652e,
+    type: 2}
+  leatherGlovesEArtefactInfo: {fileID: 11400000, guid: 0c0df248e07a0c14b8bd132df02e6dbf,
+    type: 2}
+  plateGlovesEArtefactInfo: {fileID: 11400000, guid: 5cc23739a900c774faa61126a9d2cd70,
+    type: 2}
+  clothBootsEArtefactInfo: {fileID: 11400000, guid: 446ac5b38ea813e43ae99e74a3cf37ed,
+    type: 2}
+  leatherBootsEArtefactInfo: {fileID: 11400000, guid: c634d999a4b9b8946b0edaa2f0af43e4,
+    type: 2}
+  plateBootsEArtefactInfo: {fileID: 11400000, guid: 4e3cec42b63b063409e225a9d82872e2,
+    type: 2}
+  clothPantsEArtefactInfo: {fileID: 11400000, guid: 685a64969095b2145a305d8c249f150e,
+    type: 2}
+  leatherPantsEArtefactInfo: {fileID: 11400000, guid: be834a66f00d69a4291709acee758824,
+    type: 2}
+  platePantsEArtefactInfo: {fileID: 11400000, guid: b55e95c54557f654094d8fa8144e8316,
+    type: 2}
+  immortalChestArtefactInfo: {fileID: 11400000, guid: c5e2a6d1f264c2448a6954b7581f5fb0,
+    type: 2}
+  immortalHelmArtefactInfo: {fileID: 11400000, guid: 1977914588c996146953ad62f6912e91,
     type: 2}
   appleConsumableHealingInfo: {fileID: 11400000, guid: 2ec8118d7b21fa348bfc2208d43c14c0,
     type: 2}
