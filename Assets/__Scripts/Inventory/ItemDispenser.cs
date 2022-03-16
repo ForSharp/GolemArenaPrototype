@@ -129,7 +129,7 @@ namespace __Scripts.Inventory
         
         private static void DispensePotions(int moneyForPotions, ChampionState character, out int potionsBalance)
         {
-            const int lowestPotionPrice = 150;
+            const int lowestPotionPrice = 300;
             while (moneyForPotions >= lowestPotionPrice)
             {
                 var potionsThatCanGet = ItemContainer.Instance.GetAllPotions().Where(item =>

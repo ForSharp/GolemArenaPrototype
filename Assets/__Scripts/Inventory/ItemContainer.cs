@@ -234,6 +234,70 @@ namespace __Scripts.Inventory
         [SerializeField] private InventoryItemInfo chocolateItemInfo;
         public ConsumableBuffItem Chocolate => new ConsumableBuffItem(chocolateItemInfo, chocolateConsumableBuffInfo);
         
+        [SerializeField] private InventoryItemInfo hamItemInfo;
+        public ConsumableBuffItem Ham => new ConsumableBuffItem(hamItemInfo, hamConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo mushroomItemInfo;
+        public ConsumableBuffItem Mushroom => new ConsumableBuffItem(mushroomItemInfo, mushroomConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo carrotItemInfo;
+        public ConsumableBuffItem Carrot => new ConsumableBuffItem(carrotItemInfo, carrotConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo avocadoItemInfo;
+        public ConsumableBuffItem Avocado => new ConsumableBuffItem(avocadoItemInfo, avocadoConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo cheesecakeItemInfo;
+        public ConsumableBuffItem Cheesecake => new ConsumableBuffItem(cheesecakeItemInfo, cheesecakeConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo cheeseItemInfo;
+        public ConsumableBuffItem Cheese => new ConsumableBuffItem(cheeseItemInfo, cheeseConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo chickenItemInfo;
+        public ConsumableBuffItem Chicken => new ConsumableBuffItem(chickenItemInfo, chickenConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo cakeItemInfo;
+        public ConsumableBuffItem Cake => new ConsumableBuffItem(cakeItemInfo, cakeConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo cookiesItemInfo;
+        public ConsumableBuffItem Cookies => new ConsumableBuffItem(cookiesItemInfo, cookiesConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo cornItemInfo;
+        public ConsumableBuffItem Corn => new ConsumableBuffItem(cornItemInfo, cornConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo croissantItemInfo;
+        public ConsumableBuffItem Croissant => new ConsumableBuffItem(croissantItemInfo, croissantConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo grapesItemInfo;
+        public ConsumableBuffItem Grapes => new ConsumableBuffItem(grapesItemInfo, grapesConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo schnitzelItemInfo;
+        public ConsumableBuffItem Schnitzel => new ConsumableBuffItem(schnitzelItemInfo, schnitzelConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo amanitaItemInfo;
+        public ConsumableBuffItem Amanita => new ConsumableBuffItem(amanitaItemInfo, amanitaConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo kiwiItemInfo;
+        public ConsumableBuffItem Kiwi => new ConsumableBuffItem(kiwiItemInfo, kiwiConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo redPepperItemInfo;
+        public ConsumableBuffItem RedPepper => new ConsumableBuffItem(redPepperItemInfo, redPepperConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo iceCreamItemInfo;
+        public ConsumableBuffItem IceCream => new ConsumableBuffItem(iceCreamItemInfo, iceCreamConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo borthItemInfo;
+        public ConsumableBuffItem Borth => new ConsumableBuffItem(borthItemInfo, borthConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo honeyItemInfo;
+        public ConsumableBuffItem Honey => new ConsumableBuffItem(honeyItemInfo, honeyConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo pieItemInfo;
+        public ConsumableBuffItem Pie => new ConsumableBuffItem(pieItemInfo, pieConsumableBuffInfo);
+        
+        [SerializeField] private InventoryItemInfo sausageItemInfo;
+        public ConsumableBuffItem Sausage => new ConsumableBuffItem(sausageItemInfo, sausageConsumableBuffInfo);
+        
+        
         [Header("Artefact Info")] 
         [SerializeField] private ArtefactInfo clothChestArtefactInfo;
         [SerializeField] private ArtefactInfo leatherChestArtefactInfo;
@@ -281,6 +345,27 @@ namespace __Scripts.Inventory
 
         [Header("Consumable Buff Info")] 
         [SerializeField] private ConsumableBuffInfo chocolateConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo hamConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo mushroomConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo carrotConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo avocadoConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo cheesecakeConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo cheeseConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo chickenConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo cakeConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo cookiesConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo cornConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo croissantConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo grapesConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo schnitzelConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo amanitaConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo kiwiConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo redPepperConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo iceCreamConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo borthConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo honeyConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo pieConsumableBuffInfo;
+        [SerializeField] private ConsumableBuffInfo sausageConsumableBuffInfo;
         
         [Header("PotionFlatInfo")] 
         [SerializeField] private PotionFlatInfo potionFlatSmallInfo;
@@ -426,7 +511,29 @@ namespace __Scripts.Inventory
                 PotionUltimateStrength,
                 
                 Apple,
-                Chocolate
+                Chocolate,
+                Ham,
+                Mushroom,
+                Carrot,
+                Avocado,
+                Cheesecake,
+                Cheese,
+                Chicken,
+                Cake,
+                Cookies,
+                Corn,
+                Croissant,
+                Grapes,
+                Schnitzel,
+                Amanita,
+                Kiwi,
+                RedPepper,
+                IceCream,
+                Borth,
+                Honey,
+                Pie,
+                Sausage
+                
             };
         }
 
@@ -440,27 +547,27 @@ namespace __Scripts.Inventory
         {
             var allItems = GetAllItems();
 
-            return allItems.Where(item => item.Info.ItemType == ItemType.Consumable).ToList();
+            //return allItems.Where(item => item.Info.ItemType == ItemType.Consumable).ToList();
 
-            //return allItems.Where(item => item is IConsumableBuffItem || item is IConsumableHealingItem).ToList();
+            return allItems.Where(item => item is IConsumableBuffItem || item is IConsumableHealingItem).ToList();
         }
 
         public List<IInventoryItem> GetAllArtefacts()
         {
             var allItems = GetAllItems();
 
-            return allItems.Where(item => item.Info.ItemType == ItemType.Artefact).ToList();
+            //return allItems.Where(item => item.Info.ItemType == ItemType.Artefact).ToList();
             
-            //return allItems.Where(item => item is IArtefactItem).ToList();
+            return allItems.Where(item => item is IArtefactItem).ToList();
         }
 
         public List<IInventoryItem> GetAllPotions()
         {
             var allItems = GetAllItems();
             
-            return allItems.Where(item => item.Info.ItemType == ItemType.Potion).ToList();
-            //return allItems.Where(item =>
-            //    item is IPotionFlatItem || item is IPotionMultiplyItem || item is IPotionUltimateItem).ToList();
+            //return allItems.Where(item => item.Info.ItemType == ItemType.Potion).ToList();
+            return allItems.Where(item =>
+                item is IPotionFlatItem || item is IPotionMultiplyItem || item is IPotionUltimateItem).ToList();
         }
 
         public List<IInventoryItem> GetAllSpellsLvl1()

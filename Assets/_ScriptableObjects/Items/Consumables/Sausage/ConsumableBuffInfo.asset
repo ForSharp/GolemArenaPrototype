@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae3e40245a9495f9b686e655b9eec1c, type: 3}
+  m_Name: ConsumableBuffInfo
+  m_EditorClassIdentifier: 
+  affectsExtraStats:
+  - ChangingValue: 2
+    StatsType: 6
+    IsFlat: 0
+  buffDuration: 23

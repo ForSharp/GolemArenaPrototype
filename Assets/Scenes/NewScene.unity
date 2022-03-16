@@ -74956,6 +74956,27 @@ MonoBehaviour:
     type: 2}
   appleItemInfo: {fileID: 11400000, guid: 4386dba2e34e9c146bdbddd7f83c379f, type: 2}
   chocolateItemInfo: {fileID: 11400000, guid: 38d3fe4ff4e7a78458303c5d4deb6baf, type: 2}
+  hamItemInfo: {fileID: 11400000, guid: bde5e98f2bf1792479acef7b33573b8d, type: 2}
+  mushroomItemInfo: {fileID: 11400000, guid: 0d239b63a9ab46c48aef9aa321136d0f, type: 2}
+  carrotItemInfo: {fileID: 11400000, guid: ed696ac1d92bee14fbdac845d6f4b624, type: 2}
+  avocadoItemInfo: {fileID: 11400000, guid: e5a7f0ffda09ca94da00cbf94c2f1c96, type: 2}
+  cheesecakeItemInfo: {fileID: 11400000, guid: 159b0191d54e37f45ab590c000c55d11, type: 2}
+  cheeseItemInfo: {fileID: 11400000, guid: 3f53f49c525efa649806c0f67077e62a, type: 2}
+  chickenItemInfo: {fileID: 11400000, guid: f894381649836124ba5f8951bc715060, type: 2}
+  cakeItemInfo: {fileID: 11400000, guid: 803c11b101d74c944aee00037a32fdf2, type: 2}
+  cookiesItemInfo: {fileID: 11400000, guid: 0e392c931b9158748bc6be63d8771257, type: 2}
+  cornItemInfo: {fileID: 11400000, guid: 3e308aeb787e4bf4ca9f94deb2240eca, type: 2}
+  croissantItemInfo: {fileID: 11400000, guid: ab6d50863b62ae940aaff791e4332118, type: 2}
+  grapesItemInfo: {fileID: 11400000, guid: acac60e488ede5d4e90b0812a095aa7d, type: 2}
+  schnitzelItemInfo: {fileID: 11400000, guid: 5369d678f8a151b4a9cfea523ffc67e9, type: 2}
+  amanitaItemInfo: {fileID: 11400000, guid: a567a8a3b1b6e82469078f489c1aa5aa, type: 2}
+  kiwiItemInfo: {fileID: 11400000, guid: 73dc339370eeec7499421f2045af2dd3, type: 2}
+  redPepperItemInfo: {fileID: 11400000, guid: 0579bc95155fb074a9a216b1f26d1472, type: 2}
+  iceCreamItemInfo: {fileID: 11400000, guid: 408d62e1a303a384f86be866c5f4b001, type: 2}
+  borthItemInfo: {fileID: 11400000, guid: 2cbb8206b72c7704da423bd4100cb30c, type: 2}
+  honeyItemInfo: {fileID: 11400000, guid: 1b5d6bf6894cca141be5e6dece7d226d, type: 2}
+  pieItemInfo: {fileID: 11400000, guid: b4ef8463fe30fb043a8b2674efd2bdc0, type: 2}
+  sausageItemInfo: {fileID: 11400000, guid: 4626a9cb293bc5544bf6722eaae856d4, type: 2}
   clothChestArtefactInfo: {fileID: 11400000, guid: da79acc413cbf3f489b44a5d29d46776,
     type: 2}
   leatherChestArtefactInfo: {fileID: 11400000, guid: 500794e781e559344a9476436736be51,
@@ -75039,6 +75060,48 @@ MonoBehaviour:
   appleConsumableHealingInfo: {fileID: 11400000, guid: 2ec8118d7b21fa348bfc2208d43c14c0,
     type: 2}
   chocolateConsumableBuffInfo: {fileID: 11400000, guid: 7bbd10f4d830a8c46a93da49eb9f5d7f,
+    type: 2}
+  hamConsumableBuffInfo: {fileID: 11400000, guid: 9aeafe1e089bfd34f951cd63f45aa58c,
+    type: 2}
+  mushroomConsumableBuffInfo: {fileID: 11400000, guid: d1f39531e8904e447abc21c3b77d0ef7,
+    type: 2}
+  carrotConsumableBuffInfo: {fileID: 11400000, guid: 33af4bd3bffddf64a8df87d24cd8b25b,
+    type: 2}
+  avocadoConsumableBuffInfo: {fileID: 11400000, guid: b575325dacf2f05449f586c3c54995ad,
+    type: 2}
+  cheesecakeConsumableBuffInfo: {fileID: 11400000, guid: a8331308dc062564a8d334cb8327e918,
+    type: 2}
+  cheeseConsumableBuffInfo: {fileID: 11400000, guid: 9ada25e327ac01445b54e0cdaccc008c,
+    type: 2}
+  chickenConsumableBuffInfo: {fileID: 11400000, guid: 887548aad58a4704fbc003ee7feae907,
+    type: 2}
+  cakeConsumableBuffInfo: {fileID: 11400000, guid: 79f14cdb28ac50f42b765a9c28822160,
+    type: 2}
+  cookiesConsumableBuffInfo: {fileID: 11400000, guid: c4c8bab607c5892498bdfac41d1d6ade,
+    type: 2}
+  cornConsumableBuffInfo: {fileID: 11400000, guid: 29cd2b5db4d0b7b4183bce46347ea227,
+    type: 2}
+  croissantConsumableBuffInfo: {fileID: 11400000, guid: ad3d7011d623e2747a3c9a6e70313f6c,
+    type: 2}
+  grapesConsumableBuffInfo: {fileID: 11400000, guid: ffa73729423d46c4dba80fa643eedd65,
+    type: 2}
+  schnitzelConsumableBuffInfo: {fileID: 11400000, guid: caf9ba6e3dd752347b85d904be34b886,
+    type: 2}
+  amanitaConsumableBuffInfo: {fileID: 11400000, guid: 8d6297f475b7a4849bca517e286e2d8b,
+    type: 2}
+  kiwiConsumableBuffInfo: {fileID: 11400000, guid: 6208d5607559be346976308c8de9dbf8,
+    type: 2}
+  redPepperConsumableBuffInfo: {fileID: 11400000, guid: c877024cc89369c4dab4391bccddd457,
+    type: 2}
+  iceCreamConsumableBuffInfo: {fileID: 11400000, guid: 4d05b08f54c01174ea23d8af8e943bff,
+    type: 2}
+  borthConsumableBuffInfo: {fileID: 11400000, guid: 0791fb74f218a4a47bbb7589923b4573,
+    type: 2}
+  honeyConsumableBuffInfo: {fileID: 11400000, guid: e8353c02c65506641b0fa26256c71201,
+    type: 2}
+  pieConsumableBuffInfo: {fileID: 11400000, guid: 03dcb420b3a5867468a773318687f27d,
+    type: 2}
+  sausageConsumableBuffInfo: {fileID: 11400000, guid: 23750452049f32f46ac1d3117dbbcd53,
     type: 2}
   potionFlatSmallInfo: {fileID: 11400000, guid: e49903ef9fe017e488a19c47fdbc24b8,
     type: 2}
