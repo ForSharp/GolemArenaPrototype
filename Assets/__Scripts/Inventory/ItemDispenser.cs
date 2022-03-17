@@ -35,10 +35,10 @@ namespace __Scripts.Inventory
         {
             var money = character.RoundStatistics.RoundRate * 100 * Game.Round;
 
-            if (character == Player.PlayerCharacter)
-            {
-                money *= 10;
-            }
+            // if (character == Player.PlayerCharacter)
+            // {
+            //     money *= 10;
+            // }
 
             var moneyForArtefacts = money / 4;
             money -= moneyForArtefacts;

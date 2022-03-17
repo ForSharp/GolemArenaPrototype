@@ -36,7 +36,7 @@ namespace __Scripts.Inventory
             var inventory = character.InventoryHelper.InventoryOrganization.inventory;
             foreach (var slot in inventory.GetAllEquippingSlotsWithItems())
             {
-                inventory.TransitFromSlotToSlot(character, slot, inventory.GetAllNonEquippingSlots()[0]);
+                inventory.TransitFromSlotToSlot(character, slot, inventory.GetAllNonEquippingSlots().FirstOrDefault(inventorySlot => inventorySlot.IsEmpty));
             }
         }
     }

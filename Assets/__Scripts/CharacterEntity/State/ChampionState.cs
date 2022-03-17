@@ -1,6 +1,7 @@
 ﻿using System;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
+using __Scripts.SpellSystem;
 using GameLoop;
 using Inventory;
 using SpellSystem;

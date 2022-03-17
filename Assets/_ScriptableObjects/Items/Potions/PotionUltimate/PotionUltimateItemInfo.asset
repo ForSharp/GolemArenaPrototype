@@ -18,4 +18,4 @@ MonoBehaviour:
   maxItemsInInventorySlot: 1
   spriteIcon: {fileID: 21300000, guid: b530c7ea5937f604fa2a819799f45c25, type: 3}
   itemType: 1
-  price: 1500
+  price: 5000

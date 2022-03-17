@@ -325,8 +325,8 @@ namespace CharacterEntity
             }
             else if (NearToTarget())
             {
-                //WalkSlowlyWithFightPosture(); //перемещаются как инвалиды
-                WalkToTarget();
+                WalkSlowlyWithFightPosture(); 
+                //WalkToTarget();
             }
             else if (SeeTarget())
             {
@@ -446,9 +446,16 @@ namespace CharacterEntity
 
         private void WalkSlowlyWithFightPosture()
         {
+            //иначе дергается персонаж (происходят переходы из атаки в движение и обратно, при нахождении на граничных расстояниях)
+            transform.localPosition = new Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
+            
             _animator.applyRootMotion = false;
+            // SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.attackRange, _animator, _navMeshAgent,
+            //     AnimationChanger.SetWalkingFight));
+            
             SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.attackRange, _animator, _navMeshAgent,
-                AnimationChanger.SetWalkingFight));
+                AnimationChanger.SetGolemWalk));
+            
             _moveable.Move(_thisState.Stats.moveSpeed / 2, _targetState.transform.position);
             _isIKAllowed = true;
         }

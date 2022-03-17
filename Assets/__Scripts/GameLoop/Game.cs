@@ -132,8 +132,6 @@ namespace __Scripts.GameLoop
             
             OnClearEffects();
             
-            
-            
             CoroutineManager.StartRoutine(StartBattleAfterDelay(10));
         }
 

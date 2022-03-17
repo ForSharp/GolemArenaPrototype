@@ -7,15 +7,12 @@ using __Scripts.Inventory.Abstracts;
 using Behaviour;
 using Behaviour.Abstracts;
 using CharacterEntity.State;
-using Controller;
-using GameLoop;
-using Inventory;
-using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
 using Inventory.Items.SpellItems;
+using SpellSystem;
 using UnityEngine;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class SpellManager
     {

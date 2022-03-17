@@ -20,9 +20,9 @@ namespace __Scripts.CharacterEntity.ExtraStats
             {
                 return 40;
             }
-            if (result > 150)
+            if (result > 175)
             {
-                return 150;
+                return 175;
             }
             return result;
         }
@@ -39,12 +39,12 @@ namespace __Scripts.CharacterEntity.ExtraStats
 
         public static float GetDefence(float strength, float agility)
         {
-            return (strength * 0.6f + agility * 0.4f);
+            return (strength * 0.55f + agility * 0.25f);
         }
 
         public static float GetDodgeChance(float agility, float intelligence)
         {
-            return (agility * 0.55f + intelligence * 0.45f);
+            return (agility * 0.45f + intelligence * 0.15f);
         }
 
         public static float GetHealth(float strength)
@@ -54,22 +54,22 @@ namespace __Scripts.CharacterEntity.ExtraStats
 
         public static float GetHitAccuracy(float strength, float agility)
         {
-            return (agility * 0.55f + strength * 0.30f);
+            return (agility * 0.45f + strength * 0.15f);
         }
 
         public static float GetMagicAccuracy(float strength, float intelligence)
         {
-            return (intelligence * 0.65f + strength * 0.15f);
+            return (intelligence * 0.45f + strength * 0.15f);
         }
 
         public static float GetMagicPower(float intelligence)
         {
-            return intelligence * 0.35f;
+            return intelligence * 0.65f;
         }
 
         public static float GetMagicResistance(float strength, float intelligence)
         {
-            return (intelligence * 0.45f + strength * 0.55f);
+            return (intelligence * 0.45f + strength * 0.25f);
         }
 
         public static float GetManaPool(float intelligence)

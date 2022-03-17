@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
+using Behaviour.SpellEffects;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;
-using Inventory.Abstracts;
 using Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class FireballEffect : MonoBehaviour
     {
