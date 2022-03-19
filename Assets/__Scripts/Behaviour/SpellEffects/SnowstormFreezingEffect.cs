@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using __Scripts.CharacterEntity.State;
 using CharacterEntity.ExtraStats;
 using CharacterEntity.State;
 using GameLoop;
@@ -31,7 +32,7 @@ namespace Behaviour.SpellEffects
             
             var image = _info.Info.SpriteIcon;
             var id = _info.Info.Id;
-            _target.OnStateEffectAdded(image, 10000,false, false, id);
+            _target.OnStateEffectAdded(image, 10000,false, true, id);
             _debuff = _info.DebuffSpellInfo.AffectsExtraStats;
             //можно перед этим изменить значения в зависимости от магической мощи
             

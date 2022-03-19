@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using __Scripts.CharacterEntity.State;
+using UI;
 using UnityEngine;
 
 namespace SpellSystem
@@ -18,7 +19,7 @@ namespace SpellSystem
             _spellPanelObject = Instantiate(spellPanelPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("SpellPanelsContainer").transform);
             _spellPanelObject.transform.localPosition = Vector3.zero;
             SpellsPanel = _spellPanelObject.GetComponent<SpellsPanel>();
-            SpellsPanel.Character = GetComponent<CharacterEntity.State.ChampionState>();
+            SpellsPanel.Character = GetComponent<ChampionState>();
             
             SpellsPanel.HideAll();
         }

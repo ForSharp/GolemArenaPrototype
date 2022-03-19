@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using Inventory;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;

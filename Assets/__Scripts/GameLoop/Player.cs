@@ -1,4 +1,5 @@
-﻿using CharacterEntity.State;
+﻿using __Scripts.CharacterEntity.State;
+using CharacterEntity.State;
 using GameLoop;
 
 namespace __Scripts.GameLoop

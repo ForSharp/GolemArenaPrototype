@@ -1,6 +1,7 @@
 ﻿using System;
 using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using GameLoop;
 using Inventory;
 using Inventory.Abstracts;

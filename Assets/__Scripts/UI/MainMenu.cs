@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using __Scripts.Controller;
+using UnityEngine;
 
 namespace __Scripts.UI
 {
@@ -19,6 +20,7 @@ namespace __Scripts.UI
         public void Options()
         {
             //DoSomething
+            Settings.Instance.ShowSettingsPanel();
             buttonClickSound.Play();
         }
 

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CharacterEntity.CharacterState;
+﻿using System.Collections.Generic;
+using __Scripts.CharacterEntity.State;
+using Behaviour.SpellEffects;
 using CharacterEntity.State;
 using Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class SnowstormEffect : MonoBehaviour
     {   
@@ -32,7 +31,10 @@ namespace Behaviour.SpellEffects
         {
             foreach (var effect in _snowstormFreezingEffects)
             {
-                effect.Value.EndSnowStormFreezing();
+                if (effect.Value)
+                {
+                    effect.Value.EndSnowStormFreezing();
+                }
             }
 
             Destroy(gameObject);

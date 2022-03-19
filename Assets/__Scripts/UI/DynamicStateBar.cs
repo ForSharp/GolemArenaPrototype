@@ -5,10 +5,10 @@ using System.Linq;
 using __Scripts.GameLoop;
 using CharacterEntity.State;
 using GameLoop;
+using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class DynamicStateBar : MonoBehaviour
     {
@@ -61,7 +61,10 @@ namespace UI
                 }
 
                 _delays.TryGetValue(effectId, out var coroutine);
-                StopCoroutine(coroutine);
+                if (coroutine != null)
+                {
+                    StopCoroutine(coroutine);
+                }
                 _delays.Remove(effectId);
             }
         }
@@ -107,7 +110,10 @@ namespace UI
 
             foreach (var coroutine in _delays.Values)
             {
-                StopCoroutine(coroutine);
+                if (coroutine != null)
+                {
+                    StopCoroutine(coroutine);
+                }
             }
             _delays.Clear();
         }

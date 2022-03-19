@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using __Scripts.Behaviour.Abstracts;
+using __Scripts.CharacterEntity.State;
 using __Scripts.Controller;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using Behaviour;
 using Behaviour.Abstracts;
 using CharacterEntity.State;
@@ -11,12 +15,12 @@ using Inventory.Abstracts.Spells;
 using Inventory.Items.SpellItems;
 using SpellSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace __Scripts.SpellSystem
 {
     public class SpellManager
     {
-        private readonly List<ISpellItem> _learnedSpells = new List<ISpellItem>();
         private readonly Animator _animator;
         private readonly ChampionState _character;
         private readonly SpellContainer _spellContainer;
@@ -27,24 +31,25 @@ namespace __Scripts.SpellSystem
         private ICastable _spellSecond;
         private ICastable _spellThird;
 
-        private readonly ActiveUISpell _spellFirstUI;
-        private readonly ActiveUISpell _spellSecondUI;
-        private readonly ActiveUISpell _spellThirdUI;
+        public ActiveUISpell SpellFirstUI { get;}
+        public ActiveUISpell SpellSecondUI { get;}
+        public ActiveUISpell SpellThirdUI { get;}
+        public List<ISpellItem> LearnedSpells { get; } = new List<ISpellItem>();
 
         public void LearnSpell(ISpellItem spell)
         {
             var inventoryItem = (IInventoryItem)spell;
 
-            for (var i = 0; i < _learnedSpells.Count; i++)
+            for (var i = 0; i < LearnedSpells.Count; i++)
             {
-                var containedItem = (IInventoryItem)_learnedSpells[i];
+                var containedItem = (IInventoryItem)LearnedSpells[i];
                 if (containedItem.Info.Id == inventoryItem.Info.Id)
                 {
-                    if (_learnedSpells[i].SpellInfo.SpellLvl < 3)
+                    if (LearnedSpells[i].SpellInfo.SpellLvl < 3)
                     {
-                        _learnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(_learnedSpells[i],
-                            _learnedSpells[i].SpellInfo.SpellLvl);
-                        _spellsPanel.UpdateLearnedSpells(_learnedSpells[i]);
+                        LearnedSpells[i] = ItemContainer.Instance.GetUpgradedSpell(LearnedSpells[i],
+                            LearnedSpells[i].SpellInfo.SpellLvl);
+                        _spellsPanel.UpdateLearnedSpells(LearnedSpells[i]);
                         DeleteSpellItemAfterLearning(inventoryItem);
 
                         return;
@@ -55,7 +60,7 @@ namespace __Scripts.SpellSystem
                 }
             }
 
-            _learnedSpells.Add(spell);
+            LearnedSpells.Add(spell);
             _spellsPanel.AddLearnedSpell(spell);
             DeleteSpellItemAfterLearning(inventoryItem);
         }
@@ -80,9 +85,9 @@ namespace __Scripts.SpellSystem
             _character = characterState;
             _spellContainer = spellContainer;
             _spellsPanel = _character.SpellPanelHelper.SpellsPanel;
-            _spellFirstUI = _spellsPanel.SpellButtonFirst;
-            _spellSecondUI = _spellsPanel.SpellButtonSecond;
-            _spellThirdUI = _spellsPanel.SpellButtonThird;
+            SpellFirstUI = _spellsPanel.SpellButtonFirst;
+            SpellSecondUI = _spellsPanel.SpellButtonSecond;
+            SpellThirdUI = _spellsPanel.SpellButtonThird;
             _playerController = GameObject.Find("Tester").GetComponent<PlayerController>();
         }
 
@@ -91,45 +96,45 @@ namespace __Scripts.SpellSystem
             switch (spellNumb)
             {
                 case 1:
-                    if (!_character.IsDead && !_spellFirstUI.InCooldown &&
-                        _spellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                    if (!_character.IsDead && !SpellFirstUI.InCooldown &&
+                        SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
                         && Game.Stage == Game.GameStage.Battle)
                     {
-                        var spellItem = _spellFirstUI.SpellItem;
+                        var spellItem = SpellFirstUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
 
-                        _spellFirstUI.MarkSpell();
+                        SpellFirstUI.MarkSpell();
                         
                         _character.OnStartSpellCast();
                     }
 
                     break;
                 case 2:
-                    if (!_character.IsDead && !_spellSecondUI.InCooldown &&
-                        _spellSecondUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                    if (!_character.IsDead && !SpellSecondUI.InCooldown &&
+                        SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
                         && Game.Stage == Game.GameStage.Battle)
                     {
-                        var spellItem = _spellSecondUI.SpellItem;
+                        var spellItem = SpellSecondUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
 
-                        _spellSecondUI.MarkSpell();
+                        SpellSecondUI.MarkSpell();
                         
                         _character.OnStartSpellCast();
                     }
 
                     break;
                 case 3:
-                    if (!_character.IsDead && !_spellThirdUI.InCooldown && 
-                        _spellThirdUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
+                    if (!_character.IsDead && !SpellThirdUI.InCooldown && 
+                        SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _character.CurrentMana
                         && Game.Stage == Game.GameStage.Battle)
                     {
-                        var spellItem = _spellThirdUI.SpellItem;
+                        var spellItem = SpellThirdUI.SpellItem;
                         ShowTargets(spellItem);
                         _playerController.StartChoosingTarget(GetChoosingTargetMode(spellItem), spellItem, spellNumb);
 
-                        _spellThirdUI.MarkSpell();
+                        SpellThirdUI.MarkSpell();
                         
                         _character.OnStartSpellCast();
                     }
@@ -156,6 +161,56 @@ namespace __Scripts.SpellSystem
             CancelShowingTargets(spellItem);
         }
 
+        public void CastSpell(int spellNumb)
+        {
+            ISpellItem spell;
+
+            switch (spellNumb)
+            {
+                case 1:
+                    spell = SpellFirstUI.SpellItem;
+                    break;
+                case 2:
+                    spell = SpellSecondUI.SpellItem;
+                    break;
+                case 3:
+                    spell = SpellThirdUI.SpellItem;
+                    break;
+                default:
+                    spell = null;
+                    break;
+            }
+
+            var targetMode = GetChoosingTargetMode(spell);
+            List<CharacterState> targets = new List<CharacterState>();
+
+            switch (targetMode)
+            {
+                case ChoosingTargetMode.Friend:
+                    targets = Game.GetFriends(_character).ToList();
+                    break;
+                case ChoosingTargetMode.Enemy:
+                    targets = Game.GetEnemies(_character).ToList();
+                    break;
+                case ChoosingTargetMode.All:
+                    targets = Game.AllCharactersInSession.ToList();
+                    break;
+            }
+            
+            switch (spellNumb)
+            {
+                case 1:
+                    CastSpellFirst(targets[Random.Range(0, targets.Count)], spell);
+                    break;
+                case 2:
+                    CastSpellSecond(targets[Random.Range(0, targets.Count)], spell);
+                    break;
+                case 3:
+                    CastSpellThird(targets[Random.Range(0, targets.Count)], spell);
+                    break;
+            }
+        }
+
         public void CancelCast(ISpellItem spellItem, int spellNumb)
         {
             Debug.Log("no cast");
@@ -165,13 +220,13 @@ namespace __Scripts.SpellSystem
             switch (spellNumb)
             {
                 case 1:
-                    _spellFirstUI.StopMarkSpell();
+                    SpellFirstUI.StopMarkSpell();
                     break;
                 case 2:
-                    _spellSecondUI.StopMarkSpell();
+                    SpellSecondUI.StopMarkSpell();
                     break;
                 case 3:
-                    _spellThirdUI.StopMarkSpell();
+                    SpellThirdUI.StopMarkSpell();
                     break;
             }
         }
@@ -287,28 +342,40 @@ namespace __Scripts.SpellSystem
             }
         }
 
-        private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem)
+        private void CastSpellFirst(CharacterState targetState, ISpellItem spellItem, bool stopMarking = true)
         {
-            _spellFirstUI.StopMarkSpell();
-            _spellFirstUI.StartCooldown();
+            if (stopMarking)
+            {
+                SpellFirstUI.StopMarkSpell();
+            }
+            
+            SpellFirstUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
 
             _spellFirst.CastSpell(targetState);
         }
 
-        private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem)
+        private void CastSpellSecond(CharacterState targetState, ISpellItem spellItem, bool stopMarking = true)
         {
-            _spellSecondUI.StopMarkSpell();
-            _spellSecondUI.StartCooldown();
+            if (stopMarking)
+            {
+                SpellSecondUI.StopMarkSpell();
+            }
+            
+            SpellSecondUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
 
             _spellSecond.CastSpell(targetState);
         }
 
-        private void CastSpellThird(CharacterState targetState, ISpellItem spellItem)
+        private void CastSpellThird(CharacterState targetState, ISpellItem spellItem, bool stopMarking = true)
         {
-            _spellThirdUI.StopMarkSpell();
-            _spellThirdUI.StartCooldown();
+            if (stopMarking)
+            {
+                SpellThirdUI.StopMarkSpell();
+            }
+            
+            SpellThirdUI.StartCooldown();
             _character.TrySpendMana(spellItem.SpellInfo.ManaCost);
 
             _spellThird.CastSpell(targetState);

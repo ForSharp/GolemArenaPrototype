@@ -1,6 +1,6 @@
 ﻿using Inventory.Info.Spells;
 
-namespace Inventory.Abstracts.Spells
+namespace __Scripts.Inventory.Abstracts.Spells
 {
     public interface ISpellItem
     {

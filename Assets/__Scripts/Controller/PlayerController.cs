@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
+using __Scripts.Inventory.Abstracts.Spells;
 using CharacterEntity;
 using CharacterEntity.State;
 using GameLoop;
@@ -255,7 +257,6 @@ namespace __Scripts.Controller
                 return false;
             }
         }
-
 
         private void TryShowHeroStates()
         {

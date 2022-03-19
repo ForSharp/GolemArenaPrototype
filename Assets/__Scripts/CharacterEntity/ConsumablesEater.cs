@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
@@ -26,7 +27,7 @@ namespace CharacterEntity
             Game.EndGame += RemoveAllListenersSummon;
         }
         
-        public ConsumablesEater(State.ChampionState character)
+        public ConsumablesEater(ChampionState character)
         {
             _character = character;
             _inventory = character.InventoryHelper.InventoryOrganization.inventory;

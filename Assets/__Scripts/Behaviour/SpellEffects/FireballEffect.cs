@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using __Scripts.CharacterEntity.State;
 using __Scripts.Inventory.Abstracts;
 using Behaviour.SpellEffects;
 using CharacterEntity.CharacterState;

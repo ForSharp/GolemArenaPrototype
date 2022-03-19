@@ -1,11 +1,7 @@
-﻿using System;
-using CharacterEntity.CharacterState;
+﻿using __Scripts.Inventory.Abstracts.Spells;
 using CharacterEntity.State;
-using Inventory.Abstracts.Spells;
-using Inventory.Items.SpellItems;
-using UnityEngine;
 
-namespace Behaviour.Abstracts
+namespace __Scripts.Behaviour.Abstracts
 {
     public interface ICastable
     {

@@ -1,5 +1,7 @@
 ﻿using System;
+using __Scripts.CharacterEntity.State;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using CharacterEntity.State;
 using Inventory.Abstracts;
 using Inventory.Abstracts.Spells;
@@ -130,6 +132,61 @@ namespace SpellSystem
                     }
                     spellButtonThird.ActivateSpell(spellItem);
                     Character.SpellManager.ActivateSpell(spellItem, _spellNumberToChange);
+                    learnedSpellsPanel.ActivateSpell(id);
+                    break;
+            }
+            
+        }
+        
+        public void SetupActiveSpell(ISpellItem spellItem, int numb)
+        {
+            var item = (IInventoryItem)spellItem;
+            var id = item.Info.Id;
+            switch (numb)
+            {
+                case 1:
+                    if (spellButtonFirst.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonFirst.SpellItem;
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
+                    }
+                    spellButtonFirst.ActivateSpell(spellItem);
+                    Character.SpellManager.ActivateSpell(spellItem, numb);
+                    learnedSpellsPanel.ActivateSpell(id);
+                    break;
+                case 2:
+                    if (spellButtonSecond.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonSecond.SpellItem;
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
+                    }
+                    spellButtonSecond.ActivateSpell(spellItem);
+                    Character.SpellManager.ActivateSpell(spellItem, numb);
+                    learnedSpellsPanel.ActivateSpell(id);
+                    break;
+                case 3:
+                    if (spellButtonThird.SpellItem != null)
+                    {
+                        var spellToDeactivate = (IInventoryItem)spellButtonThird.SpellItem;
+                        var currentId = spellToDeactivate.Info.Id;
+                        if (id != currentId)
+                        {
+                            learnedSpellsPanel.DeactivateSpell(currentId);
+                            learnedSpellsPanel.ActivateSpell(id);
+                        }
+                    }
+                    spellButtonThird.ActivateSpell(spellItem);
+                    Character.SpellManager.ActivateSpell(spellItem, numb);
                     learnedSpellsPanel.ActivateSpell(id);
                     break;
             }

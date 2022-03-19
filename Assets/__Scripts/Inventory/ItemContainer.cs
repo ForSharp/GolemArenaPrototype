@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using __Scripts.Inventory.Items.ArtefactItems;
 using __Scripts.Inventory.Items.ConsumableItems;
 using Inventory.Abstracts;

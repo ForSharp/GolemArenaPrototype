@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.CharacterEntity.State;
 using __Scripts.Controller;
 using __Scripts.GameLoop;
 using Behaviour;
@@ -308,13 +309,22 @@ namespace CharacterEntity
             _status = FightStatus.CastsSpell;
         }
 
+        private float _timeBetweenChangingState = 2;
+        
         private void SetFightBehaviour()
         {
             if (!_targetState || Game.Stage != Game.GameStage.Battle)
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, _targetState.transform.position);
+            
+            _timeBetweenChangingState += Time.deltaTime;
 
+            if (CanCastSpell(out int spellNumb))
+            {
+                _thisState.SpellManager.CastSpell(spellNumb);
+            }
+            
             if (NeedToCatchUpPlayer())
             {
                 RunToTarget();
@@ -325,8 +335,13 @@ namespace CharacterEntity
             }
             else if (NearToTarget())
             {
-                WalkSlowlyWithFightPosture(); 
-                //WalkToTarget();
+                if (_timeBetweenChangingState >= 0.1)
+                {
+                    WalkSlowlyWithFightPosture(); 
+                    _timeBetweenChangingState = 0;
+                    //WalkToTarget();
+                }
+                
             }
             else if (SeeTarget())
             {
@@ -355,6 +370,38 @@ namespace CharacterEntity
             bool NeedToCatchUpPlayer()
             {
                 return !InAttackDistance() && _targetState == Player.PlayerCharacter && !_playerAI;
+            }
+
+            bool CanCastSpell(out int spellNumber)
+            {
+                if (!_thisState.IsDead && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
+                    _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
+                    && Game.Stage == Game.GameStage.Battle)
+                {
+                    spellNumber = 1;
+                    return true;
+                }
+
+                if (!_thisState.IsDead && _thisState.SpellManager.SpellSecondUI.IsActive &&
+                    !_thisState.SpellManager.SpellSecondUI.InCooldown &&
+                    _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
+                    && Game.Stage == Game.GameStage.Battle)
+                {
+                    spellNumber = 2;
+                    return true;
+                }
+                
+                if (!_thisState.IsDead && _thisState.SpellManager.SpellThirdUI.IsActive &&
+                    !_thisState.SpellManager.SpellThirdUI.InCooldown &&
+                    _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
+                    && Game.Stage == Game.GameStage.Battle)
+                {
+                    spellNumber = 3;
+                    return true;
+                }
+
+                spellNumber = 0;
+                return false;
             }
         }
 
@@ -446,9 +493,12 @@ namespace CharacterEntity
 
         private void WalkSlowlyWithFightPosture()
         {
-            //иначе дергается персонаж (происходят переходы из атаки в движение и обратно, при нахождении на граничных расстояниях)
-            transform.localPosition = new Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
-            
+            // if (!_inAttack)
+            // {
+            //     //иначе дергается персонаж (происходят переходы из атаки в движение и обратно, при нахождении на граничных расстояниях)
+            //     transform.localPosition = new Vector3(transform.position.x + 0.03f, transform.position.y, transform.position.z);
+            // }
+
             _animator.applyRootMotion = false;
             // SetMoveBehaviour(new WalkNavMeshBehaviour(_thisState.Stats.attackRange, _animator, _navMeshAgent,
             //     AnimationChanger.SetWalkingFight));

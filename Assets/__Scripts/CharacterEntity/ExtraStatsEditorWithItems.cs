@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
@@ -11,11 +12,11 @@ namespace CharacterEntity
 {
     public class ExtraStatsEditorWithItems
     {
-        private State.ChampionState _character;
+        private ChampionState _character;
         private InventoryWithSlots _inventory;
         private Dictionary<IInventorySlot, ExtraStatsParameter[]> _activeItemEffects;
 
-        public ExtraStatsEditorWithItems(State.ChampionState character)
+        public ExtraStatsEditorWithItems(ChampionState character)
         {
             _character = character;
             _inventory = character.InventoryHelper.InventoryOrganization.inventory;

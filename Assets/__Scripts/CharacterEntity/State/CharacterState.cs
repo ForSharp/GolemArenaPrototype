@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using __Scripts.GameLoop;
+using __Scripts.UI;
 using CharacterEntity.BaseStats;
 using CharacterEntity.CharacterState;
 using CharacterEntity.ExtraStats;

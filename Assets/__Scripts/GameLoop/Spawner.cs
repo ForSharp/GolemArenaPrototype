@@ -1,4 +1,5 @@
-﻿using CharacterEntity;
+﻿using __Scripts.CharacterEntity.State;
+using CharacterEntity;
 using CharacterEntity.BaseStats;
 using CharacterEntity.State;
 using UnityEngine;

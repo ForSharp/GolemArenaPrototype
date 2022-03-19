@@ -2,14 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.CharacterEntity.State;
+using __Scripts.Controller;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts.Spells;
 using CharacterEntity;
 using CharacterEntity.State;
 using GameLoop;
 using Inventory;
 using Optimization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace __Scripts.GameLoop
@@ -35,8 +39,6 @@ namespace __Scripts.GameLoop
         public static event Action StartBattle;
         public static event Action OpenMainMenu;
         public static event Action EndGame;
-
-        private const int MaxRoundNumber = 4;
 
         static Game()
         {
@@ -81,7 +83,7 @@ namespace __Scripts.GameLoop
         
         private static void CreateBotCharacters()
         {
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < Settings.Instance.EnemiesQuantity; i++)
             {
                 Spawner.Instance.SpawnChampion(GetRandomCharacter(), GetRandomSpecialization());
             }
@@ -94,7 +96,7 @@ namespace __Scripts.GameLoop
         private static void EndCurrentGame()
         {
             OnEndGame();
-            Stage = GameStage.MainMenu;
+            SceneManager.LoadScene("NewScene");
         }
 
         private static IEnumerator PrepareNewRound()
@@ -111,13 +113,13 @@ namespace __Scripts.GameLoop
 
             foreach (var character in AllChampionsInSession)
             {
-                if (character != Player.PlayerCharacter)
+                //if (character != Player.PlayerCharacter)
                 {
-                    //ItemOutfitter.EquipItems(character);
-                    //PotionDrinker.DrinkAllPotions(character);
+                    ItemOutfitter.EquipItems(character);
+                    PotionDrinker.DrinkAllPotions(character);
+                    LearnNewSpells(character);
+                    SetupLearnedSpells(character);
                 }
-                ItemOutfitter.EquipItems(character);
-                PotionDrinker.DrinkAllPotions(character);
             }
             
             foreach (var character in AllCharactersInSession)
@@ -135,6 +137,46 @@ namespace __Scripts.GameLoop
             CoroutineManager.StartRoutine(StartBattleAfterDelay(10));
         }
 
+        private static void LearnNewSpells(ChampionState character)
+        {
+            var spells = character.InventoryHelper.InventoryOrganization.inventory.GetAllItems()
+                .Where(item => item.Info.ItemType == ItemType.Spell).ToArray();
+
+            if (spells.Length > 0)
+            {
+                foreach (var item in spells)
+                {
+                    var spell = (ISpellItem)item;
+                    character.SpellManager.LearnSpell(spell);
+                }
+            }
+        }
+
+        private static void SetupLearnedSpells(ChampionState character)
+        {
+            var learnedSpells = character.SpellManager.LearnedSpells.OrderByDescending(spell => spell.SpellInfo.SpellLvl).ToArray();
+
+            switch (learnedSpells.Length)
+            {
+                case 0:
+                    break;
+                case 1:
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[0], 1);
+                    break;
+                case 2:
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[0], 1);
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[1], 2);
+                    break;
+                default:
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[0], 1);
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[1], 2);
+                    character.SpellPanelHelper.SpellsPanel.SetupActiveSpell(learnedSpells[2], 3);
+                    break;
+            }
+
+            character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
+        }
+        
         private static void ActivateChampionIfNeed()
         {
             foreach (var champion in AllChampionsInSession)
@@ -178,7 +220,7 @@ namespace __Scripts.GameLoop
             Stage = GameStage.BetweenBattles;
             Round++;
 
-            if (Round > MaxRoundNumber)
+            if (Round > Settings.Instance.RoundsQuantity)
             {
                 EndCurrentGame();
             }

@@ -2,12 +2,12 @@
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.SpellSystem;
-using GameLoop;
-using Inventory;
+using CharacterEntity;
+using CharacterEntity.State;
 using SpellSystem;
 using UnityEngine;
 
-namespace CharacterEntity.State
+namespace __Scripts.CharacterEntity.State
 {
     public class ChampionState : CharacterState
     {

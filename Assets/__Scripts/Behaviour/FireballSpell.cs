@@ -1,4 +1,7 @@
-﻿using __Scripts.Behaviour.SpellEffects;
+﻿using __Scripts.Behaviour.Abstracts;
+using __Scripts.Behaviour.SpellEffects;
+using __Scripts.CharacterEntity.State;
+using __Scripts.Inventory.Abstracts.Spells;
 using Behaviour.Abstracts;
 using Behaviour.SpellEffects;
 using CharacterEntity;

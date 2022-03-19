@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using __Scripts.CharacterEntity.State;
 using CharacterEntity.CharacterState;
 using CharacterEntity.State;
 using GameLoop;

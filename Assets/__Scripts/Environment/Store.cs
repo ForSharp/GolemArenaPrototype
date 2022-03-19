@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using __Scripts.CharacterEntity.State;
+using __Scripts.Controller;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
@@ -59,7 +61,7 @@ namespace __Scripts.Environment
         {
             foreach (var champion in Game.AllChampionsInSession)
             {
-                purses.Add(champion, 500);
+                purses.Add(champion, Settings.Instance.StartMoney);
             }
         }
 
