@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c079fe490044c8f899b4ffaf9dcc121, type: 3}
+  m_Name: ItemInfo
+  m_EditorClassIdentifier: 
+  id: plate_chest_E
+  title: Plate Chest
+  description: +1650 health, +19 magic power, +34% regeneration mana
+  maxItemsInInventorySlot: 1
+  spriteIcon: {fileID: 21300000, guid: c720139856ac0f44d894498956e1b55f, type: 3}
+  itemType: 0
+  price: 2280

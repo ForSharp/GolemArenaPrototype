@@ -4,12 +4,13 @@
 // =================================
 
 using UnityEngine;
+using VFX.Mirza_Beig.Shaders._Common.Shaders.ImageEffects;
 
 // =================================	
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Shaders.Image_Effects.Resources.Sharpen
 {
 
     namespace Shaders

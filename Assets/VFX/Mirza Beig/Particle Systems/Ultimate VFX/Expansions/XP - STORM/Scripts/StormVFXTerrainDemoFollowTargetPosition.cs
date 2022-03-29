@@ -1,23 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StormVFXTerrainDemoFollowTargetPosition : MonoBehaviour
+namespace VFX.Mirza_Beig.Particle_Systems.Ultimate_VFX.Expansions.XP___STORM.Scripts
 {
-    public Transform target;
-
-    void Start()
+    public class StormVFXTerrainDemoFollowTargetPosition : MonoBehaviour
     {
+        public Transform target;
 
-    }
+        void Start()
+        {
 
-    void Update()
-    {
+        }
 
-    }
+        void Update()
+        {
 
-    void LateUpdate()
-    {
-        transform.position = target.position;
+        }
+
+        void LateUpdate()
+        {
+            transform.position = target.position;
+        }
     }
 }

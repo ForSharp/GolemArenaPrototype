@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-namespace PolygonArsenal
+namespace VFX.Polygon_Arsenal.Demo.Scripts
 {
     public class PolygonProjectileScript : MonoBehaviour
     {
