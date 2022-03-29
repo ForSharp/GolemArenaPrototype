@@ -1,6 +1,6 @@
-﻿using Inventory.Info.Spells;
+﻿using __Scripts.Inventory.Info.Spells;
 
-namespace Inventory.Abstracts.Spells
+namespace __Scripts.Inventory.Abstracts.Spells
 {
     public interface IPolymorphSpell
     {

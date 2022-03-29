@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-namespace PolygonArsenal
+namespace VFX.Polygon_Arsenal.Demo.Scripts
 {
     public class PolygonLoopScript : MonoBehaviour
     {

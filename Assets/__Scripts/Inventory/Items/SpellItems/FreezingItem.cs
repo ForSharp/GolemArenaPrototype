@@ -1,12 +1,8 @@
-﻿using System;
-using __Scripts.Inventory.Abstracts;
+﻿using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
-using Inventory.Info;
-using Inventory.Info.Spells;
+using __Scripts.Inventory.Info.Spells;
 
-namespace Inventory.Items.SpellItems
+namespace __Scripts.Inventory.Items.SpellItems
 {
     public class FreezingItem : IInventoryItem, ISpellItem, IPolymorphSpell
     {

@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.CharacterState
+﻿namespace __Scripts.CharacterEntity.State
 {
     public interface IBurnable
     {

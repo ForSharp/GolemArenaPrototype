@@ -2,12 +2,7 @@
 using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using GameLoop;
-using Inventory;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
-using Inventory.DragAndDrop;
-using Inventory.UI;
+using __Scripts.Inventory.DragAndDrop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -1,15 +1,16 @@
 ﻿using System.Collections;
+using Modern_UI_Pack.Scripts.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Button
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(UnityEngine.UI.Button))]
     public class ButtonManagerIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         // Content
@@ -18,7 +19,7 @@ namespace Michsky.UI.ModernUIPack
         public UnityEvent hoverEvent;
         public AudioClip hoverSound;
         public AudioClip clickSound;
-        public Button buttonVar;
+        public UnityEngine.UI.Button buttonVar;
 
         // Resources
         public Image normalIcon;
@@ -84,7 +85,7 @@ namespace Michsky.UI.ModernUIPack
             }
 
             if (buttonVar == null)
-                buttonVar = gameObject.GetComponent<Button>();
+                buttonVar = gameObject.GetComponent<UnityEngine.UI.Button>();
 
             buttonVar.onClick.AddListener(delegate { clickEvent.Invoke(); });
 

@@ -1,8 +1,8 @@
-﻿using CharacterEntity;
-using CharacterEntity.BaseStats;
+﻿using __Scripts.CharacterEntity;
+using __Scripts.CharacterEntity.BaseStats;
 using UnityEngine;
 
-namespace Inventory.Info
+namespace __Scripts.Inventory.Info
 {
     [CreateAssetMenu(fileName = "PotionUltimateInfo", menuName = "Gameplay/Items/Create New PotionUltimateInfo")]
     public class PotionUltimateInfo : ScriptableObject

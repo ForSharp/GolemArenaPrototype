@@ -1,7 +1,7 @@
-﻿using CharacterEntity;
+﻿using __Scripts.CharacterEntity;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "HealSpellInfo", menuName = "Gameplay/Spells/Create New HealSpellInfo")]
     public class HealSpellInfo : ScriptableObject

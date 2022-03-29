@@ -1,50 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ParticlePlexusDemo_CameraRig : MonoBehaviour
+namespace VFX.Mirza_Beig.Scripting.Effects.Particle_Plexus.Scripts__DEMO_ONLY_
 {
-    public Transform pivot;
-    Vector3 targetRotation;
-
-    [Range(0.0f, 90.0f)]
-    public float rotationLimit = 90.0f;
-
-    public float rotationSpeed = 2.0f;
-    public float rotationLerpSpeed = 4.0f;
-
-    Vector3 startRotation;
-
-    void Start()
+    public class ParticlePlexusDemo_CameraRig : MonoBehaviour
     {
-        startRotation = pivot.localEulerAngles;
-        targetRotation = startRotation;
-    }
+        public Transform pivot;
+        Vector3 targetRotation;
 
-    void Update()
-    {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        [Range(0.0f, 90.0f)]
+        public float rotationLimit = 90.0f;
 
-        if (Input.GetKeyDown(KeyCode.R))
+        public float rotationSpeed = 2.0f;
+        public float rotationLerpSpeed = 4.0f;
+
+        Vector3 startRotation;
+
+        void Start()
         {
+            startRotation = pivot.localEulerAngles;
             targetRotation = startRotation;
         }
 
-        horizontal *= rotationSpeed;
-        vertical *= rotationSpeed;
+        void Update()
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
 
-        targetRotation.y += horizontal;
-        targetRotation.x += vertical;
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                targetRotation = startRotation;
+            }
 
-        targetRotation.x = Mathf.Clamp(targetRotation.x, -rotationLimit, rotationLimit);
-        targetRotation.y = Mathf.Clamp(targetRotation.y, -rotationLimit, rotationLimit);
+            horizontal *= rotationSpeed;
+            vertical *= rotationSpeed;
 
-        Vector3 currentRotation = pivot.localEulerAngles;
+            targetRotation.y += horizontal;
+            targetRotation.x += vertical;
 
-        currentRotation.x = Mathf.LerpAngle(currentRotation.x, targetRotation.x, Time.deltaTime * rotationLerpSpeed);
-        currentRotation.y = Mathf.LerpAngle(currentRotation.y, targetRotation.y, Time.deltaTime * rotationLerpSpeed);
+            targetRotation.x = Mathf.Clamp(targetRotation.x, -rotationLimit, rotationLimit);
+            targetRotation.y = Mathf.Clamp(targetRotation.y, -rotationLimit, rotationLimit);
 
-        pivot.localEulerAngles = currentRotation;
+            Vector3 currentRotation = pivot.localEulerAngles;
+
+            currentRotation.x = Mathf.LerpAngle(currentRotation.x, targetRotation.x, Time.deltaTime * rotationLerpSpeed);
+            currentRotation.y = Mathf.LerpAngle(currentRotation.y, targetRotation.y, Time.deltaTime * rotationLerpSpeed);
+
+            pivot.localEulerAngles = currentRotation;
+        }
     }
 }

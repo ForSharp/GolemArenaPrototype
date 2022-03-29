@@ -2,16 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.CharacterEntity;
 using __Scripts.CharacterEntity.State;
 using __Scripts.Controller;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using CharacterEntity;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory;
-using Optimization;
+using __Scripts.Optimization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -96,9 +93,16 @@ namespace __Scripts.GameLoop
         private static void EndCurrentGame()
         {
             OnEndGame();
-            SceneManager.LoadScene("NewScene");
+
+            CoroutineManager.StartRoutine(StartNewGame());
         }
 
+        private static IEnumerator StartNewGame()
+        {
+            yield return new WaitForSeconds(5);
+            SceneManager.LoadScene("NewScene");
+        }
+        
         private static IEnumerator PrepareNewRound()
         {
             yield return new WaitForSeconds(5);
@@ -288,6 +292,10 @@ namespace __Scripts.GameLoop
         private static void OnEndGame()
         {
             EndGame?.Invoke();
+            AllChampionsInSession.Clear();
+            AllCharactersInSession.Clear();
+            
+            Round = 1;
         }
 
         

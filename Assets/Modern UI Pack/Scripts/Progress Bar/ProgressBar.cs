@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
+using UnityEngine.UI;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Progress_Bar
 {
     public class ProgressBar : MonoBehaviour
     {
@@ -33,7 +33,7 @@ namespace Michsky.UI.ModernUIPack
         [System.Serializable] 
         public class ProgressBarEvent : UnityEvent<float> { }
         public ProgressBarEvent onValueChanged;
-        [HideInInspector] public Slider eventSource;
+        [HideInInspector] public UnityEngine.UI.Slider eventSource;
 
         void Start()
         {
@@ -76,7 +76,7 @@ namespace Michsky.UI.ModernUIPack
             if (Application.isPlaying == true && onValueChanged.GetPersistentEventCount() != 0)
             {
                 if (eventSource == null)
-                    eventSource = gameObject.AddComponent(typeof(Slider)) as Slider;
+                    eventSource = gameObject.AddComponent(typeof(UnityEngine.UI.Slider)) as UnityEngine.UI.Slider;
 
                 eventSource.transition = Selectable.Transition.None;
                 eventSource.minValue = minValue;

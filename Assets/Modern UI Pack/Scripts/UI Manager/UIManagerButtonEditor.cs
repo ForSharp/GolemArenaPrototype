@@ -1,11 +1,10 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System;
-using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
+using UnityEngine.UI;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.UI_Manager
 {
     [CustomEditor(typeof(UIManagerButton))]
     public class UIManagerButtonEditor : Editor

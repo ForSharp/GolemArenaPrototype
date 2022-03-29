@@ -1,5 +1,5 @@
-﻿using __Scripts.Inventory.Abstracts;
-using GameLoop;
+﻿using __Scripts.GameLoop;
+using __Scripts.Inventory.Abstracts;
 using UnityEngine;
 using UnityEngine.UI;
 

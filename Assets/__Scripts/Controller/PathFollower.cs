@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Controller
+namespace __Scripts.Controller
 {
     public class PathFollower : MonoBehaviour
     {

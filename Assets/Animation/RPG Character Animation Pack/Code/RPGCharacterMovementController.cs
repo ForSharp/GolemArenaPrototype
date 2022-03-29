@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using Animation.RPG_Character_Animation_Pack.SuperCharacterController.Code.SuperCharacterController;
+using Animation.RPG_Character_Animation_Pack.SuperCharacterController.Code.SuperCharacterController.Core;
 using UnityEngine;
 
-namespace RPGCharacterAnims
+namespace Animation.RPG_Character_Animation_Pack.Code
 {
     public enum RPGCharacterState
     {
@@ -20,7 +22,7 @@ namespace RPGCharacterAnims
     {
         //Components.
         [HideInInspector] public UnityEngine.AI.NavMeshAgent navMeshAgent;
-        private SuperCharacterController superCharacterController;
+        private SuperCharacterController.Code.SuperCharacterController.Core.SuperCharacterController superCharacterController;
         private RPGCharacterController rpgCharacterController;
         private RPGCharacterInputController rpgCharacterInputController;
         private Rigidbody rb;
@@ -70,7 +72,7 @@ namespace RPGCharacterAnims
 
         private void Awake()
         {
-            superCharacterController = GetComponent<SuperCharacterController>();
+            superCharacterController = GetComponent<SuperCharacterController.Code.SuperCharacterController.Core.SuperCharacterController>();
             rpgCharacterController = GetComponent<RPGCharacterController>();
             rpgCharacterInputController = GetComponent<RPGCharacterInputController>();
             navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();

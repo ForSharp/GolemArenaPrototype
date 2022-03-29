@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using __Scripts.CharacterEntity.State;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
+using __Scripts.GameLoop;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class FlameEffect : MonoBehaviour
     {

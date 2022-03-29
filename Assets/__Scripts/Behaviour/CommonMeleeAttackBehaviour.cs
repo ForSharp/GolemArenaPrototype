@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
+using __Scripts.Behaviour.Abstracts;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using Behaviour.Abstracts;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Behaviour
+namespace __Scripts.Behaviour
 {
     public class CommonMeleeAttackBehaviour : MonoBehaviour, IAttackable
     {

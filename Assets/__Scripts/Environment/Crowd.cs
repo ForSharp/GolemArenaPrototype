@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Environment
+namespace __Scripts.Environment
 {
     public enum CrowdIntensity
     {

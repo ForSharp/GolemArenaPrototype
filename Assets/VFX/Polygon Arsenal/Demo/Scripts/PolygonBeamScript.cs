@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
-namespace PolygonArsenal
+namespace VFX.Polygon_Arsenal.Demo.Scripts
 {
 
 public class PolygonBeamScript : MonoBehaviour {

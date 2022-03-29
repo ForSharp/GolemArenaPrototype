@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using __Scripts.CharacterEntity;
 using __Scripts.GameLoop;
-using CharacterEntity;
-using GameLoop;
 using UnityEngine;
 
-namespace Optimization
+namespace __Scripts.Optimization
 {
     public class HeroViewBoxController : MonoBehaviour
     {

@@ -1,8 +1,7 @@
 ﻿using __Scripts.CharacterEntity.State;
-using UI;
 using UnityEngine;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class SpellPanelHelper : MonoBehaviour
     {

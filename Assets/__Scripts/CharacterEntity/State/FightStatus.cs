@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.State
+﻿namespace __Scripts.CharacterEntity.State
 {
     public enum FightStatus 
     {

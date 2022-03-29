@@ -1,7 +1,7 @@
-﻿using CharacterEntity.ExtraStats;
+﻿using __Scripts.CharacterEntity.ExtraStats;
 using UnityEngine;
 
-namespace Inventory.Info
+namespace __Scripts.Inventory.Info
 {
     [CreateAssetMenu(fileName = "ArtefactInfo", menuName = "Gameplay/Items/Create New ArtefactInfo")]
     public class ArtefactInfo : ScriptableObject

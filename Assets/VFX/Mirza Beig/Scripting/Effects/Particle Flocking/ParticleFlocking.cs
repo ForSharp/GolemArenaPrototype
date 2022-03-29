@@ -4,13 +4,12 @@
 // =================================
 
 using UnityEngine;
-using System.Collections.Generic;
 
 // =================================	
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Scripting.Effects.Particle_Flocking
 {
 
     namespace Scripting

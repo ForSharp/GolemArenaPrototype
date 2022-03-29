@@ -1,7 +1,7 @@
-﻿using CharacterEntity.BaseStats;
+﻿using __Scripts.CharacterEntity.BaseStats;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "SummonInfo", menuName = "Gameplay/Spells/Create New SummonInfo")]
     public class SummonSpellInfo : ScriptableObject

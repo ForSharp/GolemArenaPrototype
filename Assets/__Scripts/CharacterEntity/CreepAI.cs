@@ -2,18 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.Behaviour;
+using __Scripts.Behaviour.Abstracts;
 using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using Behaviour;
-using Behaviour.Abstracts;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public class CreepAI : MonoBehaviour
     {

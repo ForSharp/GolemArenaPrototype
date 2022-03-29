@@ -1,7 +1,7 @@
-﻿using Behaviour;
+﻿using __Scripts.Behaviour;
 using UnityEngine;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class SpellContainer : MonoBehaviour
     {

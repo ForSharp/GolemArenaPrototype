@@ -1,8 +1,6 @@
 ﻿using System;
 using __Scripts.Inventory.Abstracts;
-using Inventory;
-using Inventory.Abstracts;
-using Inventory.Info;
+using __Scripts.Inventory.Info;
 
 namespace __Scripts.Inventory.Items.ConsumableItems
 {

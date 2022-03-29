@@ -1,7 +1,7 @@
-﻿using CharacterEntity.BaseStats;
+﻿using __Scripts.CharacterEntity.BaseStats;
 using UnityEngine;
 
-namespace Inventory.Info
+namespace __Scripts.Inventory.Info
 {
     [CreateAssetMenu(fileName = "PotionFlatInfo", menuName = "Gameplay/Items/Create New PotionFlatInfo")]
     public class PotionFlatInfo : ScriptableObject

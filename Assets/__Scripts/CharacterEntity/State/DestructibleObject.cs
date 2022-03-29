@@ -1,8 +1,7 @@
 ﻿using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 
-namespace CharacterEntity.CharacterState
+namespace __Scripts.CharacterEntity.State
 {
     public class DestructibleObject : MonoBehaviour, IDestructible, IBurnable
     {

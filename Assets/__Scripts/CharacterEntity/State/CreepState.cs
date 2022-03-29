@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 
-namespace CharacterEntity.State
+namespace __Scripts.CharacterEntity.State
 {
     public class CreepState : CharacterState
     {

@@ -3,7 +3,7 @@
 using UnityEngine.InputSystem;
 #endif
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Context_Menu
 {
     [RequireComponent(typeof(Animator))]
     public class ContextMenuManager : MonoBehaviour

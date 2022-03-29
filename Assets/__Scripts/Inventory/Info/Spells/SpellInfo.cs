@@ -1,7 +1,7 @@
-﻿using Behaviour;
+﻿using __Scripts.Behaviour;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "SpellInfo", menuName = "Gameplay/Spells/Create New SpellInfo")]
     public class SpellInfo : ScriptableObject

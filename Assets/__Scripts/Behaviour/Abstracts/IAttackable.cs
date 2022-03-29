@@ -1,4 +1,4 @@
-﻿namespace Behaviour.Abstracts
+﻿namespace __Scripts.Behaviour.Abstracts
 {
     public interface IAttackable
     {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class GameStatPanel : MonoBehaviour
     {

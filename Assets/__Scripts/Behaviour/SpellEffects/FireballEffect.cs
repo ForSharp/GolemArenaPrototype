@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Linq;
 using __Scripts.CharacterEntity.State;
+using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
-using Behaviour.SpellEffects;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory.Items.SpellItems;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
 namespace __Scripts.Behaviour.SpellEffects
@@ -27,12 +24,12 @@ namespace __Scripts.Behaviour.SpellEffects
         private Vector3 _startPos;
         private Vector3 _endPos;
         private float _movementProgress;
-        
+
         private void Start()
         {
             beforeExplosion.SetActive(true);
             afterExplosion.SetActive(false);
-            
+
             Destroy(gameObject, 10);
         }
 
@@ -47,7 +44,7 @@ namespace __Scripts.Behaviour.SpellEffects
             _startPos = transform.position;
             _endPos = target.transform.position;
         }
-        
+
         private void Update()
         {
             if (!_isExplosionStarted)
@@ -68,7 +65,7 @@ namespace __Scripts.Behaviour.SpellEffects
                     }
 
                     afterExplosion.SetActive(true);
-                    
+
                     Collider[] explosionColliders = Physics.OverlapSphere(transform.position, 0.6f);
                     //увеличить сферу, вызвать горение у того, в кого попали. Шанс не 100%,
                     //он высчитывается в зависимости от разности магической точности и магического уклонения
@@ -78,14 +75,17 @@ namespace __Scripts.Behaviour.SpellEffects
                         {
                             if (state.Group != _ownerGroupNumber)
                             {
-                                
                                 var flameObj = Instantiate(flame, state.gameObject.transform);
                                 var flameEffect = flameObj.GetComponent<FlameEffect>();
-                                flameEffect.BurnTarget(_state, state, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration);
+                                flameEffect.BurnTarget(_state, state,
+                                    _info.PeriodicDamageSpellInfo.PeriodicDamagingValue,
+                                    _info.PeriodicDamageSpellInfo.PeriodicDamageDuration);
 
                                 var inventoryItem = (IInventoryItem)_info;
-                                state.OnStateEffectAdded(inventoryItem.Info.SpriteIcon, _info.PeriodicDamageSpellInfo.PeriodicDamageDuration, false, true, inventoryItem.Info.Id);
-                                
+                                state.OnStateEffectAdded(inventoryItem.Info.SpriteIcon,
+                                    _info.PeriodicDamageSpellInfo.PeriodicDamageDuration, false, true,
+                                    inventoryItem.Info.Id);
+
                                 //при поджоге наносить переодический урон
                                 //при поджоге добавить эффект горения
                                 //урон увеличивается от магической мощи нападающего, уменьшается от магического сопротивления жертвы
@@ -93,7 +93,6 @@ namespace __Scripts.Behaviour.SpellEffects
                             }
                         }
                     }
-                    
                 }
             }
         }
@@ -113,40 +112,10 @@ namespace __Scripts.Behaviour.SpellEffects
 
         private Collider[] FilterCollidersArray(Collider[] colliders)
         {
-
-            var filteredGameCharacterColliders = colliders.Where(c =>
+            return colliders.Where(c =>
                     c.GetComponentInParent<CharacterState>())
-                .Where(c => c.GetComponentInParent<CharacterState>().IsDead == false);
-            var filteredDestructibleObjects = colliders.Where(c =>
-                    c.GetComponentInParent<DestructibleObject>())
-                .Where(c => c.GetComponentInParent<DestructibleObject>().IsDead == false);
-
-            var gameCharacterColliders =
-                filteredGameCharacterColliders as Collider[] ?? filteredGameCharacterColliders.ToArray();
-            var destructibleObjects =
-                filteredDestructibleObjects as Collider[] ?? filteredDestructibleObjects.ToArray();
-
-            if (gameCharacterColliders.Length == 0 && destructibleObjects.Length == 0)
-            {
-                return Array.Empty<Collider>();
-            }
-            if (gameCharacterColliders.Length == 0)
-            {
-                return destructibleObjects;
-            }
-            if (destructibleObjects.Length == 0)
-            {
-                return gameCharacterColliders;
-            }
-
-            var filteredArray = new Collider[gameCharacterColliders.Length +
-                                             destructibleObjects.Length];
-
-            gameCharacterColliders.CopyTo(filteredArray, 0);
-            destructibleObjects.CopyTo(filteredArray, destructibleObjects.Length);
-
-            return filteredArray;
+                .Where(c => c.GetComponentInParent<CharacterState>().IsDead == false &&
+                            c.GetComponentInParent<CharacterState>().Group != _state.Group).ToArray();
         }
-        
     }
 }

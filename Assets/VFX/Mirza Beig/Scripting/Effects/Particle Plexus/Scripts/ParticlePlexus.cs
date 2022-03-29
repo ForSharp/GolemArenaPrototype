@@ -3,16 +3,14 @@
 // Namespaces.
 // =================================
 
-using UnityEngine;
 using System.Collections.Generic;
-
-using System.Threading;
+using UnityEngine;
 
 // =================================	
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Scripting.Effects.Particle_Plexus.Scripts
 {
 
 	namespace Scripting

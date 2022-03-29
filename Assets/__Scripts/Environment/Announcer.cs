@@ -1,9 +1,8 @@
 ﻿using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Environment
+namespace __Scripts.Environment
 {
     public class Announcer : MonoBehaviour
     {
@@ -55,7 +54,7 @@ namespace Environment
                 case 3:
                     audioSource.PlayOneShot(tripleKillClips[Random.Range(0, tripleKillClips.Length)]);
                     break;
-                case 4:
+                default:
                     audioSource.PlayOneShot(rampageClip);
                     break;
             }

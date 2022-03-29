@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using __Scripts.CharacterEntity.State;
-using Behaviour.SpellEffects;
-using CharacterEntity.State;
-using Inventory.Items.SpellItems;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
 namespace __Scripts.Behaviour.SpellEffects
@@ -57,7 +56,16 @@ namespace __Scripts.Behaviour.SpellEffects
                         state.transform);
                     var stormFreezing = obj.GetComponent<SnowstormFreezingEffect>();
                     stormFreezing.Initialize(_state, state, _info);
-                    stormFreezing.StartSnowstormFreezing();
+                    
+                    try
+                    {
+                        stormFreezing.StartSnowstormFreezing();
+                    }
+                    catch (Exception e)
+                    {
+                        // ignored
+                    }
+
                     _snowstormFreezingEffects.Add(state, stormFreezing);
                 }
             }

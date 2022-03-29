@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPGCharacterAnims
+namespace Animation.RPG_Character_Animation_Pack.Code
 {
     public class RPGCharacterInputController:MonoBehaviour
     {

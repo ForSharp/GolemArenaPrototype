@@ -1,7 +1,7 @@
-﻿using CharacterEntity.ExtraStats;
+﻿using __Scripts.CharacterEntity.ExtraStats;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "BuffSpellInfo", menuName = "Gameplay/Spells/Create New BuffSpellInfo")]
     public class BuffSpellInfo : ScriptableObject

@@ -1,6 +1,6 @@
-﻿using Inventory.Info;
+﻿using __Scripts.Inventory.Info;
 
-namespace Inventory.Abstracts
+namespace __Scripts.Inventory.Abstracts
 {
     public interface IConsumableBuffItem
     {

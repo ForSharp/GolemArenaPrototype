@@ -1,9 +1,7 @@
-﻿using System;
-using __Scripts.Inventory.Abstracts;
-using Inventory.Abstracts;
-using Inventory.Info;
+﻿using __Scripts.Inventory.Abstracts;
+using __Scripts.Inventory.Info;
 
-namespace Inventory.Items.PotionItems
+namespace __Scripts.Inventory.Items.PotionItems
 {
     public class PotionMultiply : IInventoryItem, IPotionMultiplyItem
     {

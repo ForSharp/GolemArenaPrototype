@@ -1,12 +1,10 @@
-﻿using __Scripts.CharacterEntity.State;
+﻿using __Scripts.CharacterEntity;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using CharacterEntity;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory.Items.SpellItems;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class SummonSpiderEffect : MonoBehaviour
     {

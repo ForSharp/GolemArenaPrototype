@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Modern_UI_Pack.Scripts.Slider;
+using UnityEngine;
 using UnityEditor;
 
 namespace Michsky.UI.ModernUIPack

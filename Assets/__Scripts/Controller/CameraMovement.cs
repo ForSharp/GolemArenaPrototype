@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
-using __Scripts.Controller;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using CharacterEntity.State;
-using GameLoop;
 using UnityEngine;
-using PlayMode = __Scripts.Controller.PlayMode;
 
-namespace Controller
+namespace __Scripts.Controller
 {
     public class CameraMovement : MonoBehaviour
     {
@@ -135,6 +132,8 @@ namespace Controller
             
             transform.position = transform.localRotation * cameraMoveAroundSettings.offset +
                                  Player.PlayerCharacter.transform.position;
+            
+            
         }
 
         private void SetCinematicMovement()

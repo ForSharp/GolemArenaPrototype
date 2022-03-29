@@ -1,14 +1,10 @@
-﻿using System;
-using __Scripts.GameLoop;
+﻿using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using GameLoop;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class ActiveUISpell : MonoBehaviour
     {

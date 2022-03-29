@@ -1,14 +1,10 @@
-﻿using System;
-using __Scripts.CharacterEntity.State;
+﻿using __Scripts.CharacterEntity.State;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using CharacterEntity.State;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class SpellsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {

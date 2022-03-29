@@ -1,5 +1,4 @@
 ﻿using System;
-using Inventory.Abstracts;
 
 namespace __Scripts.Inventory.Abstracts
 {

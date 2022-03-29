@@ -4,13 +4,12 @@
 // =================================
 
 using UnityEngine;
-using System.Collections;
 
 // =================================	
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Shaders._Common
 {
 
     namespace Shaders

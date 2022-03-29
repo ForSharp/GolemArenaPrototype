@@ -4,7 +4,6 @@ using System.Linq;
 using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity.State;
 using Random = UnityEngine.Random;
 
 namespace __Scripts.Inventory

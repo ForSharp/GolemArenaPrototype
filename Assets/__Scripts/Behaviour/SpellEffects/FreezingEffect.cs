@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using CharacterEntity.State;
-using Inventory.Items.SpellItems;
+using __Scripts.CharacterEntity.State;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class FreezingEffect : MonoBehaviour
     {

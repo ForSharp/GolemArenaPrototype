@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using CharacterEntity.State;
-using GameLoop;
-using UI;
 using UnityEngine;
 
 namespace __Scripts.UI

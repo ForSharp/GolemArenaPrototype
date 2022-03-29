@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
 
-namespace PolygonArsenal
+namespace VFX.Polygon_Arsenal.Demo.Scripts
 {
     public class PolygonFireProjectile : MonoBehaviour
     {

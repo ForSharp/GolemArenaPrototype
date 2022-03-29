@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity
+﻿namespace __Scripts.CharacterEntity
 {
     public enum Specialization 
     {

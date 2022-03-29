@@ -1,10 +1,9 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System;
 using TMPro;
+using UnityEditor;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.UI_Manager
 {
     [CustomEditor(typeof(UIManagerSlider))]
     public class UIManagerSliderEditor : Editor

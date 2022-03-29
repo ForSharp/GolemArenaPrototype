@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Optimization
+namespace __Scripts.Optimization
 {
     public sealed class CoroutineManager : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public static class AnimationChanger 
     {

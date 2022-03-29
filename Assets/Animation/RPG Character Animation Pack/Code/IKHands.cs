@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace RPGCharacterAnims
+namespace Animation.RPG_Character_Animation_Pack.Code
 {
     public class IKHands:MonoBehaviour
     {

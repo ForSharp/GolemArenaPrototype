@@ -1,11 +1,9 @@
 ﻿using __Scripts.GameLoop;
-using __Scripts.Inventory;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     public class InventoryOrganization : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {

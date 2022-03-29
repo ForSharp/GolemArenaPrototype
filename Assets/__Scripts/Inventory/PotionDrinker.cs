@@ -3,9 +3,6 @@ using System.Linq;
 using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory.Abstracts;
 
 namespace __Scripts.Inventory
 {

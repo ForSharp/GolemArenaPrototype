@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.ExtraStats
+﻿namespace __Scripts.CharacterEntity.ExtraStats
 {
     public interface IExtraStatsProvider 
     {

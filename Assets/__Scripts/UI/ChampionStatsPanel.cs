@@ -1,15 +1,13 @@
-﻿using __Scripts.CharacterEntity.State;
+﻿using __Scripts.CharacterEntity;
+using __Scripts.CharacterEntity.ExtraStats;
+using __Scripts.CharacterEntity.State;
+using __Scripts.Controller;
 using __Scripts.GameLoop;
-using CharacterEntity;
-using CharacterEntity.ExtraStats;
-using CharacterEntity.State;
-using Controller;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public sealed class ChampionStatsPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {

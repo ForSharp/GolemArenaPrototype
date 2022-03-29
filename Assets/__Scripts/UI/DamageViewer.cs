@@ -1,11 +1,10 @@
 ﻿using System;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
+using __Scripts.CharacterEntity.State;
+using __Scripts.GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class DamageViewer : MonoBehaviour
     {

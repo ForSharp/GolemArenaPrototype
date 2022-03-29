@@ -1,7 +1,6 @@
 ﻿using __Scripts.CharacterEntity.ExtraStats;
-using CharacterEntity.ExtraStats;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public class ExtraStatsRate
     {

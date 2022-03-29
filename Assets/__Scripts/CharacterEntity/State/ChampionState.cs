@@ -2,9 +2,6 @@
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.SpellSystem;
-using CharacterEntity;
-using CharacterEntity.State;
-using SpellSystem;
 using UnityEngine;
 
 namespace __Scripts.CharacterEntity.State
@@ -19,6 +16,8 @@ namespace __Scripts.CharacterEntity.State
         public SoundsController SoundsController { get; private set; }
         public event Action StartSpellCast;
         public event Action CancelSpellCast;
+        
+        private Animator _animator;
 
         private void Start()
         {
@@ -33,6 +32,8 @@ namespace __Scripts.CharacterEntity.State
             ConsumablesEater = new ConsumablesEater(this);
             
             SoundsController = GetComponent<SoundsController>();
+            
+            _animator = GetComponent<Animator>();
         }
         
         public void InitializeState(Character character, int group, Color colorGroup, string type, string spec)
@@ -53,6 +54,8 @@ namespace __Scripts.CharacterEntity.State
             HealAllParameters();
             ShowHealthBar();
             NullRoundStatistics();
+            
+            _animator.speed = 1;
         }
 
         public void PrepareAfterNewRoundForException()

@@ -9,7 +9,7 @@ using UnityEngine;
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Scripting.Effects.Particle_Affectors.Scripts
 {
 
     namespace Scripting

@@ -1,8 +1,6 @@
 ﻿using System;
 using __Scripts.CharacterEntity;
-using CharacterEntity;
-using GameLoop;
-using UI;
+using __Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,7 +1,7 @@
 ﻿using System;
-using CharacterEntity.BaseStats;
+using __Scripts.CharacterEntity.BaseStats;
 
-namespace CharacterEntity.ExtraStats.Effects
+namespace __Scripts.CharacterEntity.ExtraStats.Effects
 {
     public class ExtraStatsChanger : ExtraStatsDecorator
     {

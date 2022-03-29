@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using TMPro;
+using UnityEngine.UI;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Dropdown
 {
     [RequireComponent(typeof(Animator))]
     public class CustomDropdown : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
@@ -150,8 +149,8 @@ namespace Michsky.UI.ModernUIPack
                 imageHelper = dropdownItems[i].itemIcon;
                 setItemImage.sprite = imageHelper;
 
-                Button itemButton;
-                itemButton = go.GetComponent<Button>();
+                UnityEngine.UI.Button itemButton;
+                itemButton = go.GetComponent<UnityEngine.UI.Button>();
 
                 itemButton.onClick.AddListener(Animate);
                 itemButton.onClick.AddListener(delegate

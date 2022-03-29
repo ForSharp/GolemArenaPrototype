@@ -1,11 +1,10 @@
 ﻿using System;
+using __Scripts.CharacterEntity;
+using __Scripts.CharacterEntity.BaseStats;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity;
-using CharacterEntity.BaseStats;
-using Inventory.Abstracts;
-using Inventory.Info;
+using __Scripts.Inventory.Info;
 
-namespace Inventory.Items.PotionItems
+namespace __Scripts.Inventory.Items.PotionItems
 {
     public class PotionUltimate : IInventoryItem, IPotionUltimateItem
     {

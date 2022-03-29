@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Environment
+namespace __Scripts.Environment
 {
     public class DeathEffect : MonoBehaviour
     {

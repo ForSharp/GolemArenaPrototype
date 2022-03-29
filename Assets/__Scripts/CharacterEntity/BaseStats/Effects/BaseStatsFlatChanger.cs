@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.BaseStats.Effects
+﻿namespace __Scripts.CharacterEntity.BaseStats.Effects
 {
     public class BaseStatsFlatChanger : StatsDecorator
     {

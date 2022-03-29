@@ -1,11 +1,6 @@
-﻿using CharacterEntity;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using GameLoop;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class ControllerPanel : MonoBehaviour
     {

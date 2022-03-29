@@ -1,9 +1,9 @@
-﻿using CharacterEntity;
-using Optimization;
+﻿using __Scripts.CharacterEntity;
+using __Scripts.Optimization;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class HeroPortraitController : MonoBehaviour
     {

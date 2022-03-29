@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using CharacterEntity.BaseStats;
-using CharacterEntity.BaseStats.Effects;
-using CharacterEntity.ExtraStats;
-using CharacterEntity.ExtraStats.Effects;
+using __Scripts.CharacterEntity.BaseStats;
+using __Scripts.CharacterEntity.BaseStats.Effects;
+using __Scripts.CharacterEntity.ExtraStats;
+using __Scripts.CharacterEntity.ExtraStats.Effects;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public class Character 
     {

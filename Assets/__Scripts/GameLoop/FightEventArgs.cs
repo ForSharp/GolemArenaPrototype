@@ -1,7 +1,7 @@
 ﻿using System;
-using CharacterEntity.CharacterState;
+using __Scripts.CharacterEntity.State;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public class FightEventArgs : EventArgs
     {

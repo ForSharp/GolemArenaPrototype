@@ -3,8 +3,6 @@ using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity.State;
-using Inventory;
 using UnityEngine;
 
 namespace __Scripts.UI

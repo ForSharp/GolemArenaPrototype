@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
+using __Scripts.Inventory.Info;
+using __Scripts.Inventory.Info.Spells;
 using __Scripts.Inventory.Items.ArtefactItems;
 using __Scripts.Inventory.Items.ConsumableItems;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
-using Inventory.Info;
-using Inventory.Info.Spells;
-using Inventory.Items.PotionItems;
-using Inventory.Items.SpellItems;
+using __Scripts.Inventory.Items.PotionItems;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
 namespace __Scripts.Inventory

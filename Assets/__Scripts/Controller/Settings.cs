@@ -19,7 +19,7 @@ namespace __Scripts.Controller
 
         public static Settings Instance;
         public int RoundsQuantity { get; private set; } //1-10
-        public int StartMoney { get; private set;  } //0-1000
+        public int StartMoney { get; private set;  } //0-10000
         public int EnemiesQuantity { get; private set;  } //1-20
         public float SoundVolume { get; private set; } //0-100
 
@@ -48,7 +48,7 @@ namespace __Scripts.Controller
             roundsText.text = RoundsQuantity.ToString();
             moneyText.text = StartMoney.ToString();
             enemiesText.text = EnemiesQuantity.ToString();
-            soundVolumeText.text = SoundVolume.ToString("F1");
+            soundVolumeText.text = SoundVolume.ToString("F0");
 
         }
 
@@ -67,19 +67,19 @@ namespace __Scripts.Controller
 
         public void UpdateRoundsText()
         {
-            roundsText.text = roundsQuantity.value.ToString("F2");
+            roundsText.text = roundsQuantity.value.ToString("F0");
         }
         public void UpdateMoneyText()
         {
-            moneyText.text = startMoney.value.ToString("F2");
+            moneyText.text = startMoney.value.ToString("F0");
         }
         public void UpdateEnemiesText()
         {
-            enemiesText.text = enemiesQuantity.value.ToString("F2");
+            enemiesText.text = enemiesQuantity.value.ToString("F0");
         }
         public void UpdateSoundVolumeText()
         {
-            soundVolumeText.text = soundVolume.value.ToString("F");
+            soundVolumeText.text = soundVolume.value.ToString("F0");
         }
 
         public void ShowSettingsPanel()
@@ -89,7 +89,7 @@ namespace __Scripts.Controller
             roundsText.text = RoundsQuantity.ToString();
             moneyText.text = StartMoney.ToString();
             enemiesText.text = EnemiesQuantity.ToString();
-            soundVolumeText.text = SoundVolume.ToString("F1");
+            soundVolumeText.text = SoundVolume.ToString("F0");
         }
 
         public void HideSettingsPanel()

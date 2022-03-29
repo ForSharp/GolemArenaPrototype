@@ -1,7 +1,7 @@
 ﻿using System;
-using Inventory.Abstracts;
+using __Scripts.Inventory.Abstracts;
 
-namespace Inventory
+namespace __Scripts.Inventory
 {
     [Serializable]
     public class InventoryItemState : IInventoryItemState

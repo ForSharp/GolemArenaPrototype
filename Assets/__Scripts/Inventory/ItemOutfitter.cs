@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using __Scripts.CharacterEntity.State;
-using CharacterEntity.State;
-using Inventory.Abstracts;
 
 namespace __Scripts.Inventory
 {

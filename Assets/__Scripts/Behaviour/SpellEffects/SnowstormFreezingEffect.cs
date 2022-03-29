@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using __Scripts.CharacterEntity.ExtraStats;
 using __Scripts.CharacterEntity.State;
-using CharacterEntity.ExtraStats;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory.Items.SpellItems;
+using __Scripts.GameLoop;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour.SpellEffects
+namespace __Scripts.Behaviour.SpellEffects
 {
     public class SnowstormFreezingEffect : MonoBehaviour
     {
@@ -35,8 +35,15 @@ namespace Behaviour.SpellEffects
             _target.OnStateEffectAdded(image, 10000,false, true, id);
             _debuff = _info.DebuffSpellInfo.AffectsExtraStats;
             //можно перед этим изменить значения в зависимости от магической мощи
-            
-            _target.ConsumablesEater.AddSpellEffect(_debuff, 10000);
+
+            try
+            {
+                _target.ConsumablesEater.AddSpellEffect(_debuff, 10000);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
             
             StartCoroutine(SetPeriodicDamage(_state, _target, _info.PeriodicDamageSpellInfo.PeriodicDamagingValue));
         }

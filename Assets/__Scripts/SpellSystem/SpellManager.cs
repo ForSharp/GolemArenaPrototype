@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.Behaviour;
 using __Scripts.Behaviour.Abstracts;
 using __Scripts.CharacterEntity.State;
 using __Scripts.Controller;
@@ -8,12 +9,7 @@ using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using Behaviour;
-using Behaviour.Abstracts;
-using CharacterEntity.State;
-using Inventory.Abstracts.Spells;
-using Inventory.Items.SpellItems;
-using SpellSystem;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

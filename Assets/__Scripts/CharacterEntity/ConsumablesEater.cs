@@ -1,17 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using __Scripts.CharacterEntity.ExtraStats;
 using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
-using CharacterEntity.ExtraStats;
-using GameLoop;
-using Inventory;
-using Inventory.Abstracts;
-using Optimization;
+using __Scripts.Optimization;
 using UnityEngine;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public class ConsumablesEater
     {

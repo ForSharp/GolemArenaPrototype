@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections;
+using __Scripts.CharacterEntity.BaseStats;
+using __Scripts.CharacterEntity.ExtraStats;
 using __Scripts.GameLoop;
 using __Scripts.UI;
-using CharacterEntity.BaseStats;
-using CharacterEntity.CharacterState;
-using CharacterEntity.ExtraStats;
-using GameLoop;
-using UI;
 using UnityEngine;
 
-namespace CharacterEntity.State
+namespace __Scripts.CharacterEntity.State
 {
     public abstract class CharacterState : MonoBehaviour, IDestructible
     {

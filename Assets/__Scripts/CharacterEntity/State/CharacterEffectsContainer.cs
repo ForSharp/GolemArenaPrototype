@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using __Scripts.GameLoop;
-using GameLoop;
 using UnityEngine;
 
-namespace CharacterEntity.State
+namespace __Scripts.CharacterEntity.State
 {
     public class CharacterEffectsContainer : MonoBehaviour
     {

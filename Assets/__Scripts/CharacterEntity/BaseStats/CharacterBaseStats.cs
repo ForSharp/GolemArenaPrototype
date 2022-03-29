@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CharacterEntity.BaseStats
+namespace __Scripts.CharacterEntity.BaseStats
 {
     [Serializable]
     public class CharacterBaseStats

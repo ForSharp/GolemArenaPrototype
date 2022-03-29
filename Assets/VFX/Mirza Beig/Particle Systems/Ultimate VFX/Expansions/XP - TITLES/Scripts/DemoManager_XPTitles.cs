@@ -5,6 +5,8 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using VFX.Mirza_Beig.Particle_Systems._Common.Scripts._Demo.ParticleSystems.Demos;
+using VFX.Mirza_Beig.Particle_Systems._Common.Scripts.ParticleSystems;
 
 //using System.Collections;
 
@@ -12,7 +14,7 @@ using UnityEngine.UI;
 // Define namespace.
 // =================================
 
-namespace MirzaBeig
+namespace VFX.Mirza_Beig.Particle_Systems.Ultimate_VFX.Expansions.XP___TITLES.Scripts
 {
 
     namespace ParticleSystems

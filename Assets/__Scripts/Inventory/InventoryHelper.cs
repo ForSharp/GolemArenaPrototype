@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.UI;
-using Inventory;
-using Inventory.Abstracts;
 using UnityEngine;
 
 namespace __Scripts.Inventory

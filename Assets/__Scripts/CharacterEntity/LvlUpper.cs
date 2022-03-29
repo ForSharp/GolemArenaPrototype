@@ -1,6 +1,6 @@
-﻿using GameLoop;
+﻿using __Scripts.GameLoop;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public static class LvlUpper
     {

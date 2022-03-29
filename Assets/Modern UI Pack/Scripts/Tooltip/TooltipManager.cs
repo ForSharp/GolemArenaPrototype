@@ -3,7 +3,7 @@
 using UnityEngine.InputSystem;
 #endif
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Tooltip
 {
     public class TooltipManager : MonoBehaviour
     {

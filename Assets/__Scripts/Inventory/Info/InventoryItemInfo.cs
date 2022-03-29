@@ -1,10 +1,8 @@
-﻿using __Scripts.Inventory;
-using __Scripts.Inventory.Abstracts;
-using Inventory.Abstracts;
+﻿using __Scripts.Inventory.Abstracts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Inventory.Info
+namespace __Scripts.Inventory.Info
 {
     [CreateAssetMenu(fileName = "InventoryItemInfo", menuName = "Gameplay/Items/Create New ItemInfo")]
     public class InventoryItemInfo : ScriptableObject, IInventoryItemInfo

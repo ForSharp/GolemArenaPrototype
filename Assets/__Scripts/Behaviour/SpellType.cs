@@ -1,4 +1,4 @@
-﻿namespace Behaviour
+﻿namespace __Scripts.Behaviour
 {
     public enum SpellType
     {

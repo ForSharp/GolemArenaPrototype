@@ -1,10 +1,9 @@
 ﻿using System;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
+using __Scripts.CharacterEntity.State;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Behaviour
+namespace __Scripts.Behaviour
 {
     public class RunNavMeshBehaviour: WalkNavMeshBehaviour
     {

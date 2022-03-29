@@ -1,4 +1,4 @@
-﻿namespace CharacterEntity.BaseStats
+﻿namespace __Scripts.CharacterEntity.BaseStats
 {
     public interface IStatsProvider
     {

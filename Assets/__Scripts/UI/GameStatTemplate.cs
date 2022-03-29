@@ -2,7 +2,7 @@
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace UI
+namespace __Scripts.UI
 {
     public class GameStatTemplate : MonoBehaviour
     {

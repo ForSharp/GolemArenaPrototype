@@ -1,7 +1,6 @@
 ﻿using __Scripts.GameLoop;
-using GameLoop;
 
-namespace CharacterEntity.CharacterState
+namespace __Scripts.CharacterEntity.State
 {
     public interface IDestructible
     {

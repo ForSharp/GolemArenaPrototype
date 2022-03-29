@@ -1,7 +1,7 @@
-﻿using CharacterEntity;
+﻿using __Scripts.CharacterEntity;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "DamageSpellInfo", menuName = "Gameplay/Spells/Create New DamageSpellInfo")]
     public class DamageSpellInfo : ScriptableObject

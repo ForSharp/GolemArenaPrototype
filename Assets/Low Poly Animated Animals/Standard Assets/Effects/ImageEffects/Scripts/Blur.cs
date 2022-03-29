@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
+namespace Low_Poly_Animated_Animals.Standard_Assets.Effects.ImageEffects.Scripts
 {
     [ExecuteInEditMode]
     [AddComponentMenu("Image Effects/Blur/Blur")]

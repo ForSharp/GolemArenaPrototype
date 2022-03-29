@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "PolymorphSpellInfo", menuName = "Gameplay/Spells/Create New PolymorphSpellInfo")]
     public class PolymorphSpellInfo : ScriptableObject

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CharacterEntity;
-using CharacterEntity.BaseStats;
-using CharacterEntity.ExtraStats;
+using __Scripts.CharacterEntity.BaseStats;
+using __Scripts.CharacterEntity.ExtraStats;
 
 namespace __Scripts.CharacterEntity
 {

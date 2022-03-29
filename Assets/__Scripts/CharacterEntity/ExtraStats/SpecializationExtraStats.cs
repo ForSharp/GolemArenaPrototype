@@ -1,7 +1,6 @@
-﻿using __Scripts.CharacterEntity;
-using CharacterEntity.BaseStats;
+﻿using __Scripts.CharacterEntity.BaseStats;
 
-namespace CharacterEntity.ExtraStats
+namespace __Scripts.CharacterEntity.ExtraStats
 {
     public class SpecializationExtraStats : ExtraStatsDecorator
     {

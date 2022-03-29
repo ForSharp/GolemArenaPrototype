@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Controller
+namespace __Scripts.Controller
 {
     [Serializable]
     public class CameraMoveAroundSettings 

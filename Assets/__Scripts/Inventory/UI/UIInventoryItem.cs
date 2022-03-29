@@ -1,11 +1,9 @@
 ﻿using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.DragAndDrop;
-using Inventory.Abstracts;
-using Inventory.DragAndDrop;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory.UI
+namespace __Scripts.Inventory.UI
 {
     public class UIInventoryItem : UIItem
     {

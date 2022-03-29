@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Switch
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(UnityEngine.UI.Button))]
     public class SwitchManager : MonoBehaviour, IPointerEnterHandler
     {
         // Events
@@ -26,7 +25,7 @@ namespace Michsky.UI.ModernUIPack
 
         // Resources
         public Animator switchAnimator;
-        public Button switchButton;
+        public UnityEngine.UI.Button switchButton;
         public AudioSource soundSource;
 
         // Audio
@@ -40,7 +39,7 @@ namespace Michsky.UI.ModernUIPack
 
             if (switchButton == null)
             {
-                switchButton = gameObject.GetComponent<Button>();
+                switchButton = gameObject.GetComponent<UnityEngine.UI.Button>();
                 switchButton.onClick.AddListener(AnimateSwitch);
 
                 if (enableSwitchSounds == true && useClickSound == true)

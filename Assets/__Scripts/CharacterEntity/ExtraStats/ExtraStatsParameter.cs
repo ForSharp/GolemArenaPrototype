@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CharacterEntity.ExtraStats
+namespace __Scripts.CharacterEntity.ExtraStats
 {
     [Serializable]
     public struct ExtraStatsParameter

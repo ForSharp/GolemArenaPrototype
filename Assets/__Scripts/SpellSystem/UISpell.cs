@@ -1,13 +1,10 @@
 ﻿using System.Globalization;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class UISpell : MonoBehaviour
     {

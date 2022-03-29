@@ -1,9 +1,7 @@
 ﻿using System;
-using __Scripts.GameLoop;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
+using __Scripts.CharacterEntity.State;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public static class EventContainer
     {

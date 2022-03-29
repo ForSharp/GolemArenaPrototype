@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public class CalmIdleSetter : MonoBehaviour
     {

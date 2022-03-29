@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Behaviour.Abstracts
+namespace __Scripts.Behaviour.Abstracts
 {
     public interface IMoveable
     {

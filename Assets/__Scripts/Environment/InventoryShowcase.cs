@@ -1,7 +1,5 @@
 ﻿using __Scripts.CharacterEntity.State;
 using __Scripts.GameLoop;
-using CharacterEntity.State;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
 

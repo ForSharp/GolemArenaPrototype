@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLoop
+namespace __Scripts.GameLoop
 {
     public static class ExtensionMethodsContainer 
     {

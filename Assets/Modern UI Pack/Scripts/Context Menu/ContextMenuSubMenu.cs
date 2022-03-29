@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Context_Menu
 {
     public class ContextMenuSubMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
@@ -75,7 +74,7 @@ namespace Michsky.UI.ModernUIPack
                         if (imageHelper == null)
                             setItemImage.color = new Color(0, 0, 0, 0);
 
-                        Button itemButton = go.GetComponent<Button>();
+                        UnityEngine.UI.Button itemButton = go.GetComponent<UnityEngine.UI.Button>();
                         itemButton.onClick.AddListener(cmContent.contexItems[subMenuIndex].subMenuItems[i].onClick.Invoke);
                         itemButton.onClick.AddListener(CloseOnClick);
                         StartCoroutine(ExecuteAfterTime(0.01f));

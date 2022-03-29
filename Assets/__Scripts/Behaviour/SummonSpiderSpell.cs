@@ -1,16 +1,12 @@
 ﻿using __Scripts.Behaviour.Abstracts;
+using __Scripts.Behaviour.SpellEffects;
+using __Scripts.CharacterEntity;
 using __Scripts.CharacterEntity.State;
 using __Scripts.Inventory.Abstracts.Spells;
-using Behaviour.Abstracts;
-using Behaviour.SpellEffects;
-using CharacterEntity;
-using CharacterEntity.State;
-using GameLoop;
-using Inventory.Abstracts.Spells;
-using Inventory.Items.SpellItems;
+using __Scripts.Inventory.Items.SpellItems;
 using UnityEngine;
 
-namespace Behaviour
+namespace __Scripts.Behaviour
 {
     public class SummonSpiderSpell : MonoBehaviour, ICastable
     {

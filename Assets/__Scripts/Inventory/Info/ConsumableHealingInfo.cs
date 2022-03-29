@@ -1,7 +1,7 @@
-﻿using CharacterEntity;
+﻿using __Scripts.CharacterEntity;
 using UnityEngine;
 
-namespace Inventory.Info
+namespace __Scripts.Inventory.Info
 {
     [CreateAssetMenu(fileName = "ConsumableHealingInfo", menuName = "Gameplay/Items/Create New ConsumableHealingInfo")]
     public class ConsumableHealingInfo : ScriptableObject

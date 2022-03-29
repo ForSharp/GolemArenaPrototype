@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace RPGCharacterAnims
+namespace Animation.RPG_Character_Animation_Pack.Code
 {
     [RequireComponent(typeof(RPGCharacterMovementController))]
     [RequireComponent(typeof(RPGCharacterWeaponController))]
@@ -16,7 +16,7 @@ namespace RPGCharacterAnims
         [HideInInspector] public IKHands ikHands;
         public Weapon weapon = Weapon.RELAX;
         public GameObject target;
-        private PerfectLookAt headLookController;
+        private PerfectLookAt.PerfectLookAt headLookController;
 
         //Strafing/action.
         [HideInInspector] public bool isDead = false;
@@ -60,7 +60,7 @@ namespace RPGCharacterAnims
                 Destroy(this);
             }
             //Find HeadLookController if applied.
-            headLookController = GetComponent<PerfectLookAt>();
+            headLookController = GetComponent<PerfectLookAt.PerfectLookAt>();
             ikHands = GetComponent<IKHands>();
             //Set for starting Relax state.
             weapon = Weapon.RELAX;

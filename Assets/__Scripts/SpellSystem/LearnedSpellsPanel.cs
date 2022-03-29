@@ -1,16 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
-using Inventory;
-using Inventory.Abstracts;
-using Inventory.Abstracts.Spells;
-using Inventory.Info.Spells;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace SpellSystem
+namespace __Scripts.SpellSystem
 {
     public class LearnedSpellsPanel : MonoBehaviour
     {

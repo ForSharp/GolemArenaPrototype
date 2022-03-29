@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
-	public class AnimationControlAnimalCreep : MonoBehaviour {
-		
+	public class AnimationControlAnimalCreep : MonoBehaviour 
+	{
+		//!!!!! код из ассета
 		private string _currentAnimation="";
 		
 		public void SetAnimation(string animationName){
@@ -31,20 +32,6 @@ namespace CharacterEntity
 
 			GetComponent<Animator> ().SetInteger (animationName, clipIndex);
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 	}
 }

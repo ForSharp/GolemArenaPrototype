@@ -1,10 +1,10 @@
 ﻿using System;
-using Behaviour.Abstracts;
+using __Scripts.Behaviour.Abstracts;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace Behaviour
+namespace __Scripts.Behaviour
 {
     public class NoMoveBehaviour: IMoveable
     {

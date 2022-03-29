@@ -1,7 +1,6 @@
-﻿using __Scripts.CharacterEntity.State;
-using CharacterEntity;
-using CharacterEntity.BaseStats;
-using CharacterEntity.State;
+﻿using __Scripts.CharacterEntity;
+using __Scripts.CharacterEntity.BaseStats;
+using __Scripts.CharacterEntity.State;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;

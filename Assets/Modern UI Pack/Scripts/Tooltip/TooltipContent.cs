@@ -1,10 +1,10 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Tooltip
 {
     [AddComponentMenu("Modern UI Pack/Tooltip/Tooltip Content")]
     public class TooltipContent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

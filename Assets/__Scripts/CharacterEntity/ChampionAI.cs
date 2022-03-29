@@ -2,22 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using __Scripts.Behaviour;
+using __Scripts.Behaviour.Abstracts;
 using __Scripts.CharacterEntity.State;
 using __Scripts.Controller;
+using __Scripts.Environment;
 using __Scripts.GameLoop;
-using Behaviour;
-using Behaviour.Abstracts;
-using CharacterEntity.CharacterState;
-using CharacterEntity.State;
-using Controller;
-using Environment;
-using GameLoop;
 using UnityEngine;
 using UnityEngine.AI;
 using PlayMode = __Scripts.Controller.PlayMode;
 using Random = UnityEngine.Random;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public class ChampionAI : MonoBehaviour
     {

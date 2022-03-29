@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.UI_Manager
 {
     public class UIManagerPieChart : MonoBehaviour
     {

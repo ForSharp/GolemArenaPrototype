@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Modal_Window
 {
     public class ModalWindowManager : MonoBehaviour
     {
@@ -12,8 +12,8 @@ namespace Michsky.UI.ModernUIPack
         public Image windowIcon;
         public TextMeshProUGUI windowTitle;
         public TextMeshProUGUI windowDescription;
-        public Button confirmButton;
-        public Button cancelButton;
+        public UnityEngine.UI.Button confirmButton;
+        public UnityEngine.UI.Button cancelButton;
         public Animator mwAnimator;
 
         // Content

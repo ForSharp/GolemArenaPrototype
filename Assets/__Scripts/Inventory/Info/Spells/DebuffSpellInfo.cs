@@ -1,7 +1,7 @@
-﻿using CharacterEntity.ExtraStats;
+﻿using __Scripts.CharacterEntity.ExtraStats;
 using UnityEngine;
 
-namespace Inventory.Info.Spells
+namespace __Scripts.Inventory.Info.Spells
 {
     [CreateAssetMenu(fileName = "DebuffSpellInfo", menuName = "Gameplay/Spells/Create New DebuffSpellInfo")]
     public class DebuffSpellInfo : ScriptableObject

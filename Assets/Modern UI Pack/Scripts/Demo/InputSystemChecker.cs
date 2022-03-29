@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 #endif
 
-namespace Michsky.UI.ModernUIPack
+namespace Modern_UI_Pack.Scripts.Demo
 {
     public class InputSystemChecker : MonoBehaviour
     {

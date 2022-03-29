@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CharacterEntity
+namespace __Scripts.CharacterEntity
 {
     public static class AnimationChangerCreep
     {

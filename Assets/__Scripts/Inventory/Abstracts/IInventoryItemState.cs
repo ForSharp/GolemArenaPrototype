@@ -1,4 +1,4 @@
-﻿namespace Inventory.Abstracts
+﻿namespace __Scripts.Inventory.Abstracts
 {
     public interface IInventoryItemState
     {

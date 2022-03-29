@@ -1,27 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PanelControll : MonoBehaviour {
+namespace Low_Poly_Animated_Animals.__Scripts
+{
+	public class PanelControll : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+		// Use this for initialization
+		void Start () {
 		
-	}
+		}
 	
-	// Update is called once per frame
-	void Update () {
+		// Update is called once per frame
+		void Update () {
 	
 
 
-	} 
+		} 
 
-	public void PanelToggle(){
-		if (this.gameObject.activeSelf) {
-			this.gameObject.SetActive (false);
+		public void PanelToggle(){
+			if (this.gameObject.activeSelf) {
+				this.gameObject.SetActive (false);
 			
-		} else {
-			this.gameObject.SetActive (true);
+			} else {
+				this.gameObject.SetActive (true);
+			}
 		}
 	}
 }

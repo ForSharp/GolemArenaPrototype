@@ -1,9 +1,9 @@
 ﻿using System;
-using Behaviour.Abstracts;
+using __Scripts.Behaviour.Abstracts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Behaviour
+namespace __Scripts.Behaviour
 {
     public class NoAttackBehaviour : IAttackable
     {
