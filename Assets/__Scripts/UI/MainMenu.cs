@@ -20,7 +20,7 @@ namespace __Scripts.UI
         public void Options()
         {
             //DoSomething
-            Settings.Instance.ShowSettingsPanel();
+            Settings.instance.ShowSettingsPanel();
             buttonClickSound.Play();
         }
 

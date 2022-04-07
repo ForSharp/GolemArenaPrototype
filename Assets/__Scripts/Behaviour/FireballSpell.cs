@@ -32,17 +32,18 @@ namespace __Scripts.Behaviour
         {
             if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
             {
-                transform.LookAt(target.transform);
                 AnimationChanger.SetCastSpell(_animator);
                 _target = target;
                 
-                Invoke(nameof(ContinueCast), 1);
+                transform.LookAt(_target.transform);
+                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+                
+                Invoke(nameof(ContinueCast), 1.5f);
             }
         }
         
         private void ContinueCast()
         {
-            transform.LookAt(_target.transform);
             var fireBall = Instantiate(_spellEffect, new Vector3(transform.localPosition.x + 1, 
                 transform.localPosition.y + 1, transform.localPosition.z), Quaternion.identity, transform);
             

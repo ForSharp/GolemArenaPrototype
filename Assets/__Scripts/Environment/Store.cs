@@ -58,7 +58,7 @@ namespace __Scripts.Environment
         {
             foreach (var champion in Game.AllChampionsInSession)
             {
-                purses.Add(champion, Settings.Instance.StartMoney);
+                purses.Add(champion, Settings.instance.StartMoney);
             }
         }
 

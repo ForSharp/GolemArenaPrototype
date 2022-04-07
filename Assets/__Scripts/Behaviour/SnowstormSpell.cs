@@ -32,18 +32,18 @@ namespace __Scripts.Behaviour
         {
             if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
             {
-                transform.LookAt(target.transform);
                 AnimationChanger.SetCastSpell(_animator);
                 _target = target;
                 
-                Invoke(nameof(ContinueCast), 1);
+                transform.LookAt(target.transform);
+                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+                
+                Invoke(nameof(ContinueCast), 1.5f);
             }
         }
         
         private void ContinueCast()
         {
-            transform.LookAt(_target.transform);
-            
             // var effect = Instantiate(_spellEffect, new Vector3(_target.transform.position.x, 
             //     _target.transform.position.y + 1, _target.transform.position.x), Quaternion.identity);
             var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity);

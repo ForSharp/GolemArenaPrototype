@@ -140,7 +140,7 @@ namespace __Scripts.Controller
             switch (_playMode)
             {
                 case PlayMode.Standard:
-                    HandleJoystickInput();
+                    HandleInput();
                     break;
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
@@ -338,12 +338,12 @@ namespace __Scripts.Controller
 
         #region StandardController
 
-        private void HandleJoystickInput()
+        private void HandleInput()
         {
             if (CanMove())
             {
-                MoveCharacterByKeyboard();
-                //MoveCharacterByJoystick();
+                //MoveCharacterByKeyboard();
+                MoveCharacterByJoystick();
                 MakeSomersault();
                 Attack();
             }
@@ -358,13 +358,18 @@ namespace __Scripts.Controller
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                //Player.PlayerCharacter.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+                
                 AttackByController?.Invoke();
             }
         }
 
         public void AttackByButton()
         {
+            //Player.PlayerCharacter.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+            
             AttackByController?.Invoke();
+
         }
 
         private void MoveCharacterByJoystick()
@@ -382,16 +387,19 @@ namespace __Scripts.Controller
             {
                 if (Mathf.Abs(fixedJoystick.Horizontal) > 0.5 || Mathf.Abs(fixedJoystick.Vertical) > 0.5 )
                 {
+                    _animator.applyRootMotion = false;
                     Run();
                 }
                 else
                 {
+                    _animator.applyRootMotion = false;
                     Walk();
                 }
                 
             }
             else
             {
+                _animator.applyRootMotion = true;
                 Idle();
             }
 
@@ -423,14 +431,17 @@ namespace __Scripts.Controller
 
             if (_moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
             {
+                _animator.applyRootMotion = false;
                 Walk();
             }
             else if (_moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
             {
+                _animator.applyRootMotion = false;
                 Run();
             }
             else
             {
+                _animator.applyRootMotion = true;
                 Idle();
             }
 
@@ -450,6 +461,8 @@ namespace __Scripts.Controller
                 AnimationChanger.SetSomersault(_animator);
             }
         }
+        
+        
 
         private void Idle()
         {

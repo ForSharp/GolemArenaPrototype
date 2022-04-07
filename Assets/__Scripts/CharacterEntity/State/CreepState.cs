@@ -10,6 +10,7 @@ namespace __Scripts.CharacterEntity.State
         public float CreepLiveDuration { get; private set; }
         private  void Start()
         {
+            RoundStatistics = new RoundStatistics(this);
             ConsumablesEater = new ConsumablesEater(this);
         }
 
@@ -36,7 +37,16 @@ namespace __Scripts.CharacterEntity.State
         private void GetDeadlyDamage()
         {
             TakeDamage(100000000, null);
+            
+            AddRoundStatsToOwner();
+            
             Game.RemoveDeadCreep(this);
+        }
+
+        private void AddRoundStatsToOwner()
+        {
+            CreepOwner.RoundStatistics.RoundDamage += RoundStatistics.RoundDamage;
+            CreepOwner.RoundStatistics.RoundKills += RoundStatistics.RoundKills;
         }
     }
 }

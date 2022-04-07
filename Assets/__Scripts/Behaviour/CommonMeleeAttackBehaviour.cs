@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using __Scripts.Behaviour.Abstracts;
 using __Scripts.CharacterEntity.State;
@@ -65,6 +66,7 @@ namespace __Scripts.Behaviour
 
         private void OnAttackStarted()
         {
+            //transform.LookAt(_target.transform.position);
             _isLastHitEnd = false;
             _timeToEndAttack = 0;
         }
@@ -77,6 +79,7 @@ namespace __Scripts.Behaviour
         private void OnAttackEnded()
         {
             _isLastHitEnd = true;
+            
         }
         
         #endregion
@@ -106,6 +109,7 @@ namespace __Scripts.Behaviour
             if (_target)
             {
                 transform.LookAt(_target.transform.position);
+                
             }
 
             if (!TryFindEnemiesInSpecifiedArea(GetDamageArea(_attackRange / 3)))
@@ -114,6 +118,8 @@ namespace __Scripts.Behaviour
             }
         }
 
+        
+        
         private Vector3 GetDamageArea(float attackRange)
         {
             Vector3 spherePosition = transform.position + transform.forward * attackRange;

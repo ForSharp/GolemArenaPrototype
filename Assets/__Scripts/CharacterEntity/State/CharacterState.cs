@@ -27,7 +27,7 @@ namespace __Scripts.CharacterEntity.State
         public bool IsDead { get; protected set; }
         public CharacterBaseStats BaseStats { get; protected set; }
         public CharacterExtraStats Stats { get; protected set; }
-        
+        public RoundStatistics RoundStatistics { get; protected set; }
         public Character Character { get; protected set; }
         public ConsumablesEater ConsumablesEater { get; protected set; }
         public RoundStatistics LastEnemyAttacked { get; protected set; }

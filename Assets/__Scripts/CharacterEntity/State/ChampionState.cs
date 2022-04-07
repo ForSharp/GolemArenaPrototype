@@ -12,7 +12,7 @@ namespace __Scripts.CharacterEntity.State
         public InventoryHelper InventoryHelper { get; private set; }
         public SpellManager SpellManager { get; private set; }
         public SpellPanelHelper SpellPanelHelper { get; private set; }
-        public RoundStatistics RoundStatistics { get; private set; }
+        
         public SoundsController SoundsController { get; private set; }
         public event Action StartSpellCast;
         public event Action CancelSpellCast;
@@ -22,7 +22,6 @@ namespace __Scripts.CharacterEntity.State
         private void Start()
         {
             RoundStatistics = new RoundStatistics(this);
-            
             InventoryHelper = GetComponent<InventoryHelper>();
             SpellPanelHelper = GetComponent<SpellPanelHelper>();
             SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());

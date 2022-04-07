@@ -41,7 +41,7 @@ namespace __Scripts.CharacterEntity
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.35f;
+        private const float DestructionRadius = 0.45f;
         private static readonly Vector2 AutoResetTargetDelay = new Vector2(15, 30);
 
         private void Start()
@@ -282,7 +282,15 @@ namespace __Scripts.CharacterEntity
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
             _attackable.Attack();
-            _navMeshAgent.enabled = true;
+
+            if (_thisState != Player.PlayerCharacter || _isAIControlAllowed)
+            {
+                _navMeshAgent.enabled = true;
+            }
+            else
+            {
+                _navMeshAgent.enabled = false;
+            }
         }
 
         private List<string> _activeStunsId = new List<string>();
@@ -370,7 +378,7 @@ namespace __Scripts.CharacterEntity
 
             bool CanCastSpell(out int spellNumber)
             {
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
+                if (CanFight() && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
                     _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
                     && Game.Stage == Game.GameStage.Battle)
                 {
@@ -378,7 +386,7 @@ namespace __Scripts.CharacterEntity
                     return true;
                 }
 
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellSecondUI.IsActive &&
+                if (CanFight() && _thisState.SpellManager.SpellSecondUI.IsActive &&
                     !_thisState.SpellManager.SpellSecondUI.InCooldown &&
                     _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
                     && Game.Stage == Game.GameStage.Battle)
@@ -387,7 +395,7 @@ namespace __Scripts.CharacterEntity
                     return true;
                 }
                 
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellThirdUI.IsActive &&
+                if (CanFight() && _thisState.SpellManager.SpellThirdUI.IsActive &&
                     !_thisState.SpellManager.SpellThirdUI.InCooldown &&
                     _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
                     && Game.Stage == Game.GameStage.Battle)
@@ -435,7 +443,7 @@ namespace __Scripts.CharacterEntity
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
-            if (!_inAttack)
+            if (!_inAttack && _isAIControlAllowed)
                 TurnSmoothlyToTarget();
         }
 
