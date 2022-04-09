@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using __Scripts.Controller;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -17,7 +18,7 @@ namespace Michsky.UI.ModernUIPack
                 {
                     if (Selection.activeGameObject == null)
                     {
-                        var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
+                        var canvas = (CanvasController)GameObject.FindObjectsOfType(typeof(CanvasController))[0];
                         Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                         clone.transform.SetParent(canvas.transform, false);
                     }
@@ -35,7 +36,7 @@ namespace Michsky.UI.ModernUIPack
                 {
                     Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     CreateCanvas();
-                    var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
+                    var canvas = (CanvasController)GameObject.FindObjectsOfType(typeof(CanvasController))[0];
                     clone.transform.SetParent(canvas.transform, false);
                     clone.name = clone.name.Replace("(Clone)", "").Trim();
                 }
@@ -64,7 +65,7 @@ namespace Michsky.UI.ModernUIPack
                 {
                     if (Selection.activeGameObject == null)
                     {
-                        var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
+                        var canvas = (CanvasController)GameObject.FindObjectsOfType(typeof(CanvasController))[0];
                         Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                         clone.transform.SetParent(canvas.transform, false);
                     }
@@ -82,7 +83,7 @@ namespace Michsky.UI.ModernUIPack
                 {
                     Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     CreateCanvas();
-                    var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
+                    var canvas = (CanvasController)GameObject.FindObjectsOfType(typeof(CanvasController))[0];
                     clone.transform.SetParent(canvas.transform, false);
                     clone.name = "Button";
                 }

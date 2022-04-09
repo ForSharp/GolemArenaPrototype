@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using __Scripts.Controller;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace VFX.Polygon_Arsenal.Demo.Scripts
@@ -122,11 +123,11 @@ public class PolygonSceneSelect : MonoBehaviour
      
          if (GUIHide)
 		 {
-             GameObject.Find("CanvasSceneSelect").GetComponent<Canvas> ().enabled = false;
+             GameObject.Find("CanvasSceneSelect").GetComponent<CanvasController> ().enabled = false;
          }
 		 else
 		 {
-             GameObject.Find("CanvasSceneSelect").GetComponent<Canvas> ().enabled = true;
+             GameObject.Find("CanvasSceneSelect").GetComponent<CanvasController> ().enabled = true;
          }
      }
 	      if(Input.GetKeyDown(KeyCode.J))
@@ -135,11 +136,11 @@ public class PolygonSceneSelect : MonoBehaviour
      
          if (GUIHide2)
 		 {
-             GameObject.Find("CanvasMissiles").GetComponent<Canvas> ().enabled = false;
+             GameObject.Find("CanvasMissiles").GetComponent<CanvasController> ().enabled = false;
          }
 		 else
 		 {
-             GameObject.Find("CanvasMissiles").GetComponent<Canvas> ().enabled = true;
+             GameObject.Find("CanvasMissiles").GetComponent<CanvasController> ().enabled = true;
          }
      }
 		if(Input.GetKeyDown(KeyCode.H))
@@ -148,11 +149,11 @@ public class PolygonSceneSelect : MonoBehaviour
      
          if (GUIHide3)
 		 {
-             GameObject.Find("CanvasTips").GetComponent<Canvas> ().enabled = false;
+             GameObject.Find("CanvasTips").GetComponent<CanvasController> ().enabled = false;
          }
 		 else
 		 {
-             GameObject.Find("CanvasTips").GetComponent<Canvas> ().enabled = true;
+             GameObject.Find("CanvasTips").GetComponent<CanvasController> ().enabled = true;
          }
      }
 	}

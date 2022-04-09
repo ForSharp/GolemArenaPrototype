@@ -1595,7 +1595,6 @@ MonoBehaviour:
   spellButtonSecond: {fileID: 8633617815172670632}
   spellButtonThird: {fileID: 9166193586758271763}
   learnedSpellsPanel: {fileID: 5596485632025455436}
-  character: {fileID: 0}
 --- !u!1 &8048582548697747462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,8 +2117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -230, y: 145}
-  m_SizeDelta: {x: 500, y: 300}
+  m_AnchoredPosition: {x: -230, y: 100}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &582799637508931790
 MonoBehaviour:

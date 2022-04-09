@@ -18,15 +18,12 @@ namespace __Scripts.Controller
         private PathFollower _cameraPathFollower;
         private float _x, _y;
         private PlayMode _playMode = PlayMode.Cinematic;
-        private Vector3 _startPos;
-        private Quaternion _startRot;
+        private CanvasController _canvasController;
 
         public static CameraMovement Instance { get; private set; }
 
         private void Awake()
         {
-            _startPos = transform.position;
-            _startRot = transform.rotation;
             Instance = this;
         }
 
@@ -34,6 +31,7 @@ namespace __Scripts.Controller
         {
             _cameraPathFollower = GetComponent<PathFollower>();
             SetMainMenuMovement();
+            _canvasController = FindObjectOfType<CanvasController>();
         }
 
         private void Update()
@@ -105,16 +103,9 @@ namespace __Scripts.Controller
 
         private void SetStandardMovement()
         {
-            SetStaticCameraPosition();
-            //MoveCameraAroundHero();
+            MoveCameraAroundHero();
         }
 
-        private void SetStaticCameraPosition()
-        {
-            transform.position = _startPos;
-            transform.rotation = _startRot;
-        }
-        
         private void MoveCameraAroundHero(float multiplier = 1)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -129,10 +120,8 @@ namespace __Scripts.Controller
             cameraMoveAroundSettings.offset.z = Mathf.Clamp(cameraMoveAroundSettings.offset.z * multiplier,
                 -Mathf.Abs(cameraMoveAroundSettings.zoomMax), -Mathf.Abs(cameraMoveAroundSettings.zoomMin));
             
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) || _canvasController.CanMoveCamera)
             {
-                
-
                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
                 _y = Mathf.Clamp(_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
