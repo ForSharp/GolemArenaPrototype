@@ -1,5 +1,7 @@
 ﻿using __Scripts.GameLoop;
+using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,9 +48,33 @@ namespace __Scripts.Environment
             }
         }
         
+        private string _currentItemId;
+        
         public void OnButtonClicked(Text id)
         {
-            if(_inventoryShowcase.Owner.InventoryHelper.InventoryOrganization.inventory.TryToRemove(this, id.text))
+            _currentItemId = id.text;
+            
+            _inventoryShowcase.SetInventoryShowcaseItem(this);
+        }
+
+        private Vector2 _pos;
+        public void SetPosition(Transform tr)
+        {
+            _pos.x = tr.position.x;
+            _pos.y = tr.position.y;
+            
+            ShowInfo();
+        }
+
+        private void ShowInfo()
+        {
+            var itemInfo = ItemContainer.Instance.GetItemById(_currentItemId).Info;
+            _store.ItemInfoPanel.ShowInfo(itemInfo, ItemInfoPanelType.ShopSell, _pos);
+        }
+
+        public void SellItem()
+        {
+            if(_inventoryShowcase.Owner.InventoryHelper.InventoryOrganization.inventory.TryToRemove(this, _currentItemId))
             {
                 _store.purses.TryGetValue(_inventoryShowcase.Owner, out var money);
                 money += _price;
@@ -57,6 +83,7 @@ namespace __Scripts.Environment
                 EventContainer.OnItemSold();
             }
             
+            _store.ItemInfoPanel.Close();
         }
     }
 }

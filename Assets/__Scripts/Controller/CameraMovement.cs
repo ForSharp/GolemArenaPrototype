@@ -14,11 +14,11 @@ namespace __Scripts.Controller
         [SerializeField] private Transform battleTrackingTarget;
         [SerializeField] private Transform trackingTarget;
         [SerializeField] private CameraMoveAroundSettings cameraMoveAroundSettings = new CameraMoveAroundSettings();
+        [SerializeField] private DynamicJoystick joystick;
 
         private PathFollower _cameraPathFollower;
         private float _x, _y;
         private PlayMode _playMode = PlayMode.Cinematic;
-        private CanvasController _canvasController;
 
         public static CameraMovement Instance { get; private set; }
 
@@ -31,7 +31,6 @@ namespace __Scripts.Controller
         {
             _cameraPathFollower = GetComponent<PathFollower>();
             SetMainMenuMovement();
-            _canvasController = FindObjectOfType<CanvasController>();
         }
 
         private void Update()
@@ -50,13 +49,15 @@ namespace __Scripts.Controller
                 case PlayMode.Cinematic:
                     if (Game.Stage == Game.GameStage.MainMenu)
                     {
+                        joystick.gameObject.SetActive(false);
                         transform.LookAt(mainMenuTrackingTarget);
                     }
                     else if (Game.Stage == Game.GameStage.Battle || Game.Stage == Game.GameStage.BetweenBattles)
                     {
+                        joystick.gameObject.SetActive(true);
+                        MoveCameraByJoystick();
                         TurnSmoothlyToTarget(trackingTarget, 1);
                     }
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -87,6 +88,8 @@ namespace __Scripts.Controller
 
         private void SetStandardMovementValues()
         {
+            joystick.gameObject.SetActive(true);
+            
             _playMode = PlayMode.Standard;
             _cameraPathFollower.MoveType = PathFollower.MovementType.None;
 
@@ -120,22 +123,37 @@ namespace __Scripts.Controller
             cameraMoveAroundSettings.offset.z = Mathf.Clamp(cameraMoveAroundSettings.offset.z * multiplier,
                 -Mathf.Abs(cameraMoveAroundSettings.zoomMax), -Mathf.Abs(cameraMoveAroundSettings.zoomMin));
             
-            if (Input.GetMouseButton(1) || _canvasController.CanMoveCamera)
+            if (Input.GetMouseButton(1))
             {
                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
                 _y = Mathf.Clamp(_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
                 transform.localEulerAngles = new Vector3(-_y, _x, 0);
-
-
+                
             }
             
             transform.position = transform.localRotation * cameraMoveAroundSettings.offset +
                                  Player.PlayerCharacter.transform.position;
             
+            MoveCameraByJoystick();
             
         }
 
+        private void MoveCameraByJoystick()
+        {
+            var moveVector = Vector3.zero;
+            
+            moveVector.x = joystick.Horizontal;
+            moveVector.y = joystick.Vertical;
+            moveVector.z = joystick.Vertical;
+            
+            if (Vector3.Angle(Vector3.forward, moveVector) > 1 || Vector3.Angle(Vector3.forward, moveVector) == 0)
+            {
+                var direction = Vector3.RotateTowards(transform.forward, moveVector, 1, 0);
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
+        }
+        
         private void SetCinematicMovement()
         {
             _playMode = PlayMode.Cinematic;

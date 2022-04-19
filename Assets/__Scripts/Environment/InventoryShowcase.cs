@@ -81,5 +81,16 @@ namespace __Scripts.Environment
             EventContainer.ItemSold -= SetCashValue;
             
         }
+
+        private InventoryShowcaseItem _currentItem;
+        public void SetInventoryShowcaseItem(InventoryShowcaseItem item)
+        {
+            _currentItem = item;
+        }
+
+        public void SellItem()
+        {
+            _currentItem.SellItem();
+        }
     }
 }

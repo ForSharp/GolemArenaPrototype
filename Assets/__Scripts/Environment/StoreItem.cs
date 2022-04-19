@@ -1,4 +1,5 @@
-﻿using __Scripts.Inventory.Abstracts;
+﻿using System;
+using __Scripts.Inventory.Abstracts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,6 @@ namespace __Scripts.Environment
         private void Start()
         {
             _store = GetComponentInParent<Store>();
-            
         }
 
         public void Initialize(IInventoryItem item)
@@ -25,10 +25,12 @@ namespace __Scripts.Environment
             price.text = item.Info.Price.ToString();
             itemId.text = item.Info.Id;
         }
+        
 
         public void OnButtonClicked(Text id)
         {
-            _store.SendItemToPlayer(id.text);
+            //_store.SendItemToPlayer(id.text);
+            _store.ChooseItem(id.text, new Vector2(transform.position.x, transform.position.y));
         }
     }
 }

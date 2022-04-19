@@ -379,8 +379,7 @@ namespace __Scripts.CharacterEntity
             bool CanCastSpell(out int spellNumber)
             {
                 if (CanFight() && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
-                    _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                    _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 1;
                     return true;
@@ -388,8 +387,7 @@ namespace __Scripts.CharacterEntity
 
                 if (CanFight() && _thisState.SpellManager.SpellSecondUI.IsActive &&
                     !_thisState.SpellManager.SpellSecondUI.InCooldown &&
-                    _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                    _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 2;
                     return true;
@@ -397,8 +395,7 @@ namespace __Scripts.CharacterEntity
                 
                 if (CanFight() && _thisState.SpellManager.SpellThirdUI.IsActive &&
                     !_thisState.SpellManager.SpellThirdUI.InCooldown &&
-                    _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                    _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 3;
                     return true;

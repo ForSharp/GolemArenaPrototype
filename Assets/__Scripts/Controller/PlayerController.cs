@@ -277,13 +277,10 @@ namespace __Scripts.Controller
                      !_currentCharacter.SpellPanelHelper.SpellsPanel.InPanel)
             {
                 standardPanel.gameObject.SetActive(false);
-                foreach (var character in Game.AllCharactersInSession)
+                foreach (var character in Game.AllChampionsInSession)
                 {
-                    if (character is ChampionState champion)
-                    {
-                        champion.InventoryHelper.InventoryOrganization.HideAllInventory();
-                        champion.SpellPanelHelper.SpellsPanel.HideAll();
-                    }
+                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    character.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
         }

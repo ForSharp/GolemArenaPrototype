@@ -5,6 +5,7 @@ using __Scripts.Controller;
 using __Scripts.GameLoop;
 using __Scripts.Inventory;
 using __Scripts.Inventory.Abstracts;
+using __Scripts.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -29,12 +30,15 @@ namespace __Scripts.Environment
         [SerializeField] private Image buttonConsumables;
         [SerializeField] private Image buttonPotions;
         [SerializeField] private Image buttonSpells;
+
+        [SerializeField] private ItemInfoPanel itemInfoPanel;
         
         private List<IInventoryItem> _items = new List<IInventoryItem>();
         private ItemContainer _container;
 
         public readonly Dictionary<ChampionState, int> purses = new Dictionary<ChampionState, int>();
-
+        public ItemInfoPanel ItemInfoPanel => itemInfoPanel;
+        
         private void Start()
         {
             _container = ItemContainer.Instance;
@@ -62,13 +66,17 @@ namespace __Scripts.Environment
             }
         }
 
-        private void HideStore()
+        public void HideStore()
         {
             storeButtonText.text = "Open";
             
             showcaseContainer.SetActive(false);
             switchButtons.SetActive(false);
             inventoryShowcase.SetActive(false);
+            
+            itemInfoPanel.Close();
+            
+            
         }
 
         private void ShowStore()
@@ -80,6 +88,13 @@ namespace __Scripts.Environment
             inventoryShowcase.SetActive(true);
             
             SetShowcase("Artefact");
+            
+            itemInfoPanel.Close();
+            foreach (var champion in Game.AllChampionsInSession)
+            {
+                champion.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
+                champion.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
+            }
         }
 
         public void SetShowcase(string itemType)
@@ -100,6 +115,8 @@ namespace __Scripts.Environment
                     showcaseConsumables.SetActive(false);
                     showcasePotions.SetActive(false);
                     showcaseSpells.SetActive(false);
+                    
+                    itemInfoPanel.Close();
                     break;
                 case "Consumable":
                     showcaseConsumables.SetActive(true);
@@ -115,6 +132,8 @@ namespace __Scripts.Environment
                     showcaseArtefacts.SetActive(false);
                     showcasePotions.SetActive(false);
                     showcaseSpells.SetActive(false);
+                    
+                    itemInfoPanel.Close();
                     break;
                 case "Potion":
                     showcasePotions.SetActive(true);
@@ -130,6 +149,8 @@ namespace __Scripts.Environment
                     showcaseArtefacts.SetActive(false);
                     showcaseConsumables.SetActive(false);
                     showcaseSpells.SetActive(false);
+                    
+                    itemInfoPanel.Close();
                     break;
                 case "Spell":
                     showcaseSpells.SetActive(true);
@@ -145,6 +166,8 @@ namespace __Scripts.Environment
                     showcaseArtefacts.SetActive(false);
                     showcaseConsumables.SetActive(false);
                     showcasePotions.SetActive(false);
+                    
+                    itemInfoPanel.Close();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -205,6 +228,23 @@ namespace __Scripts.Environment
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
+        }
+
+        private string _currentItemId;
+        
+        public void ChooseItem(string itemId, Vector2 pos)
+        {
+            _currentItemId = itemId;
+            var itemInfo = ItemContainer.Instance.GetItemById(itemId).Info;
+            itemInfoPanel.ShowInfo(itemInfo, ItemInfoPanelType.ShopBuy, pos);
+        }
+
+        public void SendItemToPlayer()
+        {
+            if (_currentItemId != null)
+            {
+                SendItemToPlayer(_currentItemId);
             }
         }
         
