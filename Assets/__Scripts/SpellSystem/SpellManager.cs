@@ -17,7 +17,6 @@ namespace __Scripts.SpellSystem
 {
     public class SpellManager
     {
-        private readonly Animator _animator;
         private readonly ChampionState _character;
         private readonly SpellContainer _spellContainer;
         private readonly SpellsPanel _spellsPanel;
@@ -75,9 +74,8 @@ namespace __Scripts.SpellSystem
             inventory.OnInventoryStateChanged(_character);
         }
 
-        public SpellManager(Animator animator, ChampionState characterState, SpellContainer spellContainer)
+        public SpellManager(ChampionState characterState, SpellContainer spellContainer)
         {
-            _animator = animator;
             _character = characterState;
             _spellContainer = spellContainer;
             _spellsPanel = _character.SpellPanelHelper.SpellsPanel;

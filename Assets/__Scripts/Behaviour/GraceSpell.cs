@@ -30,18 +30,15 @@ namespace __Scripts.Behaviour
 
         public void CastSpell(CharacterState target)
         {
-            if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
-            {
-                AnimationChanger.SetCastSpell(_animator);
-                _target = target;
-                
-                transform.LookAt(_target.transform);
-                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
-                
-                Invoke(nameof(ContinueCast), 1.5f);
-            }
+            AnimationChanger.SetCastSpell(_animator);
+            _target = target;
+
+            transform.LookAt(_target.transform);
+            transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+
+            Invoke(nameof(ContinueCast), 1.5f);
         }
-        
+
         private void ContinueCast()
         {
             if (_target.GetComponentInChildren<GraceEffect>())
@@ -49,10 +46,10 @@ namespace __Scripts.Behaviour
                 var oldEffect = _target.GetComponentInChildren<GraceEffect>();
                 Destroy(oldEffect.gameObject);
             }
+
             var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity, _target.transform);
             var freezingEffect = effect.GetComponent<GraceEffect>();
             freezingEffect.Initialize(_character, _target, _info);
-            
         }
     }
 }

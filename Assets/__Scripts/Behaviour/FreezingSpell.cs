@@ -15,7 +15,7 @@ namespace __Scripts.Behaviour
         private CharacterState _target;
         private Animator _animator;
         private GameObject _spellEffect;
-        
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
@@ -30,28 +30,23 @@ namespace __Scripts.Behaviour
 
         public void CastSpell(CharacterState target)
         {
-            if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
-            {
-                AnimationChanger.SetCastSpell(_animator);
-                _target = target;
-                
-                transform.LookAt(_target.transform);
-                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+            AnimationChanger.SetCastSpell(_animator);
+            _target = target;
 
-                Invoke(nameof(ContinueCast), 1.5f);
-            }
+            transform.LookAt(_target.transform);
+            transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+
+            Invoke(nameof(ContinueCast), 1.5f);
         }
-        
-        
+
+
         private void ContinueCast()
         {
             //тут решить, прошел каст или нет (маг точность, маг уклонение)
-            
+
             var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity, _target.transform);
             var freezingEffect = effect.GetComponent<FreezingEffect>();
             freezingEffect.Initialize(_character, _target, _info);
-            
         }
-        
     }
 }

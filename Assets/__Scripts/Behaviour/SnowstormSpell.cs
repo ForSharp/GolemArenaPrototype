@@ -30,18 +30,15 @@ namespace __Scripts.Behaviour
 
         public void CastSpell(CharacterState target)
         {
-            if (_character.TrySpendMana(_info.SpellInfo.ManaCost))
-            {
-                AnimationChanger.SetCastSpell(_animator);
-                _target = target;
-                
-                transform.LookAt(target.transform);
-                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
-                
-                Invoke(nameof(ContinueCast), 1.5f);
-            }
+            AnimationChanger.SetCastSpell(_animator);
+            _target = target;
+
+            transform.LookAt(target.transform);
+            transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+
+            Invoke(nameof(ContinueCast), 1.5f);
         }
-        
+
         private void ContinueCast()
         {
             // var effect = Instantiate(_spellEffect, new Vector3(_target.transform.position.x, 
@@ -49,7 +46,6 @@ namespace __Scripts.Behaviour
             var effect = Instantiate(_spellEffect, _target.transform.position, Quaternion.identity);
             var snowstormEffect = effect.GetComponent<SnowstormEffect>();
             snowstormEffect.Initialize(_character, _info);
-            
         }
     }
 }

@@ -54,8 +54,7 @@ namespace __Scripts.Controller
                     }
                     else if (Game.Stage == Game.GameStage.Battle || Game.Stage == Game.GameStage.BetweenBattles)
                     {
-                        joystick.gameObject.SetActive(true);
-                        MoveCameraByJoystick();
+                        joystick.gameObject.SetActive(false);
                         TurnSmoothlyToTarget(trackingTarget, 1);
                     }
                     break;
@@ -107,6 +106,7 @@ namespace __Scripts.Controller
         private void SetStandardMovement()
         {
             MoveCameraAroundHero();
+            MoveCameraByJoystick();
         }
 
         private void MoveCameraAroundHero(float multiplier = 1)
@@ -129,29 +129,32 @@ namespace __Scripts.Controller
                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
                 _y = Mathf.Clamp(_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
                 transform.localEulerAngles = new Vector3(-_y, _x, 0);
-                
             }
             
             transform.position = transform.localRotation * cameraMoveAroundSettings.offset +
                                  Player.PlayerCharacter.transform.position;
-            
-            MoveCameraByJoystick();
-            
+
+            transform.position = new Vector3(transform.position.x, Player.PlayerCharacter.transform.position.y + 4, transform.position.z);
+            TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
         }
 
         private void MoveCameraByJoystick()
         {
+            TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
+            
             var moveVector = Vector3.zero;
             
             moveVector.x = joystick.Horizontal;
-            moveVector.y = joystick.Vertical;
             moveVector.z = joystick.Vertical;
+            moveVector.y = joystick.Vertical;
             
             if (Vector3.Angle(Vector3.forward, moveVector) > 1 || Vector3.Angle(Vector3.forward, moveVector) == 0)
             {
                 var direction = Vector3.RotateTowards(transform.forward, moveVector, 1, 0);
                 transform.rotation = Quaternion.LookRotation(direction);
             }
+            
+            //transform.LookAt(Player.PlayerCharacter.transform);
         }
         
         private void SetCinematicMovement()

@@ -24,7 +24,7 @@ namespace __Scripts.CharacterEntity.State
             RoundStatistics = new RoundStatistics(this);
             InventoryHelper = GetComponent<InventoryHelper>();
             SpellPanelHelper = GetComponent<SpellPanelHelper>();
-            SpellManager = new SpellManager(GetComponent<Animator>(), this, GetComponent<SpellContainer>());
+            SpellManager = new SpellManager(this, GetComponent<SpellContainer>());
             
             var unused = new ExtraStatsEditorWithItems(this);
             
