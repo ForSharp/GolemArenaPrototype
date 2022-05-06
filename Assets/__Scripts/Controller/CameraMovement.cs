@@ -106,7 +106,7 @@ namespace __Scripts.Controller
         private void SetStandardMovement()
         {
             MoveCameraAroundHero();
-            MoveCameraByJoystick();
+            //MoveCameraByJoystick();
         }
 
         private void MoveCameraAroundHero(float multiplier = 1)
@@ -135,7 +135,7 @@ namespace __Scripts.Controller
                                  Player.PlayerCharacter.transform.position;
 
             transform.position = new Vector3(transform.position.x, Player.PlayerCharacter.transform.position.y + 4, transform.position.z);
-            TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
+            //TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
         }
 
         private void MoveCameraByJoystick()

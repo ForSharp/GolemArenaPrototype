@@ -754,7 +754,25 @@ namespace __Scripts.CharacterEntity
                 StartCoroutine(FindEnemies());
             }
 
-            if (enemies.Length > 0)
+            else if (enemies.Length > 1) //чтобы не брали в таргет игрока
+            {
+                List<CharacterState> enemiesExceptPlayer = new List<CharacterState>();
+                foreach (var enemy in enemies)
+                {
+                    if (enemy != Player.PlayerCharacter)
+                    {
+                        enemiesExceptPlayer.Add(enemy);
+                    }
+                    
+                }
+                
+                _targetState = enemiesExceptPlayer[Random.Range(0, enemiesExceptPlayer.Count)];
+                yield return new WaitForSeconds(Random.Range(AutoResetTargetDelay.x, AutoResetTargetDelay.y));
+                StartCoroutine(FindEnemies());
+                
+            }
+
+            else if (enemies.Length > 0)
             {
                 _targetState = enemies[Random.Range(0, enemies.Length)];
                 yield return new WaitForSeconds(Random.Range(AutoResetTargetDelay.x, AutoResetTargetDelay.y));
