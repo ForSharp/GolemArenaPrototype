@@ -80,7 +80,7 @@ namespace __Scripts.GameLoop
         
         private static void CreateBotCharacters()
         {
-            for (var i = 0; i < Settings.Instance.EnemiesQuantity; i++)
+            for (var i = 0; i < Settings.instance.EnemiesQuantity; i++)
             {
                 Spawner.Instance.SpawnChampion(GetRandomCharacter(), GetRandomSpecialization());
             }
@@ -224,7 +224,7 @@ namespace __Scripts.GameLoop
             Stage = GameStage.BetweenBattles;
             Round++;
 
-            if (Round > Settings.Instance.RoundsQuantity)
+            if (Round > Settings.instance.RoundsQuantity)
             {
                 EndCurrentGame();
             }

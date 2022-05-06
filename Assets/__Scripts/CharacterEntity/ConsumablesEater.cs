@@ -12,11 +12,11 @@ namespace __Scripts.CharacterEntity
 {
     public class ConsumablesEater
     {
-        private readonly State.CharacterState _character;
+        private readonly CharacterState _character;
         private readonly InventoryWithSlots _inventory;
         private readonly Dictionary<ExtraStatsParameter[], Coroutine> _effects = new Dictionary<ExtraStatsParameter[], Coroutine>();
 
-        public ConsumablesEater(State.CharacterState character)
+        public ConsumablesEater(CharacterState character)
         {
             _character = character;
 

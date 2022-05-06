@@ -1,6 +1,8 @@
 ﻿using __Scripts.CharacterEntity.State;
+using __Scripts.Environment;
 using __Scripts.Inventory.Abstracts;
 using __Scripts.Inventory.Abstracts.Spells;
+using __Scripts.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +17,10 @@ namespace __Scripts.SpellSystem
         [SerializeField] private LearnedSpellsPanel learnedSpellsPanel;
         private int _spellNumberToChange;
         private bool _learnedSpellPanelEnabled;
+        
+        private Store _store;
+        private ItemInfoPanel _itemInfoPanel;
+        
         public ChampionState Character { get; set; }
         
         public ActiveUISpell SpellButtonFirst => spellButtonFirst;
@@ -22,17 +28,24 @@ namespace __Scripts.SpellSystem
         public ActiveUISpell SpellButtonThird => spellButtonThird;
         public bool InPanel { get; private set; }
 
+        private void Awake()
+        {
+            _store = FindObjectOfType<Store>();
+            _itemInfoPanel = FindObjectOfType<ItemInfoPanel>();
+        }
+        
         public void HideLearnedSpellsPanel()
         {
             learnedSpellsPanel.HideLearnedSpells();
             _learnedSpellPanelEnabled = false;
+            _itemInfoPanel.Close();
         }
 
         public void HideAll()
         {
-            spellButtonFirst.gameObject.SetActive(false);
-            spellButtonSecond.gameObject.SetActive(false);
-            spellButtonThird.gameObject.SetActive(false);
+            spellButtonFirst.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+            spellButtonSecond.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+            spellButtonThird.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
             learnedSpellsPanel.HideLearnedSpells();
             _learnedSpellPanelEnabled = false;
         }
@@ -194,13 +207,16 @@ namespace __Scripts.SpellSystem
             learnedSpellsPanel.ShowLearnedSpells();
             Character.InventoryHelper.InventoryOrganization.HideNonEquippingSlots();
             _learnedSpellPanelEnabled = true;
+            
+            _itemInfoPanel.Close();
+            _store.HideStore();
         }
 
         public void ShowActiveSpells()
         {
-            spellButtonFirst.gameObject.SetActive(true);
-            spellButtonSecond.gameObject.SetActive(true);
-            spellButtonThird.gameObject.SetActive(true);
+            spellButtonFirst.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            spellButtonSecond.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            spellButtonThird.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
 
         public void AddLearnedSpell(ISpellItem learnedSpell)

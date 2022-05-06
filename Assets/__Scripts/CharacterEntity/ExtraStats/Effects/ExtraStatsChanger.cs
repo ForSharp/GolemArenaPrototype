@@ -32,55 +32,55 @@ namespace __Scripts.CharacterEntity.ExtraStats.Effects
             return stats;
         }
 
-        private CharacterExtraStats GetExtraStatsFlat(__Scripts.CharacterEntity.ExtraStats.ExtraStats type, float changingValue)
+        private CharacterExtraStats GetExtraStatsFlat(ExtraStats type, float changingValue)
         {
             var tempStats = new CharacterExtraStats();
             
             switch (type)
             {
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AttackRange:
+                case ExtraStats.AttackRange:
                     tempStats.attackRange = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AttackSpeed:
+                case ExtraStats.AttackSpeed:
                     tempStats.attackSpeed = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AvoidChance:
+                case ExtraStats.AvoidChance:
                     tempStats.avoidChance = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.DamagePerHeat:
+                case ExtraStats.DamagePerHeat:
                     tempStats.damagePerHeat = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.Defence:
+                case ExtraStats.Defence:
                     tempStats.defence = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.DodgeChance:
+                case ExtraStats.DodgeChance:
                     tempStats.dodgeChance = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.Health:
+                case ExtraStats.Health:
                     tempStats.health = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.HitAccuracy:
+                case ExtraStats.HitAccuracy:
                     tempStats.hitAccuracy = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicAccuracy:
+                case ExtraStats.MagicAccuracy:
                     tempStats.magicAccuracy = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicPower:
+                case ExtraStats.MagicPower:
                     tempStats.magicPower = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicResistance:
+                case ExtraStats.MagicResistance:
                     tempStats.magicResistance = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.ManaPool:
+                case ExtraStats.ManaPool:
                     tempStats.manaPool = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MoveSpeed:
+                case ExtraStats.MoveSpeed:
                     tempStats.moveSpeed = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.RegenerationHealth:
+                case ExtraStats.RegenerationHealth:
                     tempStats.regenerationHealth = changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.RegenerationMana:
+                case ExtraStats.RegenerationMana:
                     tempStats.regenerationMana = changingValue;
                     break;
                 default:
@@ -90,54 +90,54 @@ namespace __Scripts.CharacterEntity.ExtraStats.Effects
             return tempStats;
         }
         
-        private CharacterExtraStats GetExtraStatsMultiplier(CharacterExtraStats characterExtraStats, __Scripts.CharacterEntity.ExtraStats.ExtraStats type,
+        private CharacterExtraStats GetExtraStatsMultiplier(CharacterExtraStats characterExtraStats, ExtraStats type,
             float changingValue)
         {
             switch (type)
             {
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AttackRange:
+                case ExtraStats.AttackRange:
                     characterExtraStats.attackRange *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AttackSpeed:
+                case ExtraStats.AttackSpeed:
                     characterExtraStats.attackSpeed *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.AvoidChance:
+                case ExtraStats.AvoidChance:
                     characterExtraStats.avoidChance *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.DamagePerHeat:
+                case ExtraStats.DamagePerHeat:
                     characterExtraStats.damagePerHeat *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.Defence:
+                case ExtraStats.Defence:
                     characterExtraStats.defence *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.DodgeChance:
+                case ExtraStats.DodgeChance:
                     characterExtraStats.dodgeChance *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.Health:
+                case ExtraStats.Health:
                     characterExtraStats.health *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.HitAccuracy:
+                case ExtraStats.HitAccuracy:
                     characterExtraStats.hitAccuracy *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicAccuracy:
+                case ExtraStats.MagicAccuracy:
                     characterExtraStats.magicAccuracy *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicPower:
+                case ExtraStats.MagicPower:
                     characterExtraStats.magicPower *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MagicResistance:
+                case ExtraStats.MagicResistance:
                     characterExtraStats.magicResistance *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.ManaPool:
+                case ExtraStats.ManaPool:
                     characterExtraStats.manaPool *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.MoveSpeed:
+                case ExtraStats.MoveSpeed:
                     characterExtraStats.moveSpeed *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.RegenerationHealth:
+                case ExtraStats.RegenerationHealth:
                     characterExtraStats.regenerationHealth *= changingValue;
                     break;
-                case __Scripts.CharacterEntity.ExtraStats.ExtraStats.RegenerationMana:
+                case ExtraStats.RegenerationMana:
                     characterExtraStats.regenerationMana *= changingValue;
                     break;
                 default:

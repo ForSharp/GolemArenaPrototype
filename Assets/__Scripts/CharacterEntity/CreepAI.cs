@@ -32,11 +32,12 @@ namespace __Scripts.CharacterEntity
         
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.35f;
+        private const float DestructionRadius = 0.45f;
         private const int AutoResetTargetDelay = 30;
         
         private void Start()
         {
+
             _thisState = GetComponent<CreepState>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
@@ -238,7 +239,7 @@ namespace __Scripts.CharacterEntity
                 _animator, _thisState.Group, _thisState.Stats.damagePerHeat, GetDelayBetweenHits(),
                 _thisState.Stats.hitAccuracy,
                 _targetState.gameObject, _thisState.Type,
-                _ownerState.RoundStatistics,
+                _thisState.RoundStatistics,
                 AnimationChangerCreep.SetAttack);
             _attackable.Attack();
             

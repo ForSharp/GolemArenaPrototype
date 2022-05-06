@@ -14,6 +14,7 @@ namespace __Scripts.Controller
         [SerializeField] private Transform battleTrackingTarget;
         [SerializeField] private Transform trackingTarget;
         [SerializeField] private CameraMoveAroundSettings cameraMoveAroundSettings = new CameraMoveAroundSettings();
+        [SerializeField] private DynamicJoystick joystick;
 
         private PathFollower _cameraPathFollower;
         private float _x, _y;
@@ -48,13 +49,14 @@ namespace __Scripts.Controller
                 case PlayMode.Cinematic:
                     if (Game.Stage == Game.GameStage.MainMenu)
                     {
+                        joystick.gameObject.SetActive(false);
                         transform.LookAt(mainMenuTrackingTarget);
                     }
                     else if (Game.Stage == Game.GameStage.Battle || Game.Stage == Game.GameStage.BetweenBattles)
                     {
+                        joystick.gameObject.SetActive(false);
                         TurnSmoothlyToTarget(trackingTarget, 1);
                     }
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -85,6 +87,8 @@ namespace __Scripts.Controller
 
         private void SetStandardMovementValues()
         {
+            joystick.gameObject.SetActive(true);
+            
             _playMode = PlayMode.Standard;
             _cameraPathFollower.MoveType = PathFollower.MovementType.None;
 
@@ -102,6 +106,7 @@ namespace __Scripts.Controller
         private void SetStandardMovement()
         {
             MoveCameraAroundHero();
+            //MoveCameraByJoystick();
         }
 
         private void MoveCameraAroundHero(float multiplier = 1)
@@ -120,22 +125,38 @@ namespace __Scripts.Controller
             
             if (Input.GetMouseButton(1))
             {
-                
-
                 _x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * cameraMoveAroundSettings.sensitivity;
                 _y += Input.GetAxis("Mouse Y") * cameraMoveAroundSettings.sensitivity;
                 _y = Mathf.Clamp(_y, -cameraMoveAroundSettings.limit, cameraMoveAroundSettings.limit);
                 transform.localEulerAngles = new Vector3(-_y, _x, 0);
-
-
             }
             
             transform.position = transform.localRotation * cameraMoveAroundSettings.offset +
                                  Player.PlayerCharacter.transform.position;
-            
-            
+
+            transform.position = new Vector3(transform.position.x, Player.PlayerCharacter.transform.position.y + 4, transform.position.z);
+            //TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
         }
 
+        private void MoveCameraByJoystick()
+        {
+            TurnSmoothlyToTarget(Player.PlayerCharacter.transform, 5);
+            
+            var moveVector = Vector3.zero;
+            
+            moveVector.x = joystick.Horizontal;
+            moveVector.z = joystick.Vertical;
+            moveVector.y = joystick.Vertical;
+            
+            if (Vector3.Angle(Vector3.forward, moveVector) > 1 || Vector3.Angle(Vector3.forward, moveVector) == 0)
+            {
+                var direction = Vector3.RotateTowards(transform.forward, moveVector, 1, 0);
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
+            
+            //transform.LookAt(Player.PlayerCharacter.transform);
+        }
+        
         private void SetCinematicMovement()
         {
             _playMode = PlayMode.Cinematic;

@@ -41,7 +41,7 @@ namespace __Scripts.CharacterEntity
 
         private const float CloseDistance = 20;
         private const float HitHeight = 0.75f;
-        private const float DestructionRadius = 0.35f;
+        private const float DestructionRadius = 0.45f;
         private static readonly Vector2 AutoResetTargetDelay = new Vector2(15, 30);
 
         private void Start()
@@ -282,7 +282,15 @@ namespace __Scripts.CharacterEntity
             _moveable.Move(default, default);
             _attackable = new NoAttackBehaviour(_animator, AnimationChanger.SetFightIdle);
             _attackable.Attack();
-            _navMeshAgent.enabled = true;
+
+            if (_thisState != Player.PlayerCharacter || _isAIControlAllowed)
+            {
+                _navMeshAgent.enabled = true;
+            }
+            else
+            {
+                _navMeshAgent.enabled = false;
+            }
         }
 
         private List<string> _activeStunsId = new List<string>();
@@ -370,27 +378,24 @@ namespace __Scripts.CharacterEntity
 
             bool CanCastSpell(out int spellNumber)
             {
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
-                    _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                if (CanFight() && _thisState.SpellManager.SpellFirstUI.IsActive &&!_thisState.SpellManager.SpellFirstUI.InCooldown &&
+                    _thisState.SpellManager.SpellFirstUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 1;
                     return true;
                 }
 
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellSecondUI.IsActive &&
+                if (CanFight() && _thisState.SpellManager.SpellSecondUI.IsActive &&
                     !_thisState.SpellManager.SpellSecondUI.InCooldown &&
-                    _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                    _thisState.SpellManager.SpellSecondUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 2;
                     return true;
                 }
                 
-                if (!_thisState.IsDead && _thisState.SpellManager.SpellThirdUI.IsActive &&
+                if (CanFight() && _thisState.SpellManager.SpellThirdUI.IsActive &&
                     !_thisState.SpellManager.SpellThirdUI.InCooldown &&
-                    _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana
-                    && Game.Stage == Game.GameStage.Battle)
+                    _thisState.SpellManager.SpellThirdUI.SpellItem.SpellInfo.ManaCost <= _thisState.CurrentMana)
                 {
                     spellNumber = 3;
                     return true;
@@ -435,7 +440,7 @@ namespace __Scripts.CharacterEntity
                 AnimationChanger.SetSwordAttack, AnimationChanger.SetKickAttack);
             _attackable.Attack();
             _isIKAllowed = true;
-            if (!_inAttack)
+            if (!_inAttack && _isAIControlAllowed)
                 TurnSmoothlyToTarget();
         }
 
@@ -749,7 +754,25 @@ namespace __Scripts.CharacterEntity
                 StartCoroutine(FindEnemies());
             }
 
-            if (enemies.Length > 0)
+            else if (enemies.Length > 1) //чтобы не брали в таргет игрока
+            {
+                List<CharacterState> enemiesExceptPlayer = new List<CharacterState>();
+                foreach (var enemy in enemies)
+                {
+                    if (enemy != Player.PlayerCharacter)
+                    {
+                        enemiesExceptPlayer.Add(enemy);
+                    }
+                    
+                }
+                
+                _targetState = enemiesExceptPlayer[Random.Range(0, enemiesExceptPlayer.Count)];
+                yield return new WaitForSeconds(Random.Range(AutoResetTargetDelay.x, AutoResetTargetDelay.y));
+                StartCoroutine(FindEnemies());
+                
+            }
+
+            else if (enemies.Length > 0)
             {
                 _targetState = enemies[Random.Range(0, enemies.Length)];
                 yield return new WaitForSeconds(Random.Range(AutoResetTargetDelay.x, AutoResetTargetDelay.y));

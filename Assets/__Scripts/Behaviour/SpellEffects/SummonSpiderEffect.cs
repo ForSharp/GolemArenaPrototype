@@ -20,7 +20,7 @@ namespace __Scripts.Behaviour.SpellEffects
             _info = info;
             _owner = owner;
             _target = target;
-            _spawner = GameObject.Find("Tester").GetComponent<Spawner>();
+            _spawner = FindObjectOfType<Spawner>();
             
             SummonSpider();
         }

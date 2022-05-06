@@ -34,7 +34,7 @@ namespace __Scripts.Controller
 
         [SerializeField] private float gravity = -9.81f;
         [SerializeField] private FixedJoystick fixedJoystick;
-        [SerializeField] private GameObject camera;
+        [SerializeField] private Camera cameraMain;
 
         private bool _aiControl = true;
         private PlayMode _playMode = PlayMode.Cinematic;
@@ -140,7 +140,7 @@ namespace __Scripts.Controller
             switch (_playMode)
             {
                 case PlayMode.Standard:
-                    HandleJoystickInput();
+                    HandleInput();
                     break;
                 case PlayMode.Cinematic:
                     if (Input.GetMouseButtonDown(0))
@@ -193,7 +193,7 @@ namespace __Scripts.Controller
                 _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
             }
 
-            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            var ray = cameraMain.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit))
             {
                 _currentCharacter.SpellManager.CancelCast(_currentSpell, _currentSpellNumb);
@@ -262,8 +262,8 @@ namespace __Scripts.Controller
 
         private void TryShowHeroStates()
         {
-            if (Camera.main is null) return;
-            var ray = Camera.main.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+            if (cameraMain is null) return;
+            var ray = cameraMain.ScreenPointToRay(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (!Physics.Raycast(ray, out var hit)) return;
             var coll = hit.collider;
             if (coll.TryGetComponent(out ChampionState state))
@@ -277,13 +277,10 @@ namespace __Scripts.Controller
                      !_currentCharacter.SpellPanelHelper.SpellsPanel.InPanel)
             {
                 standardPanel.gameObject.SetActive(false);
-                foreach (var character in Game.AllCharactersInSession)
+                foreach (var character in Game.AllChampionsInSession)
                 {
-                    if (character is ChampionState champion)
-                    {
-                        champion.InventoryHelper.InventoryOrganization.HideAllInventory();
-                        champion.SpellPanelHelper.SpellsPanel.HideAll();
-                    }
+                    character.InventoryHelper.InventoryOrganization.HideAllInventory();
+                    character.SpellPanelHelper.SpellsPanel.HideAll();
                 }
             }
         }
@@ -338,12 +335,12 @@ namespace __Scripts.Controller
 
         #region StandardController
 
-        private void HandleJoystickInput()
+        private void HandleInput()
         {
             if (CanMove())
             {
-                MoveCharacterByKeyboard();
-                //MoveCharacterByJoystick();
+                //MoveCharacterByKeyboard();
+                MoveCharacterByJoystick();
                 MakeSomersault();
                 Attack();
             }
@@ -370,31 +367,33 @@ namespace __Scripts.Controller
         private void MoveCharacterByJoystick()
         {
             var moveVector = Vector3.zero;
-            //var cosCameraRotationY = Mathf.Cos(camera.transform.rotation.y);
-
-            // fixedJoystick.transform.rotation = new Quaternion(fixedJoystick.transform.rotation.x,
-            //     fixedJoystick.transform.rotation.y, camera.transform.rotation.y, fixedJoystick.transform.rotation.w);
             
             moveVector.x = fixedJoystick.Horizontal;
             moveVector.z = fixedJoystick.Vertical;
-
+            
+            moveVector = cameraMain.transform.TransformDirection(moveVector);
+            moveVector.y = 0;
+            
             if (moveVector.x != 0 || moveVector.z != 0)
             {
                 if (Mathf.Abs(fixedJoystick.Horizontal) > 0.5 || Mathf.Abs(fixedJoystick.Vertical) > 0.5 )
                 {
+                    _animator.applyRootMotion = false;
                     Run();
                 }
                 else
                 {
+                    _animator.applyRootMotion = false;
                     Walk();
                 }
                 
             }
             else
             {
+                _animator.applyRootMotion = true;
                 Idle();
             }
-
+            
             if (Vector3.Angle(Vector3.forward, moveVector) > 1 || Vector3.Angle(Vector3.forward, moveVector) == 0)
             {
                 var direction = Vector3.RotateTowards(_state.transform.forward, moveVector, _moveSpeed, 0);
@@ -423,14 +422,17 @@ namespace __Scripts.Controller
 
             if (_moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
             {
+                _animator.applyRootMotion = false;
                 Walk();
             }
             else if (_moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift))
             {
+                _animator.applyRootMotion = false;
                 Run();
             }
             else
             {
+                _animator.applyRootMotion = true;
                 Idle();
             }
 
@@ -450,7 +452,7 @@ namespace __Scripts.Controller
                 AnimationChanger.SetSomersault(_animator);
             }
         }
-
+        
         private void Idle()
         {
             AnimationChanger.SetFightIdle(_animator);

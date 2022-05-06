@@ -1,4 +1,7 @@
-﻿using __Scripts.GameLoop;
+﻿using System;
+using __Scripts.Environment;
+using __Scripts.GameLoop;
+using __Scripts.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,6 +20,13 @@ namespace __Scripts.Inventory
         public InventoryWithSlots inventory;
         public bool InPanel { get; private set; }
         private bool _isHide = false;
+        private Store _store;
+        private ItemInfoPanel _itemInfoPanel;
+        private void Awake()
+        {
+            _store = FindObjectOfType<Store>();
+            _itemInfoPanel = FindObjectOfType<ItemInfoPanel>();
+        }
 
         public void OnSwitchButtonClicked()
         {
@@ -48,6 +58,9 @@ namespace __Scripts.Inventory
             {
                 character.SpellPanelHelper.SpellsPanel.HideLearnedSpellsPanel();
             }
+            
+            _itemInfoPanel.Close();
+            _store.HideStore();
         }
 
         public void HideNonEquippingSlots()
@@ -61,6 +74,8 @@ namespace __Scripts.Inventory
             inventoryBackGround.SetActive(false);
             _isHide = true;
             switchButtonText.text = "Show";
+            
+            _itemInfoPanel.Close();
         }
 
         public void HideAllInventory()
@@ -80,6 +95,8 @@ namespace __Scripts.Inventory
             }
             closeButton.gameObject.SetActive(false);
             inventoryBackGround.SetActive(false);
+            
+            _itemInfoPanel.Close();
         }
 
         public void ShowInventory()
@@ -92,6 +109,9 @@ namespace __Scripts.Inventory
             {
                 slot.SetActive(true);
             }
+            
+            _itemInfoPanel.Close();
+            _store.HideStore();
         }
 
         public void OnPointerExit(PointerEventData eventData)

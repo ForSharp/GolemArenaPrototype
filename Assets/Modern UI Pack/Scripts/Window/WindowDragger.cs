@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using __Scripts.Controller;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Modern_UI_Pack.Scripts.Window
@@ -21,7 +22,7 @@ namespace Modern_UI_Pack.Scripts.Window
             {
                 try
                 {
-                    var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
+                    var canvas = (CanvasController)GameObject.FindObjectsOfType(typeof(CanvasController))[0];
                     dragArea = canvas.GetComponent<RectTransform>();
                 }
 

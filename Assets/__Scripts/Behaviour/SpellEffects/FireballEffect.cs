@@ -50,7 +50,7 @@ namespace __Scripts.Behaviour.SpellEffects
             if (!_isExplosionStarted)
             {
                 transform.position = Vector3.Lerp(_startPos, _endPos, _movementProgress);
-                _movementProgress += 0.1f;
+                _movementProgress += 0.05f;
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 0.1f);
                 if (FilterCollidersArray(colliders).Length > 0)
