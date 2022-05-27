@@ -66,7 +66,6 @@ namespace __Scripts.Controller
                         {
                             _targetPoint = 0;
                         }
-
                         if (_targetPoint < 0)
                         {
                             _targetPoint = pathElements.Length - 1;

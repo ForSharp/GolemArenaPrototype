@@ -41,6 +41,12 @@ namespace __Scripts.Controller
 
         private void LoadSavedSetting()
         {
+
+            if (!ExistSettingsData())
+            {
+                SetStandardSettings();
+            }
+            
             RoundsQuantity = PlayerPrefs.GetInt("RoundsQuantity");
             StartMoney = PlayerPrefs.GetInt("StartMoney");
             EnemiesQuantity = PlayerPrefs.GetInt("EnemiesQuantity");
@@ -63,6 +69,26 @@ namespace __Scripts.Controller
             {
                 ChangeQuality(QualityLevel);
             }
+        }
+
+        private bool ExistSettingsData()
+        {
+            var quantity = PlayerPrefs.GetInt("RoundsQuantity");
+            if (quantity == 0)
+                return false;
+            else return true;
+        }
+
+        private void SetStandardSettings()
+        {
+            PlayerPrefs.SetInt("RoundsQuantity", 5);
+            PlayerPrefs.SetInt("StartMoney", 500);
+            PlayerPrefs.SetInt("EnemiesQuantity", 4);
+            PlayerPrefs.SetFloat("SoundVolume", 100);
+            PlayerPrefs.SetInt("QualityLevel", 2);
+            PlayerPrefs.Save();
+            
+            LoadSavedSetting();
         }
 
         private string GetQualityLevel(int level)

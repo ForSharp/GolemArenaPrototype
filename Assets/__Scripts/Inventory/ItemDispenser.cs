@@ -34,12 +34,8 @@ namespace __Scripts.Inventory
         private static void DispenseAllTypesOfItemsToCurrentCharacter(ChampionState character)
         {
             var money = character.RoundStatistics.RoundRate * 100 * Game.Round;
-
-            // if (character == Player.PlayerCharacter)
-            // {
-            //     money *= 10;
-            // }
-
+            
+            
             var moneyForArtefacts = money / 4;
             money -= moneyForArtefacts;
             DispenseArtefacts(moneyForArtefacts, character, out var artefactBalance);
